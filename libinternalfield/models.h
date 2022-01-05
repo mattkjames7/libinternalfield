@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include "internal.h"
+#include "coeffs.h"
 #endif
 
 /* models! */

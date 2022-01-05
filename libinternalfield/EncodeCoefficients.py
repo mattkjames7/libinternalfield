@@ -208,6 +208,7 @@ def CreateHeaderFiles(files):
 			'#include <string>\n',
 			'#include <map>\n',
 			'#include "internal.h"\n',
+			'#include "coeffs.h"\n',
 			'#endif\n\n']
 	lines += s
 	
