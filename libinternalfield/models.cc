@@ -26,3 +26,8 @@ Internal* getModelObjPointer(string Model) {
 Internal* getModelObjPointer(const char *Model) {
 	return modelMap[Model];
 }
+
+vector<string> listAvailableModels() {
+	return listMapKeys(modelMap);
+}
+

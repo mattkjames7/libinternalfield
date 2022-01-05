@@ -16,6 +16,16 @@ map<string,int> m = {
 };
 
 
+/* based upon https://www.lonecpluspluscoder.com/2015/08/13/an-elegant-way-to-extract-keys-from-a-c-map/ */
+template <typename Tkey, typename Tval> 
+vector<Tkey> listMapKeys(map<Tkey,Tval> const &inmap) {
+	vector<Tkey> keys;
+	for (auto const& element: inmap) {
+		keys.push_back(element.first);
+	}
+	return keys;
+}	
+
 int main() {
 	
 	int n = m.size();
@@ -25,6 +35,14 @@ int main() {
 	printf("c: %d\n",m["c"]);
 	printf("b (using string): %d\n",m[s]);
 
+	int i;
+	printf("size: %ld\n",m.size());
+	
+	vector<string> keys = listMapKeys(m);
+	for (i=0;i<n;i++) {
+		printf("%s : %d\n",keys[i].c_str(),m[keys[i]]);
+	}
 
 }
+
 	

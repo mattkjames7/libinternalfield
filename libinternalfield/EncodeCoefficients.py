@@ -209,6 +209,7 @@ def CreateHeaderFiles(files):
 			'#include <map>\n',
 			'#include "internal.h"\n',
 			'#include "coeffs.h"\n',
+			'#include "listmapkeys.h"\n',
 			'#endif\n\n']
 	lines += s
 	
@@ -237,6 +238,10 @@ def CreateHeaderFiles(files):
 	lines.append('Internal* getModelObjPointer(string Model);\n')
 	lines.append('Internal* getModelObjPointer(const char *Model);\n\n')
 	
+	#prototype for the function which lists all of the models
+	lines.append('/* a function to return a list of the models available */\n')
+	lines.append('vector<string> listAvailableModels();\n')
+	
 		
 	#write to file
 	f = open('models.h','w')
@@ -254,7 +259,7 @@ def CreateHeaderFiles(files):
 	lines.append('/* model definitions */\n')
 	for m,ml in zip(models,modelsl):
 		lines.append('Internal {:s}(&_binary_{:s}_bin_start);\n'.format(ml,m))
-	
+	lines.append('\n')
 	
 	#add function to return model pointer here
 	s = [	'Internal* getModelObjPointer(string Model) {\n',
@@ -263,8 +268,15 @@ def CreateHeaderFiles(files):
 			'Internal* getModelObjPointer(const char *Model) {\n',
 			'	return modelMap[Model];\n',
 			'}\n']
-	lines.append('\n')
 	lines += s	
+	lines.append('\n')
+	
+	#add the function which will return the list of available models
+	s = [	'vector<string> listAvailableModels() {\n',
+			'	return listMapKeys(modelMap);\n',
+			'}\n' ]
+	lines += s
+	lines.append('\n')
 	
 	#write to file
 	f = open('models.cc','w')

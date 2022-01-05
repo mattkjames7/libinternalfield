@@ -2,24 +2,10 @@
 
 InternalModel::InternalModel() {
 	
-	/* load all of the models */
-	vip4_ = &vip4;
-	jrm09_ = &jrm09;
-	jrm33_ = &jrm33;
-	gsfc13ev_ = &gsfc13ev;
-	gsfc15ev_ = &gsfc15ev;
-	gsfc15evs_ = &gsfc15evs;
-	isaac_ = &isaac;
-	jpl15ev_ = &jpl15ev;
-	jpl15evs_ = &jpl15evs;
-	o4_ = &o4;
-	o6_ = &o6;
-	p11a_ = &p11a;
-	sha_ = &sha;
-	u17ev_ = &u17ev;
-	v117ev_ = &v117ev;
-	vipal_ = &vipal;
-	vit4_ = &vit4;
+	/* load all of the models into a map*/
+	
+	
+
 		
 	/* set the current model */
 	CurrentModel_ = jrm09_;

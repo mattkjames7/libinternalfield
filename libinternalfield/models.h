@@ -5,6 +5,7 @@
 #include <map>
 #include "internal.h"
 #include "coeffs.h"
+#include "listmapkeys.h"
 #endif
 
 /* models! */
@@ -50,3 +51,5 @@ map<string,Internal*> modelMap = {	{"o6",&o6},
 Internal* getModelObjPointer(string Model);
 Internal* getModelObjPointer(const char *Model);
 
+/* a function to return a list of the models available */
+vector<string> listAvailableModels();
