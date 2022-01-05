@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include "internal.h"
 #include <string.h>
+#include <vector>
+#include <string>
+#include <map>
+#include "models.h"
 
 class InternalModel {
 	
