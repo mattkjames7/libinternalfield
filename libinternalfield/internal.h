@@ -29,12 +29,7 @@ class Internal {
 		void Field(int,double*,double*,double*,int,double*,double*,double*);
 		void Field(double,double,double,double*,double*,double*);
 		void Field(double,double,double,int,double*,double*,double*);
-		
-		/* set model parameters*/
-		void SetCartIn(bool);
-		void SetCartOut(bool);
-		bool GetCartIn();
-		bool GetCartOut();
+
 		
 	private:
 		/*Schmidt coefficients */
@@ -59,11 +54,7 @@ class Internal {
 		 * spherical polar coordinates */
 		void _SphHarm(int,double*,double*,double*,int,double*,double*,double*);
 		
-		/* coordinate/field vector rotation */
-		bool CartIn_;
-		bool CartOut_;
-		void _Cart2Pol(int,double*,double*,double*,double*,double*,double*);
-		void _BPol2BCart(int,double*,double*,double*,double*,double*,double*,double*,double*);
+
 		
 		bool copy;
 	

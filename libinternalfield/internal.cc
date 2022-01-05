@@ -26,10 +26,6 @@ Internal::Internal(const char *model) {
 	_Schmidt();
 	_CoeffGrids();
 	
-	/* set I/O coords */
-	CartIn_ = true;
-	CartOut_ = true;
-	
 	/* tell object that it is not a copy */
 	copy = false;
 	
@@ -44,10 +40,7 @@ Internal::Internal(unsigned char *ptr) {
 	/* calcualte Schmidt normalized coefficient grids */
 	_Schmidt();
 	_CoeffGrids();
-	
-	/* set I/O coords */
-	CartIn_ = true;
-	CartOut_ = true;	
+
 	
 	/* tell object that it is not a copy */
 	copy = false;
@@ -82,21 +75,7 @@ Internal::~Internal() {
 	}
 }
 
-void Internal::SetCartIn(bool CartIn) {
-	CartIn_ = CartIn;
-}
 
-bool Internal::GetCartIn() {
-	return CartIn_;
-}
-
-void Internal::SetCartOut(bool CartOut) {
-	CartOut_ = CartOut;
-}
-
-bool Internal::GetCartOut() {
-	return CartOut_;
-}
 
 void Internal::_LoadSchmidt(unsigned char *ptr){
 	
@@ -419,186 +398,40 @@ void Internal::_SphHarm(int l, double *r, double *t, double *p,
 					
 }
 
-void Internal::_Cart2Pol(int l, double *x, double *y, double *z,
-						double *r, double *t, double *p) {
-	
-	int i;
-	double pi2 = M_PI*2;
-	for (i=0;i<l;i++) {
-		r[i] = sqrt(x[i]*x[i] + y[i]*y[i] + z[i]*z[i]);
-		t[i] = acos(z[i]/r[i]);
-		p[i] = fmod(atan2(y[i],x[i]) + pi2,pi2);
-	}
-}
 
-void Internal::_BPol2BCart(int l, double *t, double *p,
-							double *Br, double *Bt, double *Bp,
-							double *Bx, double *By, double *Bz) {
+void Internal::Field(int l, double *r, double *t, double *p,
+						double *Br, double *Bt, double *Bp) {
 	
-	int i;
-	double cost, cosp, sint ,sinp;
-	for (i=0;i<l;i++) {
-		cost = cos(t[i]);
-		cosp = cos(p[i]);
-		sint = sin(t[i]);
-		sinp = sin(p[i]);
-		Bx[i] = Br[i]*sint*cosp + Bt[i]*cost*cosp - Bp[i]*sinp;
-		By[i] = Br[i]*sint*sinp + Bt[i]*cost*sinp + Bp[i]*cosp;
-		Bz[i] = Br[i]*cost - Bt[i]*sint;
-	}
-								
-}
 
-void Internal::Field(int l, double *p0, double *p1, double *p2,
-					double *B0, double *B1, double *B2) {
-	
-	/* some IO pointers */
-	int i;
-	double *r, *t, *p, *Br, *Bt, *Bp;
-	
-	/* set the input pointers */
-	if (!CartIn_) {
-		r = p0;
-		t = p1;
-		p = p2;
-	} else { 
-		r = new double[l];
-		t = new double[l];
-		p = new double[l];
-		_Cart2Pol(l,p0,p1,p2,r,t,p);
-	}
-	
-	/* set up the output pointers */
-	if (!CartOut_) {
-		Br = B0;
-		Bt = B1;
-		Bp = B2;
-	} else { 
-		Br = new double[l];
-		Bt = new double[l];
-		Bp = new double[l];		
-	}
-	
 	/* call the model */
 	_SphHarm(l,r,t,p,nmax_,Br,Bt,Bp);
 	
-	/* rotate field vector if needed and delete output arrays */
-	if (CartOut_) {
-		_BPol2BCart(l,t,p,Br,Bt,Bp,B0,B1,B2);
-		delete[] Br;
-		delete[] Bt;
-		delete[] Bp;
-	}
-	
-	/* delete input arrays */
-	if (CartIn_) {
-		delete[] r;
-		delete[] t;
-		delete[] p;
-	}
 }
 
-void Internal::Field(int l, double *p0, double *p1, double *p2,
-					int MaxDeg, double *B0, double *B1, double *B2) {
+void Internal::Field(int l, double *r, double *t, double *p,
+					int MaxDeg, double *Br, double *Bt, double *Bp) {
 	
-	/* some IO pointers */
-	int i;
-	double *r, *t, *p, *Br, *Bt, *Bp;
-	
-	/* set the input pointers */
-	if (!CartIn_) {
-		r = p0;
-		t = p1;
-		p = p2;
-	} else { 
-		r = new double[l];
-		t = new double[l];
-		p = new double[l];
-		_Cart2Pol(l,p0,p1,p2,r,t,p);
-	}
-	
-	/* set up the output pointers */
-	if (!CartOut_) {
-		Br = B0;
-		Bt = B1;
-		Bp = B2;
-	} else { 
-		Br = new double[l];
-		Bt = new double[l];
-		Bp = new double[l];		
-	}
-	
+
 	/* call the model */
 	_SphHarm(l,r,t,p,MaxDeg,Br,Bt,Bp);
 	
-	/* rotate field vector if needed and delete output arrays */
-	if (CartOut_) {
-		_BPol2BCart(l,t,p,Br,Bt,Bp,B0,B1,B2);
-		delete[] Br;
-		delete[] Bt;
-		delete[] Bp;
-	}
-	
-	/* delete input arrays */
-	if (CartIn_) {
-		delete[] r;
-		delete[] t;
-		delete[] p;
-	}
+
 }
 
-void Internal::Field(	double p0, double p1, double p2,
-						double *B0, double *B1, double *B2) {
-	
-	/* temporary variables*/
-	double r, t, p, Br, Bt, Bp;
-	
-	/* convert input coords (or not) */
-	if (!CartIn_) {
-		r = p0;
-		t = p1;
-		p = p2;
-	} else { 
-		_Cart2Pol(1,&p0,&p1,&p2,&r,&t,&p);
-	}
+void Internal::Field(	double r, double t, double p,
+						double *Br, double *Bt, double *Bp) {
 	
 	/* call the model */
-	_SphHarm(1,&r,&t,&p,nmax_,&Br,&Bt,&Bp);
+	_SphHarm(1,&r,&t,&p,nmax_,Br,Bt,Bp);
 	
-	/* rotate field vector if needed and delete output arrays */
-	if (CartOut_) {
-		_BPol2BCart(1,&t,&p,&Br,&Bt,&Bp,B0,B1,B2);
-	} else {
-		B0[0] = Br;
-		B1[0] = Bt;
-		B2[0] = Bp;
-	}
+
 }
 
-void Internal::Field(	double p0, double p1, double p2, int MaxDeg,
-						double *B0, double *B1, double *B2) {
+void Internal::Field(	double r, double t, double p, int MaxDeg,
+						double *Br, double *Bt, double *Bp) {
 	
-	/* temporary variables*/
-	double r, t, p, Br, Bt, Bp;
-	
-	/* convert input coords (or not) */
-	if (!CartIn_) {
-		r = p0;
-		t = p1;
-		p = p2;
-	} else { 
-		_Cart2Pol(1,&p0,&p1,&p2,&r,&t,&p);
-	}
-	
+
 	/* call the model */
-	_SphHarm(1,&r,&t,&p,MaxDeg,&Br,&Bt,&Bp);
-	
-	/* rotate field vector if needed and delete output arrays */
-	if (CartOut_) {
-		_BPol2BCart(1,&t,&p,&Br,&Bt,&Bp,B0,B1,B2);
-	} else {
-		B0[0] = Br;
-		B1[0] = Bt;
-		B2[0] = Bp;
-	}
+	_SphHarm(1,&r,&t,&p,MaxDeg,Br,Bt,Bp);
+
 }

@@ -38,25 +38,19 @@ InternalModel::~InternalModel() {
 
 }	
 
-void InternalModel::SetCartIn(bool CartIn){
-	
+void Internal::SetCartIn(bool CartIn) {
 	CartIn_ = CartIn;
-	CurrentModel_->SetCartIn(CartIn_);
 }
 
-bool InternalModel::GetCartIn() {
-	
+bool Internal::GetCartIn() {
 	return CartIn_;
 }
 
-void InternalModel::SetCartOut(bool CartOut){
-	
+void Internal::SetCartOut(bool CartOut) {
 	CartOut_ = CartOut;
-	CurrentModel_->SetCartOut(CartOut_);
 }
 
-bool InternalModel::GetCartOut() {
-	
+bool Internal::GetCartOut() {
 	return CartOut_;
 }
 
@@ -119,27 +113,187 @@ void InternalModel::GetModel(char *ModelName) {
 void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 							double *B0, double *B1, double *B2) {
 	
-	CurrentModel_->Field(n,p0,p1,p2,B0,B1,B2);
+	/* some IO pointers */
+	int i;
+	double *r, *t, *p, *Br, *Bt, *Bp;
+	
+	/* set the input pointers */
+	if (!CartIn_) {
+		r = p0;
+		t = p1;
+		p = p2;
+	} else { 
+		r = new double[l];
+		t = new double[l];
+		p = new double[l];
+		_Cart2Pol(l,p0,p1,p2,r,t,p);
+	}
+
+	/* set up the output pointers */
+	if (!CartOut_) {
+		Br = B0;
+		Bt = B1;
+		Bp = B2;
+	} else { 
+		Br = new double[l];
+		Bt = new double[l];
+		Bp = new double[l];		
+	}
+
+	CurrentModel_->Field(n,r,t,p,Br,Bt,Bp);
+
+	/* rotate field vector if needed and delete output arrays */
+	if (CartOut_) {
+		_BPol2BCart(l,t,p,Br,Bt,Bp,B0,B1,B2);
+		delete[] Br;
+		delete[] Bt;
+		delete[] Bp;
+	}
+	
+	/* delete input arrays */
+	if (CartIn_) {
+		delete[] r;
+		delete[] t;
+		delete[] p;
+	}
+}
 								
 }
 
 void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 							int MaxDeg, double *B0, double *B1, double *B2) {
+
 	
-	CurrentModel_->Field(n,p0,p1,p2,MaxDeg,B0,B1,B2);
+	/* some IO pointers */
+	int i;
+	double *r, *t, *p, *Br, *Bt, *Bp;
+	
+	/* set the input pointers */
+	if (!CartIn_) {
+		r = p0;
+		t = p1;
+		p = p2;
+	} else { 
+		r = new double[l];
+		t = new double[l];
+		p = new double[l];
+		_Cart2Pol(l,p0,p1,p2,r,t,p);
+	}
+	
+	/* set up the output pointers */
+	if (!CartOut_) {
+		Br = B0;
+		Bt = B1;
+		Bp = B2;
+	} else { 
+		Br = new double[l];
+		Bt = new double[l];
+		Bp = new double[l];		
+	}
+	
+	CurrentModel_->Field(n,r,t,p,MaxDeg,Br,Bt,Bp);
+
+	/* rotate field vector if needed and delete output arrays */
+	if (CartOut_) {
+		_BPol2BCart(l,t,p,Br,Bt,Bp,B0,B1,B2);
+		delete[] Br;
+		delete[] Bt;
+		delete[] Bp;
+	}
+	
+	/* delete input arrays */
+	if (CartIn_) {
+		delete[] r;
+		delete[] t;
+		delete[] p;
+	}
 								
 }
 
 void InternalModel::Field(	double p0, double p1, double p2,
 							double *B0, double *B1, double *B2) {
+
+
+	/* temporary variables*/
+	double r, t, p, Br, Bt, Bp;
 	
-	CurrentModel_->Field(p0,p1,p2,B0,B1,B2);
-								
+	/* convert input coords (or not) */
+	if (!CartIn_) {
+		r = p0;
+		t = p1;
+		p = p2;
+	} else { 
+		_Cart2Pol(1,&p0,&p1,&p2,&r,&t,&p);
+	}
+	
+	CurrentModel_->Field(r,t,p,&Br,&Bt,&Bp);
+
+	/* rotate field vector if needed and delete output arrays */
+	if (CartOut_) {
+		_BPol2BCart(1,&t,&p,&Br,&Bt,&Bp,B0,B1,B2);
+	} else {
+		B0[0] = Br;
+		B1[0] = Bt;
+		B2[0] = Bp;
+	}								
 }
 
 void InternalModel::Field(	double p0, double p1, double p2, int MaxDeg,
 							double *B0, double *B1, double *B2) {
+
+	/* temporary variables*/
+	double r, t, p, Br, Bt, Bp;
 	
-	CurrentModel_->Field(p0,p1,p2,MaxDeg,B0,B1,B2);
+	/* convert input coords (or not) */
+	if (!CartIn_) {
+		r = p0;
+		t = p1;
+		p = p2;
+	} else { 
+		_Cart2Pol(1,&p0,&p1,&p2,&r,&t,&p);
+	}
+	
+	
+	CurrentModel_->Field(r,t,p,MaxDeg,&Br,&Bt,&Bp);
+	
+	/* rotate field vector if needed and delete output arrays */
+	if (CartOut_) {
+		_BPol2BCart(1,&t,&p,&Br,&Bt,&Bp,B0,B1,B2);
+	} else {
+		B0[0] = Br;
+		B1[0] = Bt;
+		B2[0] = Bp;
+	}								
+}
+
+
+
+void InternalModel::_Cart2Pol(int l, double *x, double *y, double *z,
+						double *r, double *t, double *p) {
+	
+	int i;
+	double pi2 = M_PI*2;
+	for (i=0;i<l;i++) {
+		r[i] = sqrt(x[i]*x[i] + y[i]*y[i] + z[i]*z[i]);
+		t[i] = acos(z[i]/r[i]);
+		p[i] = fmod(atan2(y[i],x[i]) + pi2,pi2);
+	}
+}
+
+void InternalModel::_BPol2BCart(int l, double *t, double *p,
+							double *Br, double *Bt, double *Bp,
+							double *Bx, double *By, double *Bz) {
+	
+	int i;
+	double cost, cosp, sint ,sinp;
+	for (i=0;i<l;i++) {
+		cost = cos(t[i]);
+		cosp = cos(p[i]);
+		sint = sin(t[i]);
+		sinp = sin(p[i]);
+		Bx[i] = Br[i]*sint*cosp + Bt[i]*cost*cosp - Bp[i]*sinp;
+		By[i] = Br[i]*sint*sinp + Bt[i]*cost*sinp + Bp[i]*cosp;
+		Bz[i] = Br[i]*cost - Bt[i]*sint;
+	}
 								
 }

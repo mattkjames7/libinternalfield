@@ -39,8 +39,13 @@ class InternalModel {
 	private:
 		Internal *CurrentModel_;
 		char CurrentModelName_[32];
+
+
+		/* coordinate/field vector rotation */
 		bool CartIn_;
 		bool CartOut_;
+		void _Cart2Pol(int,double*,double*,double*,double*,double*,double*);
+		void _BPol2BCart(int,double*,double*,double*,double*,double*,double*,double*,double*);
 };
 
 
