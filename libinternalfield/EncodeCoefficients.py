@@ -215,7 +215,28 @@ def CreateHeaderFiles(files):
 	lines.append('/* models! */\n')
 	for m in modelsl:
 		lines.append('extern Internal {:s};\n'.format(m))
+	lines.append('\n')
+
+	#add another map from model name to model pointer
+	lines.append('/* map the model names to their model object pointers */\n')
+	s = 'map<string,Internal*> modelMap = {\t'
+	for i,ml in enumerate(modelsl):
+		if i > 0:
+			s += '\t\t\t\t\t\t\t\t\t'
+		s += '{"' + ml + '",&{:s}'.format(ml) + '}'
+		if i < len(modelsl) - 1:
+			s += ',\n'
+		else:
+			s += '\n'
+	s += '}\n\n'
+	lines.append(s)	
+
+	#header for getModelCoeffPointer
+	lines.append('/* this function will return the pointer to a model object given a string */\n')
+	lines.append('Internal* getModelObjPointer(string Model);\n')
+	lines.append('Internal* getModelObjPointer(const char *Model);\n\n')
 	
+		
 	#write to file
 	f = open('models.h','w')
 	f.writelines(lines)
@@ -234,10 +255,15 @@ def CreateHeaderFiles(files):
 		lines.append('Internal {:s}(&_binary_{:s}_bin_start);\n'.format(ml,m))
 	
 	
-	#add another map from model name to model pointer
-	
-	
 	#add function to return model pointer here
+	s = [	'Internal* getModelObjPointer(string Model) {\n',
+			'	return modelMap[Model];\n',
+			'}\n\n',
+			'Internal* getModelObjPointer(const char *Model) {\n',
+			'	return modelMap[Model];\n',
+			'}\n']
+	lines.append('\n')
+	lines += s	
 	
 	#write to file
 	f = open('models.cc','w')

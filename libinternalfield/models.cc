@@ -18,3 +18,11 @@ Internal v117ev(&_binary_v117ev_bin_start);
 Internal jrm33(&_binary_jrm33_bin_start);
 Internal u17ev(&_binary_u17ev_bin_start);
 Internal vipal(&_binary_vipal_bin_start);
+
+Internal* getModelObjPointer(string Model) {
+	return modelMap[Model];
+}
+
+Internal* getModelObjPointer(const char *Model) {
+	return modelMap[Model];
+}
