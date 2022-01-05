@@ -1,35 +1,35 @@
 #include "internal.h"
 
 
-Internal::Internal(const char *model) {
+//Internal::Internal(const char *model) {
 	
 	
-	/* use the model string to determine which model to load */
-	unsigned char *ptr;
-	if (strcmp(model,"VIP4") == 0) {
-		/* load the VIP 4 model */
-		ptr = &_binary_vip4coeffs_bin_start;
-	} else if (strcmp(model,"JRM09") == 0) {
-		/* load the JRM09 model */
-		ptr = &_binary_jrm09coeffs_bin_start;
-	} else {
-		/* default to VIP4 */
-		ptr = &_binary_vip4coeffs_bin_start;
-	}
+	///* use the model string to determine which model to load */
+	//unsigned char *ptr;
+	//if (strcmp(model,"VIP4") == 0) {
+		///* load the VIP 4 model */
+		//ptr = &_binary_vip4coeffs_bin_start;
+	//} else if (strcmp(model,"JRM09") == 0) {
+		///* load the JRM09 model */
+		//ptr = &_binary_jrm09coeffs_bin_start;
+	//} else {
+		///* default to VIP4 */
+		//ptr = &_binary_vip4coeffs_bin_start;
+	//}
 	
 	
 	
-	/* read the coeffs into the object */
-	_LoadSchmidt(ptr);
+	///* read the coeffs into the object */
+	//_LoadSchmidt(ptr);
 	
-	/* calcualte Schmidt normalized coefficient grids */
-	_Schmidt();
-	_CoeffGrids();
+	///* calcualte Schmidt normalized coefficient grids */
+	//_Schmidt();
+	//_CoeffGrids();
 	
-	/* tell object that it is not a copy */
-	copy = false;
+	///* tell object that it is not a copy */
+	//copy = false;
 	
-}
+//}
 
 Internal::Internal(unsigned char *ptr) {
 	

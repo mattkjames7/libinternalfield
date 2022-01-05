@@ -160,8 +160,7 @@ def CreateHeaderFiles(files):
 	
 	#list of model names
 	lines.append('/* list of model names */\n');
-	s = '{\t"' + '",\n\t\t\t\t\t\t\t\t"'.join(modelsl)+'"};\n\n'
-	lines.append('vector<string> modelNames = '+s)
+	lines.append('extern vector<string> modelNames;\n')
 
 	#define all of the memory pointers
 	lines.append('/* pointers to the memory where coefficients are stored */\n')
@@ -170,6 +169,30 @@ def CreateHeaderFiles(files):
 		lines.append(s)
 	lines.append('\n')
 
+
+	#define the map
+	lines.append('/* map the model names to their pointers */\n')
+	lines.append('extern map<string,unsigned char*> modelMap;\n\n')
+		
+	#header for getModelCoeffPointer
+	lines.append('/* this function will return the pointer to a model given a string */\n')
+	lines.append('unsigned char* getModelCoeffPointer(string Model);\n')
+	lines.append('unsigned char* getModelCoeffPointer(const char *Model);\n\n')
+	
+	
+	#write to file
+	f = open('coeffs.h','w')
+	f.writelines(lines)
+	f.close()
+
+	print('Generating coeffs.cc')
+	lines = []
+	lines.append('#include "coeffs.h"\n\n')
+	
+	#list of model names
+	lines.append('/* list of model names */\n');
+	s = '{\t"' + '",\n\t\t\t\t\t\t\t\t"'.join(modelsl)+'"};\n\n'
+	lines.append('vector<string> modelNames = '+s)
 
 	#define the map
 	lines.append('/* map the model names to their pointers */\n')
@@ -182,19 +205,25 @@ def CreateHeaderFiles(files):
 			s += ',\n'
 		else:
 			s += '\n'
-	s += '}\n\n'
+	s += '};\n\n'
 	lines.append(s)
-		
-	#header for getModelCoeffPointer
-	lines.append('/* this function will return the pointer to a model given a string */\n')
-	lines.append('unsigned char* getModelCoeffPointer(string Model);\n')
-	lines.append('unsigned char* getModelCoeffPointer(const char *Model);\n\n')
+
+	#define function code to return model pointers
+	s = [	'unsigned char* GetModelCoeffPointer(string Model) {\n',
+			'	return modelMap[Model];\n',
+			'}\n\n' ]
+	lines += s
 	
-	
+	s = [	'unsigned char* GetModelCoeffPointer(const char *Model) {',
+			'	return modelMap[Model];\n',
+			'}\n\n']
+	lines += s
+
 	#write to file
-	f = open('coeffs.h','w')
+	f = open('coeffs.cc','w')
 	f.writelines(lines)
 	f.close()
+
 
 
 	print('Generating models.h')
@@ -221,17 +250,8 @@ def CreateHeaderFiles(files):
 
 	#add another map from model name to model pointer
 	lines.append('/* map the model names to their model object pointers */\n')
-	s = 'map<string,Internal*> modelMap = {\t'
-	for i,ml in enumerate(modelsl):
-		if i > 0:
-			s += '\t\t\t\t\t\t\t\t\t'
-		s += '{"' + ml + '",&{:s}'.format(ml) + '}'
-		if i < len(modelsl) - 1:
-			s += ',\n'
-		else:
-			s += '\n'
-	s += '}\n\n'
-	lines.append(s)	
+	lines.append('extern map<string,Internal*> modelPtrMap;\n\n')
+
 
 	#header for getModelCoeffPointer
 	lines.append('/* this function will return the pointer to a model object given a string */\n')
@@ -260,20 +280,35 @@ def CreateHeaderFiles(files):
 	for m,ml in zip(models,modelsl):
 		lines.append('Internal {:s}(&_binary_{:s}_bin_start);\n'.format(ml,m))
 	lines.append('\n')
+
+	#add another map from model name to model pointer
+	lines.append('/* map the model names to their model object pointers */\n')
+	s = 'map<string,Internal*> modelPtrMap = {\t'
+	for i,ml in enumerate(modelsl):
+		if i > 0:
+			s += '\t\t\t\t\t\t\t\t\t\t'
+		s += '{"' + ml + '",&{:s}'.format(ml) + '}'
+		if i < len(modelsl) - 1:
+			s += ',\n'
+		else:
+			s += '\n'
+	s += '};\n\n'
+	lines.append(s)	
+
 	
 	#add function to return model pointer here
 	s = [	'Internal* getModelObjPointer(string Model) {\n',
-			'	return modelMap[Model];\n',
+			'	return modelPtrMap[Model];\n',
 			'}\n\n',
 			'Internal* getModelObjPointer(const char *Model) {\n',
-			'	return modelMap[Model];\n',
+			'	return modelPtrMap[Model];\n',
 			'}\n']
 	lines += s	
 	lines.append('\n')
 	
 	#add the function which will return the list of available models
 	s = [	'vector<string> listAvailableModels() {\n',
-			'	return listMapKeys(modelMap);\n',
+			'	return listMapKeys(modelPtrMap);\n',
 			'}\n' ]
 	lines += s
 	lines.append('\n')

@@ -29,19 +29,19 @@ InternalModel::~InternalModel() {
 
 }	
 
-void Internal::SetCartIn(bool CartIn) {
+void InternalModel::SetCartIn(bool CartIn) {
 	CartIn_ = CartIn;
 }
 
-bool Internal::GetCartIn() {
+bool InternalModel::GetCartIn() {
 	return CartIn_;
 }
 
-void Internal::SetCartOut(bool CartOut) {
+void InternalModel::SetCartOut(bool CartOut) {
 	CartOut_ = CartOut;
 }
 
-bool Internal::GetCartOut() {
+bool InternalModel::GetCartOut() {
 	return CartOut_;
 }
 
@@ -62,11 +62,11 @@ void InternalModel::SetModel(char *ModelName) {
 	
 	if (validmodel) {
 		/* set the new model if a valid string has been provided */
-		CurrentModel_ = Models_[ModelName];
-		CurrentModelName_ = ModelName;
+		CurrentModel_ = Models_[ModelIn];
+		CurrentModelName_ = ModelIn;
 	} else {
 		/* ignore the new model, print a warning */
-		printf("Invalid model name: %s, ignoring...\n",ModelName.c_str());
+		printf("Invalid model name: %s, ignoring...\n",ModelIn.c_str());
 	}
 	
 }
@@ -89,10 +89,10 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 		t = p1;
 		p = p2;
 	} else { 
-		r = new double[l];
-		t = new double[l];
-		p = new double[l];
-		_Cart2Pol(l,p0,p1,p2,r,t,p);
+		r = new double[n];
+		t = new double[n];
+		p = new double[n];
+		_Cart2Pol(n,p0,p1,p2,r,t,p);
 	}
 
 	/* set up the output pointers */
@@ -101,16 +101,16 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 		Bt = B1;
 		Bp = B2;
 	} else { 
-		Br = new double[l];
-		Bt = new double[l];
-		Bp = new double[l];		
+		Br = new double[n];
+		Bt = new double[n];
+		Bp = new double[n];		
 	}
 
 	CurrentModel_->Field(n,r,t,p,Br,Bt,Bp);
 
 	/* rotate field vector if needed and delete output arrays */
 	if (CartOut_) {
-		_BPol2BCart(l,t,p,Br,Bt,Bp,B0,B1,B2);
+		_BPol2BCart(n,t,p,Br,Bt,Bp,B0,B1,B2);
 		delete[] Br;
 		delete[] Bt;
 		delete[] Bp;
@@ -124,7 +124,7 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 	}
 }
 								
-}
+
 
 void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 							int MaxDeg, double *B0, double *B1, double *B2) {
@@ -140,10 +140,10 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 		t = p1;
 		p = p2;
 	} else { 
-		r = new double[l];
-		t = new double[l];
-		p = new double[l];
-		_Cart2Pol(l,p0,p1,p2,r,t,p);
+		r = new double[n];
+		t = new double[n];
+		p = new double[n];
+		_Cart2Pol(n,p0,p1,p2,r,t,p);
 	}
 	
 	/* set up the output pointers */
@@ -152,16 +152,16 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 		Bt = B1;
 		Bp = B2;
 	} else { 
-		Br = new double[l];
-		Bt = new double[l];
-		Bp = new double[l];		
+		Br = new double[n];
+		Bt = new double[n];
+		Bp = new double[n];		
 	}
 	
 	CurrentModel_->Field(n,r,t,p,MaxDeg,Br,Bt,Bp);
 
 	/* rotate field vector if needed and delete output arrays */
 	if (CartOut_) {
-		_BPol2BCart(l,t,p,Br,Bt,Bp,B0,B1,B2);
+		_BPol2BCart(n,t,p,Br,Bt,Bp,B0,B1,B2);
 		delete[] Br;
 		delete[] Bt;
 		delete[] Bp;
