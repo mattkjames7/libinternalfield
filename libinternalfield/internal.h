@@ -8,25 +8,6 @@
 
 using namespace std;
 
-/* here are the pointers to the memory where the coefficients are stored*/
-extern unsigned char _binary_vip4coeffs_bin_start;
-extern unsigned char _binary_jrm09coeffs_bin_start;
-extern unsigned char _binary_jrm33coeffs_bin_start;
-extern unsigned char _binary_gsfc13evcoeffs_bin_start;
-extern unsigned char _binary_gsfc15evcoeffs_bin_start;
-extern unsigned char _binary_gsfc15evscoeffs_bin_start;
-extern unsigned char _binary_isaaccoeffs_bin_start;
-extern unsigned char _binary_jpl15evcoeffs_bin_start;
-extern unsigned char _binary_jpl15evscoeffs_bin_start;
-extern unsigned char _binary_o4coeffs_bin_start;
-extern unsigned char _binary_o6coeffs_bin_start;
-extern unsigned char _binary_p11acoeffs_bin_start;
-extern unsigned char _binary_shacoeffs_bin_start;
-extern unsigned char _binary_u17evcoeffs_bin_start;
-extern unsigned char _binary_v117evcoeffs_bin_start;
-extern unsigned char _binary_vipalcoeffs_bin_start;
-extern unsigned char _binary_vit4coeffs_bin_start;
-
 /* This structure will store the Schmidt coefficients */
 struct schmidtcoeffs {
 	int n;
@@ -90,20 +71,3 @@ class Internal {
 
 #endif
 
-extern Internal vip4;
-extern Internal jrm09;
-extern Internal jrm33;
-extern Internal gsfc13ev;
-extern Internal gsfc15ev;
-extern Internal gsfc15evs;
-extern Internal isaac;
-extern Internal jpl15ev;
-extern Internal jpl15evs;
-extern Internal o4;
-extern Internal o6;
-extern Internal p11a;
-extern Internal sha;
-extern Internal u17ev;
-extern Internal v117ev;
-extern Internal vipal;
-extern Internal vit4;
