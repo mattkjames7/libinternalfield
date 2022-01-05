@@ -1,21 +1,26 @@
-#include "internalmodel.h"
+#include "internalmodel.h" 
 
 InternalModel::InternalModel() {
 	
 	/* load all of the models into a map*/
 	
+	/* start by getting the models available */
+	ModelNames_ = listAvailableModels();
 	
-
+	/* loop through each one and add to the map */
+	int i;
+	for (i=0;i<ModelNames_.size();i++) {
+		Models_[ModelNames_[i]] = getModelObjPointer(ModelNames_[i]);
+	}
 		
 	/* set the current model */
-	CurrentModel_ = jrm09_;
-	strcpy(CurrentModelName_,"JRM09");
+	CurrentModel_ = Models_["jrm09"];
+	CurrentModelName_ = "jrm09";
 	
 	/* default parameters */
 	CartIn_ = true;
 	CartOut_ = true;
-	CurrentModel_->SetCartIn(CartIn_);
-	CurrentModel_->SetCartOut(CartOut_);
+
 	
 }
 
@@ -41,59 +46,34 @@ bool Internal::GetCartOut() {
 }
 
 void InternalModel::SetModel(char *ModelName) {
-
-	/* Find the correct model and set it */
-	bool validmodel = true;
-	if (strcmp(ModelName,"JRM09") == 0) {
-		CurrentModel_ = jrm09_;
-	} else if (strcmp(ModelName,"JRM33") == 0) {
-		CurrentModel_ = jrm33_;
-	} else if (strcmp(ModelName,"VIP4") == 0) {
-		CurrentModel_ = vip4_;
-	} else if (strcmp(ModelName,"GSFC13EV") == 0) {
-		CurrentModel_ = gsfc13ev_;
-	} else if (strcmp(ModelName,"GSFC15EV") == 0) {
-		CurrentModel_ = gsfc15ev_;
-	} else if (strcmp(ModelName,"GSFC15EVS") == 0) {
-		CurrentModel_ = gsfc15evs_;
-	} else if (strcmp(ModelName,"ISAAC") == 0) {
-		CurrentModel_ = isaac_;
-	} else if (strcmp(ModelName,"JPL15EV") == 0) {
-		CurrentModel_ = jpl15ev_;
-	} else if (strcmp(ModelName,"JPL15EVS") == 0) {
-		CurrentModel_ = jpl15evs_;
-	} else if (strcmp(ModelName,"O4") == 0) {
-		CurrentModel_ = o4_;
-	} else if (strcmp(ModelName,"O6") == 0) {
-		CurrentModel_ = o6_;
-	} else if (strcmp(ModelName,"P11A") == 0) {
-		CurrentModel_ = p11a_;
-	} else if (strcmp(ModelName,"SHA") == 0) {
-		CurrentModel_ = sha_;
-	} else if (strcmp(ModelName,"U17EV") == 0) {
-		CurrentModel_ = u17ev_;
-	} else if (strcmp(ModelName,"V117EV") == 0) {
-		CurrentModel_ = v117ev_;
-	} else if (strcmp(ModelName,"VIPAL") == 0) {
-		CurrentModel_ = vipal_;
-	} else if (strcmp(ModelName,"VIT4") == 0) {
-		CurrentModel_ = vit4_;
-	} else {
-		printf("Invalid model name: %s, ignoring...\n",ModelName);
-		validmodel = false;
+	
+	/* convert the input to a string because I am a n00b*/
+	string ModelIn = ModelName;
+	
+	/* loop through list of models and check if it's in there*/
+	bool validmodel = false;
+	for (int i=0;i<ModelNames_.size();i++) {
+		if (ModelIn.compare(ModelNames_[i]) == 0) {
+			validmodel = true;
+			break;
+		}
 	}
 	
-	/* change the stored model name and set model parameters */
+	
 	if (validmodel) {
-		strcpy(CurrentModelName_,ModelName);
-		CurrentModel_->SetCartIn(CartIn_);
-		CurrentModel_->SetCartOut(CartOut_);
+		/* set the new model if a valid string has been provided */
+		CurrentModel_ = Models_[ModelName];
+		CurrentModelName_ = ModelName;
+	} else {
+		/* ignore the new model, print a warning */
+		printf("Invalid model name: %s, ignoring...\n",ModelName.c_str());
 	}
+	
 }
 
 void InternalModel::GetModel(char *ModelName) {
 	
-	strcpy(ModelName,CurrentModelName_);
+	strcpy(ModelName,CurrentModelName_.c_str());
 }
 
 void InternalModel::Field(int n, double *p0, double *p1, double *p2,

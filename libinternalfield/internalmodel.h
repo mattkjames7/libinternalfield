@@ -34,10 +34,11 @@ class InternalModel {
 				
 		/* these objects are the models to use */
 		map<string,Internal*> Models_;
+		vector<string> ModelNames_;
 
 	private:
 		Internal *CurrentModel_;
-		char CurrentModelName_[32];
+		string CurrentModelName_;
 
 
 		/* coordinate/field vector rotation */
