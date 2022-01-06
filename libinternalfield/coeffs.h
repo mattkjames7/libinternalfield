@@ -12,6 +12,7 @@ using std::map;
 /* list of model names */
 extern vector<string> modelNames;
 /* pointers to the memory where coefficients are stored */
+extern unsigned char _binary_ness1975_bin_start;
 extern unsigned char _binary_o6_bin_start;
 extern unsigned char _binary_sha_bin_start;
 extern unsigned char _binary_gsfc15evs_bin_start;
@@ -25,6 +26,7 @@ extern unsigned char _binary_jrm09_bin_start;
 extern unsigned char _binary_jpl15evs_bin_start;
 extern unsigned char _binary_jpl15ev_bin_start;
 extern unsigned char _binary_vit4_bin_start;
+extern unsigned char _binary_langlais2019_bin_start;
 extern unsigned char _binary_v117ev_bin_start;
 extern unsigned char _binary_jrm33_bin_start;
 extern unsigned char _binary_u17ev_bin_start;

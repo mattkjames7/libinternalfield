@@ -1,6 +1,7 @@
 #include "models.h"
 
 /* model definitions */
+Internal ness1975(&_binary_ness1975_bin_start);
 Internal o6(&_binary_o6_bin_start);
 Internal sha(&_binary_sha_bin_start);
 Internal gsfc15evs(&_binary_gsfc15evs_bin_start);
@@ -14,13 +15,15 @@ Internal jrm09(&_binary_jrm09_bin_start);
 Internal jpl15evs(&_binary_jpl15evs_bin_start);
 Internal jpl15ev(&_binary_jpl15ev_bin_start);
 Internal vit4(&_binary_vit4_bin_start);
+Internal langlais2019(&_binary_langlais2019_bin_start);
 Internal v117ev(&_binary_v117ev_bin_start);
 Internal jrm33(&_binary_jrm33_bin_start);
 Internal u17ev(&_binary_u17ev_bin_start);
 Internal vipal(&_binary_vipal_bin_start);
 
 /* map the model names to their model object pointers */
-map<string,Internal*> modelPtrMap = {	{"o6",&o6},
+map<string,Internal*> modelPtrMap = {	{"ness1975",&ness1975},
+										{"o6",&o6},
 										{"sha",&sha},
 										{"gsfc15evs",&gsfc15evs},
 										{"vip4",&vip4},
@@ -33,6 +36,7 @@ map<string,Internal*> modelPtrMap = {	{"o6",&o6},
 										{"jpl15evs",&jpl15evs},
 										{"jpl15ev",&jpl15ev},
 										{"vit4",&vit4},
+										{"langlais2019",&langlais2019},
 										{"v117ev",&v117ev},
 										{"jrm33",&jrm33},
 										{"u17ev",&u17ev},

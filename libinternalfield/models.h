@@ -9,6 +9,7 @@
 #endif
 
 /* models! */
+extern Internal ness1975;
 extern Internal o6;
 extern Internal sha;
 extern Internal gsfc15evs;
@@ -22,6 +23,7 @@ extern Internal jrm09;
 extern Internal jpl15evs;
 extern Internal jpl15ev;
 extern Internal vit4;
+extern Internal langlais2019;
 extern Internal v117ev;
 extern Internal jrm33;
 extern Internal u17ev;
