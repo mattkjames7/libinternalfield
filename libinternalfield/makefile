@@ -19,7 +19,7 @@ obj:
 
 lib:
 	#$(CC) *.o coeffs/*.o -shared -o libinternal.so
-	$(CC) coeffs/*.o coeffs.o internal.o models.o internalmodel.o libinternal.o  -shared -o libinternal.so
+	$(CC) coeffs/*.o coeffs.o internal.o models.o internalmodel.o libinternal.o  -shared -o libinternalfield.so
 	rm -v *.o
 	rm -v coeffs/*.o
 	rm -v coeffs/*.bin

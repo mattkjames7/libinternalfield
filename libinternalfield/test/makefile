@@ -6,7 +6,7 @@ CCo=g++ -c $(CFLAGS)
 CC=g++ $(CFLAGS)
 
 all:
-	$(CC) test.cc -o test -Wl,-rpath='$$ORIGIN/..' -L.. -linternal 
+	$(CC) test.cc -o test -Wl,-rpath='$$ORIGIN/..' -L.. -linternalfield
 	
 clean:
 	rm -v test
