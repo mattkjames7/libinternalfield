@@ -2,12 +2,12 @@
 #define __INTERNALMODEL_H__
 #include <stdio.h>
 #include <stdlib.h>
-#include "internal.h"
 #include <string.h>
 #include <vector>
 #include <string>
 #include <map>
 #include "models.h"
+#include "internal.h"
 
 class InternalModel {
 	
@@ -18,12 +18,16 @@ class InternalModel {
 		/* destructor */
 		~InternalModel();
 		
+		/* Init this function - I would like to remove this if at all possible*/
+		void CheckInit();
+		void Init();
+		
 		/* set model parameters */
 		void SetCartIn(bool);
 		void SetCartOut(bool);
 		bool GetCartIn();
 		bool GetCartOut();
-		void SetModel(char *);
+		void SetModel(const char *);
 		void GetModel(char *);
 
 		/* Field functions */
@@ -42,6 +46,7 @@ class InternalModel {
 
 
 		/* coordinate/field vector rotation */
+		bool init_;
 		bool CartIn_;
 		bool CartOut_;
 		void _Cart2Pol(int,double*,double*,double*,double*,double*,double*);

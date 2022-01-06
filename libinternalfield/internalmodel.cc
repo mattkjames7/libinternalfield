@@ -1,7 +1,20 @@
 #include "internalmodel.h" 
 
 InternalModel::InternalModel() {
+
+	init_  = false;
+}
+
+
+void InternalModel::CheckInit() {
 	
+	if (!init_) {
+		Init();
+		init_ = true;
+	}
+}
+
+void InternalModel::Init() {	
 	/* load all of the models into a map*/
 	
 	/* start by getting the models available */
@@ -30,23 +43,27 @@ InternalModel::~InternalModel() {
 }	
 
 void InternalModel::SetCartIn(bool CartIn) {
+	CheckInit();
 	CartIn_ = CartIn;
 }
 
 bool InternalModel::GetCartIn() {
+	CheckInit();
 	return CartIn_;
 }
 
 void InternalModel::SetCartOut(bool CartOut) {
+	CheckInit();
 	CartOut_ = CartOut;
 }
 
 bool InternalModel::GetCartOut() {
+	CheckInit();
 	return CartOut_;
 }
 
-void InternalModel::SetModel(char *ModelName) {
-	
+void InternalModel::SetModel(const char *ModelName) {
+	CheckInit();
 	/* convert the input to a string because I am a n00b*/
 	string ModelIn = ModelName;
 	
@@ -72,13 +89,14 @@ void InternalModel::SetModel(char *ModelName) {
 }
 
 void InternalModel::GetModel(char *ModelName) {
-	
+	CheckInit();
 	strcpy(ModelName,CurrentModelName_.c_str());
 }
 
 void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 							double *B0, double *B1, double *B2) {
 	
+	CheckInit();
 	/* some IO pointers */
 	int i;
 	double *r, *t, *p, *Br, *Bt, *Bp;
@@ -129,7 +147,7 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 							int MaxDeg, double *B0, double *B1, double *B2) {
 
-	
+	CheckInit();
 	/* some IO pointers */
 	int i;
 	double *r, *t, *p, *Br, *Bt, *Bp;
@@ -179,7 +197,7 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 void InternalModel::Field(	double p0, double p1, double p2,
 							double *B0, double *B1, double *B2) {
 
-
+	CheckInit();
 	/* temporary variables*/
 	double r, t, p, Br, Bt, Bp;
 	
@@ -206,7 +224,8 @@ void InternalModel::Field(	double p0, double p1, double p2,
 
 void InternalModel::Field(	double p0, double p1, double p2, int MaxDeg,
 							double *B0, double *B1, double *B2) {
-
+	
+	CheckInit();
 	/* temporary variables*/
 	double r, t, p, Br, Bt, Bp;
 	
@@ -236,7 +255,7 @@ void InternalModel::Field(	double p0, double p1, double p2, int MaxDeg,
 
 void InternalModel::_Cart2Pol(int l, double *x, double *y, double *z,
 						double *r, double *t, double *p) {
-	
+	CheckInit();
 	int i;
 	double pi2 = M_PI*2;
 	for (i=0;i<l;i++) {
@@ -249,7 +268,7 @@ void InternalModel::_Cart2Pol(int l, double *x, double *y, double *z,
 void InternalModel::_BPol2BCart(int l, double *t, double *p,
 							double *Br, double *Bt, double *Bp,
 							double *Bx, double *By, double *Bz) {
-	
+	CheckInit();
 	int i;
 	double cost, cosp, sint ,sinp;
 	for (i=0;i<l;i++) {

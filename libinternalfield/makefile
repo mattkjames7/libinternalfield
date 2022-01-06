@@ -5,7 +5,7 @@ CFLAGS=-lm -fopenmp -fPIC -std=c++17 -g
 CCo=g++ -c $(CFLAGS)
 CC=g++ $(CFLAGS)
 
-all: obj lib
+all: obj lib test
 
 obj:
 	#this bit converts the internale field model coefficients into 
@@ -18,11 +18,17 @@ obj:
 	$(CCo) libinternal.cc -o libinternal.o
 
 lib:
-	$(CC) *.o coeffs/*.o -shared -o libinternal.so
+	#$(CC) *.o coeffs/*.o -shared -o libinternal.so
+	$(CC) coeffs/*.o coeffs.o internal.o models.o internalmodel.o libinternal.o  -shared -o libinternal.so
 	rm -v *.o
 	rm -v coeffs/*.o
 	rm -v coeffs/*.bin
+	cd test; make all
+	
+test:
+	echo "here"
+	
 	
 clean:
 	rm -v *.so
-	
+	cd test; make clean

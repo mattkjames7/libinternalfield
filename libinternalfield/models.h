@@ -1,5 +1,5 @@
-#ifndef __COEFFS_H__
-#define __COEFFS_H__
+#ifndef __MODELS_H__
+#define __MODELS_H__
 #include <vector>
 #include <string>
 #include <map>

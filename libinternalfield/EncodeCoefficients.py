@@ -118,9 +118,16 @@ def MakeObjectFile(fname):
 	name,ext = os.path.splitext(fname)
 	fnameout = name + '.o'
 	
+	#change working directory
+	pwd = os.getcwd()
+	os.chdir('coeffs/')
+	
 	#call ld
-	cmd = 'ld -r -b binary -o coeffs/{:s} coeffs/{:s}'.format(fnameout,fname)
+	cmd = 'ld -r -b binary -o {:s} {:s}'.format(fnameout,fname)
 	os.system(cmd)
+	
+	#return to original directory
+	os.chdir(pwd)
 
 def CreateHeaderFiles(files):
 	'''
@@ -231,8 +238,8 @@ def CreateHeaderFiles(files):
 	lines = []
 	
 	#add the includes
-	s = [ 	'#ifndef __COEFFS_H__\n',
-			'#define __COEFFS_H__\n',
+	s = [ 	'#ifndef __MODELS_H__\n',
+			'#define __MODELS_H__\n',
 			'#include <vector>\n',
 			'#include <string>\n',
 			'#include <map>\n',
