@@ -1,11 +1,22 @@
 #include "internalmodel.h" 
 
+/***********************************************************************
+ * NAME : InternalModel::InternalModel()
+ * 
+ * DESCRIPTION : Initialize the InternalModel object.
+ * 
+ * ********************************************************************/
 InternalModel::InternalModel() {
 
 	init_  = false;
 }
 
-
+/***********************************************************************
+ * NAME : void InternalModel::CheckInit()
+ * 
+ * DESCRIPTION : Check that the object has been initialized.
+ * 
+ * ********************************************************************/
 void InternalModel::CheckInit() {
 	
 	if (!init_) {
@@ -14,6 +25,13 @@ void InternalModel::CheckInit() {
 	}
 }
 
+/***********************************************************************
+ * NAME : void InternalModel::Init()
+ * 
+ * DESCRIPTION : Initialize the InternalModel object by reading the
+ * 				available models and storing their object pointers.
+ * 
+ * ********************************************************************/
 void InternalModel::Init() {	
 	/* load all of the models into a map*/
 	
@@ -42,26 +60,77 @@ InternalModel::~InternalModel() {
 
 }	
 
+/***********************************************************************
+ * NAME : void InternalModel::SetCartIn(CartIn)
+ * 
+ * DESCRIPTION : Set input coordinate system either to Cartesian or 
+ * 				spherical polar.
+ * 
+ * INPUTS :
+ * 		bool	CartIn		If true: input coordinates are Cartesian,
+ * 							if false: input coordinates are polar.
+ * 
+ * ********************************************************************/
 void InternalModel::SetCartIn(bool CartIn) {
 	CheckInit();
 	CartIn_ = CartIn;
 }
 
+/***********************************************************************
+ * NAME : bool InternalModel::GetCartIn(CartIn)
+ * 
+ * DESCRIPTION : Return whether input coordinates are Cartesian or not.
+ * 
+ * OUTPUTS :
+ * 		bool	CartIn		If true: input coordinates are Cartesian,
+ * 							if false: input coordinates are polar.
+ * 
+ * ********************************************************************/
 bool InternalModel::GetCartIn() {
 	CheckInit();
 	return CartIn_;
 }
 
+/***********************************************************************
+ * NAME : void InternalModel::SetCartOut(CartOut)
+ * 
+ * DESCRIPTION : Set output coordinate system either to Cartesian or 
+ * 				spherical polar.
+ * 
+ * INPUTS :
+ * 		bool	CartOut		If true: output coordinates are Cartesian,
+ * 							if false: output coordinates are polar.
+ * 
+ * ********************************************************************/
 void InternalModel::SetCartOut(bool CartOut) {
 	CheckInit();
 	CartOut_ = CartOut;
 }
 
+/***********************************************************************
+ * NAME : bool InternalModel::GetCartOut(CartOut)
+ * 
+ * DESCRIPTION : Return whether output coordinates are Cartesian or not.
+ * 
+ * OUTPUTS :
+ * 		bool	CartOut		If true: output coordinates are Cartesian,
+ * 							if false: output coordinates are polar.
+ * 
+ * ********************************************************************/
 bool InternalModel::GetCartOut() {
 	CheckInit();
 	return CartOut_;
 }
 
+/***********************************************************************
+ * NAME : void InternalModel::SetModel(ModelName)
+ * 
+ * DESCRIPTION : Set the current model to use.
+ * 
+ * INPUTS :
+ * 		const char *ModelName	The name of the model to use.
+ * 
+ * ********************************************************************/
 void InternalModel::SetModel(const char *ModelName) {
 	CheckInit();
 	/* convert the input to a string because I am a n00b*/
@@ -88,11 +157,40 @@ void InternalModel::SetModel(const char *ModelName) {
 	
 }
 
+/***********************************************************************
+ * NAME : void InternalModel::GetModel(ModelName)
+ * 
+ * DESCRIPTION : Get the current model in use.
+ * 
+ * INPUTS :
+ * 		char *ModelName		The name of the model being used.
+ * 
+ * ********************************************************************/
 void InternalModel::GetModel(char *ModelName) {
 	CheckInit();
 	strcpy(ModelName,CurrentModelName_.c_str());
 }
 
+/***********************************************************************
+ * NAME : void InternalModel::Field(n,p0,p1,p2,B0,B1,B2)
+ * 
+ * DESCRIPTION : Calculate the magnetic field.
+ * 
+ * INPUTS : 
+ * 		int		n			Number of elements
+ * 		double	*p0			Radial or x coordinate (planetary radii)
+ * 		double 	*p1			Theta, colatitude (radians) or y (planetary radii)
+ * 		double	*p2			Phi, azimuth (radians) or z (planetary radii)			
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	*B0			Radial or x field component (nT)
+ * 		double 	*B1			Theta or y component (nT)
+ * 		double 	*B2			Phi or z component (nT)
+ * 
+ * 
+ * 
+ * ********************************************************************/
 void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 							double *B0, double *B1, double *B2) {
 	
@@ -143,7 +241,27 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 }
 								
 
-
+/***********************************************************************
+ * NAME : void InternalModel::Field(n,p0,p1,p2,MaxDeg,B0,B1,B2)
+ * 
+ * DESCRIPTION : Calculate the magnetic field.
+ * 
+ * INPUTS : 
+ * 		int		n			Number of elements
+ * 		double	*p0			Radial or x coordinate (planetary radii)
+ * 		double 	*p1			Theta, colatitude (radians) or y (planetary radii)
+ * 		double	*p2			Phi, azimuth (radians) or z (planetary radii)			
+ * 		int		MaxDeg		Maximum degree of the model to use.
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	*B0			Radial or x field component (nT)
+ * 		double 	*B1			Theta or y component (nT)
+ * 		double 	*B2			Phi or z component (nT)
+ * 
+ * 
+ * 
+ * ********************************************************************/
 void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 							int MaxDeg, double *B0, double *B1, double *B2) {
 
@@ -194,6 +312,25 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 								
 }
 
+/***********************************************************************
+ * NAME : void InternalModel::Field(p0,p1,p2,B0,B1,B2)
+ * 
+ * DESCRIPTION : Calculate the magnetic field.
+ * 
+ * INPUTS : 
+ * 		double	p0			Radial or x coordinate (planetary radii)
+ * 		double 	p1			Theta, colatitude (radians) or y (planetary radii)
+ * 		double	p2			Phi, azimuth (radians) or z (planetary radii)			
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	*B0			Radial or x field component (nT)
+ * 		double 	*B1			Theta or y component (nT)
+ * 		double 	*B2			Phi or z component (nT)
+ * 
+ * 
+ * 
+ * ********************************************************************/
 void InternalModel::Field(	double p0, double p1, double p2,
 							double *B0, double *B1, double *B2) {
 
@@ -222,6 +359,26 @@ void InternalModel::Field(	double p0, double p1, double p2,
 	}								
 }
 
+/***********************************************************************
+ * NAME : void InternalModel::Field(p0,p1,p2,MaxDeg,B0,B1,B2)
+ * 
+ * DESCRIPTION : Calculate the magnetic field.
+ * 
+ * INPUTS : 
+ * 		double	p0			Radial or x coordinate (planetary radii)
+ * 		double 	p1			Theta, colatitude (radians) or y (planetary radii)
+ * 		double	p2			Phi, azimuth (radians) or z (planetary radii)			
+ * 		int		MaxDeg		Maximum degree of the model to use.
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	*B0			Radial or x field component (nT)
+ * 		double 	*B1			Theta or y component (nT)
+ * 		double 	*B2			Phi or z component (nT)
+ * 
+ * 
+ * 
+ * ********************************************************************/
 void InternalModel::Field(	double p0, double p1, double p2, int MaxDeg,
 							double *B0, double *B1, double *B2) {
 	
@@ -252,7 +409,26 @@ void InternalModel::Field(	double p0, double p1, double p2, int MaxDeg,
 }
 
 
-
+/***********************************************************************
+ * NAME : void InternalModel::_Cart2Pol(l,x,y,z,r,t,p)
+ * 
+ * DESCRIPTION : Convert Cartesian to polar.
+ * 
+ * INPUTS : 
+ * 		int		l			Number of elements
+ * 		double	x			x 
+ * 		double 	y			y 
+ * 		double	z			z 			
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	*r			Radial component
+ * 		double 	*t			Theta component
+ * 		double 	*p			Phi component 
+ * 
+ * 
+ * 
+ * ********************************************************************/
 void InternalModel::_Cart2Pol(int l, double *x, double *y, double *z,
 						double *r, double *t, double *p) {
 	CheckInit();
@@ -265,6 +441,28 @@ void InternalModel::_Cart2Pol(int l, double *x, double *y, double *z,
 	}
 }
 
+/***********************************************************************
+ * NAME : void InternalModel::_BPol2Cart(l,t,p,Br,Bt,Bp,Bx,By,Bz)
+ * 
+ * DESCRIPTION : Convert polar field to Cartesian.
+ * 
+ * INPUTS : 
+ * 		int		l			Number of elements
+ * 		double	t			t Theta position
+ * 		double 	p			p Phi position
+ * 		double	Br			Radial field 			
+ * 		double	Bt			Theta field 			
+ * 		double	Bp			Phi field 			
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	*Bx			x component
+ * 		double 	*By			y component
+ * 		double 	*Bz			z component 
+ * 
+ * 
+ * 
+ * ********************************************************************/
 void InternalModel::_BPol2BCart(int l, double *t, double *p,
 							double *Br, double *Bt, double *Bp,
 							double *Bx, double *By, double *Bz) {

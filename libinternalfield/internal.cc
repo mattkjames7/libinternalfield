@@ -1,36 +1,15 @@
 #include "internal.h"
 
 
-//Internal::Internal(const char *model) {
-	
-	
-	///* use the model string to determine which model to load */
-	//unsigned char *ptr;
-	//if (strcmp(model,"VIP4") == 0) {
-		///* load the VIP 4 model */
-		//ptr = &_binary_vip4coeffs_bin_start;
-	//} else if (strcmp(model,"JRM09") == 0) {
-		///* load the JRM09 model */
-		//ptr = &_binary_jrm09coeffs_bin_start;
-	//} else {
-		///* default to VIP4 */
-		//ptr = &_binary_vip4coeffs_bin_start;
-	//}
-	
-	
-	
-	///* read the coeffs into the object */
-	//_LoadSchmidt(ptr);
-	
-	///* calcualte Schmidt normalized coefficient grids */
-	//_Schmidt();
-	//_CoeffGrids();
-	
-	///* tell object that it is not a copy */
-	//copy = false;
-	
-//}
-
+/***********************************************************************
+ * NAME : Internal::Internal(ptr)
+ * 
+ * DESCRIPTION : Initialize the Internal object.
+ * 
+ * INPUTS : 
+ * 		unsigned char	*ptr	Pointer to the memory location to read.
+ * 
+ * ********************************************************************/
 Internal::Internal(unsigned char *ptr) {
 	
 	
@@ -76,7 +55,15 @@ Internal::~Internal() {
 }
 
 
-
+/***********************************************************************
+ * NAME : void Internal::_LoadSchmidt(ptr)
+ * 
+ * DESCRIPTION : Read the g/h coefficients from memory.
+ * 
+ * INPUTS : 
+ * 		unsigned char	*ptr	Pointer to the memory location to read.
+ * 
+ * ********************************************************************/
 void Internal::_LoadSchmidt(unsigned char *ptr){
 	
 	/* this is the length of each array */
@@ -158,7 +145,13 @@ void Internal::_LoadSchmidt(unsigned char *ptr){
 	
 }
 
-
+/***********************************************************************
+ * NAME : void Internal::_Schmidt()
+ * 
+ * DESCRIPTION : Calculate the Schmidt coefficients.
+ * 
+ * 
+ * ********************************************************************/
 void Internal::_Schmidt() {
 	
 	/* create nmax_+1*n+1 array full of coefficients */
@@ -190,6 +183,13 @@ void Internal::_Schmidt() {
 	}
 }
 
+/***********************************************************************
+ * NAME : void Internal::_CoeffGrids()
+ * 
+ * DESCRIPTION : Initialize the g/h coefficient grids.
+ * 
+ * 
+ * ********************************************************************/
 void Internal::_CoeffGrids() {
 	
 	/* create the grids for g and h */
@@ -218,6 +218,24 @@ void Internal::_CoeffGrids() {
 	
 }
 
+
+/***********************************************************************
+ * NAME : void Internal::_Legendre(l,costheta,sintheta,nmax,Pnm,dPnm)
+ * 
+ * DESCRIPTION : Calculate the Legendre polynomials.
+ * 
+ * INPUTS : 
+ * 		int		l			Number of elements
+ * 		double	*costheta	Cosine of colatitude.
+ * 		double	*sintheta	Sine of colatitude.
+ * 		int		nmax		Maximum degree of the model
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	***Pnm			Polynomials
+ * 		double 	***dPnm			Polynomial derivatives
+ * 
+ * ********************************************************************/
 void Internal::_Legendre(int l, double *costheta, double *sintheta, 
 						int nmax, double ***Pnm, double ***dPnm) {
 	
@@ -261,6 +279,28 @@ void Internal::_Legendre(int l, double *costheta, double *sintheta,
 	
 }
 
+
+/***********************************************************************
+ * NAME : void Internal::_SphHarm(l,r,t,p,MaxDeg,Br,Bt,Bp)
+ * 
+ * DESCRIPTION : Calculate the magnetic field using spherical harmonics.
+ * 
+ * INPUTS : 
+ * 		int		l			Number of elements
+ * 		double	*r			Radial coordinate (planetary radii)
+ * 		double 	*t			Theta, colatitude (radians)
+ * 		double	*p			Phi, azimuth (radians)			
+ * 		int		MaxDeg		Maximum degree of the model to use.
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	*Br			Radial field component (nT)
+ * 		double 	*Bt			Theta component (nT)
+ * 		double 	*Bp			Phi component (nT)
+ * 
+ * 
+ * 
+ * ********************************************************************/
 /* try making a scalar version of this to remove new/delete allocation*/
 void Internal::_SphHarm(int l, double *r, double *t, double *p,
 					int MaxDeg, double *Br, double *Bt, double *Bp) {
@@ -399,6 +439,26 @@ void Internal::_SphHarm(int l, double *r, double *t, double *p,
 }
 
 
+/***********************************************************************
+ * NAME : void Internal::Field(l,r,t,p,Br,Bt,Bp)
+ * 
+ * DESCRIPTION : Calculate the magnetic field.
+ * 
+ * INPUTS : 
+ * 		int		l			Number of elements
+ * 		double	*r			Radial coordinate (planetary radii)
+ * 		double 	*t			Theta, colatitude (radians)
+ * 		double	*p			Phi, azimuth (radians)			
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	*Br			Radial field component (nT)
+ * 		double 	*Bt			Theta component (nT)
+ * 		double 	*Bp			Phi component (nT)
+ * 
+ * 
+ * 
+ * ********************************************************************/
 void Internal::Field(int l, double *r, double *t, double *p,
 						double *Br, double *Bt, double *Bp) {
 	
@@ -408,6 +468,27 @@ void Internal::Field(int l, double *r, double *t, double *p,
 	
 }
 
+/***********************************************************************
+ * NAME : void Internal::Field(l,r,t,p,MaxDeg,Br,Bt,Bp)
+ * 
+ * DESCRIPTION : Calculate the magnetic field.
+ * 
+ * INPUTS : 
+ * 		int		l			Number of elements
+ * 		double	*r			Radial coordinate (planetary radii)
+ * 		double 	*t			Theta, colatitude (radians)
+ * 		double	*p			Phi, azimuth (radians)			
+ * 		int		MaxDeg		Maximum degree of the model to use.
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	*Br			Radial field component (nT)
+ * 		double 	*Bt			Theta component (nT)
+ * 		double 	*Bp			Phi component (nT)
+ * 
+ * 
+ * 
+ * ********************************************************************/
 void Internal::Field(int l, double *r, double *t, double *p,
 					int MaxDeg, double *Br, double *Bt, double *Bp) {
 	
@@ -418,6 +499,25 @@ void Internal::Field(int l, double *r, double *t, double *p,
 
 }
 
+/***********************************************************************
+ * NAME : void Internal::Field(r,t,p,Br,Bt,Bp)
+ * 
+ * DESCRIPTION : Calculate the magnetic field.
+ * 
+ * INPUTS : 
+ * 		double	r			Radial coordinate (planetary radii)
+ * 		double 	t			Theta, colatitude (radians)
+ * 		double	p			Phi, azimuth (radians)			
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	Br			Radial field component (nT)
+ * 		double 	Bt			Theta component (nT)
+ * 		double 	Bp			Phi component (nT)
+ * 
+ * 
+ * 
+ * ********************************************************************/
 void Internal::Field(	double r, double t, double p,
 						double *Br, double *Bt, double *Bp) {
 	
@@ -427,6 +527,27 @@ void Internal::Field(	double r, double t, double p,
 
 }
 
+
+/***********************************************************************
+ * NAME : void Internal::Field(r,t,p,MaxDeg,Br,Bt,Bp)
+ * 
+ * DESCRIPTION : Calculate the magnetic field.
+ * 
+ * INPUTS : 
+ * 		double	r			Radial coordinate (planetary radii)
+ * 		double 	t			Theta, colatitude (radians)
+ * 		double	p			Phi, azimuth (radians)			
+ * 		int		MaxDeg		Maximum degree of the model to use.
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	Br			Radial field component (nT)
+ * 		double 	Bt			Theta component (nT)
+ * 		double 	Bp			Phi component (nT)
+ * 
+ * 
+ * 
+ * ********************************************************************/
 void Internal::Field(	double r, double t, double p, int MaxDeg,
 						double *Br, double *Bt, double *Bp) {
 	
