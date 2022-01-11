@@ -18,7 +18,7 @@ void InternalFieldDeg(int n, double *p0, double *p1, double *p2,
 				
 }
 
-void SetInternalCFG(char *Model, bool CartIn, bool CartOut) {
+void SetInternalCFG(const char *Model, bool CartIn, bool CartOut) {
 	internalModel.SetCartIn(CartIn);
 	internalModel.SetCartOut(CartOut);
 	internalModel.SetModel(Model);
