@@ -10,7 +10,7 @@ all: obj lib test
 obj:
 	#this bit converts the internale field model coefficients into 
 	#something addressable within the library
-	python3 EncodeCoefficients.py
+	python3 CodeGen.py
 	$(CCo) coeffs.cc -o coeffs.o
 	$(CCo) models.cc -o models.o
 	$(CCo) internal.cc -o internal.o 

@@ -43,6 +43,7 @@ map<string,Internal*> modelPtrMap = {	{"ness1975",&ness1975},
 										{"vipal",&vipal}
 };
 
+
 Internal* getModelObjPointer(string Model) {
 	return modelPtrMap[Model];
 }
@@ -53,5 +54,134 @@ Internal* getModelObjPointer(const char *Model) {
 
 vector<string> listAvailableModels() {
 	return listMapKeys(modelPtrMap);
+}
+
+/* map of strings to direct field model function pointers */
+map<string,modelFieldPtr> modelFieldPtrMap = {	{"ness1975",&ness1975Field},
+													{"o6",&o6Field},
+													{"sha",&shaField},
+													{"gsfc15evs",&gsfc15evsField},
+													{"vip4",&vip4Field},
+													{"p11a",&p11aField},
+													{"o4",&o4Field},
+													{"gsfc15ev",&gsfc15evField},
+													{"gsfc13ev",&gsfc13evField},
+													{"isaac",&isaacField},
+													{"jrm09",&jrm09Field},
+													{"jpl15evs",&jpl15evsField},
+													{"jpl15ev",&jpl15evField},
+													{"vit4",&vit4Field},
+													{"langlais2019",&langlais2019Field},
+													{"v117ev",&v117evField},
+													{"jrm33",&jrm33Field},
+													{"u17ev",&u17evField},
+													{"vipal",&vipalField}
+};
+
+
+/* function to return pointer to model field function */
+modelFieldPtr getModelFieldPtr(string Model) {
+    return modelFieldPtrMap[Model];
+}
+
+modelFieldPtr getModelFieldPtr(const char *Model) {
+    return modelFieldPtrMap[Model];
+}
+
+/* functions to directly call each model for a single Cartesian vector (this will be used for tracing) */
+
+void ness1975Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	ness1975.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void o6Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	o6.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void shaField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	sha.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void gsfc15evsField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	gsfc15evs.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void vip4Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	vip4.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void p11aField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	p11a.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void o4Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	o4.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void gsfc15evField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	gsfc15ev.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void gsfc13evField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	gsfc13ev.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void isaacField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	isaac.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void jrm09Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	jrm09.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void jpl15evsField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	jpl15evs.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void jpl15evField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	jpl15ev.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void vit4Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	vit4.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void langlais2019Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	langlais2019.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void v117evField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	v117ev.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void jrm33Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	jrm33.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void u17evField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	u17ev.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void vipalField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	vipal.FieldCart(x,y,z,Bx,By,Bz);
 }
 

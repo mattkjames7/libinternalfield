@@ -1,0 +1,20 @@
+
+/* map the model names to their model object pointers */
+extern map<string,Internal*> modelPtrMap;
+
+/* this function will return the pointer to a model object given a string */
+Internal* getModelObjPointer(string Model);
+Internal* getModelObjPointer(const char *Model);
+
+/* a function to return a list of the models available */
+vector<string> listAvailableModels();
+
+/* map of strings to direct field model function pointers */
+typedef void (*modelFieldPtr)(double,double,double,double*,double*,double*);
+extern map<string,modelFieldPtr> modelFieldPtrMap;
+
+/* function to return pointer to model field function */
+modelFieldPtr getModelFieldPtr(string Model);
+modelFieldPtr getModelFieldPtr(const char *Model);
+
+/* functions to directly call each model for a single Cartesian vector (this will be used for tracing) */

@@ -1,0 +1,11 @@
+#ifndef __MODELS_H__
+#define __MODELS_H__
+#include <vector>
+#include <string>
+#include <map>
+#include "internal.h"
+#include "coeffs.h"
+#include "listmapkeys.h"
+#endif
+
+/* models! */

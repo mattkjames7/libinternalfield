@@ -556,3 +556,144 @@ void Internal::Field(	double r, double t, double p, int MaxDeg,
 	_SphHarm(1,&r,&t,&p,MaxDeg,Br,Bt,Bp);
 
 }
+
+
+/***********************************************************************
+ * NAME : void Internal::FieldCart(x,y,z,Bx,By,Bz)
+ * 
+ * DESCRIPTION : Calculate the magnetic field.
+ * 
+ * INPUTS : 
+ * 		double	x			x coordinate (planetary radii)
+ * 		double 	y			y coordinate (planetary radii)
+ * 		double	z			z coordinate (planetary radii)			
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	Bx			x field component (nT)
+ * 		double 	By			y field component (nT)
+ * 		double 	Bz			z field component (nT)
+ * 
+ * 
+ * 
+ * ********************************************************************/
+void Internal::FieldCart(	double x, double y, double z,
+							double *Bx, double *By, double *Bz) {
+	
+	/* convert to polar */
+	double r, t, p, Br, Bt, Bp;
+	_Cart2Pol(x,y,z,&r,&t,&p);
+
+	/* call the model */
+	_SphHarm(1,&r,&t,&p,nmax_,&Br,&Bt,&Bp);
+
+	/* convert B to Cartesian */
+	_BPol2BCart(t,p,Br,Bt,Bp,Bx,By,Bz);
+}
+
+
+
+/***********************************************************************
+ * NAME : void Internal::FieldCart(x,y,z,MaxDeg,Bx,By,Bz)
+ * 
+ * DESCRIPTION : Calculate the magnetic field.
+ * 
+ * INPUTS : 
+ * 		double	x			x coordinate (planetary radii)
+ * 		double 	y			y coordinate (planetary radii)
+ * 		double	z			z coordinate (planetary radii)			
+ * 		int		MaxDeg		Maximum degree of the model to use.
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	Bx			x field component (nT)
+ * 		double 	By			y field component (nT)
+ * 		double 	Bz			z field component (nT)
+ * 
+ * 
+ * 
+ * ********************************************************************/
+void Internal::FieldCart(	double x, double y, double z, int MaxDeg,
+							double *Bx, double *By, double *Bz) {
+	
+	/* convert to polar */
+	double r, t, p, Br, Bt, Bp;
+	_Cart2Pol(x,y,z,&r,&t,&p);
+
+	/* call the model */
+	_SphHarm(1,&r,&t,&p,MaxDeg,&Br,&Bt,&Bp);
+
+	/* convert B to Cartesian */
+	_BPol2BCart(t,p,Br,Bt,Bp,Bx,By,Bz);
+}
+
+
+
+
+
+
+/***********************************************************************
+ * NAME : void Internal::_Cart2Pol(x,y,z,r,t,p)
+ * 
+ * DESCRIPTION : Convert Cartesian to polar.
+ * 
+ * INPUTS : 
+ * 		int		l			Number of elements
+ * 		double	x			x 
+ * 		double 	y			y 
+ * 		double	z			z 			
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	*r			Radial component
+ * 		double 	*t			Theta component
+ * 		double 	*p			Phi component 
+ * 
+ * 
+ * 
+ * ********************************************************************/
+void Internal::_Cart2Pol(	double x, double y, double z,
+							double *r, double *t, double *p) {
+	double pi2 = M_PI*2;
+	r[0] = sqrt(x*x + y*y + z*z);
+	t[0] = acos(z/r[0]);
+	p[0] = fmod(atan2(y,x) + pi2,pi2);
+	
+}
+
+/***********************************************************************
+ * NAME : void Internal::_BPol2Cart(t,p,Br,Bt,Bp,Bx,By,Bz)
+ * 
+ * DESCRIPTION : Convert polar field to Cartesian.
+ * 
+ * INPUTS : 
+ * 		double	t			t Theta position
+ * 		double 	p			p Phi position
+ * 		double	Br			Radial field 			
+ * 		double	Bt			Theta field 			
+ * 		double	Bp			Phi field 			
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	*Bx			x component
+ * 		double 	*By			y component
+ * 		double 	*Bz			z component 
+ * 
+ * 
+ * 
+ * ********************************************************************/
+void Internal::_BPol2BCart(	double t, double p,
+							double Br, double Bt, double Bp,
+							double *Bx, double *By, double *Bz) {
+
+	double cost, cosp, sint ,sinp;
+	cost = cos(t);
+	cosp = cos(p);
+	sint = sin(t);
+	sinp = sin(p);
+	Bx[0] = Br*sint*cosp + Bt*cost*cosp - Bp*sinp;
+	By[0] = Br*sint*sinp + Bt*cost*sinp + Bp*cosp;
+	Bz[0] = Br*cost - Bt*sint;
+	
+								
+}

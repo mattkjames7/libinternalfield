@@ -1,0 +1,14 @@
+
+Internal* getModelObjPointer(string Model) {
+	return modelPtrMap[Model];
+}
+
+Internal* getModelObjPointer(const char *Model) {
+	return modelPtrMap[Model];
+}
+
+vector<string> listAvailableModels() {
+	return listMapKeys(modelPtrMap);
+}
+
+/* map of strings to direct field model function pointers */

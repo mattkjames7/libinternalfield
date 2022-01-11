@@ -1,0 +1,12 @@
+
+/* function to return pointer to model field function */
+modelFieldPtr getModelFieldPtr(string Model) {
+    return modelFieldPtrMap[Model];
+}
+
+modelFieldPtr getModelFieldPtr(const char *Model) {
+    return modelFieldPtrMap[Model];
+}
+
+/* functions to directly call each model for a single Cartesian vector (this will be used for tracing) */
+

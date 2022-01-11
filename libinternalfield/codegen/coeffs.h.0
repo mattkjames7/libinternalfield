@@ -1,0 +1,15 @@
+#ifndef __COEFFS_H__
+#define __COEFFS_H__
+#include <vector>
+#include <string>
+#include <map>
+#endif
+
+using std::string;
+using std::vector;
+using std::map;
+
+/* list of model names */
+extern vector<string> modelNames;
+
+/* pointers to the memory where coefficients are stored */

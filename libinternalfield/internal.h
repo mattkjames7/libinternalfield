@@ -23,12 +23,16 @@ class Internal {
 		Internal(const Internal&);
 		~Internal();
 	
-		/*these two functions will calculate the field in Cartesian RH 
-		 * system III coordinates.*/
+		/*these four functions will calculate the field in spherical
+		 * polar RH system III coordinates.*/
 		void Field(int,double*,double*,double*,double*,double*,double*);
 		void Field(int,double*,double*,double*,int,double*,double*,double*);
 		void Field(double,double,double,double*,double*,double*);
 		void Field(double,double,double,int,double*,double*,double*);
+		
+		/* these will be Cartesian */
+		void FieldCart(double,double,double,double*,double*,double*);
+		void FieldCart(double,double,double,int,double*,double*,double*);
 
 		
 	private:
@@ -54,7 +58,9 @@ class Internal {
 		 * spherical polar coordinates */
 		void _SphHarm(int,double*,double*,double*,int,double*,double*,double*);
 		
-
+		
+		void _Cart2Pol(double,double,double,double*,double*,double*);
+		void _BPol2BCart(double,double,double,double,double,double*,double*,double*);
 		
 		bool copy;
 	

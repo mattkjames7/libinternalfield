@@ -1,0 +1,9 @@
+
+/* map the model names to their pointers */
+extern map<string,unsigned char*> modelMap;
+
+/* this function will return the pointer to a model given a string */
+unsigned char* getModelCoeffPointer(string Model);
+unsigned char* getModelCoeffPointer(const char *Model);
+
+

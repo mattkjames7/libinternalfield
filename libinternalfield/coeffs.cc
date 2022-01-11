@@ -21,6 +21,7 @@ vector<string> modelNames = {	"ness1975",
 								"u17ev",
 								"vipal"};
 
+
 /* map the model names to their pointers */
 map<string,unsigned char*> modelMap = {	{"ness1975",&_binary_ness1975_bin_start},
 										{"o6",&_binary_o6_bin_start},
@@ -43,10 +44,13 @@ map<string,unsigned char*> modelMap = {	{"ness1975",&_binary_ness1975_bin_start}
 										{"vipal",&_binary_vipal_bin_start}
 };
 
+
 unsigned char* GetModelCoeffPointer(string Model) {
 	return modelMap[Model];
 }
 
-unsigned char* GetModelCoeffPointer(const char *Model) {	return modelMap[Model];
+unsigned char* GetModelCoeffPointer(const char *Model) {	
+	return modelMap[Model];
 }
+
 
