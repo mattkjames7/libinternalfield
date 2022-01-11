@@ -5,12 +5,8 @@
 #include <map>
 #endif
 
-using std::string;
-using std::vector;
-using std::map;
-
 /* list of model names */
-extern vector<string> modelNames;
+extern std::vector<std::string> modelNames;
 
 /* pointers to the memory where coefficients are stored */
 extern unsigned char _binary_ness1975_bin_start;
@@ -35,10 +31,38 @@ extern unsigned char _binary_vipal_bin_start;
 
 
 /* map the model names to their pointers */
-extern map<string,unsigned char*> modelMap;
+extern std::map<std::string,unsigned char*> modelMap;
 
-/* this function will return the pointer to a model given a string */
-unsigned char* getModelCoeffPointer(string Model);
+/* fucntions to return the pointer to a model given a string/const char */
+
+/***********************************************************************
+ * NAME : getModelCoeffPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to the memory address
+ *			where the model coefficients are stored.
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		unsigned char *ptr	Pointer to model data.
+ *
+ **********************************************************************/
+unsigned char* getModelCoeffPointer(std::string Model);
+
+/***********************************************************************
+ * NAME : getModelCoeffPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to the memory address
+ *			where the model coefficients are stored.
+ *		
+ * INPUTS : 
+ *		const char *Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		unsigned char *ptr	Pointer to model data.
+ *
+ **********************************************************************/
 unsigned char* getModelCoeffPointer(const char *Model);
 
 

@@ -1,7 +1,7 @@
 #include "coeffs.h"
 
 /* list of model names */
-vector<string> modelNames = {	"ness1975",
+std::vector<std::string> modelNames = {	"ness1975",
 								"o6",
 								"sha",
 								"gsfc15evs",
@@ -23,7 +23,7 @@ vector<string> modelNames = {	"ness1975",
 
 
 /* map the model names to their pointers */
-map<string,unsigned char*> modelMap = {	{"ness1975",&_binary_ness1975_bin_start},
+std::map<std::string,unsigned char*> modelMap = {	{"ness1975",&_binary_ness1975_bin_start},
 										{"o6",&_binary_o6_bin_start},
 										{"sha",&_binary_sha_bin_start},
 										{"gsfc15evs",&_binary_gsfc15evs_bin_start},
@@ -45,10 +45,36 @@ map<string,unsigned char*> modelMap = {	{"ness1975",&_binary_ness1975_bin_start}
 };
 
 
-unsigned char* GetModelCoeffPointer(string Model) {
+/***********************************************************************
+ * NAME : getModelCoeffPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to the memory address
+ *			where the model coefficients are stored.
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		unsigned char *ptr	Pointer to model data.
+ *
+ **********************************************************************/
+unsigned char* GetModelCoeffPointer(std::string Model) {
 	return modelMap[Model];
 }
 
+/***********************************************************************
+ * NAME : getModelCoeffPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to the memory address
+ *			where the model coefficients are stored.
+ *		
+ * INPUTS : 
+ *		const char *Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		unsigned char *ptr	Pointer to model data.
+ *
+ **********************************************************************/
 unsigned char* GetModelCoeffPointer(const char *Model) {	
 	return modelMap[Model];
 }

@@ -5,11 +5,7 @@
 #include <map>
 #endif
 
-using std::string;
-using std::vector;
-using std::map;
-
 /* list of model names */
-extern vector<string> modelNames;
+extern std::vector<std::string> modelNames;
 
 /* pointers to the memory where coefficients are stored */

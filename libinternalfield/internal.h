@@ -6,7 +6,6 @@
 #include <string.h>
 
 
-using namespace std;
 
 /* This structure will store the Schmidt coefficients */
 struct schmidtcoeffs {
@@ -16,9 +15,18 @@ struct schmidtcoeffs {
 	double h;
 };
 
+
+/***********************************************************************
+ * NAME : class Internal
+ * 
+ * DESCRIPTION : 
+ * 		Class which will store the g and h spherical harmonic 
+ * 		coefficients for a given model. To obtain the magnetic field,
+ * 		use the Field() and FieldCart() member functions.
+ * 
+ * ********************************************************************/
 class Internal {
 	public:
-		Internal(const char*);
 		Internal(unsigned char *);
 		Internal(const Internal&);
 		~Internal();
@@ -57,7 +65,7 @@ class Internal {
 		/* this function will calculate the magnetic field components in
 		 * spherical polar coordinates */
 		void _SphHarm(int,double*,double*,double*,int,double*,double*,double*);
-		
+		/* could do with writing a scalar version of this for extra speed */
 		
 		void _Cart2Pol(double,double,double,double*,double*,double*);
 		void _BPol2BCart(double,double,double,double,double,double*,double*,double*);

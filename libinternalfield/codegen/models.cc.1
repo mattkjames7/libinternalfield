@@ -1,13 +1,46 @@
 
-Internal* getModelObjPointer(string Model) {
+/***********************************************************************
+ * NAME : getModelObjPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to a model object.
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		Internal *ptr		Pointer to model object.
+ *
+ **********************************************************************/
+Internal* getModelObjPointer(std::string Model) {
 	return modelPtrMap[Model];
 }
 
+/***********************************************************************
+ * NAME : getModelObjPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to a model object.
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		Internal *ptr		Pointer to model object.
+ *
+ **********************************************************************/
 Internal* getModelObjPointer(const char *Model) {
 	return modelPtrMap[Model];
 }
 
-vector<string> listAvailableModels() {
+/***********************************************************************
+ * NAME : listAvailableModels()
+ *
+ * DESCRIPTION : Function to return a list of model names available.
+ *		
+ * RETURNS :
+ *		vector<string> Models	Model list.
+ *
+ **********************************************************************/
+std::vector<std::string> listAvailableModels() {
 	return listMapKeys(modelPtrMap);
 }
 

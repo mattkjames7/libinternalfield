@@ -31,24 +31,107 @@ extern Internal vipal;
 
 
 /* map the model names to their model object pointers */
-extern map<string,Internal*> modelPtrMap;
+extern std::map<std::string,Internal*> modelPtrMap;
 
-/* this function will return the pointer to a model object given a string */
-Internal* getModelObjPointer(string Model);
+/* functions to return the pointer to a model object given a string */
+
+/***********************************************************************
+ * NAME : getModelObjPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to a model object.
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		Internal *ptr		Pointer to model object.
+ *
+ **********************************************************************/
+Internal* getModelObjPointer(std::string Model);
+
+/***********************************************************************
+ * NAME : getModelObjPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to a model object.
+ *		
+ * INPUTS : 
+ *		const char *Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		Internal *ptr		Pointer to model object.
+ *
+ **********************************************************************/
 Internal* getModelObjPointer(const char *Model);
 
 /* a function to return a list of the models available */
-vector<string> listAvailableModels();
+/***********************************************************************
+ * NAME : listAvailableModels()
+ *
+ * DESCRIPTION : Function to return a list of model names available.
+ *		
+ * RETURNS :
+ *		vector<string> Models	Model list.
+ *
+ **********************************************************************/
+std::vector<std::string> listAvailableModels();
 
 /* map of strings to direct field model function pointers */
 typedef void (*modelFieldPtr)(double,double,double,double*,double*,double*);
-extern map<string,modelFieldPtr> modelFieldPtrMap;
+extern std::map<std::string,modelFieldPtr> modelFieldPtrMap;
 
-/* function to return pointer to model field function */
-modelFieldPtr getModelFieldPtr(string Model);
+/* functions to return pointer to model field function */
+
+/***********************************************************************
+ * NAME : getModelFieldPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to a wrapper function
+ * 			which will provide a single field vector at a single 
+ * 			position.
+ *		
+ * INPUTS : 
+ *		std::string Model		Model name (use lower case!).
+ *
+ * RETURNS :
+ *		modelFieldPtr *ptr		Pointer to model wrapper.
+ *
+ **********************************************************************/
+modelFieldPtr getModelFieldPtr(std::string Model);
+
+/***********************************************************************
+ * NAME : getModelFieldPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to a wrapper function
+ * 			which will provide a single field vector at a single 
+ * 			position.
+ *		
+ * INPUTS : 
+ *		const char *Model		Model name (use lower case!).
+ *
+ * RETURNS :
+ *		modelFieldPtr *ptr		Pointer to model wrapper.
+ *
+ **********************************************************************/
 modelFieldPtr getModelFieldPtr(const char *Model);
 
 /* functions to directly call each model for a single Cartesian vector (this will be used for tracing) */
+
+/***********************************************************************
+ * NAME : XXXXXField(x,y,z,Bx,By,Bz)
+ *
+ * DESCRIPTION : Model wrapper functions which can be passed to the 
+ * 			tracing code. Replace XXXXXX with the name of the model...
+ *		
+ * INPUTS : 
+ *		double	x			x coordinate in planetary radii.
+ *		double	y			y coordinate in planetary radii.
+ *		double	z			z coordinate in planetary radii.
+ *
+ * OUTPUTS :
+ *		double	*Bx			x component of the field (nT).
+ *		double	*By			y component of the field (nT).
+ *		double	*Bz			z component of the field (nT).
+ * 
+ **********************************************************************/
 void ness1975Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void o6Field(double x, double y, double z,

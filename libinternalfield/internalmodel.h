@@ -9,6 +9,13 @@
 #include "models.h"
 #include "internal.h"
 
+/***********************************************************************
+ * NAME : class InternalModel
+ * 
+ * DESCRIPTION : 
+ * 		Class which can access all instances of Internal objects.
+ * 
+ * ********************************************************************/
 class InternalModel {
 	
 	public:
@@ -37,12 +44,12 @@ class InternalModel {
 		void Field(double,double,double,double*,double*,double*);
 				
 		/* these objects are the models to use */
-		map<string,Internal*> Models_;
-		vector<string> ModelNames_;
+		std::map<std::string,Internal*> Models_;
+		std::vector<std::string> ModelNames_;
 
 	private:
 		Internal *CurrentModel_;
-		string CurrentModelName_;
+		std::string CurrentModelName_;
 
 
 		/* coordinate/field vector rotation */

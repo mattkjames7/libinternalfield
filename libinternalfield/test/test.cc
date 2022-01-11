@@ -4,11 +4,11 @@
 int main() {
 
 	/* some input coordinates to test a few models with */
-	array<double,16> r = {3,3,3,3, 3,3,3,3, 3,3,3,3, 3,3,3,3};
-	array<double,16> tdeg = {10,10,10,10,55,55,55,55,90,90,90,90,130,130,130,130};
-	array<double,16> pdeg = {0,27,180,340, 0,27,180,340, 0,27,180,340, 0,27,180,340};
-	array<double,16> t;
-	array<double,16> p;
+	std::array<double,16> r = {3,3,3,3, 3,3,3,3, 3,3,3,3, 3,3,3,3};
+	std::array<double,16> tdeg = {10,10,10,10,55,55,55,55,90,90,90,90,130,130,130,130};
+	std::array<double,16> pdeg = {0,27,180,340, 0,27,180,340, 0,27,180,340, 0,27,180,340};
+	std::array<double,16> t;
+	std::array<double,16> p;
 
 
 	/* convert to radians */
@@ -20,9 +20,9 @@ int main() {
 	}
 	
 	/*output arrays */
-	array<double,16> Br;
-	array<double,16> Bt;
-	array<double,16> Bp;
+	std::array<double,16> Br;
+	std::array<double,16> Bt;
+	std::array<double,16> Bp;
 	
 
 	

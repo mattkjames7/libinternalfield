@@ -1,12 +1,58 @@
 
 /* function to return pointer to model field function */
-modelFieldPtr getModelFieldPtr(string Model) {
+
+/***********************************************************************
+ * NAME : getModelFieldPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to a wrapper function
+ * 			which will provide a single field vector at a single 
+ * 			position.
+ *		
+ * INPUTS : 
+ *		std::string Model		Model name (use lower case!).
+ *
+ * RETURNS :
+ *		modelFieldPtr *ptr		Pointer to model wrapper.
+ *
+ *******************************************************************
+modelFieldPtr getModelFieldPtr(std::string Model) {
     return modelFieldPtrMap[Model];
 }
 
+/***********************************************************************
+ * NAME : getModelFieldPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to a wrapper function
+ * 			which will provide a single field vector at a single 
+ * 			position.
+ *		
+ * INPUTS : 
+ *		const char *Model		Model name (use lower case!).
+ *
+ * RETURNS :
+ *		modelFieldPtr *ptr		Pointer to model wrapper.
+ *
+ **********************************************************************/
 modelFieldPtr getModelFieldPtr(const char *Model) {
     return modelFieldPtrMap[Model];
 }
 
 /* functions to directly call each model for a single Cartesian vector (this will be used for tracing) */
 
+/***********************************************************************
+ * NAME : XXXXXField(x,y,z,Bx,By,Bz)
+ *
+ * DESCRIPTION : Model wrapper functions which can be passed to the 
+ * 			tracing code. Replace XXXXXX with the name of the model...
+ *		
+ * INPUTS : 
+ *		double	x			x coordinate in planetary radii.
+ *		double	y			y coordinate in planetary radii.
+ *		double	z			z coordinate in planetary radii.
+ *
+ * OUTPUTS :
+ *		double	*Bx			x component of the field (nT).
+ *		double	*By			y component of the field (nT).
+ *		double	*Bz			z component of the field (nT).
+ * 
+ **********************************************************************/

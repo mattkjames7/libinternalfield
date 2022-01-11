@@ -212,13 +212,13 @@ def GenerateCoeffsCC(models,modelsl):
 
 	#list of model names
 	s = '{\t"' + '",\n\t\t\t\t\t\t\t\t"'.join(modelsl)+'"};\n\n'
-	lines.append('vector<string> modelNames = '+s)
+	lines.append('std::vector<std::string> modelNames = '+s)
 		
 	#add some existing code
 	lines += code1
 
 	#define the map
-	s = 'map<string,unsigned char*> modelMap = {\t'
+	s = 'std::map<std::string,unsigned char*> modelMap = {\t'
 	for i,(m,ml) in enumerate(zip(models,modelsl)):
 		if i > 0:
 			s += '\t\t\t\t\t\t\t\t\t\t'
@@ -292,7 +292,7 @@ def GenerateModelsCC(models,modelsl):
 
 	#add another map from model name to model pointer
 	lines.append('/* map the model names to their model object pointers */\n')
-	s = 'map<string,Internal*> modelPtrMap = {\t'
+	s = 'std::map<std::string,Internal*> modelPtrMap = {\t'
 	for i,ml in enumerate(modelsl):
 		if i > 0:
 			s += '\t\t\t\t\t\t\t\t\t\t'
@@ -308,7 +308,7 @@ def GenerateModelsCC(models,modelsl):
 	lines += code1
 	
 	#add another map from model name to model field function pointer
-	s = 'map<string,modelFieldPtr> modelFieldPtrMap = {\t'
+	s = 'std::map<std::string,modelFieldPtr> modelFieldPtrMap = {\t'
 	for i,ml in enumerate(modelsl):
 		if i > 0:
 			s += '\t\t\t\t\t\t\t\t\t\t\t\t\t'
@@ -335,6 +335,30 @@ def GenerateModelsCC(models,modelsl):
 
 	#write to file
 	WriteASCII('models.cc',lines)
+	
+def GenerateLibHeader():
+	'''
+	Generate a library header to be included when linking to 
+	libinternalfield.so
+	
+	'''
+	
+	#read in the template code
+	code = ReadASCII('codegen/libinternalfield.h.0')
+	
+	#read in the other headers
+	headers = ['coeffs.h','models.h','listmapkeys.h','internal.h',
+				'internalmodel.h','libinternal.h']
+	for h in headers:
+		lines = ReadASCII(h)
+		for l in lines:
+			if not l[0] == '#':
+				code.append(l)
+	code.append('#endif')			
+	
+	#save it
+	WriteASCII('../libinternalfield.h',code)
+	
 	
 
 if __name__ == "__main__":
@@ -371,3 +395,4 @@ if __name__ == "__main__":
 	GenerateCoeffsCC(models,modelsl)
 	GenerateModelsH(models,modelsl)
 	GenerateModelsCC(models,modelsl)
+	GenerateLibHeader()

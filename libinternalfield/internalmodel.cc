@@ -134,7 +134,7 @@ bool InternalModel::GetCartOut() {
 void InternalModel::SetModel(const char *ModelName) {
 	CheckInit();
 	/* convert the input to a string because I am a n00b*/
-	string ModelIn = ModelName;
+	std::string ModelIn = ModelName;
 	
 	/* loop through list of models and check if it's in there*/
 	bool validmodel = false;

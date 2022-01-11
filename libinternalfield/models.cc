@@ -22,7 +22,7 @@ Internal u17ev(&_binary_u17ev_bin_start);
 Internal vipal(&_binary_vipal_bin_start);
 
 /* map the model names to their model object pointers */
-map<string,Internal*> modelPtrMap = {	{"ness1975",&ness1975},
+std::map<std::string,Internal*> modelPtrMap = {	{"ness1975",&ness1975},
 										{"o6",&o6},
 										{"sha",&sha},
 										{"gsfc15evs",&gsfc15evs},
@@ -44,20 +44,53 @@ map<string,Internal*> modelPtrMap = {	{"ness1975",&ness1975},
 };
 
 
-Internal* getModelObjPointer(string Model) {
+/***********************************************************************
+ * NAME : getModelObjPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to a model object.
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		Internal *ptr		Pointer to model object.
+ *
+ **********************************************************************/
+Internal* getModelObjPointer(std::string Model) {
 	return modelPtrMap[Model];
 }
 
+/***********************************************************************
+ * NAME : getModelObjPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to a model object.
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		Internal *ptr		Pointer to model object.
+ *
+ **********************************************************************/
 Internal* getModelObjPointer(const char *Model) {
 	return modelPtrMap[Model];
 }
 
-vector<string> listAvailableModels() {
+/***********************************************************************
+ * NAME : listAvailableModels()
+ *
+ * DESCRIPTION : Function to return a list of model names available.
+ *		
+ * RETURNS :
+ *		vector<string> Models	Model list.
+ *
+ **********************************************************************/
+std::vector<std::string> listAvailableModels() {
 	return listMapKeys(modelPtrMap);
 }
 
 /* map of strings to direct field model function pointers */
-map<string,modelFieldPtr> modelFieldPtrMap = {	{"ness1975",&ness1975Field},
+std::map<std::string,modelFieldPtr> modelFieldPtrMap = {	{"ness1975",&ness1975Field},
 													{"o6",&o6Field},
 													{"sha",&shaField},
 													{"gsfc15evs",&gsfc15evsField},
@@ -80,16 +113,62 @@ map<string,modelFieldPtr> modelFieldPtrMap = {	{"ness1975",&ness1975Field},
 
 
 /* function to return pointer to model field function */
-modelFieldPtr getModelFieldPtr(string Model) {
+
+/***********************************************************************
+ * NAME : getModelFieldPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to a wrapper function
+ * 			which will provide a single field vector at a single 
+ * 			position.
+ *		
+ * INPUTS : 
+ *		std::string Model		Model name (use lower case!).
+ *
+ * RETURNS :
+ *		modelFieldPtr *ptr		Pointer to model wrapper.
+ *
+ *******************************************************************
+modelFieldPtr getModelFieldPtr(std::string Model) {
     return modelFieldPtrMap[Model];
 }
 
+/***********************************************************************
+ * NAME : getModelFieldPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to a wrapper function
+ * 			which will provide a single field vector at a single 
+ * 			position.
+ *		
+ * INPUTS : 
+ *		const char *Model		Model name (use lower case!).
+ *
+ * RETURNS :
+ *		modelFieldPtr *ptr		Pointer to model wrapper.
+ *
+ **********************************************************************/
 modelFieldPtr getModelFieldPtr(const char *Model) {
     return modelFieldPtrMap[Model];
 }
 
 /* functions to directly call each model for a single Cartesian vector (this will be used for tracing) */
 
+/***********************************************************************
+ * NAME : XXXXXField(x,y,z,Bx,By,Bz)
+ *
+ * DESCRIPTION : Model wrapper functions which can be passed to the 
+ * 			tracing code. Replace XXXXXX with the name of the model...
+ *		
+ * INPUTS : 
+ *		double	x			x coordinate in planetary radii.
+ *		double	y			y coordinate in planetary radii.
+ *		double	z			z coordinate in planetary radii.
+ *
+ * OUTPUTS :
+ *		double	*Bx			x component of the field (nT).
+ *		double	*By			y component of the field (nT).
+ *		double	*Bz			z component of the field (nT).
+ * 
+ **********************************************************************/
 void ness1975Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
 	ness1975.FieldCart(x,y,z,Bx,By,Bz);

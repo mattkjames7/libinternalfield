@@ -32,3 +32,4 @@ test:
 clean:
 	rm -v *.so
 	cd test; make clean
+	rm -v ../libinternalfield.h

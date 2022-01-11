@@ -1,8 +1,34 @@
 
-unsigned char* GetModelCoeffPointer(string Model) {
+/***********************************************************************
+ * NAME : getModelCoeffPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to the memory address
+ *			where the model coefficients are stored.
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		unsigned char *ptr	Pointer to model data.
+ *
+ **********************************************************************/
+unsigned char* GetModelCoeffPointer(std::string Model) {
 	return modelMap[Model];
 }
 
+/***********************************************************************
+ * NAME : getModelCoeffPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to the memory address
+ *			where the model coefficients are stored.
+ *		
+ * INPUTS : 
+ *		const char *Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		unsigned char *ptr	Pointer to model data.
+ *
+ **********************************************************************/
 unsigned char* GetModelCoeffPointer(const char *Model) {	
 	return modelMap[Model];
 }
