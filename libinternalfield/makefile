@@ -20,6 +20,7 @@ obj:
 lib:
 	#$(CC) *.o coeffs/*.o -shared -o libinternal.so
 	$(CC) coeffs/*.o coeffs.o internal.o models.o internalmodel.o libinternal.o  -shared -o libinternalfield.so
+	ar -rc libinternalfield.a *.o coeffs/*.o
 	rm -v *.o
 	rm -v coeffs/*.o
 	rm -v coeffs/*.bin
@@ -30,6 +31,6 @@ test:
 	
 	
 clean:
-	rm -v *.so
+	rm -v *.so *.a
 	cd test; make clean
 	rm -v ../libinternalfield.h
