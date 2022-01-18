@@ -307,6 +307,7 @@ class Internal {
 		int nschc_;
 		double **Snm_;
 		int nmax_;
+		int DefDeg_;
 		
 		/* these ones will have Snm_ already multiplied */
 		double **g_;

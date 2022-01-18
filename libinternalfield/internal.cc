@@ -96,6 +96,8 @@ void Internal::_LoadSchmidt(unsigned char *ptr){
 		coeffs[i] = ((double*) ptr)[0];
 		ptr += sizeof(double);
 	}
+	DefDeg_ = ((int*) ptr)[0];
+	ptr += sizeof(int);
 	
 	/* get n max */
 	nmax_ = 0;
@@ -306,7 +308,7 @@ void Internal::_SphHarm(int l, double *r, double *t, double *p,
 					int MaxDeg, double *Br, double *Bt, double *Bp) {
 	
 	/* set the maximum degree of the model to use */
-	int nmax = nmax_;
+	int nmax = DefDeg_;
 	if ((MaxDeg > 0) && (MaxDeg < nmax_)) {
 		nmax = MaxDeg;
 	}
@@ -464,7 +466,7 @@ void Internal::Field(int l, double *r, double *t, double *p,
 	
 
 	/* call the model */
-	_SphHarm(l,r,t,p,nmax_,Br,Bt,Bp);
+	_SphHarm(l,r,t,p,DefDeg_,Br,Bt,Bp);
 	
 }
 
@@ -522,7 +524,7 @@ void Internal::Field(	double r, double t, double p,
 						double *Br, double *Bt, double *Bp) {
 	
 	/* call the model */
-	_SphHarm(1,&r,&t,&p,nmax_,Br,Bt,Bp);
+	_SphHarm(1,&r,&t,&p,DefDeg_,Br,Bt,Bp);
 	
 
 }
@@ -585,7 +587,7 @@ void Internal::FieldCart(	double x, double y, double z,
 	_Cart2Pol(x,y,z,&r,&t,&p);
 
 	/* call the model */
-	_SphHarm(1,&r,&t,&p,nmax_,&Br,&Bt,&Bp);
+	_SphHarm(1,&r,&t,&p,DefDeg_,&Br,&Bt,&Bp);
 
 	/* convert B to Cartesian */
 	_BPol2BCart(t,p,Br,Bt,Bp,Bx,By,Bz);

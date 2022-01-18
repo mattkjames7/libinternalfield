@@ -88,6 +88,22 @@ def EncodeFile(fname):
 	#get the number of lines in the file
 	nl = lines.size
 	
+	#get any extra info out starting with '#'
+	remove = np.zeros(nl,dtype='bool')
+	stuff = {}
+	for i in range(0,nl):
+		l = lines[i]
+		if l[0] == '#':
+			#add this to the stuff dictionary
+			s = l[1:].split()
+			stuff[s[0]] = s[1]
+			remove[i] = True
+	good = np.where(remove == False)[0]
+	lines = lines[good]
+	nl = lines.size
+	
+
+	
 	#create the arrays for the coefficients
 	gh = np.zeros(nl,dtype='int8')
 	n = np.zeros(nl,dtype='int32')
@@ -106,6 +122,14 @@ def EncodeFile(fname):
 		n[i] = np.int32(s[1])
 		m[i] = np.int32(s[2])
 		coeff[i] = np.float64(s[3])
+
+	#get any extra info - more things might be added here e.g. "planet"
+	if 'DefaultDegree' in stuff:
+		DefDeg = np.int32(stuff['DefaultDegree'])
+	else:
+		DefDeg = np.int32(n.max())
+		
+
 	
 	#output file name
 	name,ext = os.path.splitext(fname)
@@ -120,6 +144,7 @@ def EncodeFile(fname):
 	n.tofile(f)
 	m.tofile(f)
 	coeff.tofile(f)
+	DefDeg.tofile(f)
 	f.close()
 
 def MakeObjectFile(fname):
