@@ -309,7 +309,7 @@ void Internal::_SphHarm(int l, double *r, double *t, double *p,
 	
 	/* set the maximum degree of the model to use */
 	int nmax = DefDeg_;
-	if ((MaxDeg > 0) && (MaxDeg < nmax_)) {
+	if ((MaxDeg > 0) && (MaxDeg <= nmax_)) {
 		nmax = MaxDeg;
 	}
 	
