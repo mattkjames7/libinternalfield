@@ -32,26 +32,26 @@ This will create a shared object file ```libinternalfield.so``` with a symbolic 
 
 Here is a list of the currently supported models (more will most likely be added):
 
-| Model               | C String       | Maximum Degree | Planet  | Reference              |
-| ------------------- | -------------- | -------------- | ------- | ---------------------- |
-| Ness 1975           | `ness1975`     | 1              | Mercury | Ness et al., 1975      |
-| Langlais et al 2019 | `langlais2019` | 134            | Mars    | Langlais et al., 2019  |
-| JRM33               | `jrm33`        | 30             | Jupiter | Connerney et al., 2020 |
-| JRM09               | `jrm09`        | 10             | Jupiter | Connerney 2007         |
-| ISaAC               | `isaac`        | 10             | Jupiter | Hess et al., 2017      |
-| VIPAL               | `vipal`        | 5              | Jupiter | Hess et al., 2011      |
-| VIP4                | `vip4`         | 4              | Jupiter | Connerney 2007         |
-| VIT4                | `vit4`         | 4              | Jupiter | Connerney 2007         |
-| O4                  | `o4`           | 3              | Jupiter | Connerney 1981         |
-| O6                  | `o6`           | 3              | Jupiter | Connerney 2007         |
-| GSFC15evs           | `gsfc15evs`    | 3              | Jupiter | Connerney 1981         |
-| GSFC15ev            | `gsfc15ev`     | 3              | Jupiter | Connerney 1981         |
-| GSFC13ev            | `gsfc13ev`     | 3              | Jupiter | Connerney 1981         |
-| Ulysses 17ev        | `u17ev`        | 3              | Jupiter | Connerney 2007         |
-| SHA                 | `sha`          | 3              | Jupiter | Connerney 2007         |
-| Voyager 1 17ev      | `v117ev`       | 3              | Jupiter | Connerney 2007         |
-| JPL15ev             | `jpl15ev`      | 3              | Jupiter | Connerney 1981         |
-| JPL15evs            | `jpl15evs`     | 3              | Jupiter | Connerney 1981         |
+| Model               | C String       | Maximum Degree | Default Degree | Planet  | Reference              |
+| ------------------- | -------------- | -------------- | -------------- | ------- | ---------------------- |
+| Ness 1975           | `ness1975`     | 1              | 1              | Mercury | Ness et al., 1975      |
+| Langlais et al 2019 | `langlais2019` | 134            |                | Mars    | Langlais et al., 2019  |
+| JRM33               | `jrm33`        | 30             | 13             | Jupiter | Connerney et al., 2020 |
+| JRM09               | `jrm09`        | 20             | 10             | Jupiter | Connerney 2007         |
+| ISaAC               | `isaac`        | 10             |                | Jupiter | Hess et al., 2017      |
+| VIPAL               | `vipal`        | 5              | 5              | Jupiter | Hess et al., 2011      |
+| VIP4                | `vip4`         | 4              | 4              | Jupiter | Connerney 2007         |
+| VIT4                | `vit4`         | 4              | 4              | Jupiter | Connerney 2007         |
+| O4                  | `o4`           | 3              |                | Jupiter | Connerney 1981         |
+| O6                  | `o6`           | 3              |                | Jupiter | Connerney 2007         |
+| GSFC15evs           | `gsfc15evs`    | 3              |                | Jupiter | Connerney 1981         |
+| GSFC15ev            | `gsfc15ev`     | 3              |                | Jupiter | Connerney 1981         |
+| GSFC13ev            | `gsfc13ev`     | 3              |                | Jupiter | Connerney 1981         |
+| Ulysses 17ev        | `u17ev`        | 3              |                | Jupiter | Connerney 2007         |
+| SHA                 | `sha`          | 3              |                | Jupiter | Connerney 2007         |
+| Voyager 1 17ev      | `v117ev`       | 3              |                | Jupiter | Connerney 2007         |
+| JPL15ev             | `jpl15ev`      | 3              |                | Jupiter | Connerney 1981         |
+| JPL15evs            | `jpl15evs`     | 3              |                | Jupiter | Connerney 1981         |
 
 Model coefficients are stored in `libinternalfield/coeffs/` as `name.dat` files, where `name` is the name of the model. Each file contains for columns: 
 
@@ -99,11 +99,11 @@ int main() {
 ```cpp
 /* calculate the magnetic field at some sets of coordinates (p0,p1,p2) */
 void InternalField(int n, double *p0, double *p1, double *p2,
-						double *B0, double *B1, double *B2);
+                        double *B0, double *B1, double *B2);
 
 /* same as above, with a custom maximum model degree */
 void InternalFieldDeg(int n, double *p0, double *p1, double *p2,
-						int MaxDeg, double *B0, double *B1, double *B2);
+                        int MaxDeg, double *B0, double *B1, double *B2);
 
 /* Set the model and its input and output coordinates */ 
 void SetInternalCFG(char *Model, bool CartIn, bool CartOut);
@@ -111,10 +111,6 @@ void SetInternalCFG(char *Model, bool CartIn, bool CartOut);
 /* return the current configuration */
 void GetInternalCFG(char *Model, bool *CartIn, bool *CartOut);
 ```
-
-
-
-
 
 ## References
 
