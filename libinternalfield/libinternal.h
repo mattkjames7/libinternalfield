@@ -60,7 +60,7 @@ extern "C" {
 						int MaxDeg, double *B0, double *B1, double *B2);
 
 	/***********************************************************************
-	 * NAME : SetInternalCFG(Model,CartIn,CartOut)
+	 * NAME : SetInternalCFG(Model,CartIn,CartOut,MaxDeg)
 	 *
 	 * DESCRIPTION : Configure the current model.
 	 *		
@@ -69,12 +69,13 @@ extern "C" {
 	 * 		bool CartIn				Set to True for Cartesian input
 	 * 								coordinates or false for polar.
 	 * 		bool CartOut			As above, but for the output.
+	 * 		int  MaxDeg				Maximum degree used by model
 	 * 
 	 **********************************************************************/
-	void SetInternalCFG(const char *Model, bool CartIn, bool CartOut);
+	void SetInternalCFG(const char *Model, bool CartIn, bool CartOut, int MaxDeg);
 
 	/***********************************************************************
-	 * NAME : GetInternalCFG(Model,CartIn,CartOut)
+	 * NAME : GetInternalCFG(Model,CartIn,CartOut,MaxDeg)
 	 *
 	 * DESCRIPTION : Return the current model configuration.
 	 *		
@@ -83,9 +84,10 @@ extern "C" {
 	 * 		bool CartIn				True for Cartesian input
 	 * 								coordinates or false for polar.
 	 * 		bool CartOut			As above, but for the output.
+	 * 		int  MaxDeg				Maximum degree used by model
 	 * 
 	 **********************************************************************/
-	void GetInternalCFG(char *Model, bool *CartIn, bool *CartOut);
+	void GetInternalCFG(char *Model, bool *CartIn, bool *CartOut, int *MaxDeg);
 
 	
 }

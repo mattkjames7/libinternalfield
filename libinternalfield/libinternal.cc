@@ -60,7 +60,7 @@ void InternalFieldDeg(int n, double *p0, double *p1, double *p2,
 }
 
 /***********************************************************************
- * NAME : SetInternalCFG(Model,CartIn,CartOut)
+ * NAME : SetInternalCFG(Model,CartIn,CartOut,MaxDeg)
  *
  * DESCRIPTION : Configure the current model.
  *		
@@ -69,16 +69,18 @@ void InternalFieldDeg(int n, double *p0, double *p1, double *p2,
  * 		bool CartIn				Set to True for Cartesian input
  * 								coordinates or false for polar.
  * 		bool CartOut			As above, but for the output.
+ * 		int  MaxDeg				Maximum degree used by model
  * 
  **********************************************************************/
-void SetInternalCFG(const char *Model, bool CartIn, bool CartOut) {
+void SetInternalCFG(const char *Model, bool CartIn, bool CartOut, int MaxDeg) {
 	internalModel.SetCartIn(CartIn);
 	internalModel.SetCartOut(CartOut);
 	internalModel.SetModel(Model);
+	internalModel.SetDegree(MaxDeg);
 }
 
 /***********************************************************************
- * NAME : GetInternalCFG(Model,CartIn,CartOut)
+ * NAME : GetInternalCFG(Model,CartIn,CartOut,MaxDeg)
  *
  * DESCRIPTION : Return the current model configuration.
  *		
@@ -87,11 +89,13 @@ void SetInternalCFG(const char *Model, bool CartIn, bool CartOut) {
  * 		bool CartIn				True for Cartesian input
  * 								coordinates or false for polar.
  * 		bool CartOut			As above, but for the output.
+ * 		int  MaxDeg				Maximum degree used by model
  * 
  **********************************************************************/
-void GetInternalCFG(char *Model, bool *CartIn, bool *CartOut) {
+void GetInternalCFG(char *Model, bool *CartIn, bool *CartOut, int *MaxDeg) {
 	CartIn[0] = internalModel.GetCartIn();
 	CartOut[0] = internalModel.GetCartOut();
 	internalModel.GetModel(Model);
+	MaxDeg[0] = internalModel.GetDegree();
 }
 

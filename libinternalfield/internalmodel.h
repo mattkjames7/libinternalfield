@@ -36,6 +36,8 @@ class InternalModel {
 		bool GetCartOut();
 		void SetModel(const char *);
 		void GetModel(char *);
+		void SetDegree(int n);
+		int GetDegree();
 
 		/* Field functions */
 		void Field(int,double*,double*,double*,int,double*,double*,double*);

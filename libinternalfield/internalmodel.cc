@@ -171,6 +171,39 @@ void InternalModel::GetModel(char *ModelName) {
 	strcpy(ModelName,CurrentModelName_.c_str());
 }
 
+
+/***********************************************************************
+ * NAME : void InternalModel::SetDegree(n)
+ * 
+ * DESCRIPTION : Set the maximum degree of this model to use.
+ * 
+ * INPUTS : 
+ * 		int		n			Model degree
+ * 
+ * ********************************************************************/
+void InternalModel::SetDegree(int n) {
+	
+	CheckInit();
+	CurrentModel_->SetDegree(n);
+	
+}
+
+/***********************************************************************
+ * NAME : int Internal::GetDegree()
+ * 
+ * DESCRIPTION : Get the current degree of this model in use.
+ * 
+ * OUTPUTS : 
+ * 		int		n			Model degree
+ * 
+ * ********************************************************************/
+int InternalModel::GetDegree() {
+	
+	return CurrentModel_->GetDegree();
+	
+}
+
+
 /***********************************************************************
  * NAME : void InternalModel::Field(n,p0,p1,p2,B0,B1,B2)
  * 
@@ -293,7 +326,15 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 		Bp = new double[n];		
 	}
 	
-	CurrentModel_->Field(n,r,t,p,MaxDeg,Br,Bt,Bp);
+	/* store the existing model degree and set current*/
+	int OldDeg = CurrentModel_->GetDegree();
+	CurrentModel_->SetDegree(MaxDeg);
+	
+	/* call the model */
+	CurrentModel_->Field(n,r,t,p,Br,Bt,Bp);
+	
+	/* return the original degree */
+	CurrentModel_->SetDegree(OldDeg);
 
 	/* rotate field vector if needed and delete output arrays */
 	if (CartOut_) {
@@ -395,8 +436,16 @@ void InternalModel::Field(	double p0, double p1, double p2, int MaxDeg,
 		_Cart2Pol(1,&p0,&p1,&p2,&r,&t,&p);
 	}
 	
+
+	/* store the existing model degree and set current*/
+	int OldDeg = CurrentModel_->GetDegree();
+	CurrentModel_->SetDegree(MaxDeg);
 	
-	CurrentModel_->Field(r,t,p,MaxDeg,&Br,&Bt,&Bp);
+	/* call the model */
+	CurrentModel_->Field(r,t,p,&Br,&Bt,&Bp);
+	
+	/* return the original degree */
+	CurrentModel_->SetDegree(OldDeg);
 	
 	/* rotate field vector if needed and delete output arrays */
 	if (CartOut_) {
