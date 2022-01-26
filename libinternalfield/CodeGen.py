@@ -128,7 +128,7 @@ def EncodeFile(fname):
 		DefDeg = np.int32(stuff['DefaultDegree'])
 	else:
 		DefDeg = np.int32(n.max())
-		
+	Rscale = np.float64(stuff.get('Rscale',1.0))
 
 	
 	#output file name
@@ -145,6 +145,7 @@ def EncodeFile(fname):
 	m.tofile(f)
 	coeff.tofile(f)
 	DefDeg.tofile(f)
+	Rscale.tofile(f)
 	f.close()
 
 def MakeObjectFile(fname):

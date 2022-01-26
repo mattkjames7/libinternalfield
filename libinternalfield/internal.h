@@ -62,6 +62,14 @@ class Internal {
 		double **g_;
 		double **h_;
 		
+		/* hack to scale r or x,y,z because some models use a different
+		 * definition for the planetary radius - notably the different 
+		 * Jupiter models - this should be rpgood/rpbad, where rpgood
+		 * is the accepted planetary radius and rpbad is the erroneous
+		 * one - this will be then multiplied by r: rnew = r*rscale_
+		 * where rscale_ = rgood/rbad */
+		double rscale_;
+		
 		/* functions for initializing the object */
 		void _LoadSchmidt(unsigned char*);
 		void _Schmidt();

@@ -34,6 +34,7 @@ Internal::Internal(const Internal &obj) {
 	nmax_ = obj.nmax_;
 	ndef_ = obj.ndef_;
 	ncur_ = obj.ncur_;
+	rscale_ = rscale_;
 	g_ = obj.g_;
 	h_ = obj.h_;
 }
@@ -117,6 +118,10 @@ void Internal::_LoadSchmidt(unsigned char *ptr){
 	for (i=0;i<nmax_;i++) {
 		nschc_ += (2 + i);
 	}
+	
+	/* get rscale */
+	rscale_ = ((double*) ptr)[0];
+	ptr += sizeof(double);
 	
 	/* create the structure array */
 	schc_ = new struct schmidtcoeffs[nschc_];
@@ -352,14 +357,21 @@ void Internal::_Legendre(int l, double *costheta, double *sintheta,
  * 
  * ********************************************************************/
 /* try making a scalar version of this to remove new/delete allocation*/
-void Internal::_SphHarm(	int l, double *r, double *t, double *p,
+void Internal::_SphHarm(	int l, double *r0, double *t, double *p,
 							double *Br, double *Bt, double *Bp) {
+	
+	/* rescale r */
+	int i;
+	double *r = new double[l];
+	for (i=0;i<l;i++) {
+		r[i] = r0[i]*rscale_;
+	}	
 	
 	/* set the maximum degree of the model to use */
 	int nmax = ncur_;
 	
 	/* create arrays for the Legendre polynomials */
-	int n, m, i;
+	int n, m;
 	double ***Pnm = new double**[nmax+1];
 	double ***dPnm = new double**[nmax+1];
 	for (n=0;n<=nmax;n++) {
@@ -473,6 +485,7 @@ void Internal::_SphHarm(	int l, double *r, double *t, double *p,
 	delete[] cosmp;
 	delete[] sinmp;
 	
+	delete[] r;
 	delete[] r1;
 	delete[] C;
 	delete[] cost;
