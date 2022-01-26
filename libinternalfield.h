@@ -300,18 +300,33 @@ class Internal {
 		void FieldCart(double,double,double,double*,double*,double*);
 		void FieldCart(double,double,double,int,double*,double*,double*);
 
+		/* set current degree */
+		void SetDegree(int n);
+		int GetDegree();
+
 		
 	private:
 		/*Schmidt coefficients */
 		struct schmidtcoeffs *schc_;
 		int nschc_;
 		double **Snm_;
+		
+		/* maximum, default and current degree */
 		int nmax_;
-		int DefDeg_;
+		int ndef_;
+		int ncur_;
 		
 		/* these ones will have Snm_ already multiplied */
 		double **g_;
 		double **h_;
+		
+		/* hack to scale r or x,y,z because some models use a different
+		 * definition for the planetary radius - notably the different 
+		 * Jupiter models - this should be rpgood/rpbad, where rpgood
+		 * is the accepted planetary radius and rpbad is the erroneous
+		 * one - this will be then multiplied by r: rnew = r*rscale_
+		 * where rscale_ = rgood/rbad */
+		double rscale_;
 		
 		/* functions for initializing the object */
 		void _LoadSchmidt(unsigned char*);
@@ -323,7 +338,7 @@ class Internal {
 		
 		/* this function will calculate the magnetic field components in
 		 * spherical polar coordinates */
-		void _SphHarm(int,double*,double*,double*,int,double*,double*,double*);
+		void _SphHarm(int,double*,double*,double*,double*,double*,double*);
 		/* could do with writing a scalar version of this for extra speed */
 		
 		void _Cart2Pol(double,double,double,double*,double*,double*);
@@ -362,6 +377,8 @@ class InternalModel {
 		bool GetCartOut();
 		void SetModel(const char *);
 		void GetModel(char *);
+		void SetDegree(int n);
+		int GetDegree();
 
 		/* Field functions */
 		void Field(int,double*,double*,double*,int,double*,double*,double*);
@@ -442,7 +459,7 @@ extern "C" {
 						int MaxDeg, double *B0, double *B1, double *B2);
 
 	/***********************************************************************
-	 * NAME : SetInternalCFG(Model,CartIn,CartOut)
+	 * NAME : SetInternalCFG(Model,CartIn,CartOut,MaxDeg)
 	 *
 	 * DESCRIPTION : Configure the current model.
 	 *		
@@ -451,12 +468,13 @@ extern "C" {
 	 * 		bool CartIn				Set to True for Cartesian input
 	 * 								coordinates or false for polar.
 	 * 		bool CartOut			As above, but for the output.
+	 * 		int  MaxDeg				Maximum degree used by model
 	 * 
 	 **********************************************************************/
-	void SetInternalCFG(const char *Model, bool CartIn, bool CartOut);
+	void SetInternalCFG(const char *Model, bool CartIn, bool CartOut, int MaxDeg);
 
 	/***********************************************************************
-	 * NAME : GetInternalCFG(Model,CartIn,CartOut)
+	 * NAME : GetInternalCFG(Model,CartIn,CartOut,MaxDeg)
 	 *
 	 * DESCRIPTION : Return the current model configuration.
 	 *		
@@ -465,9 +483,10 @@ extern "C" {
 	 * 		bool CartIn				True for Cartesian input
 	 * 								coordinates or false for polar.
 	 * 		bool CartOut			As above, but for the output.
+	 * 		int  MaxDeg				Maximum degree used by model
 	 * 
 	 **********************************************************************/
-	void GetInternalCFG(char *Model, bool *CartIn, bool *CartOut);
+	void GetInternalCFG(char *Model, bool *CartIn, bool *CartOut, int *MaxDeg);
 
 	
 }
