@@ -127,7 +127,7 @@ std::map<std::string,modelFieldPtr> modelFieldPtrMap = {	{"ness1975",&ness1975Fi
  * RETURNS :
  *		modelFieldPtr *ptr		Pointer to model wrapper.
  *
- *******************************************************************
+ *******************************************************************/
 modelFieldPtr getModelFieldPtr(std::string Model) {
     return modelFieldPtrMap[Model];
 }
