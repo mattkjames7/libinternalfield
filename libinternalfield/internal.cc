@@ -369,7 +369,6 @@ void Internal::_SphHarm(	int l, double *r0, double *t, double *p,
 	
 	/* set the maximum degree of the model to use */
 	int nmax = ncur_;
-	printf("degree: %d %d\n",nmax,ncur_);
 	
 	/* create arrays for the Legendre polynomials */
 	int n, m;
