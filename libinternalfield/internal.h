@@ -42,14 +42,21 @@ class Internal {
 		void FieldCart(double,double,double,double*,double*,double*);
 		void FieldCart(double,double,double,int,double*,double*,double*);
 
+		/* set current degree */
+		void SetDegree(int n);
+		int GetDegree();
+
 		
 	private:
 		/*Schmidt coefficients */
 		struct schmidtcoeffs *schc_;
 		int nschc_;
 		double **Snm_;
+		
+		/* maximum, default and current degree */
 		int nmax_;
-		int DefDeg_;
+		int ndef_;
+		int ncur_;
 		
 		/* these ones will have Snm_ already multiplied */
 		double **g_;
@@ -65,7 +72,7 @@ class Internal {
 		
 		/* this function will calculate the magnetic field components in
 		 * spherical polar coordinates */
-		void _SphHarm(int,double*,double*,double*,int,double*,double*,double*);
+		void _SphHarm(int,double*,double*,double*,double*,double*,double*);
 		/* could do with writing a scalar version of this for extra speed */
 		
 		void _Cart2Pol(double,double,double,double*,double*,double*);

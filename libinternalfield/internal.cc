@@ -32,6 +32,8 @@ Internal::Internal(const Internal &obj) {
 	schc_ = obj.schc_;
 	Snm_ = obj.Snm_;
 	nmax_ = obj.nmax_;
+	ndef_ = obj.ndef_;
+	ncur_ = obj.ncur_;
 	g_ = obj.g_;
 	h_ = obj.h_;
 }
@@ -96,7 +98,7 @@ void Internal::_LoadSchmidt(unsigned char *ptr){
 		coeffs[i] = ((double*) ptr)[0];
 		ptr += sizeof(double);
 	}
-	DefDeg_ = ((int*) ptr)[0];
+	ndef_ = ((int*) ptr)[0];
 	ptr += sizeof(int);
 	
 	/* get n max */
@@ -106,6 +108,9 @@ void Internal::_LoadSchmidt(unsigned char *ptr){
 			nmax_ = n[i];
 		}
 	}
+	
+	/* set current model degree to the default */
+	ncur_ = ndef_;
 	
 	/* calculate the length of the coefficient structure */
 	nschc_ = 0;
@@ -221,6 +226,49 @@ void Internal::_CoeffGrids() {
 }
 
 
+
+
+/***********************************************************************
+ * NAME : void Internal::SetDegree(n)
+ * 
+ * DESCRIPTION : Set the maximum degree of this model to use.
+ * 
+ * INPUTS : 
+ * 		int		n			Model degree
+ * 
+ * ********************************************************************/
+void Internal::SetDegree(int n) {
+	
+	/* check that the degree falls within a valid range */
+	if (n > nmax_) {
+		/* greater than the maximum, cap at nmax_ */
+		printf("WARNING: Attempted to set model degree above maximum (%d)\n",nmax_);
+		ncur_ = nmax_;
+	} else if (n < 1) {
+		/* too small - use default instead */
+		printf("WARNING: Attempted to use model degree < 1 - using default (%d)\n",ndef_);
+		ncur_ = ndef_;
+	} else {
+		ncur_ = n;
+	}
+	
+}
+
+/***********************************************************************
+ * NAME : int Internal::GetDegree()
+ * 
+ * DESCRIPTION : Get the current degree of this model in use.
+ * 
+ * OUTPUTS : 
+ * 		int		n			Model degree
+ * 
+ * ********************************************************************/
+int Internal::GetDegree() {
+	
+	return ncur_;
+	
+}
+
 /***********************************************************************
  * NAME : void Internal::_Legendre(l,costheta,sintheta,nmax,Pnm,dPnm)
  * 
@@ -304,14 +352,11 @@ void Internal::_Legendre(int l, double *costheta, double *sintheta,
  * 
  * ********************************************************************/
 /* try making a scalar version of this to remove new/delete allocation*/
-void Internal::_SphHarm(int l, double *r, double *t, double *p,
-					int MaxDeg, double *Br, double *Bt, double *Bp) {
+void Internal::_SphHarm(	int l, double *r, double *t, double *p,
+							double *Br, double *Bt, double *Bp) {
 	
 	/* set the maximum degree of the model to use */
-	int nmax = DefDeg_;
-	if ((MaxDeg > 0) && (MaxDeg <= nmax_)) {
-		nmax = MaxDeg;
-	}
+	int nmax = ncur_;
 	
 	/* create arrays for the Legendre polynomials */
 	int n, m, i;
@@ -444,7 +489,7 @@ void Internal::_SphHarm(int l, double *r, double *t, double *p,
 /***********************************************************************
  * NAME : void Internal::Field(l,r,t,p,Br,Bt,Bp)
  * 
- * DESCRIPTION : Calculate the magnetic field.
+ * DESCRIPTION : Calculate the magnetic field using current degree.
  * 
  * INPUTS : 
  * 		int		l			Number of elements
@@ -466,7 +511,7 @@ void Internal::Field(int l, double *r, double *t, double *p,
 	
 
 	/* call the model */
-	_SphHarm(l,r,t,p,DefDeg_,Br,Bt,Bp);
+	_SphHarm(l,r,t,p,Br,Bt,Bp);
 	
 }
 
@@ -494,9 +539,11 @@ void Internal::Field(int l, double *r, double *t, double *p,
 void Internal::Field(int l, double *r, double *t, double *p,
 					int MaxDeg, double *Br, double *Bt, double *Bp) {
 	
+	/* set the model degree */
+	SetDegree(MaxDeg);
 
 	/* call the model */
-	_SphHarm(l,r,t,p,MaxDeg,Br,Bt,Bp);
+	_SphHarm(l,r,t,p,Br,Bt,Bp);
 	
 
 }
@@ -524,7 +571,7 @@ void Internal::Field(	double r, double t, double p,
 						double *Br, double *Bt, double *Bp) {
 	
 	/* call the model */
-	_SphHarm(1,&r,&t,&p,DefDeg_,Br,Bt,Bp);
+	_SphHarm(1,&r,&t,&p,Br,Bt,Bp);
 	
 
 }
@@ -553,9 +600,11 @@ void Internal::Field(	double r, double t, double p,
 void Internal::Field(	double r, double t, double p, int MaxDeg,
 						double *Br, double *Bt, double *Bp) {
 	
+	/* set the model degree */
+	SetDegree(MaxDeg);
 
 	/* call the model */
-	_SphHarm(1,&r,&t,&p,MaxDeg,Br,Bt,Bp);
+	_SphHarm(1,&r,&t,&p,Br,Bt,Bp);
 
 }
 
@@ -587,7 +636,7 @@ void Internal::FieldCart(	double x, double y, double z,
 	_Cart2Pol(x,y,z,&r,&t,&p);
 
 	/* call the model */
-	_SphHarm(1,&r,&t,&p,DefDeg_,&Br,&Bt,&Bp);
+	_SphHarm(1,&r,&t,&p,&Br,&Bt,&Bp);
 
 	/* convert B to Cartesian */
 	_BPol2BCart(t,p,Br,Bt,Bp,Bx,By,Bz);
@@ -618,12 +667,15 @@ void Internal::FieldCart(	double x, double y, double z,
 void Internal::FieldCart(	double x, double y, double z, int MaxDeg,
 							double *Bx, double *By, double *Bz) {
 	
+	/* set the model degree */
+	SetDegree(MaxDeg);
+	
 	/* convert to polar */
 	double r, t, p, Br, Bt, Bp;
 	_Cart2Pol(x,y,z,&r,&t,&p);
 
 	/* call the model */
-	_SphHarm(1,&r,&t,&p,MaxDeg,&Br,&Bt,&Bp);
+	_SphHarm(1,&r,&t,&p,&Br,&Bt,&Bp);
 
 	/* convert B to Cartesian */
 	_BPol2BCart(t,p,Br,Bt,Bp,Bx,By,Bz);
