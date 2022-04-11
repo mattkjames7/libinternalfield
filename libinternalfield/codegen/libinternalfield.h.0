@@ -8,3 +8,7 @@
 #include <string>
 #include <map>
 
+
+#define INTERNALFIELD_VERSION_MAJOR 0
+#define INTERNALFIELD_VERSION_MINOR 0
+#define INTERNALFIELD_VERSION_PATCH 1
