@@ -9,6 +9,10 @@
 #include <map>
 
 
+#define INTERNALFIELD_VERSION_MAJOR 0
+#define INTERNALFIELD_VERSION_MINOR 0
+#define INTERNALFIELD_VERSION_PATCH 1
+
 /* list of model names */
 extern std::vector<std::string> modelNames;
 

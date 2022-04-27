@@ -1,11 +1,11 @@
 # CFLAGS for CC
-CFLAGS=-lm -fopenmp -fPIC -std=c++17 -g
+CFLAGS=-lm -fPIC -std=c++17
 
 # Compiler
 CCo=g++ -c $(CFLAGS)
 CC=g++ $(CFLAGS)
 
-all: obj lib test
+all: obj lib
 
 obj:
 	#this bit converts the internale field model coefficients into 
