@@ -3,9 +3,21 @@
 #include <vector>
 #include <string>
 #include <map>
-#endif
 
+
+/* structure for storing the coefficients in memory (replaces binary stuff) */
+typedef struct coeffStruct {
+    const int len;    
+    const int nmax;
+    const int ndef;
+    const double rscale;
+    const int *n;
+    const int *m;
+    const double *g;
+    const double *h;
+} coeffStruct;
+#endif
 /* list of model names */
 extern std::vector<std::string> modelNames;
 
-/* pointers to the memory where coefficients are stored */
+/* pointers to the memory where coefficients are stored (to be removed)*/

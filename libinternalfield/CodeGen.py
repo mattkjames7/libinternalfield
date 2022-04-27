@@ -33,6 +33,22 @@ def ListBinFiles():
 	print('Found {:d} binary files'.format(bnf.size))
 	return bnf
 
+def ListCppFiles():
+	'''
+	List the .cc files within the "coeffs" directory
+	
+	'''
+	
+	files = os.listdir('coeffs')
+	bnf = []
+	for f in files:
+		if f.endswith('.cc'):
+			bnf.append(f)
+	
+	bnf = np.array(bnf)
+	print('Found {:d} C++ parameter files'.format(bnf.size))
+	return bnf
+
 def ListObjFiles():
 	'''
 	List the object files within the "coeffs" directory
@@ -64,6 +80,195 @@ def ListModelNames():
 	modelsl = [os.path.splitext(f)[0].lower() for f in files]
 	
 	return models,modelsl	
+	
+def WriteCppFile(fname):
+	'''
+	This will convert the ASCII files of internal magnetic field model
+	coefficients to C++ code.
+	
+	Inputs
+	======
+	fnamein : str
+		Name of the ASCII file containing the coefficients.
+	fnameout : str
+		Name of the output C++ file.
+	
+	'''
+	
+	#open the ASCII file
+	f = open('coeffs/'+fname,'r')
+	lines = f.readlines()
+	f.close()
+	lines = np.array(lines)
+	
+	#get the number of lines in the file
+	nl = lines.size
+	
+	#get any extra info out starting with '#'
+	remove = np.zeros(nl,dtype='bool')
+	stuff = {}
+	for i in range(0,nl):
+		l = lines[i]
+		if l[0] == '#':
+			#add this to the stuff dictionary
+			s = l[1:].split()
+			stuff[s[0]] = s[1]
+			remove[i] = True
+	good = np.where(remove == False)[0]
+	lines = lines[good]
+	nl = lines.size
+	
+
+	
+	#create the arrays for the coefficients
+	gh = np.zeros(nl,dtype='int8')
+	n = np.zeros(nl,dtype='int32')
+	m = np.zeros(nl,dtype='int32')
+	coeff = np.zeros(nl,dtype='float64')
+	
+	#fill them
+	for i in range(0,nl):
+		s = lines[i].split()
+
+		if s[0] == 'h':
+			gh[i] = 1
+		else:
+			gh[i] = 0
+			
+		n[i] = np.int32(s[1])
+		m[i] = np.int32(s[2])
+		coeff[i] = np.float64(s[3])
+		
+
+	#get any extra info - more things might be added here e.g. "planet"
+	if 'DefaultDegree' in stuff:
+		DefDeg = np.int32(stuff['DefaultDegree'])
+	else:
+		DefDeg = np.int32(n.max())
+	Rscale = np.float64(stuff.get('Rscale',1.0))
+
+	#count the number of coeffs (including ones missing from the file)
+	nschc = 0
+	nmax = n.max()
+	for i in range(0,nmax):
+		nschc += (2 + i)
+	dtype = [('n','int32'),('m','int32'),('g','float64'),('h','float64')]
+	schc = np.recarray(nschc,dtype=dtype)
+		
+	p = 0;
+	for i in range(1,nmax+1):
+		for j in range(0,i+1):
+			schc[p].n = i
+			schc[p].m = j
+			schc[p].g = 0.0
+			schc[p].h = 0.0
+			p += 1;
+
+	for i in range(0,nl):
+		p = m[i]-1
+		for j in range(0,n[i]):
+			p += (1 + j)
+		
+		if (gh[i] == 0):
+			schc[p].g = coeff[i];
+		else:
+			schc[p].h = coeff[i];
+		
+		
+	
+	#output file names
+	name,ext = os.path.splitext(fname)
+	fnameoutc = name + '.cc'
+	fnameouth = name + '.h'
+	
+	#header contents
+	hlines = []
+	hlines.append('const int _model_coeff_{:s}_len;\n'.format(name))
+	hlines.append('const int _model_coeff_{:s}_nmax;\n'.format(name))
+	hlines.append('const int _model_coeff_{:s}_ndef;\n'.format(name))
+	hlines.append('const double _model_coeff_{:s}_rscale;\n'.format(name))
+	hlines.append('const int _model_coeff_{:s}_n[];\n'.format(name))
+	hlines.append('const int _model_coeff_{:s}_m[];\n'.format(name))
+	hlines.append('const double _model_coeff_{:s}_g[];\n'.format(name))
+	hlines.append('const double _model_coeff_{:s}_h[];\n'.format(name))
+	hlines.append('coeffStruct _model_coeff_{:s};\n\n'.format(name))
+	
+	#cpp contents
+	clines = []
+	clines.append('const int _model_coeff_{:s}_len = {:d};\n'.format(name,nl))
+	clines.append('const int _model_coeff_{:s}_nmax = {:d};\n'.format(name,nmax))
+	clines.append('const int _model_coeff_{:s}_ndef = {:d};\n'.format(name,DefDeg))
+	clines.append('const double _model_coeff_{:s}_rscale = {:f};\n'.format(name,Rscale))
+	cn = 'const int _model_coeff_{:s}_n[] = '.format(name) + '{'
+	cm = 'const int _model_coeff_{:s}_m[] = '.format(name) + '{'
+	cg = 'const double _model_coeff_{:s}_g[] = '.format(name) + '{'
+	ch = 'const double _model_coeff_{:s}_h[] = '.format(name) + '{'
+	lstr0 = len(cn)
+	lstrn = lstr0
+	lstrm = lstr0
+	lstrg = lstr0
+	lstrh = lstr0
+	for i in range(0,nschc):
+		cns = '{:d},'.format(schc[i].n)
+		cms = '{:d},'.format(schc[i].m)
+		cgs = '{:f},'.format(schc[i].g)
+		chs = '{:f},'.format(schc[i].h)
+		
+		if lstrn + len(cns) > 72:
+			cn += '\n\t'
+			lstrn = 4 + len(cns)
+		else:
+			lstrn += len(cns)
+		if lstrm + len(cms) > 72:
+			cm += '\n\t'
+			lstrm = 4 + len(cms)
+		else:
+			lstrm += len(cms)
+		if lstrg + len(cgs) > 72:
+			cg += '\n\t'
+			lstrg = 4 + len(cgs)
+		else:
+			lstrg += len(cgs)
+		if lstrh + len(chs) > 72:
+			ch += '\n\t'
+			lstrh = 4 + len(chs)
+		else:
+			lstrh += len(chs)
+			
+		cn += cns
+		cm += cms
+		cg += cgs
+		ch += chs
+		
+	clines.append(cn[:-1] + '};\n')
+	clines.append(cm[:-1] + '};\n')
+	clines.append(cg[:-1] + '};\n')
+	clines.append(ch[:-1] + '};\n')
+	
+	sstr = 'coeffStruct _model_coeff_{:s} ='.format(name)+'{'
+	sstr +='_model_coeff_{:s}_len,\n'.format(name)
+	sstr +='								_model_coeff_{:s}_nmax,\n'.format(name)
+	sstr +='								_model_coeff_{:s}_ndef,\n'.format(name)
+	sstr +='								_model_coeff_{:s}_rscale,\n'.format(name)
+	sstr +='								_model_coeff_{:s}_n,\n'.format(name)
+	sstr +='								_model_coeff_{:s}_m,\n'.format(name)
+	sstr +='								_model_coeff_{:s}_g,\n'.format(name)
+	sstr +='								_model_coeff_{:s}_h'.format(name) + '};\n\n'
+	clines.append(sstr)
+	
+	#header file
+	print('Saving {:s}'.format(fnameouth))
+	fh = open('coeffs/'+fnameouth,'w')
+	fh.writelines(hlines)
+	fh.close()
+	
+	#C++ file
+	print('Saving {:s}'.format(fnameoutc))
+	fc = open('coeffs/'+fnameoutc,'w')
+	fc.writelines(clines)
+	fc.close()
+	
+	
 	
 def EncodeFile(fname):
 	'''
@@ -204,6 +409,7 @@ def GenerateCoeffsH(models,modelsl):
 	#read in the existing bits of code from the codegen folder
 	code0 = ReadASCII('codegen/coeffs.h.0')
 	code1 = ReadASCII('codegen/coeffs.h.1')
+	code2 = ReadASCII('codegen/coeffs.h.2')
 	lines += code0
 
 	#add the memory pointers
@@ -212,8 +418,15 @@ def GenerateCoeffsH(models,modelsl):
 		lines.append(s)
 	lines.append('\n')
 	
-	#add the rest of the existing code
+	#add the coefficient arrays
 	lines += code1
+	
+	for m in models:
+		lines.append('extern coeffStruct _model_coeff_{:s};\n'.format(m))
+		
+		
+	#rest of the code
+	lines += code2
 	
 	#write to file
 	WriteASCII('coeffs.h',lines)
@@ -234,14 +447,35 @@ def GenerateCoeffsCC(models,modelsl):
 	code0 = ReadASCII('codegen/coeffs.cc.0')
 	code1 = ReadASCII('codegen/coeffs.cc.1')
 	code2 = ReadASCII('codegen/coeffs.cc.2')
+	code3 = ReadASCII('codegen/coeffs.cc.3')
+	code4 = ReadASCII('codegen/coeffs.cc.4')
 	lines += code0
 
 	#list of model names
 	s = '{\t"' + '",\n\t\t\t\t\t\t\t\t"'.join(modelsl)+'"};\n\n'
 	lines.append('std::vector<std::string> modelNames = '+s)
 		
-	#add some existing code
+	#arrays of coefficients and struct definitions
 	lines += code1
+	for m in models:
+		cc = ReadASCII('coeffs/{:s}.cc'.format(m))
+		lines += cc
+	
+	#map of structures
+	s = 'std::map<std::string,coeffStruct> coeffMap = {\t'
+	for i,(m,ml) in enumerate(zip(models,modelsl)):
+		if i > 0:
+			s += '\t\t\t\t\t\t\t\t\t\t'
+		s += '{"' + ml + '",_model_coeff_{:s}'.format(m) + '}'
+		if i < len(models) - 1:
+			s += ',\n'
+		else:
+			s += '\n'
+	s += '};\n\n'
+	lines.append(s)
+			
+	#add some existing code
+	lines += code3
 
 	#define the map
 	s = 'std::map<std::string,unsigned char*> modelMap = {\t'
@@ -257,7 +491,7 @@ def GenerateCoeffsCC(models,modelsl):
 	lines.append(s)
 
 	#add more existing code
-	lines += code2
+	lines += code4
 	
 	#write to file
 	WriteASCII('coeffs.cc',lines)
@@ -313,7 +547,8 @@ def GenerateModelsCC(models,modelsl):
 
 	#define models
 	for m,ml in zip(models,modelsl):
-		lines.append('Internal {:s}(&_binary_{:s}_bin_start);\n'.format(ml,m))
+		lines.append('//Internal {:s}(&_binary_{:s}_bin_start);\n'.format(ml,m))
+		lines.append('Internal {:s}(_model_coeff_{:s});\n'.format(ml,m))
 	lines.append('\n')
 
 	#add another map from model name to model pointer
@@ -395,9 +630,11 @@ if __name__ == "__main__":
 	#now attempt to convert them
 	for i,f in enumerate(files):
 		print('Converting coefficients in {:s} ({:d} of {:d})'.format(f,i+1,files.size))
+		WriteCppFile(f)
 		try:
 			#read it in, convert to binary
 			EncodeFile(f)
+			
 		except:
 			#ignore if it fails
 			print('Converting file {:s} failed, check the formatting'.format(f))

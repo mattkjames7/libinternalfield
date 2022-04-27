@@ -25,6 +25,30 @@ Internal::Internal(unsigned char *ptr) {
 	copy = false;
 }
 
+/***********************************************************************
+ * NAME : Internal::Internal(S)
+ * 
+ * DESCRIPTION : Initialize the Internal object.
+ * 
+ * INPUTS : 
+ * 		coeffStruct		S	Struct containing the coefficients.
+ * 
+ * ********************************************************************/
+Internal::Internal(coeffStruct S) {
+	
+	
+	/* read the coeffs into the object */
+	_LoadSchmidt(S);
+	
+	/* calcualte Schmidt normalized coefficient grids */
+	_Schmidt();
+	_CoeffGrids();
+
+	
+	/* tell object that it is not a copy */
+	copy = false;
+}
+
 Internal::Internal(const Internal &obj) {
 	
 	copy = true;
@@ -154,6 +178,49 @@ void Internal::_LoadSchmidt(unsigned char *ptr){
 	delete[] m;
 	delete[] gh;
 	delete[] coeffs;
+	
+}
+
+/***********************************************************************
+ * NAME : void Internal::_LoadSchmidt(S)
+ * 
+ * DESCRIPTION : Read the g/h coefficients from memory.
+ * 
+ * INPUTS : 
+ * 		coeffStruct		S	Struct containing the coefficients.
+ * 
+ * ********************************************************************/
+void Internal::_LoadSchmidt(coeffStruct S){
+	
+	/* this is the length of each array */
+	int i, j, p;
+	
+	
+	/* get n max and ndef*/
+	nmax_ = S.nmax;
+	ndef_ = S.ndef;
+	
+	/* set current model degree to the default */
+	ncur_ = ndef_;
+	
+	/* calculate the length of the coefficient structure */
+	nschc_ = S.len;
+
+	/* get rscale */
+	rscale_ = S.rscale;
+	
+	/* create the structure array */
+	schc_ = new struct schmidtcoeffs[nschc_];
+	
+	/*fill it up */
+	p = 0;
+	for (i=0;i<=nschc_;i++) {
+		schc_[i].n = S.n[i];
+		schc_[i].m = S.m[i];
+		schc_[i].g = S.g[i];
+		schc_[i].h = S.h[i];
+	}
+
 	
 }
 

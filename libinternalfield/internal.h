@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-
+#include "coeffs.h"
 
 
 /* This structure will store the Schmidt coefficients */
@@ -28,6 +28,7 @@ struct schmidtcoeffs {
 class Internal {
 	public:
 		Internal(unsigned char *);
+		Internal(coeffStruct);
 		Internal(const Internal&);
 		~Internal();
 	
@@ -72,6 +73,7 @@ class Internal {
 		
 		/* functions for initializing the object */
 		void _LoadSchmidt(unsigned char*);
+		void _LoadSchmidt(coeffStruct);
 		void _Schmidt();
 		void _CoeffGrids();
 

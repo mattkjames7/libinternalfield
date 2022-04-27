@@ -1,0 +1,67 @@
+
+/***********************************************************************
+ * NAME : getModelCoeffPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to the memory address
+ *			where the model coefficients are stored.
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		unsigned char *ptr	Pointer to model data.
+ *
+ **********************************************************************/
+unsigned char* GetModelCoeffPointer(std::string Model) {
+	return modelMap[Model];
+}
+
+/***********************************************************************
+ * NAME : getModelCoeffPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to the memory address
+ *			where the model coefficients are stored.
+ *		
+ * INPUTS : 
+ *		const char *Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		unsigned char *ptr	Pointer to model data.
+ *
+ **********************************************************************/
+unsigned char* GetModelCoeffPointer(const char *Model) {	
+	return modelMap[Model];
+}
+
+
+
+/***********************************************************************
+ * NAME : getModelCoeffStruct(Model)
+ *
+ * DESCRIPTION : Function to return a structure containing model 
+        coefficients.
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		coeffStruct	cstr    Model coefficients.
+ *
+ **********************************************************************/
+coeffStruct getModelCoeffStruct(std::string Model);
+
+/***********************************************************************
+ * NAME : getModelCoeffStruct(Model)
+ *
+ * DESCRIPTION : Function to return a structure containing model 
+        coefficients.
+ *		
+ * INPUTS : 
+ *		const char *Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		coeffStruct	cstr    Model coefficients.
+ *
+ **********************************************************************/
+coeffStruct getModelCoeffStruct(const char *Model);
+
