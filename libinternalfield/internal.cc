@@ -11,18 +11,11 @@
  * 
  * ********************************************************************/
 Internal::Internal(unsigned char *ptr) {
-	
-	
-	/* read the coeffs into the object */
-	_LoadSchmidt(ptr);
-	
-	/* calcualte Schmidt normalized coefficient grids */
-	_Schmidt();
-	_CoeffGrids();
 
-	
-	/* tell object that it is not a copy */
-	copy = false;
+	useptr_ = true;
+	init_ = false;
+	modelptr_ = ptr;
+	_Init();
 }
 
 /***********************************************************************
@@ -34,24 +27,21 @@ Internal::Internal(unsigned char *ptr) {
  * 		coeffStruct		S	Struct containing the coefficients.
  * 
  * ********************************************************************/
-Internal::Internal(coeffStruct S) {
+Internal::Internal(const char *Model) {
 	
 	
-	/* read the coeffs into the object */
-	_LoadSchmidt(S);
-	
-	/* calcualte Schmidt normalized coefficient grids */
-	_Schmidt();
-	_CoeffGrids();
-
-	
-	/* tell object that it is not a copy */
-	copy = false;
+	useptr_ = false;
+	init_ = false;
+	modelstr_ = &(getModelCoeffStruct(Model))();
+	_Init();
 }
 
+
 Internal::Internal(const Internal &obj) {
-	
+	init_ = true;
 	copy = true;
+	useptr_ = obj.useptr_;
+	init_ = obj.init_;
 	nschc_ = obj.nschc_;
 	schc_ = obj.schc_;
 	Snm_ = obj.Snm_;
@@ -79,6 +69,37 @@ Internal::~Internal() {
 		delete[] g_;
 		delete[] h_;
 	}
+}
+
+void Internal::_CheckInit() {
+	/* check if the object is initialized, if not then intialize it! */
+	if (!init_) {
+		_Init();
+	}
+	
+}
+
+
+void Internal::_Init() {
+	
+	/* call the appropriate functions to intialize the object */
+	/* read the coeffs into the object */
+	if (useptr_) {
+		_LoadSchmidt(modelptr_);	
+	} else {
+		_LoadSchmidt(*modelstr_);
+	}
+
+	/* calcualte Schmidt normalized coefficient grids */
+	_Schmidt();
+	_CoeffGrids();
+
+	/* tell object that it is not a copy */
+	copy = false;
+	
+	/* set the status of this object as being intialized */
+	init_ = true;
+	
 }
 
 
@@ -214,7 +235,7 @@ void Internal::_LoadSchmidt(coeffStruct S){
 	
 	/*fill it up */
 	p = 0;
-	for (i=0;i<=nschc_;i++) {
+	for (i=0;i<nschc_;i++) {
 		schc_[i].n = S.n[i];
 		schc_[i].m = S.m[i];
 		schc_[i].g = S.g[i];
@@ -311,6 +332,8 @@ void Internal::_CoeffGrids() {
  * ********************************************************************/
 void Internal::SetDegree(int n) {
 	
+	_CheckInit();
+	
 	/* check that the degree falls within a valid range */
 	if (n > nmax_) {
 		/* greater than the maximum, cap at nmax_ */
@@ -336,7 +359,7 @@ void Internal::SetDegree(int n) {
  * 
  * ********************************************************************/
 int Internal::GetDegree() {
-	
+	_CheckInit();
 	return ncur_;
 	
 }
@@ -360,7 +383,7 @@ int Internal::GetDegree() {
  * ********************************************************************/
 void Internal::_Legendre(int l, double *costheta, double *sintheta, 
 						int nmax, double ***Pnm, double ***dPnm) {
-	
+	_CheckInit();
 	/* set up the intial few terms */
 	int n, m, i;
 	for (i=0;i<l;i++) {
@@ -426,7 +449,7 @@ void Internal::_Legendre(int l, double *costheta, double *sintheta,
 /* try making a scalar version of this to remove new/delete allocation*/
 void Internal::_SphHarm(	int l, double *r0, double *t, double *p,
 							double *Br, double *Bt, double *Bp) {
-	
+	_CheckInit();
 	/* rescale r */
 	int i;
 	double *r = new double[l];
@@ -589,7 +612,7 @@ void Internal::_SphHarm(	int l, double *r0, double *t, double *p,
 void Internal::Field(int l, double *r, double *t, double *p,
 						double *Br, double *Bt, double *Bp) {
 	
-
+	_CheckInit();
 	/* call the model */
 	_SphHarm(l,r,t,p,Br,Bt,Bp);
 	
@@ -618,6 +641,7 @@ void Internal::Field(int l, double *r, double *t, double *p,
  * ********************************************************************/
 void Internal::Field(int l, double *r, double *t, double *p,
 					int MaxDeg, double *Br, double *Bt, double *Bp) {
+	_CheckInit();
 	
 	/* set the model degree */
 	SetDegree(MaxDeg);
@@ -649,6 +673,7 @@ void Internal::Field(int l, double *r, double *t, double *p,
  * ********************************************************************/
 void Internal::Field(	double r, double t, double p,
 						double *Br, double *Bt, double *Bp) {
+	_CheckInit();
 	
 	/* call the model */
 	_SphHarm(1,&r,&t,&p,Br,Bt,Bp);
@@ -679,6 +704,7 @@ void Internal::Field(	double r, double t, double p,
  * ********************************************************************/
 void Internal::Field(	double r, double t, double p, int MaxDeg,
 						double *Br, double *Bt, double *Bp) {
+	_CheckInit();
 	
 	/* set the model degree */
 	SetDegree(MaxDeg);
@@ -710,6 +736,7 @@ void Internal::Field(	double r, double t, double p, int MaxDeg,
  * ********************************************************************/
 void Internal::FieldCart(	double x, double y, double z,
 							double *Bx, double *By, double *Bz) {
+	_CheckInit();
 	
 	/* convert to polar */
 	double r, t, p, Br, Bt, Bp;
@@ -746,6 +773,7 @@ void Internal::FieldCart(	double x, double y, double z,
  * ********************************************************************/
 void Internal::FieldCart(	double x, double y, double z, int MaxDeg,
 							double *Bx, double *By, double *Bz) {
+	_CheckInit();
 	
 	/* set the model degree */
 	SetDegree(MaxDeg);
@@ -788,6 +816,8 @@ void Internal::FieldCart(	double x, double y, double z, int MaxDeg,
  * ********************************************************************/
 void Internal::_Cart2Pol(	double x, double y, double z,
 							double *r, double *t, double *p) {
+	_CheckInit();
+	
 	double pi2 = M_PI*2;
 	r[0] = sqrt(x*x + y*y + z*z);
 	t[0] = acos(z/r[0]);
@@ -819,7 +849,8 @@ void Internal::_Cart2Pol(	double x, double y, double z,
 void Internal::_BPol2BCart(	double t, double p,
 							double Br, double Bt, double Bp,
 							double *Bx, double *By, double *Bz) {
-
+	_CheckInit();
+	
 	double cost, cosp, sint ,sinp;
 	cost = cos(t);
 	cosp = cos(p);

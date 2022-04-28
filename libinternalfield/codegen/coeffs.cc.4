@@ -45,10 +45,12 @@ unsigned char* GetModelCoeffPointer(const char *Model) {
  *		std::string Model	Model name (use lower case!).
  *
  * RETURNS :
- *		coeffStruct	cstr    Model coefficients.
+ *		coeffStructFunc	cstr    Model coefficient function.
  *
  **********************************************************************/
-coeffStruct getModelCoeffStruct(std::string Model);
+coeffStructFunc getModelCoeffStruct(std::string Model) {
+    return coeffMap[Model];
+}
 
 /***********************************************************************
  * NAME : getModelCoeffStruct(Model)
@@ -60,8 +62,10 @@ coeffStruct getModelCoeffStruct(std::string Model);
  *		const char *Model	Model name (use lower case!).
  *
  * RETURNS :
- *		coeffStruct	cstr    Model coefficients.
+ *		coeffStructFunc	cstr    Model coefficient function.
  *
  **********************************************************************/
-coeffStruct getModelCoeffStruct(const char *Model);
+coeffStructFunc getModelCoeffStruct(const char *Model) {
+    return coeffMap[Model];
+}
 

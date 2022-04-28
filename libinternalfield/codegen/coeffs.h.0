@@ -16,6 +16,10 @@ typedef struct coeffStruct {
     const double *g;
     const double *h;
 } coeffStruct;
+
+typedef coeffStruct& (*coeffStructFunc)();
+
+
 #endif
 /* list of model names */
 extern std::vector<std::string> modelNames;

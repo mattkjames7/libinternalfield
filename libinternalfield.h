@@ -25,6 +25,10 @@ typedef struct coeffStruct {
     const double *g;
     const double *h;
 } coeffStruct;
+
+typedef coeffStruct& (*coeffStructFunc)();
+
+
 /* list of model names */
 extern std::vector<std::string> modelNames;
 
@@ -51,28 +55,28 @@ extern unsigned char _binary_vipal_bin_start;
 
 
 /* model coefficient arrays */
-extern coeffStruct _model_coeff_ness1975;
-extern coeffStruct _model_coeff_o6;
-extern coeffStruct _model_coeff_sha;
-extern coeffStruct _model_coeff_gsfc15evs;
-extern coeffStruct _model_coeff_vip4;
-extern coeffStruct _model_coeff_p11a;
-extern coeffStruct _model_coeff_o4;
-extern coeffStruct _model_coeff_gsfc15ev;
-extern coeffStruct _model_coeff_gsfc13ev;
-extern coeffStruct _model_coeff_isaac;
-extern coeffStruct _model_coeff_jrm09;
-extern coeffStruct _model_coeff_jpl15evs;
-extern coeffStruct _model_coeff_jpl15ev;
-extern coeffStruct _model_coeff_vit4;
-extern coeffStruct _model_coeff_langlais2019;
-extern coeffStruct _model_coeff_v117ev;
-extern coeffStruct _model_coeff_jrm33;
-extern coeffStruct _model_coeff_u17ev;
-extern coeffStruct _model_coeff_vipal;
+extern coeffStruct& _model_coeff_ness1975();
+extern coeffStruct& _model_coeff_o6();
+extern coeffStruct& _model_coeff_sha();
+extern coeffStruct& _model_coeff_gsfc15evs();
+extern coeffStruct& _model_coeff_vip4();
+extern coeffStruct& _model_coeff_p11a();
+extern coeffStruct& _model_coeff_o4();
+extern coeffStruct& _model_coeff_gsfc15ev();
+extern coeffStruct& _model_coeff_gsfc13ev();
+extern coeffStruct& _model_coeff_isaac();
+extern coeffStruct& _model_coeff_jrm09();
+extern coeffStruct& _model_coeff_jpl15evs();
+extern coeffStruct& _model_coeff_jpl15ev();
+extern coeffStruct& _model_coeff_vit4();
+extern coeffStruct& _model_coeff_langlais2019();
+extern coeffStruct& _model_coeff_v117ev();
+extern coeffStruct& _model_coeff_jrm33();
+extern coeffStruct& _model_coeff_u17ev();
+extern coeffStruct& _model_coeff_vipal();
 
 /* map model names to the structure containing the coefficients */
-extern std::map<std::string,coeffStruct> coeffMap;
+extern std::map<std::string,coeffStructFunc> coeffMap;
 
 /***********************************************************************
  * NAME : getModelCoeffStruct(Model)
@@ -84,10 +88,10 @@ extern std::map<std::string,coeffStruct> coeffMap;
  *		std::string Model	Model name (use lower case!).
  *
  * RETURNS :
- *		coeffStruct	cstr    Model coefficients.
+ *		coeffStructFunc	cstr    Model coefficient function.
  *
  **********************************************************************/
-coeffStruct getModelCoeffStruct(std::string Model);
+coeffStructFunc getModelCoeffStruct(std::string Model);
 
 /***********************************************************************
  * NAME : getModelCoeffStruct(Model)
@@ -99,10 +103,10 @@ coeffStruct getModelCoeffStruct(std::string Model);
  *		const char *Model	Model name (use lower case!).
  *
  * RETURNS :
- *		coeffStruct	cstr    Model coefficients.
+ *		coeffStructFunc	cstr    Model coefficient function.
  *
  **********************************************************************/
-coeffStruct getModelCoeffStruct(const char *Model);
+coeffStructFunc getModelCoeffStruct(const char *Model);
 
 
 /* map the model names to their pointers (to be removed) */
@@ -356,7 +360,7 @@ struct schmidtcoeffs {
 class Internal {
 	public:
 		Internal(unsigned char *);
-		Internal(coeffStruct);
+		Internal(const char *);
 		Internal(const Internal&);
 		~Internal();
 	
@@ -401,7 +405,7 @@ class Internal {
 		
 		/* functions for initializing the object */
 		void _LoadSchmidt(unsigned char*);
-		void _LoadSchmidt(coeffStruct);
+		void _LoadSchmidt(coeffStruct );
 		void _Schmidt();
 		void _CoeffGrids();
 
@@ -417,6 +421,14 @@ class Internal {
 		void _BPol2BCart(double,double,double,double,double,double*,double*,double*);
 		
 		bool copy;
+
+		/* initialization */
+		bool useptr_;
+		bool init_;
+		unsigned char *modelptr_;
+		coeffStruct *modelstr_;
+		void _Init();
+		void _CheckInit();
 	
 };
 

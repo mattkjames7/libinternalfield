@@ -28,7 +28,7 @@ struct schmidtcoeffs {
 class Internal {
 	public:
 		Internal(unsigned char *);
-		Internal(coeffStruct);
+		Internal(const char *);
 		Internal(const Internal&);
 		~Internal();
 	
@@ -73,7 +73,7 @@ class Internal {
 		
 		/* functions for initializing the object */
 		void _LoadSchmidt(unsigned char*);
-		void _LoadSchmidt(coeffStruct);
+		void _LoadSchmidt(coeffStruct );
 		void _Schmidt();
 		void _CoeffGrids();
 
@@ -89,6 +89,14 @@ class Internal {
 		void _BPol2BCart(double,double,double,double,double,double*,double*,double*);
 		
 		bool copy;
+
+		/* initialization */
+		bool useptr_;
+		bool init_;
+		unsigned char *modelptr_;
+		coeffStruct *modelstr_;
+		void _Init();
+		void _CheckInit();
 	
 };
 

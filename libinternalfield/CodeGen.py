@@ -183,26 +183,27 @@ def WriteCppFile(fname):
 	
 	#header contents
 	hlines = []
-	hlines.append('const int _model_coeff_{:s}_len;\n'.format(name))
-	hlines.append('const int _model_coeff_{:s}_nmax;\n'.format(name))
-	hlines.append('const int _model_coeff_{:s}_ndef;\n'.format(name))
-	hlines.append('const double _model_coeff_{:s}_rscale;\n'.format(name))
-	hlines.append('const int _model_coeff_{:s}_n[];\n'.format(name))
-	hlines.append('const int _model_coeff_{:s}_m[];\n'.format(name))
-	hlines.append('const double _model_coeff_{:s}_g[];\n'.format(name))
-	hlines.append('const double _model_coeff_{:s}_h[];\n'.format(name))
-	hlines.append('coeffStruct _model_coeff_{:s};\n\n'.format(name))
+	#hlines.append('const int _model_coeff_{:s}_len;\n'.format(name))
+	#hlines.append('const int _model_coeff_{:s}_nmax;\n'.format(name))
+	#hlines.append('const int _model_coeff_{:s}_ndef;\n'.format(name))
+	#hlines.append('const double _model_coeff_{:s}_rscale;\n'.format(name))
+	#hlines.append('const int _model_coeff_{:s}_n[];\n'.format(name))
+	#hlines.append('const int _model_coeff_{:s}_m[];\n'.format(name))
+	#hlines.append('const double _model_coeff_{:s}_g[];\n'.format(name))
+	#hlines.append('const double _model_coeff_{:s}_h[];\n'.format(name))
+	hlines.append('coeffStruct& _model_coeff_{:s}();\n'.format(name))
 	
 	#cpp contents
 	clines = []
-	clines.append('const int _model_coeff_{:s}_len = {:d};\n'.format(name,nl))
-	clines.append('const int _model_coeff_{:s}_nmax = {:d};\n'.format(name,nmax))
-	clines.append('const int _model_coeff_{:s}_ndef = {:d};\n'.format(name,DefDeg))
-	clines.append('const double _model_coeff_{:s}_rscale = {:f};\n'.format(name,Rscale))
-	cn = 'const int _model_coeff_{:s}_n[] = '.format(name) + '{'
-	cm = 'const int _model_coeff_{:s}_m[] = '.format(name) + '{'
-	cg = 'const double _model_coeff_{:s}_g[] = '.format(name) + '{'
-	ch = 'const double _model_coeff_{:s}_h[] = '.format(name) + '{'
+	clines.append('coeffStruct& _model_coeff_{:s}()'.format(name)+' {\n')
+	clines.append('\tstatic const int len = {:d};\n'.format(nschc))
+	clines.append('\tstatic const int nmax = {:d};\n'.format(nmax))
+	clines.append('\tstatic const int ndef = {:d};\n'.format(DefDeg))
+	clines.append('\tstatic const double rscale = {:f};\n'.format(Rscale))
+	cn = '\tstatic const int n[] = ' + '{'
+	cm = '\tstatic const int m[] = ' + '{'
+	cg = '\tstatic const double g[] = ' + '{'
+	ch = '\tstatic const double h[] = ' + '{'
 	lstr0 = len(cn)
 	lstrn = lstr0
 	lstrm = lstr0
@@ -215,22 +216,22 @@ def WriteCppFile(fname):
 		chs = '{:f},'.format(schc[i].h)
 		
 		if lstrn + len(cns) > 72:
-			cn += '\n\t'
+			cn += '\n\t\t'
 			lstrn = 4 + len(cns)
 		else:
 			lstrn += len(cns)
 		if lstrm + len(cms) > 72:
-			cm += '\n\t'
+			cm += '\n\t\t'
 			lstrm = 4 + len(cms)
 		else:
 			lstrm += len(cms)
 		if lstrg + len(cgs) > 72:
-			cg += '\n\t'
+			cg += '\n\t\t'
 			lstrg = 4 + len(cgs)
 		else:
 			lstrg += len(cgs)
 		if lstrh + len(chs) > 72:
-			ch += '\n\t'
+			ch += '\n\t\t'
 			lstrh = 4 + len(chs)
 		else:
 			lstrh += len(chs)
@@ -245,16 +246,73 @@ def WriteCppFile(fname):
 	clines.append(cg[:-1] + '};\n')
 	clines.append(ch[:-1] + '};\n')
 	
-	sstr = 'coeffStruct _model_coeff_{:s} ='.format(name)+'{'
-	sstr +='_model_coeff_{:s}_len,\n'.format(name)
-	sstr +='								_model_coeff_{:s}_nmax,\n'.format(name)
-	sstr +='								_model_coeff_{:s}_ndef,\n'.format(name)
-	sstr +='								_model_coeff_{:s}_rscale,\n'.format(name)
-	sstr +='								_model_coeff_{:s}_n,\n'.format(name)
-	sstr +='								_model_coeff_{:s}_m,\n'.format(name)
-	sstr +='								_model_coeff_{:s}_g,\n'.format(name)
-	sstr +='								_model_coeff_{:s}_h'.format(name) + '};\n\n'
-	clines.append(sstr)
+
+	clines.append('\tstatic coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};\n')
+	clines.append('\treturn out;\n')
+	clines.append('}\n\n')
+	# #cpp contents
+	# clines = []
+	# clines.append('coeffStruct& _model_coeff_{:s}()'.format(name)+' {\n')
+	# clines.append('const int _model_coeff_{:s}_len = {:d};\n'.format(name,nl))
+	# clines.append('const int _model_coeff_{:s}_nmax = {:d};\n'.format(name,nmax))
+	# clines.append('const int _model_coeff_{:s}_ndef = {:d};\n'.format(name,DefDeg))
+	# clines.append('const double _model_coeff_{:s}_rscale = {:f};\n'.format(name,Rscale))
+	# cn = 'const int _model_coeff_{:s}_n[] = '.format(name) + '{'
+	# cm = 'const int _model_coeff_{:s}_m[] = '.format(name) + '{'
+	# cg = 'const double _model_coeff_{:s}_g[] = '.format(name) + '{'
+	# ch = 'const double _model_coeff_{:s}_h[] = '.format(name) + '{'
+	# lstr0 = len(cn)
+	# lstrn = lstr0
+	# lstrm = lstr0
+	# lstrg = lstr0
+	# lstrh = lstr0
+	# for i in range(0,nschc):
+		# cns = '{:d},'.format(schc[i].n)
+		# cms = '{:d},'.format(schc[i].m)
+		# cgs = '{:f},'.format(schc[i].g)
+		# chs = '{:f},'.format(schc[i].h)
+		
+		# if lstrn + len(cns) > 72:
+			# cn += '\n\t'
+			# lstrn = 4 + len(cns)
+		# else:
+			# lstrn += len(cns)
+		# if lstrm + len(cms) > 72:
+			# cm += '\n\t'
+			# lstrm = 4 + len(cms)
+		# else:
+			# lstrm += len(cms)
+		# if lstrg + len(cgs) > 72:
+			# cg += '\n\t'
+			# lstrg = 4 + len(cgs)
+		# else:
+			# lstrg += len(cgs)
+		# if lstrh + len(chs) > 72:
+			# ch += '\n\t'
+			# lstrh = 4 + len(chs)
+		# else:
+			# lstrh += len(chs)
+			
+		# cn += cns
+		# cm += cms
+		# cg += cgs
+		# ch += chs
+		
+	# clines.append(cn[:-1] + '};\n')
+	# clines.append(cm[:-1] + '};\n')
+	# clines.append(cg[:-1] + '};\n')
+	# clines.append(ch[:-1] + '};\n')
+	
+	# sstr = 'coeffStruct _model_coeff_{:s} ='.format(name)+'{'
+	# sstr +='_model_coeff_{:s}_len,\n'.format(name)
+	# sstr +='								_model_coeff_{:s}_nmax,\n'.format(name)
+	# sstr +='								_model_coeff_{:s}_ndef,\n'.format(name)
+	# sstr +='								_model_coeff_{:s}_rscale,\n'.format(name)
+	# sstr +='								_model_coeff_{:s}_n,\n'.format(name)
+	# sstr +='								_model_coeff_{:s}_m,\n'.format(name)
+	# sstr +='								_model_coeff_{:s}_g,\n'.format(name)
+	# sstr +='								_model_coeff_{:s}_h'.format(name) + '};\n\n'
+	# clines.append(sstr)
 	
 	#header file
 	print('Saving {:s}'.format(fnameouth))
@@ -422,7 +480,7 @@ def GenerateCoeffsH(models,modelsl):
 	lines += code1
 	
 	for m in models:
-		lines.append('extern coeffStruct _model_coeff_{:s};\n'.format(m))
+		lines.append('extern coeffStruct& _model_coeff_{:s}();\n'.format(m))
 		
 		
 	#rest of the code
@@ -462,7 +520,7 @@ def GenerateCoeffsCC(models,modelsl):
 		lines += cc
 	
 	#map of structures
-	s = 'std::map<std::string,coeffStruct> coeffMap = {\t'
+	s = 'std::map<std::string,coeffStructFunc> coeffMap = {\t'
 	for i,(m,ml) in enumerate(zip(models,modelsl)):
 		if i > 0:
 			s += '\t\t\t\t\t\t\t\t\t\t'
@@ -548,7 +606,8 @@ def GenerateModelsCC(models,modelsl):
 	#define models
 	for m,ml in zip(models,modelsl):
 		lines.append('//Internal {:s}(&_binary_{:s}_bin_start);\n'.format(ml,m))
-		lines.append('Internal {:s}(_model_coeff_{:s});\n'.format(ml,m))
+		lines.append('//Internal {:s}(&_model_coeff_{:s});\n'.format(ml,m))
+		lines.append('Internal {:s}("{:s}");\n'.format(ml,m))
 	lines.append('\n')
 
 	#add another map from model name to model pointer

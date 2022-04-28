@@ -1,5 +1,5 @@
 # CFLAGS for CC
-CFLAGS=-lm -fPIC -std=c++17
+CFLAGS=-lm -fPIC -std=c++17 -g
 
 # Compiler
 CCo=g++ -c $(CFLAGS)
@@ -31,6 +31,9 @@ test:
 	
 	
 clean:
+	rm -v coeffs/*.h
+	rm -v coeffs/*.cc
 	rm -v *.so *.a
 	cd test; make clean
 	rm -v ../libinternalfield.h
+

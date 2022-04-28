@@ -1,5 +1,5 @@
 # CFLAGS for CC
-CFLAGS=-lm -fPIC -std=c++17
+CFLAGS=-lm -fPIC -std=c++17 -g
 
 # Compiler
 CCo=g++ -c $(CFLAGS)
