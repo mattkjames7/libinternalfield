@@ -1,1 +1,35 @@
-/* map the model names to their pointers (this will be removed) */
+
+/***********************************************************************
+ * NAME : getModelCoeffStruct(Model)
+ *
+ * DESCRIPTION : Function to return a structure containing model 
+        coefficients.
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		coeffStructFunc	cstr    Model coefficient function.
+ *
+ **********************************************************************/
+coeffStructFunc getModelCoeffStruct(std::string Model) {
+    return coeffMap[Model];
+}
+
+/***********************************************************************
+ * NAME : getModelCoeffStruct(Model)
+ *
+ * DESCRIPTION : Function to return a structure containing model 
+        coefficients.
+ *		
+ * INPUTS : 
+ *		const char *Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		coeffStructFunc	cstr    Model coefficient function.
+ *
+ **********************************************************************/
+coeffStructFunc getModelCoeffStruct(const char *Model) {
+    return coeffMap[Model];
+}
+

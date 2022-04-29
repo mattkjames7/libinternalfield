@@ -19,11 +19,9 @@ obj:
 
 lib:
 	#$(CC) *.o coeffs/*.o -shared -o libinternal.so
-	$(CC) coeffs/*.o coeffs.o internal.o models.o internalmodel.o libinternal.o  -shared -o libinternalfield.so
-	ar -rc libinternalfield.a *.o coeffs/*.o
+	$(CC) coeffs.o internal.o models.o internalmodel.o libinternal.o  -shared -o libinternalfield.so
+	ar -rc libinternalfield.a *.o 
 	rm -v *.o
-	rm -v coeffs/*.o
-	rm -v coeffs/*.bin
 	cd test; make all
 	
 test:
@@ -31,7 +29,6 @@ test:
 	
 	
 clean:
-	rm -v coeffs/*.h
 	rm -v coeffs/*.cc
 	rm -v *.so *.a
 	cd test; make clean

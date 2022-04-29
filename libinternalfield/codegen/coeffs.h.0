@@ -24,4 +24,4 @@ typedef coeffStruct& (*coeffStructFunc)();
 /* list of model names */
 extern std::vector<std::string> modelNames;
 
-/* pointers to the memory where coefficients are stored (to be removed)*/
+/* model coefficient arrays */
