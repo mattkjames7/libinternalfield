@@ -343,7 +343,7 @@ def GenerateModelsH(models,modelsl):
 
 	#add externs
 	for m in modelsl:
-		lines.append('extern Internal {:s};\n'.format(m))
+		lines.append('extern Internal& {:s}();\n'.format(m))
 	lines.append('\n')
 	
 	#add the rest of the existing code
@@ -376,16 +376,19 @@ def GenerateModelsCC(models,modelsl):
 
 	#define models
 	for m,ml in zip(models,modelsl):
-		lines.append('Internal {:s}("{:s}");\n'.format(ml,m))
+		lines.append('Internal& {:s}()'.format(ml,m)+' {\n')
+		lines.append('\tstatic Internal model("{:s}");\n'.format(m))
+		lines.append('\treturn model;\n')
+		lines.append('}\n\n')
 	lines.append('\n')
 
 	#add another map from model name to model pointer
 	lines.append('/* map the model names to their model object pointers */\n')
-	s = 'std::map<std::string,Internal*> modelPtrMap = {\t'
+	s = 'std::map<std::string,InternalFunc> modelPtrMap = {\t'
 	for i,ml in enumerate(modelsl):
 		if i > 0:
 			s += '\t\t\t\t\t\t\t\t\t\t'
-		s += '{"' + ml + '",&{:s}'.format(ml) + '}'
+		s += '{"' + ml + '",{:s}'.format(ml) + '}'
 		if i < len(modelsl) - 1:
 			s += ',\n'
 		else:
@@ -417,7 +420,8 @@ def GenerateModelsCC(models,modelsl):
 	for m in modelsl:
 		s = 'void {:s}Field(double x, double y, double z,\n'.format(m)
 		s+= '				double *Bx, double *By, double *Bz) {\n'
-		s+= '	{:s}.FieldCart(x,y,z,Bx,By,Bz);\n'.format(m)
+		s+= '	Internal model = {:s}();\n'.format(m)
+		s+= '	model.FieldCart(x,y,z,Bx,By,Bz);\n'
 		s+= '}\n\n'
 		lines.append(s)
 		

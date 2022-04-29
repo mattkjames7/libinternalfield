@@ -9,29 +9,30 @@
 #endif
 
 /* models! */
-extern Internal gsfc15evs;
-extern Internal vip4;
-extern Internal v117ev;
-extern Internal gsfc15ev;
-extern Internal gsfc13ev;
-extern Internal vipal;
-extern Internal jpl15evs;
-extern Internal u17ev;
-extern Internal jrm09;
-extern Internal ness1975;
-extern Internal o6;
-extern Internal o4;
-extern Internal sha;
-extern Internal p11a;
-extern Internal jrm33;
-extern Internal langlais2019;
-extern Internal vit4;
-extern Internal isaac;
-extern Internal jpl15ev;
+extern Internal& gsfc15evs();
+extern Internal& vip4();
+extern Internal& v117ev();
+extern Internal& gsfc15ev();
+extern Internal& gsfc13ev();
+extern Internal& vipal();
+extern Internal& jpl15evs();
+extern Internal& u17ev();
+extern Internal& jrm09();
+extern Internal& ness1975();
+extern Internal& o6();
+extern Internal& o4();
+extern Internal& sha();
+extern Internal& p11a();
+extern Internal& jrm33();
+extern Internal& langlais2019();
+extern Internal& vit4();
+extern Internal& isaac();
+extern Internal& jpl15ev();
 
 
 /* map the model names to their model object pointers */
-extern std::map<std::string,Internal*> modelPtrMap;
+typedef Internal& (*InternalFunc)();
+extern std::map<std::string,InternalFunc> modelPtrMap;
 
 /* functions to return the pointer to a model object given a string */
 
@@ -44,10 +45,10 @@ extern std::map<std::string,Internal*> modelPtrMap;
  *		std::string Model	Model name (use lower case!).
  *
  * RETURNS :
- *		Internal *ptr		Pointer to model object.
+ *		InternalFunc ptr		Function pointer to model object.
  *
  **********************************************************************/
-Internal* getModelObjPointer(std::string Model);
+InternalFunc getModelObjPointer(std::string Model);
 
 /***********************************************************************
  * NAME : getModelObjPointer(Model)
@@ -58,10 +59,10 @@ Internal* getModelObjPointer(std::string Model);
  *		const char *Model	Model name (use lower case!).
  *
  * RETURNS :
- *		Internal *ptr		Pointer to model object.
+ *		InternalFunc ptr		Function pointer to model object.
  *
  **********************************************************************/
-Internal* getModelObjPointer(const char *Model);
+InternalFunc getModelObjPointer(const char *Model);
 
 /* a function to return a list of the models available */
 /***********************************************************************

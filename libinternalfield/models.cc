@@ -1,46 +1,122 @@
 #include "models.h"
 
 /* model definitions */
-Internal gsfc15evs("gsfc15evs");
-Internal vip4("vip4");
-Internal v117ev("v117ev");
-Internal gsfc15ev("gsfc15ev");
-Internal gsfc13ev("gsfc13ev");
-Internal vipal("vipal");
-Internal jpl15evs("jpl15evs");
-Internal u17ev("u17ev");
-Internal jrm09("jrm09");
-Internal ness1975("ness1975");
-Internal o6("o6");
-Internal o4("o4");
-Internal sha("sha");
-Internal p11a("p11a");
-Internal jrm33("jrm33");
-Internal langlais2019("langlais2019");
-Internal vit4("vit4");
-Internal isaac("isaac");
-Internal jpl15ev("jpl15ev");
+Internal& gsfc15evs() {
+	static Internal model("gsfc15evs");
+	return model;
+}
+
+Internal& vip4() {
+	static Internal model("vip4");
+	return model;
+}
+
+Internal& v117ev() {
+	static Internal model("v117ev");
+	return model;
+}
+
+Internal& gsfc15ev() {
+	static Internal model("gsfc15ev");
+	return model;
+}
+
+Internal& gsfc13ev() {
+	static Internal model("gsfc13ev");
+	return model;
+}
+
+Internal& vipal() {
+	static Internal model("vipal");
+	return model;
+}
+
+Internal& jpl15evs() {
+	static Internal model("jpl15evs");
+	return model;
+}
+
+Internal& u17ev() {
+	static Internal model("u17ev");
+	return model;
+}
+
+Internal& jrm09() {
+	static Internal model("jrm09");
+	return model;
+}
+
+Internal& ness1975() {
+	static Internal model("ness1975");
+	return model;
+}
+
+Internal& o6() {
+	static Internal model("o6");
+	return model;
+}
+
+Internal& o4() {
+	static Internal model("o4");
+	return model;
+}
+
+Internal& sha() {
+	static Internal model("sha");
+	return model;
+}
+
+Internal& p11a() {
+	static Internal model("p11a");
+	return model;
+}
+
+Internal& jrm33() {
+	static Internal model("jrm33");
+	return model;
+}
+
+Internal& langlais2019() {
+	static Internal model("langlais2019");
+	return model;
+}
+
+Internal& vit4() {
+	static Internal model("vit4");
+	return model;
+}
+
+Internal& isaac() {
+	static Internal model("isaac");
+	return model;
+}
+
+Internal& jpl15ev() {
+	static Internal model("jpl15ev");
+	return model;
+}
+
 
 /* map the model names to their model object pointers */
-std::map<std::string,Internal*> modelPtrMap = {	{"gsfc15evs",&gsfc15evs},
-										{"vip4",&vip4},
-										{"v117ev",&v117ev},
-										{"gsfc15ev",&gsfc15ev},
-										{"gsfc13ev",&gsfc13ev},
-										{"vipal",&vipal},
-										{"jpl15evs",&jpl15evs},
-										{"u17ev",&u17ev},
-										{"jrm09",&jrm09},
-										{"ness1975",&ness1975},
-										{"o6",&o6},
-										{"o4",&o4},
-										{"sha",&sha},
-										{"p11a",&p11a},
-										{"jrm33",&jrm33},
-										{"langlais2019",&langlais2019},
-										{"vit4",&vit4},
-										{"isaac",&isaac},
-										{"jpl15ev",&jpl15ev}
+std::map<std::string,InternalFunc> modelPtrMap = {	{"gsfc15evs",gsfc15evs},
+										{"vip4",vip4},
+										{"v117ev",v117ev},
+										{"gsfc15ev",gsfc15ev},
+										{"gsfc13ev",gsfc13ev},
+										{"vipal",vipal},
+										{"jpl15evs",jpl15evs},
+										{"u17ev",u17ev},
+										{"jrm09",jrm09},
+										{"ness1975",ness1975},
+										{"o6",o6},
+										{"o4",o4},
+										{"sha",sha},
+										{"p11a",p11a},
+										{"jrm33",jrm33},
+										{"langlais2019",langlais2019},
+										{"vit4",vit4},
+										{"isaac",isaac},
+										{"jpl15ev",jpl15ev}
 };
 
 
@@ -53,10 +129,10 @@ std::map<std::string,Internal*> modelPtrMap = {	{"gsfc15evs",&gsfc15evs},
  *		std::string Model	Model name (use lower case!).
  *
  * RETURNS :
- *		Internal *ptr		Pointer to model object.
+ *		InternalFunc *ptr		Function pointer to model object.
  *
  **********************************************************************/
-Internal* getModelObjPointer(std::string Model) {
+InternalFunc getModelObjPointer(std::string Model) {
 	return modelPtrMap[Model];
 }
 
@@ -69,10 +145,10 @@ Internal* getModelObjPointer(std::string Model) {
  *		std::string Model	Model name (use lower case!).
  *
  * RETURNS :
- *		Internal *ptr		Pointer to model object.
+ *		InternalFunc *ptr		Function pointer to model object.
  *
  **********************************************************************/
-Internal* getModelObjPointer(const char *Model) {
+InternalFunc getModelObjPointer(const char *Model) {
 	return modelPtrMap[Model];
 }
 
@@ -171,96 +247,115 @@ modelFieldPtr getModelFieldPtr(const char *Model) {
  **********************************************************************/
 void gsfc15evsField(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	gsfc15evs.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = gsfc15evs();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void vip4Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	vip4.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = vip4();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void v117evField(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	v117ev.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = v117ev();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void gsfc15evField(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	gsfc15ev.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = gsfc15ev();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void gsfc13evField(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	gsfc13ev.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = gsfc13ev();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void vipalField(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	vipal.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = vipal();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void jpl15evsField(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	jpl15evs.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = jpl15evs();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void u17evField(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	u17ev.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = u17ev();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void jrm09Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	jrm09.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = jrm09();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void ness1975Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	ness1975.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = ness1975();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void o6Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	o6.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = o6();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void o4Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	o4.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = o4();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void shaField(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	sha.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = sha();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void p11aField(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	p11a.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = p11a();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void jrm33Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	jrm33.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = jrm33();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void langlais2019Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	langlais2019.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = langlais2019();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void vit4Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	vit4.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = vit4();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void isaacField(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	isaac.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = isaac();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
 void jpl15evField(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
-	jpl15ev.FieldCart(x,y,z,Bx,By,Bz);
+	Internal model = jpl15ev();
+	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 

@@ -1,6 +1,7 @@
 
 /* map the model names to their model object pointers */
-extern std::map<std::string,Internal*> modelPtrMap;
+typedef Internal& (*InternalFunc)();
+extern std::map<std::string,InternalFunc> modelPtrMap;
 
 /* functions to return the pointer to a model object given a string */
 
@@ -13,10 +14,10 @@ extern std::map<std::string,Internal*> modelPtrMap;
  *		std::string Model	Model name (use lower case!).
  *
  * RETURNS :
- *		Internal *ptr		Pointer to model object.
+ *		InternalFunc ptr		Function pointer to model object.
  *
  **********************************************************************/
-Internal* getModelObjPointer(std::string Model);
+InternalFunc getModelObjPointer(std::string Model);
 
 /***********************************************************************
  * NAME : getModelObjPointer(Model)
@@ -27,10 +28,10 @@ Internal* getModelObjPointer(std::string Model);
  *		const char *Model	Model name (use lower case!).
  *
  * RETURNS :
- *		Internal *ptr		Pointer to model object.
+ *		InternalFunc ptr		Function pointer to model object.
  *
  **********************************************************************/
-Internal* getModelObjPointer(const char *Model);
+InternalFunc getModelObjPointer(const char *Model);
 
 /* a function to return a list of the models available */
 /***********************************************************************

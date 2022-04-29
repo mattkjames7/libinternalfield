@@ -41,7 +41,7 @@ void InternalModel::Init() {
 	/* loop through each one and add to the map */
 	int i;
 	for (i=0;i<ModelNames_.size();i++) {
-		Models_[ModelNames_[i]] = getModelObjPointer(ModelNames_[i]);
+		Models_[ModelNames_[i]] = &getModelObjPointer(ModelNames_[i])();
 	}
 		
 	/* set the current model */

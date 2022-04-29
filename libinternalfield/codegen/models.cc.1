@@ -8,10 +8,10 @@
  *		std::string Model	Model name (use lower case!).
  *
  * RETURNS :
- *		Internal *ptr		Pointer to model object.
+ *		InternalFunc *ptr		Function pointer to model object.
  *
  **********************************************************************/
-Internal* getModelObjPointer(std::string Model) {
+InternalFunc getModelObjPointer(std::string Model) {
 	return modelPtrMap[Model];
 }
 
@@ -24,10 +24,10 @@ Internal* getModelObjPointer(std::string Model) {
  *		std::string Model	Model name (use lower case!).
  *
  * RETURNS :
- *		Internal *ptr		Pointer to model object.
+ *		InternalFunc *ptr		Function pointer to model object.
  *
  **********************************************************************/
-Internal* getModelObjPointer(const char *Model) {
+InternalFunc getModelObjPointer(const char *Model) {
 	return modelPtrMap[Model];
 }
 
