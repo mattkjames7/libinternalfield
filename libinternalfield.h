@@ -10,8 +10,11 @@
 
 
 #define INTERNALFIELD_VERSION_MAJOR 0
-#define INTERNALFIELD_VERSION_MINOR 0
-#define INTERNALFIELD_VERSION_PATCH 1
+#define INTERNALFIELD_VERSION_MINOR 1
+#define INTERNALFIELD_VERSION_PATCH 0
+
+class Internal;
+
 
 
 /* structure for storing the coefficients in memory (replaces binary stuff) */
