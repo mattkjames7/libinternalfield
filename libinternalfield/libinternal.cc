@@ -3,7 +3,7 @@
 /* we want to initialize the model objects witht heir parameters */
 
 InternalModel getInternalModel() {
-	InternalModel internalModel;
+	static InternalModel internalModel;
 	return internalModel;
 }
 
