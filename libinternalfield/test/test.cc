@@ -33,6 +33,7 @@ int main() {
 	const char *fmt = " %3.1f | %5.1f | %5.1f | %18.11f | %18.11f | %18.11f\n";
 	
 	/* set model to VIP4 */
+	InternalModel internalModel = getInternalModel();
 	internalModel.SetModel("vip4");
 	internalModel.SetCartIn(false);
 	internalModel.SetCartOut(false);

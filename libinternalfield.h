@@ -436,7 +436,7 @@ class InternalModel {
 
 
 /* we want to initialize the model objects witht heir parameters */
-extern InternalModel internalModel;
+InternalModel getInternalModel();
 
 extern "C" {
 	/* these wrappers can be used to get the magnetic field vectors */
