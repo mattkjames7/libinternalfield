@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 #include <map>
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include "models.h"
 #include "internal.h"
 

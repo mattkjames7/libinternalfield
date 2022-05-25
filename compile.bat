@@ -1,5 +1,5 @@
 cd libinternalfield
-call compile.bad 
+call compile.bat 
 cd ..
 
 
