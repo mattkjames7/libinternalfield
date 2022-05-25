@@ -390,32 +390,36 @@ def GenerateModelsCC(models,modelsl):
 
 	#add another map from model name to model pointer
 	lines.append('/* map the model names to their model object pointers */\n')
-	s = 'std::map<std::string,InternalFunc> modelPtrMap = {\t'
+	s = 'std::map<std::string,InternalFunc> getModelPtrMap() {\n'
+	s += '\tstatic std::map<std::string,InternalFunc> modelPtrMap = {\n'
 	for i,ml in enumerate(modelsl):
-		if i > 0:
-			s += '\t\t\t\t\t\t\t\t\t\t'
+		s += '\t\t\t\t\t\t\t\t\t\t'
 		s += '{"' + ml + '",{:s}'.format(ml) + '}'
 		if i < len(modelsl) - 1:
 			s += ',\n'
 		else:
 			s += '\n'
-	s += '};\n\n'
+	s += '\t};\n'
+	s += '\treturn modelPtrMap;\n'
+	s += '}\n'
 	lines.append(s)	
 	
 	#add some more of the existing code
 	lines += code1
 	
 	#add another map from model name to model field function pointer
-	s = 'std::map<std::string,modelFieldPtr> modelFieldPtrMap = {\t'
+	s = 'std::map<std::string,modelFieldPtr> getModelFieldPtrMap() {\n'
+	s += '\tstatic std::map<std::string,modelFieldPtr> modelFieldPtrMap = {\n'
 	for i,ml in enumerate(modelsl):
-		if i > 0:
-			s += '\t\t\t\t\t\t\t\t\t\t\t\t\t'
+		s += '\t\t\t\t\t\t\t\t\t\t\t\t\t'
 		s += '{"' + ml + '",&{:s}Field'.format(ml) + '}'
 		if i < len(modelsl) - 1:
 			s += ',\n'
 		else:
 			s += '\n'
-	s += '};\n\n'
+	s += '\t};\n'
+	s += '\treturn modelFieldPtrMap;\n'
+	s += '}\n'
 	lines.append(s)		
 	
 	

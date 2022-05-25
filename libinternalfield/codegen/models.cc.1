@@ -12,6 +12,7 @@
  *
  **********************************************************************/
 InternalFunc getModelObjPointer(std::string Model) {
+    std::map<std::string,InternalFunc> modelPtrMap = getModelPtrMap();
 	return modelPtrMap[Model];
 }
 
@@ -28,6 +29,7 @@ InternalFunc getModelObjPointer(std::string Model) {
  *
  **********************************************************************/
 InternalFunc getModelObjPointer(const char *Model) {
+    std::map<std::string,InternalFunc> modelPtrMap = getModelPtrMap();
 	return modelPtrMap[Model];
 }
 
@@ -41,7 +43,7 @@ InternalFunc getModelObjPointer(const char *Model) {
  *
  **********************************************************************/
 std::vector<std::string> listAvailableModels() {
-	return listMapKeys(modelPtrMap);
+	return listMapKeys(getModelPtrMap());
 }
 
 /* map of strings to direct field model function pointers */

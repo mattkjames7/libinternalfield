@@ -98,7 +98,9 @@ Internal& jpl15ev() {
 
 
 /* map the model names to their model object pointers */
-std::map<std::string,InternalFunc> modelPtrMap = {	{"gsfc15evs",gsfc15evs},
+std::map<std::string,InternalFunc> getModelPtrMap() {
+	static std::map<std::string,InternalFunc> modelPtrMap = {
+										{"gsfc15evs",gsfc15evs},
 										{"vip4",vip4},
 										{"v117ev",v117ev},
 										{"gsfc15ev",gsfc15ev},
@@ -117,8 +119,9 @@ std::map<std::string,InternalFunc> modelPtrMap = {	{"gsfc15evs",gsfc15evs},
 										{"vit4",vit4},
 										{"isaac",isaac},
 										{"jpl15ev",jpl15ev}
-};
-
+	};
+	return modelPtrMap;
+}
 
 /***********************************************************************
  * NAME : getModelObjPointer(Model)
@@ -133,6 +136,7 @@ std::map<std::string,InternalFunc> modelPtrMap = {	{"gsfc15evs",gsfc15evs},
  *
  **********************************************************************/
 InternalFunc getModelObjPointer(std::string Model) {
+    std::map<std::string,InternalFunc> modelPtrMap = getModelPtrMap();
 	return modelPtrMap[Model];
 }
 
@@ -149,6 +153,7 @@ InternalFunc getModelObjPointer(std::string Model) {
  *
  **********************************************************************/
 InternalFunc getModelObjPointer(const char *Model) {
+    std::map<std::string,InternalFunc> modelPtrMap = getModelPtrMap();
 	return modelPtrMap[Model];
 }
 
@@ -162,11 +167,13 @@ InternalFunc getModelObjPointer(const char *Model) {
  *
  **********************************************************************/
 std::vector<std::string> listAvailableModels() {
-	return listMapKeys(modelPtrMap);
+	return listMapKeys(getModelPtrMap());
 }
 
 /* map of strings to direct field model function pointers */
-std::map<std::string,modelFieldPtr> modelFieldPtrMap = {	{"gsfc15evs",&gsfc15evsField},
+std::map<std::string,modelFieldPtr> getModelFieldPtrMap() {
+	static std::map<std::string,modelFieldPtr> modelFieldPtrMap = {
+													{"gsfc15evs",&gsfc15evsField},
 													{"vip4",&vip4Field},
 													{"v117ev",&v117evField},
 													{"gsfc15ev",&gsfc15evField},
@@ -185,8 +192,9 @@ std::map<std::string,modelFieldPtr> modelFieldPtrMap = {	{"gsfc15evs",&gsfc15evs
 													{"vit4",&vit4Field},
 													{"isaac",&isaacField},
 													{"jpl15ev",&jpl15evField}
-};
-
+	};
+	return modelFieldPtrMap;
+}
 
 /* function to return pointer to model field function */
 
@@ -205,6 +213,7 @@ std::map<std::string,modelFieldPtr> modelFieldPtrMap = {	{"gsfc15evs",&gsfc15evs
  *
  *******************************************************************/
 modelFieldPtr getModelFieldPtr(std::string Model) {
+    std::map<std::string,modelFieldPtr> modelFieldPtrMap = getModelFieldPtrMap();
     return modelFieldPtrMap[Model];
 }
 
@@ -223,6 +232,7 @@ modelFieldPtr getModelFieldPtr(std::string Model) {
  *
  **********************************************************************/
 modelFieldPtr getModelFieldPtr(const char *Model) {
+    std::map<std::string,modelFieldPtr> modelFieldPtrMap = getModelFieldPtrMap();
     return modelFieldPtrMap[Model];
 }
 
