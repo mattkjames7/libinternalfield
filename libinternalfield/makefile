@@ -5,6 +5,8 @@ CFLAGS=-lm -fPIC -std=c++17 -g
 CCo=g++ -c $(CFLAGS)
 CC=g++ $(CFLAGS)
 
+UNAME_S := $(shell uname -s)
+
 all: obj lib
 
 obj:
@@ -22,15 +24,22 @@ lib:
 	$(CC) coeffs.o internal.o models.o internalmodel.o libinternal.o  -shared -o libinternalfield.so
 	ar -rc libinternalfield.a *.o 
 	rm -v *.o
-	cd test; make all
+	if [ $(UNAME_S) = "Linux" ]; then\
+		echo "Making tests";\
+		cd test; make all;\
+	fi
 	
 test:
-	echo "here"
+	echo "Making tests"
+	cd test; make all
 	
 	
 clean:
 	rm -v coeffs/*.cc
 	rm -v *.so *.a
-	cd test; make clean
+	if [ $(UNAME_S) = "Linux" ]; then\
+		echo "Removing tests";\
+		cd test; make clean;\
+	fi
 	rm -v ../libinternalfield.h
 
