@@ -64,5 +64,9 @@ int main() {
 	for (i=0;i<r.size();i++) {
 		printf(fmt,r[i],tdeg[i],pdeg[i],Br[i],Bt[i],Bp[i]);
 	}
+	
+	double bx,by,bz;
+	jrm09Field(5.0,0.0,0.0,&bx,&by,&bz);
+	printf("B: %f %f %f\n",bx,by,bz);
 }
 	

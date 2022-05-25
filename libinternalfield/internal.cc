@@ -48,7 +48,7 @@ Internal::Internal(const Internal &obj) {
 	nmax_ = obj.nmax_;
 	ndef_ = obj.ndef_;
 	ncur_ = obj.ncur_;
-	rscale_ = rscale_;
+	rscale_ = obj.rscale_;
 	g_ = obj.g_;
 	h_ = obj.h_;
 }
