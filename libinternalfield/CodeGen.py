@@ -297,9 +297,13 @@ def GenerateCoeffsCC(models,modelsl):
 	lines += code0
 
 	#list of model names
-	s = '{\t"' + '",\n\t\t\t\t\t\t\t\t"'.join(modelsl)+'"};\n\n'
-	lines.append('std::vector<std::string> modelNames = '+s)
-		
+	s = 'std::vector<std::string> getModelNames() {\n'
+	mn = '{\t"' + '",\n\t\t\t\t\t\t\t\t"'.join(modelsl)+'"};\n\n'
+	s += '\t static std::vector<std::string> modelNames = '+mn
+	s += '\treturn modelNames;\n'
+	s += '}\n'
+	lines.append(s)
+	
 	#arrays of coefficients and struct definitions
 	lines += code1
 	for m in models:
@@ -307,16 +311,18 @@ def GenerateCoeffsCC(models,modelsl):
 		lines += cc
 	
 	#map of structures
-	s = 'std::map<std::string,coeffStructFunc> coeffMap = {\t'
+	s = 'std::map<std::string,coeffStructFunc> getCoeffMap() {\n'
+	s += '\tstatic std::map<std::string,coeffStructFunc> coeffMap = {\t\n'
 	for i,(m,ml) in enumerate(zip(models,modelsl)):
-		if i > 0:
-			s += '\t\t\t\t\t\t\t\t\t\t'
+		s += '\t\t\t\t\t\t\t\t\t\t\t'
 		s += '{"' + ml + '",_model_coeff_{:s}'.format(m) + '}'
 		if i < len(models) - 1:
 			s += ',\n'
 		else:
 			s += '\n'
-	s += '};\n\n'
+	s += '\t};\n'
+	s += '\treturn coeffMap;\n'
+	s += '}\n\n'
 	lines.append(s)
 			
 	#add more existing code

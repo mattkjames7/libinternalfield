@@ -1,7 +1,8 @@
 #include "coeffs.h"
 
 /* list of model names */
-std::vector<std::string> modelNames = {	"gsfc15evs",
+std::vector<std::string> getModelNames() {
+	 static std::vector<std::string> modelNames = {	"gsfc15evs",
 								"vip4",
 								"v117ev",
 								"gsfc15ev",
@@ -21,6 +22,8 @@ std::vector<std::string> modelNames = {	"gsfc15evs",
 								"isaac",
 								"jpl15ev"};
 
+	return modelNames;
+}
 
 /* arrays containing the model coefficients and structure definitions*/
 
@@ -4189,26 +4192,30 @@ coeffStruct& _model_coeff_jpl15ev() {
 	return out;
 }
 
-std::map<std::string,coeffStructFunc> coeffMap = {	{"gsfc15evs",_model_coeff_gsfc15evs},
-										{"vip4",_model_coeff_vip4},
-										{"v117ev",_model_coeff_v117ev},
-										{"gsfc15ev",_model_coeff_gsfc15ev},
-										{"gsfc13ev",_model_coeff_gsfc13ev},
-										{"vipal",_model_coeff_vipal},
-										{"jpl15evs",_model_coeff_jpl15evs},
-										{"u17ev",_model_coeff_u17ev},
-										{"jrm09",_model_coeff_jrm09},
-										{"ness1975",_model_coeff_ness1975},
-										{"o6",_model_coeff_o6},
-										{"o4",_model_coeff_o4},
-										{"sha",_model_coeff_sha},
-										{"p11a",_model_coeff_p11a},
-										{"jrm33",_model_coeff_jrm33},
-										{"langlais2019",_model_coeff_langlais2019},
-										{"vit4",_model_coeff_vit4},
-										{"isaac",_model_coeff_isaac},
-										{"jpl15ev",_model_coeff_jpl15ev}
-};
+std::map<std::string,coeffStructFunc> getCoeffMap() {
+	static std::map<std::string,coeffStructFunc> coeffMap = {	
+											{"gsfc15evs",_model_coeff_gsfc15evs},
+											{"vip4",_model_coeff_vip4},
+											{"v117ev",_model_coeff_v117ev},
+											{"gsfc15ev",_model_coeff_gsfc15ev},
+											{"gsfc13ev",_model_coeff_gsfc13ev},
+											{"vipal",_model_coeff_vipal},
+											{"jpl15evs",_model_coeff_jpl15evs},
+											{"u17ev",_model_coeff_u17ev},
+											{"jrm09",_model_coeff_jrm09},
+											{"ness1975",_model_coeff_ness1975},
+											{"o6",_model_coeff_o6},
+											{"o4",_model_coeff_o4},
+											{"sha",_model_coeff_sha},
+											{"p11a",_model_coeff_p11a},
+											{"jrm33",_model_coeff_jrm33},
+											{"langlais2019",_model_coeff_langlais2019},
+											{"vit4",_model_coeff_vit4},
+											{"isaac",_model_coeff_isaac},
+											{"jpl15ev",_model_coeff_jpl15ev}
+	};
+	return coeffMap;
+}
 
 
 /***********************************************************************
@@ -4225,6 +4232,7 @@ std::map<std::string,coeffStructFunc> coeffMap = {	{"gsfc15evs",_model_coeff_gsf
  *
  **********************************************************************/
 coeffStructFunc getModelCoeffStruct(std::string Model) {
+    std::map<std::string,coeffStructFunc> coeffMap = getCoeffMap();
     return coeffMap[Model];
 }
 
@@ -4242,6 +4250,7 @@ coeffStructFunc getModelCoeffStruct(std::string Model) {
  *
  **********************************************************************/
 coeffStructFunc getModelCoeffStruct(const char *Model) {
+    std::map<std::string,coeffStructFunc> coeffMap = getCoeffMap();
     return coeffMap[Model];
 }
 

@@ -22,6 +22,6 @@ typedef coeffStruct& (*coeffStructFunc)();
 
 #endif
 /* list of model names */
-extern std::vector<std::string> modelNames;
+std::vector<std::string> getModelNames();
 
 /* model coefficient arrays */

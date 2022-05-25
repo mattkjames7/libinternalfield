@@ -13,6 +13,7 @@
  *
  **********************************************************************/
 coeffStructFunc getModelCoeffStruct(std::string Model) {
+    std::map<std::string,coeffStructFunc> coeffMap = getCoeffMap();
     return coeffMap[Model];
 }
 
@@ -30,6 +31,7 @@ coeffStructFunc getModelCoeffStruct(std::string Model) {
  *
  **********************************************************************/
 coeffStructFunc getModelCoeffStruct(const char *Model) {
+    std::map<std::string,coeffStructFunc> coeffMap = getCoeffMap();
     return coeffMap[Model];
 }
 

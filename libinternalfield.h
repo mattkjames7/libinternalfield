@@ -33,7 +33,7 @@ typedef coeffStruct& (*coeffStructFunc)();
 
 
 /* list of model names */
-extern std::vector<std::string> modelNames;
+std::vector<std::string> getModelNames();
 
 /* model coefficient arrays */
 extern coeffStruct& _model_coeff_gsfc15evs();
@@ -57,7 +57,7 @@ extern coeffStruct& _model_coeff_isaac();
 extern coeffStruct& _model_coeff_jpl15ev();
 
 /* map model names to the structure containing the coefficients */
-extern std::map<std::string,coeffStructFunc> coeffMap;
+std::map<std::string,coeffStructFunc> getCoeffMap();
 
 /***********************************************************************
  * NAME : getModelCoeffStruct(Model)
