@@ -10,8 +10,4 @@ g++ -c -lm -fPIC -std=c++17 -g libinternal.cc -o libinternal.o
 
 g++ -lm -fPIC -std=c++17 -g coeffs.o internal.o models.o internalmodel.o libinternal.o  -shared -o libinternalfield.dll
 
-cd test
-call compile.bat
-cd ..
 
-exit
