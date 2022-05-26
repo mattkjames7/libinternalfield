@@ -22,7 +22,7 @@ obj:
 lib:
 	#$(CC) *.o coeffs/*.o -shared -o libinternal.so
 	$(CC) coeffs.o internal.o models.o internalmodel.o libinternal.o  -shared -o libinternalfield.so
-	ar -rc libinternalfield.a *.o 
+	ar -rcs libinternalfield.a *.o 
 	rm -vf *.o
 
 	
