@@ -9,4 +9,4 @@ all:
 	$(CC) test.cc -o test -Wl,-rpath='$$ORIGIN/..' -L.. -linternalfield
 	
 clean:
-	rm -v test
+	rm -vf test

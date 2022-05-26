@@ -23,11 +23,8 @@ lib:
 	#$(CC) *.o coeffs/*.o -shared -o libinternal.so
 	$(CC) coeffs.o internal.o models.o internalmodel.o libinternal.o  -shared -o libinternalfield.so
 	ar -rc libinternalfield.a *.o 
-	rm -v *.o
-	if [ $(UNAME_S) = "Linux" ]; then\
-		echo "Making tests";\
-		cd test; make all;\
-	fi
+	rm -vf *.o
+
 	
 test:
 	echo "Making tests"
@@ -35,11 +32,8 @@ test:
 	
 	
 clean:
-	rm -v coeffs/*.cc
-	rm -v *.so *.a
-	if [ $(UNAME_S) = "Linux" ]; then\
-		echo "Removing tests";\
-		cd test; make clean;\
-	fi
-	rm -v ../libinternalfield.h
+	rm -vf coeffs/*.cc
+	rm -vf *.so *.a
+	cd test; make clean;\
+	rm -vf ../libinternalfield.h
 
