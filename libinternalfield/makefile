@@ -6,6 +6,12 @@ CCo=g++ -c $(CFLAGS)
 CC=g++ $(CFLAGS)
 
 UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	ARCMD=ar -rcs libinternalfield.a *.o 
+endif
+ifeq ($(UNAME_S),Darwin)
+	ARCMD=libtool -static -o libinternalfield.a *.o 
+endif
 
 all: obj lib
 
@@ -22,7 +28,8 @@ obj:
 lib:
 	#$(CC) *.o coeffs/*.o -shared -o libinternal.so
 	$(CC) coeffs.o internal.o models.o internalmodel.o libinternal.o  -shared -o libinternalfield.so
-	ar -rcs libinternalfield.a *.o 
+	$(ARCMD)
+	#ar -rcs libinternalfield.a *.o 
 	rm -vf *.o
 
 	
