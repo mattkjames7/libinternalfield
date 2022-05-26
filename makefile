@@ -2,8 +2,8 @@
 
 all:
 	cd libinternalfield; make all
-	ln -sv libinternalfield/libinternalfield.so libinternalfield.so 
-	ln -sv libinternalfield/libinternalfield.a libinternalfield.a
+	ln -svf libinternalfield/libinternalfield.so libinternalfield.so 
+	ln -svf libinternalfield/libinternalfield.a libinternalfield.a
 
 clean:
 	cd libinternalfield; make clean
