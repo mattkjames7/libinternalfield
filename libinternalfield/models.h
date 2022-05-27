@@ -9,25 +9,25 @@
 #endif
 
 /* models! */
-extern Internal& gsfc15evs();
-extern Internal& vip4();
-extern Internal& v117ev();
-extern Internal& gsfc15ev();
 extern Internal& gsfc13ev();
-extern Internal& vipal();
-extern Internal& jpl15evs();
-extern Internal& u17ev();
-extern Internal& jrm09();
-extern Internal& ness1975();
-extern Internal& o6();
-extern Internal& o4();
-extern Internal& sha();
-extern Internal& p11a();
-extern Internal& jrm33();
-extern Internal& langlais2019();
-extern Internal& vit4();
+extern Internal& gsfc15ev();
+extern Internal& gsfc15evs();
 extern Internal& isaac();
 extern Internal& jpl15ev();
+extern Internal& jpl15evs();
+extern Internal& jrm09();
+extern Internal& jrm33();
+extern Internal& langlais2019();
+extern Internal& ness1975();
+extern Internal& o4();
+extern Internal& o6();
+extern Internal& p11a();
+extern Internal& sha();
+extern Internal& u17ev();
+extern Internal& v117ev();
+extern Internal& vip4();
+extern Internal& vipal();
+extern Internal& vit4();
 
 
 /* map the model names to their model object pointers */
@@ -133,41 +133,41 @@ modelFieldPtr getModelFieldPtr(const char *Model);
  *		double	*Bz			z component of the field (nT).
  * 
  **********************************************************************/
-void gsfc15evsField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
-void vip4Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
-void v117evField(double x, double y, double z,
+void gsfc13evField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void gsfc15evField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
-void gsfc13evField(double x, double y, double z,
+void gsfc15evsField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
-void vipalField(double x, double y, double z,
+void isaacField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void jpl15evField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void jpl15evsField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
-void u17evField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
 void jrm09Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
-void ness1975Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
-void o6Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
-void o4Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
-void shaField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
-void p11aField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void jrm33Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void langlais2019Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
+void ness1975Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void o4Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void o6Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void p11aField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void shaField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void u17evField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void v117evField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void vip4Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void vipalField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
 void vit4Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
-void isaacField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
-void jpl15evField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
