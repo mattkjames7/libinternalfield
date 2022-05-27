@@ -24,6 +24,9 @@ class InternalModel {
 		/* constructor */
 		InternalModel();
 		
+		/* copy constructor */
+		InternalModel(const InternalModel&);
+		
 		/* destructor */
 		~InternalModel();
 		
@@ -53,13 +56,14 @@ class InternalModel {
 
 	private:
 		Internal *CurrentModel_;
-		std::string CurrentModelName_;
+		std::string *CurrentModelName_;
 
 
 		/* coordinate/field vector rotation */
-		bool init_;
-		bool CartIn_;
-		bool CartOut_;
+		bool copy_;
+		bool *init_;
+		bool *CartIn_;
+		bool *CartOut_;
 		void _Cart2Pol(int,double*,double*,double*,double*,double*,double*);
 		void _BPol2BCart(int,double*,double*,double*,double*,double*,double*,double*,double*);
 };

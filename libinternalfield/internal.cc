@@ -13,7 +13,8 @@
 Internal::Internal(unsigned char *ptr) {
 
 	useptr_ = true;
-	init_ = false;
+	init_ = new bool[1];
+	init_[0] = false;
 	modelptr_ = ptr;
 	_Init();
 }
@@ -31,14 +32,15 @@ Internal::Internal(const char *Model) {
 	
 	
 	useptr_ = false;
-	init_ = false;
+	init_ = new bool[1];
+	init_[0] = false;
 	modelstr_ = &(getModelCoeffStruct(Model))();
 	_Init();
 }
 
 
 Internal::Internal(const Internal &obj) {
-	init_ = true;
+	init_ = obj.init_;
 	copy = true;
 	useptr_ = obj.useptr_;
 	init_ = obj.init_;
@@ -55,6 +57,9 @@ Internal::Internal(const Internal &obj) {
 
 Internal::~Internal() {
 	if (!copy) {
+		delete[] init_;
+		delete[] ncur_;
+		
 		/* delete the structure containing coefficients */
 		delete[] schc_;
 		
@@ -73,7 +78,7 @@ Internal::~Internal() {
 
 void Internal::_CheckInit() {
 	/* check if the object is initialized, if not then intialize it! */
-	if (!init_) {
+	if (!init_[0]) {
 		_Init();
 	}
 	
@@ -98,7 +103,7 @@ void Internal::_Init() {
 	copy = false;
 	
 	/* set the status of this object as being intialized */
-	init_ = true;
+	init_[0] = true;
 	
 }
 
@@ -156,7 +161,7 @@ void Internal::_LoadSchmidt(unsigned char *ptr){
 	}
 	
 	/* set current model degree to the default */
-	ncur_ = ndef_;
+	ncur_[0] = ndef_;
 	
 	/* calculate the length of the coefficient structure */
 	nschc_ = 0;
@@ -222,7 +227,8 @@ void Internal::_LoadSchmidt(coeffStruct S){
 	ndef_ = S.ndef;
 	
 	/* set current model degree to the default */
-	ncur_ = ndef_;
+	ncur_ = new int[1];
+	ncur_[0] = ndef_;
 	
 	/* calculate the length of the coefficient structure */
 	nschc_ = S.len;
@@ -331,18 +337,17 @@ void Internal::_CoeffGrids() {
  * 
  * ********************************************************************/
 void Internal::SetDegree(int n) {
-	
 	/* check that the degree falls within a valid range */
 	if (n > nmax_) {
 		/* greater than the maximum, cap at nmax_ */
 		printf("WARNING: Attempted to set model degree above maximum (%d)\n",nmax_);
-		ncur_ = nmax_;
+		ncur_[0] = nmax_;
 	} else if (n < 1) {
 		/* too small - use default instead */
 		printf("WARNING: Attempted to use model degree < 1 - using default (%d)\n",ndef_);
-		ncur_ = ndef_;
+		ncur_[0] = ndef_;
 	} else {
-		ncur_ = n;
+		ncur_[0] = n;
 	}
 	
 }
@@ -358,7 +363,7 @@ void Internal::SetDegree(int n) {
  * ********************************************************************/
 int Internal::GetDegree() {
 	_CheckInit();
-	return ncur_;
+	return ncur_[0];
 	
 }
 
@@ -454,7 +459,7 @@ void Internal::_SphHarm(	int l, double *r0, double *t, double *p,
 	}	
 	
 	/* set the maximum degree of the model to use */
-	int nmax = ncur_;
+	int nmax = ncur_[0];
 	
 	/* create arrays for the Legendre polynomials */
 	int n, m;

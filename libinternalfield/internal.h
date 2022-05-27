@@ -58,7 +58,7 @@ class Internal {
 		/* maximum, default and current degree */
 		int nmax_;
 		int ndef_;
-		int ncur_;
+		int *ncur_;
 		
 		/* these ones will have Snm_ already multiplied */
 		double **g_;
@@ -93,7 +93,7 @@ class Internal {
 
 		/* initialization */
 		bool useptr_;
-		bool init_;
+		bool *init_;
 		unsigned char *modelptr_;
 		coeffStruct *modelstr_;
 		void _Init();

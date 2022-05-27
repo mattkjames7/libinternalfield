@@ -68,5 +68,20 @@ int main() {
 	double bx,by,bz;
 	jrm09Field(5.0,0.0,0.0,&bx,&by,&bz);
 	printf("B: %f %f %f\n",bx,by,bz);
+	
+	printf("\nTesting Model CFG\n");
+	char mstr[32];
+	bool cartin,cartout;
+	int deg;
+	printf("Initial Config:\n");
+	GetInternalCFG(mstr,&cartin,&cartout,&deg);
+	printf("%s %d %d %d\n",mstr,cartin,cartout,deg);
+	printf("Attempting to change config to\n jrm33 0 0 15\n");
+	SetInternalCFG("jrm33",false,false,15);
+	GetInternalCFG(mstr,&cartin,&cartout,&deg);
+	printf("Result:\n");
+	printf("%s %d %d %d\n",mstr,cartin,cartout,deg);
+	
+	
 }
 	

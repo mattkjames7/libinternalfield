@@ -7,8 +7,26 @@
  * 
  * ********************************************************************/
 InternalModel::InternalModel() {
+	copy_ = false;
+	init_ = new bool[1];
+	init_[0]  = false;
+	CheckInit();
+}
 
-	init_  = false;
+InternalModel::InternalModel(const InternalModel &obj) {
+	
+	copy_ = true;
+	init_ = obj.init_;
+	CartIn_ = obj.CartIn_;
+	CartOut_ = obj.CartOut_;
+	Models_ = obj.Models_;
+	ModelNames_ = obj.ModelNames_;
+	//CurrentModel_ = obj.CurrentModel_;
+	
+	CurrentModelName_ = obj.CurrentModelName_;
+	CurrentModel_ = Models_[CurrentModelName_[0]];
+	
+
 }
 
 /***********************************************************************
@@ -19,9 +37,9 @@ InternalModel::InternalModel() {
  * ********************************************************************/
 void InternalModel::CheckInit() {
 	
-	if (!init_) {
+	if (!init_[0]) {
 		Init();
-		init_ = true;
+		init_[0] = true;
 	}
 }
 
@@ -46,18 +64,28 @@ void InternalModel::Init() {
 		
 	/* set the current model */
 	CurrentModel_ = Models_["jrm09"];
-	CurrentModelName_ = "jrm09";
+	CurrentModelName_ = new std::string[1];
+	CurrentModelName_[0] = "jrm09";
 	
 	/* default parameters */
-	CartIn_ = true;
-	CartOut_ = true;
+	CartIn_ = new bool[1];
+	CartOut_ = new bool[1];
+	CartIn_[0] = true;
+	CartOut_[0] = true;
 
 	
 }
 
 
 InternalModel::~InternalModel() {
-
+	if (!copy_) {
+		if (init_[0]) {
+			delete[] CurrentModelName_;
+			delete[] CartIn_;
+			delete[] CartOut_;
+		}
+		delete[] init_;
+	}
 }	
 
 /***********************************************************************
@@ -73,7 +101,7 @@ InternalModel::~InternalModel() {
  * ********************************************************************/
 void InternalModel::SetCartIn(bool CartIn) {
 	CheckInit();
-	CartIn_ = CartIn;
+	CartIn_[0] = CartIn;
 }
 
 /***********************************************************************
@@ -88,7 +116,7 @@ void InternalModel::SetCartIn(bool CartIn) {
  * ********************************************************************/
 bool InternalModel::GetCartIn() {
 	CheckInit();
-	return CartIn_;
+	return CartIn_[0];
 }
 
 /***********************************************************************
@@ -104,7 +132,7 @@ bool InternalModel::GetCartIn() {
  * ********************************************************************/
 void InternalModel::SetCartOut(bool CartOut) {
 	CheckInit();
-	CartOut_ = CartOut;
+	CartOut_[0] = CartOut;
 }
 
 /***********************************************************************
@@ -119,7 +147,7 @@ void InternalModel::SetCartOut(bool CartOut) {
  * ********************************************************************/
 bool InternalModel::GetCartOut() {
 	CheckInit();
-	return CartOut_;
+	return CartOut_[0];
 }
 
 /***********************************************************************
@@ -149,7 +177,7 @@ void InternalModel::SetModel(const char *ModelName) {
 	if (validmodel) {
 		/* set the new model if a valid string has been provided */
 		CurrentModel_ = Models_[ModelIn];
-		CurrentModelName_ = ModelIn;
+		CurrentModelName_[0] = ModelIn;
 	} else {
 		/* ignore the new model, print a warning */
 		printf("Invalid model name: %s, ignoring...\n",ModelIn.c_str());
@@ -168,7 +196,7 @@ void InternalModel::SetModel(const char *ModelName) {
  * ********************************************************************/
 void InternalModel::GetModel(char *ModelName) {
 	CheckInit();
-	strcpy(ModelName,CurrentModelName_.c_str());
+	strcpy(ModelName,CurrentModelName_[0].c_str());
 }
 
 
@@ -182,7 +210,6 @@ void InternalModel::GetModel(char *ModelName) {
  * 
  * ********************************************************************/
 void InternalModel::SetDegree(int n) {
-	
 	CheckInit();
 	CurrentModel_->SetDegree(n);
 	
@@ -198,7 +225,6 @@ void InternalModel::SetDegree(int n) {
  * 
  * ********************************************************************/
 int InternalModel::GetDegree() {
-	
 	return CurrentModel_->GetDegree();
 	
 }
@@ -233,7 +259,7 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 	double *r, *t, *p, *Br, *Bt, *Bp;
 	
 	/* set the input pointers */
-	if (!CartIn_) {
+	if (!CartIn_[0]) {
 		r = p0;
 		t = p1;
 		p = p2;
@@ -245,7 +271,7 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 	}
 
 	/* set up the output pointers */
-	if (!CartOut_) {
+	if (!CartOut_[0]) {
 		Br = B0;
 		Bt = B1;
 		Bp = B2;
@@ -258,7 +284,7 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 	CurrentModel_->Field(n,r,t,p,Br,Bt,Bp);
 
 	/* rotate field vector if needed and delete output arrays */
-	if (CartOut_) {
+	if (CartOut_[0]) {
 		_BPol2BCart(n,t,p,Br,Bt,Bp,B0,B1,B2);
 		delete[] Br;
 		delete[] Bt;
@@ -266,7 +292,7 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 	}
 	
 	/* delete input arrays */
-	if (CartIn_) {
+	if (CartIn_[0]) {
 		delete[] r;
 		delete[] t;
 		delete[] p;
@@ -304,7 +330,7 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 	double *r, *t, *p, *Br, *Bt, *Bp;
 	
 	/* set the input pointers */
-	if (!CartIn_) {
+	if (!CartIn_[0]) {
 		r = p0;
 		t = p1;
 		p = p2;
@@ -316,7 +342,7 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 	}
 	
 	/* set up the output pointers */
-	if (!CartOut_) {
+	if (!CartOut_[0]) {
 		Br = B0;
 		Bt = B1;
 		Bp = B2;
@@ -337,7 +363,7 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 	CurrentModel_->SetDegree(OldDeg);
 
 	/* rotate field vector if needed and delete output arrays */
-	if (CartOut_) {
+	if (CartOut_[0]) {
 		_BPol2BCart(n,t,p,Br,Bt,Bp,B0,B1,B2);
 		delete[] Br;
 		delete[] Bt;
@@ -345,7 +371,7 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 	}
 	
 	/* delete input arrays */
-	if (CartIn_) {
+	if (CartIn_[0]) {
 		delete[] r;
 		delete[] t;
 		delete[] p;
@@ -380,7 +406,7 @@ void InternalModel::Field(	double p0, double p1, double p2,
 	double r, t, p, Br, Bt, Bp;
 	
 	/* convert input coords (or not) */
-	if (!CartIn_) {
+	if (!CartIn_[0]) {
 		r = p0;
 		t = p1;
 		p = p2;
@@ -391,7 +417,7 @@ void InternalModel::Field(	double p0, double p1, double p2,
 	CurrentModel_->Field(r,t,p,&Br,&Bt,&Bp);
 
 	/* rotate field vector if needed and delete output arrays */
-	if (CartOut_) {
+	if (CartOut_[0]) {
 		_BPol2BCart(1,&t,&p,&Br,&Bt,&Bp,B0,B1,B2);
 	} else {
 		B0[0] = Br;
@@ -428,7 +454,7 @@ void InternalModel::Field(	double p0, double p1, double p2, int MaxDeg,
 	double r, t, p, Br, Bt, Bp;
 	
 	/* convert input coords (or not) */
-	if (!CartIn_) {
+	if (!CartIn_[0]) {
 		r = p0;
 		t = p1;
 		p = p2;
@@ -448,7 +474,7 @@ void InternalModel::Field(	double p0, double p1, double p2, int MaxDeg,
 	CurrentModel_->SetDegree(OldDeg);
 	
 	/* rotate field vector if needed and delete output arrays */
-	if (CartOut_) {
+	if (CartOut_[0]) {
 		_BPol2BCart(1,&t,&p,&Br,&Bt,&Bp,B0,B1,B2);
 	} else {
 		B0[0] = Br;
