@@ -344,7 +344,7 @@ void Internal::SetDegree(int n) {
 		ncur_[0] = nmax_;
 	} else if (n < 1) {
 		/* too small - use default instead */
-		printf("WARNING: Attempted to use model degree < 1 - using default (%d)\n",ndef_);
+		//printf("WARNING: Attempted to use model degree < 1 - using default (%d)\n",ndef_);
 		ncur_[0] = ndef_;
 	} else {
 		ncur_[0] = n;
