@@ -123,7 +123,7 @@ coeffStruct& _model_coeff_vipal() {
 		-770.000000,-7400.000000};
 	static const double h[] = {0.000000,19730.000000,0.000000,-40410.000000,
 		60300.000000,0.000000,-23100.000000,51600.000000,-11310.000000,
-		0.000000,32820.000000,-21310.000000,-6060.000000,-4860.000000,
+		0.000000,32830.000000,-21310.000000,-6060.000000,-4860.000000,
 		0.000000,20650.000000,-11670.000000,-2880.000000,-500.000000,
 		-22790.000000};
 	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
@@ -325,7 +325,7 @@ coeffStruct& _model_coeff_sha() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const double rscale = 1.000000;
+	static const double rscale = 1.001317;
 	static const int n[] = {1,1,2,2,2,3,3,3,3};
 	static const int m[] = {0,1,0,1,2,0,1,2,3};
 	static const double g[] = {409200.000000,-70500.000000,-3300.000000,
@@ -4121,7 +4121,7 @@ coeffStruct& _model_coeff_vit4() {
 	static const int len = 14;
 	static const int nmax = 4;
 	static const int ndef = 4;
-	static const double rscale = 1.000000;
+	static const double rscale = 1.002370;
 	static const int n[] = {1,1,2,2,2,3,3,3,3,4,4,4,4,4};
 	static const int m[] = {0,1,0,1,2,0,1,2,3,0,1,2,3,4};
 	static const double g[] = {428077.000000,-75306.000000,-4283.000000,
