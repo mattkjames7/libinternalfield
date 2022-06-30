@@ -171,7 +171,7 @@ def WriteCppFile(fname):
 	clines.append('\tstatic const int len = {:d};\n'.format(nschc))
 	clines.append('\tstatic const int nmax = {:d};\n'.format(nmax))
 	clines.append('\tstatic const int ndef = {:d};\n'.format(DefDeg))
-	clines.append('\tstatic const double rscale = {:f};\n'.format(Rscale))
+	clines.append('\tstatic const double rscale = {:28.25f};\n'.format(Rscale))
 	cn = '\tstatic const int n[] = ' + '{'
 	cm = '\tstatic const int m[] = ' + '{'
 	cg = '\tstatic const double g[] = ' + '{'

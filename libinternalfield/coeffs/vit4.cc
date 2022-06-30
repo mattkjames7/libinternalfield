@@ -2,7 +2,7 @@ coeffStruct& _model_coeff_vit4() {
 	static const int len = 14;
 	static const int nmax = 4;
 	static const int ndef = 4;
-	static const double rscale = 1.002370;
+	static const double rscale =  1.0023695021241394442768069;
 	static const int n[] = {1,1,2,2,2,3,3,3,3,4,4,4,4,4};
 	static const int m[] = {0,1,0,1,2,0,1,2,3,0,1,2,3,4};
 	static const double g[] = {428077.000000,-75306.000000,-4283.000000,

@@ -2,7 +2,7 @@ coeffStruct& _model_coeff_langlais2019() {
 	static const int len = 9179;
 	static const int nmax = 134;
 	static const int ndef = 134;
-	static const double rscale = 1.000000;
+	static const double rscale =  1.0000000000000000000000000;
 	static const int n[] = {1,1,2,2,2,3,3,3,3,4,4,4,4,4,5,5,5,5,5,5,6,6,6,
 		6,6,6,6,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9,10,10,
 		10,10,10,10,10,10,10,10,10,11,11,11,11,11,11,11,11,11,11,11,11,12,

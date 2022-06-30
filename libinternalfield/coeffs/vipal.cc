@@ -2,7 +2,7 @@ coeffStruct& _model_coeff_vipal() {
 	static const int len = 20;
 	static const int nmax = 5;
 	static const int ndef = 5;
-	static const double rscale = 1.000000;
+	static const double rscale =  1.0000000000000000000000000;
 	static const int n[] = {1,1,2,2,2,3,3,3,3,4,4,4,4,4,5,5,5,5,5,5};
 	static const int m[] = {0,1,0,1,2,0,1,2,3,0,1,2,3,4,0,1,2,3,4,5};
 	static const double g[] = {420000.000000,-69750.000000,64410.000000,

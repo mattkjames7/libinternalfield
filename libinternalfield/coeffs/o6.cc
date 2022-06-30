@@ -2,7 +2,7 @@ coeffStruct& _model_coeff_o6() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const double rscale = 1.001681;
+	static const double rscale =  1.0016813316146389034599906;
 	static const int n[] = {1,1,2,2,2,3,3,3,3};
 	static const int m[] = {0,1,0,1,2,0,1,2,3};
 	static const double g[] = {424202.000000,-65929.000000,-2181.000000,
