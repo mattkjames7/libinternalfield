@@ -7,6 +7,7 @@ CC=g++ $(CFLAGS)
 
 all:
 	$(CC) test.cc -o test -Wl,-rpath='$$ORIGIN/..' -L.. -linternalfield
-	
+	$(CC) timer.cc -o timer -Wl,-rpath='$$ORIGIN/..' -L.. -linternalfield
+		
 clean:
 	-rm -v test

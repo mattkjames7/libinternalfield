@@ -61,6 +61,11 @@ Internal& o4() {
 	return model;
 }
 
+Internal& gsfcq3() {
+	static Internal model("gsfcq3");
+	return model;
+}
+
 Internal& sha() {
 	static Internal model("sha");
 	return model;
@@ -112,6 +117,7 @@ std::map<std::string,InternalFunc> getModelPtrMap() {
 										{"ness1975",ness1975},
 										{"o6",o6},
 										{"o4",o4},
+										{"gsfcq3",gsfcq3},
 										{"sha",sha},
 										{"p11a",p11a},
 										{"jrm33",jrm33},
@@ -185,6 +191,7 @@ std::map<std::string,modelFieldPtr> getModelFieldPtrMap() {
 													{"ness1975",&ness1975Field},
 													{"o6",&o6Field},
 													{"o4",&o4Field},
+													{"gsfcq3",&gsfcq3Field},
 													{"sha",&shaField},
 													{"p11a",&p11aField},
 													{"jrm33",&jrm33Field},
@@ -324,6 +331,12 @@ void o6Field(double x, double y, double z,
 void o4Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
 	Internal model = o4();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void gsfcq3Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = gsfcq3();
 	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 

@@ -21,6 +21,7 @@ extern Internal& jrm09();
 extern Internal& ness1975();
 extern Internal& o6();
 extern Internal& o4();
+extern Internal& gsfcq3();
 extern Internal& sha();
 extern Internal& p11a();
 extern Internal& jrm33();
@@ -156,6 +157,8 @@ void ness1975Field(double x, double y, double z,
 void o6Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void o4Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void gsfcq3Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void shaField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);

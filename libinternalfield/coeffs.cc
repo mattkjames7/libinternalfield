@@ -14,6 +14,7 @@ std::vector<std::string> getModelNames() {
 								"ness1975",
 								"o6",
 								"o4",
+								"gsfcq3",
 								"sha",
 								"p11a",
 								"jrm33",
@@ -317,6 +318,21 @@ coeffStruct& _model_coeff_o4() {
 		-23100.000000};
 	static const double h[] = {0.000000,26400.000000,0.000000,-46900.000000,
 		8800.000000,0.000000,-58000.000000,48700.000000,-29400.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_gsfcq3() {
+	static const int len = 5;
+	static const int nmax = 2;
+	static const int ndef = 2;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2};
+	static const int m[] = {0,1,0,1,2};
+	static const double g[] = {11893.000000,11579.000000,-6030.000000,
+		-12587.000000,196.000000};
+	static const double h[] = {0.000000,-15684.000000,0.000000,6116.000000,
+		4759.000000};
 	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
 	return out;
 }
@@ -4206,6 +4222,7 @@ std::map<std::string,coeffStructFunc> getCoeffMap() {
 											{"ness1975",_model_coeff_ness1975},
 											{"o6",_model_coeff_o6},
 											{"o4",_model_coeff_o4},
+											{"gsfcq3",_model_coeff_gsfcq3},
 											{"sha",_model_coeff_sha},
 											{"p11a",_model_coeff_p11a},
 											{"jrm33",_model_coeff_jrm33},
