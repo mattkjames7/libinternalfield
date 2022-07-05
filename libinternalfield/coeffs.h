@@ -37,6 +37,7 @@ extern coeffStruct& _model_coeff_jrm09();
 extern coeffStruct& _model_coeff_ness1975();
 extern coeffStruct& _model_coeff_o6();
 extern coeffStruct& _model_coeff_o4();
+extern coeffStruct& _model_coeff_gsfco8();
 extern coeffStruct& _model_coeff_gsfcq3();
 extern coeffStruct& _model_coeff_sha();
 extern coeffStruct& _model_coeff_p11a();
