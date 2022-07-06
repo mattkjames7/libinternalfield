@@ -53,6 +53,11 @@ Internal::Internal(const Internal &obj) {
 	rscale_ = obj.rscale_;
 	g_ = obj.g_;
 	h_ = obj.h_;
+	Pnm_ = obj.Pnm_;
+	dPnm_ = obj.dPnm_;
+	cosmp_ = obj.cosmp_;
+	sinmp_ = obj.sinmp_;
+	
 }
 
 Internal::~Internal() {
@@ -73,6 +78,17 @@ Internal::~Internal() {
 		delete[] Snm_;
 		delete[] g_;
 		delete[] h_;
+		
+		for (n=0;n<=nmax_;n++) {
+			delete[] Pnm_[n];
+			delete[] dPnm_[n];
+			
+		}		
+		delete[] Pnm_;
+		delete[] dPnm_;
+		
+		delete[] cosmp_;
+		delete[] sinmp_;			
 	}
 }
 
@@ -105,6 +121,19 @@ void Internal::_Init() {
 	/* set the status of this object as being intialized */
 	init_[0] = true;
 	
+	/* allocate Legendre polynomial arrays */
+	int n, m;
+	Pnm_ = new double*[nmax_+1];
+	dPnm_ = new double*[nmax_+1];
+	for (n=0;n<=nmax_;n++) {
+		Pnm_[n] = new double[n+1];
+		dPnm_[n] = new double[n+1];
+	}		
+	
+	/* and cosmp sinmp */
+	cosmp_ = new double[nmax_+1];
+	sinmp_ = new double[nmax_+1];
+
 }
 
 
@@ -681,12 +710,6 @@ void Internal::_SphHarm(double r0, double t, double p,
 	
 	/* create arrays for the Legendre polynomials */
 	int n, m;
-	double **Pnm = new double*[nmax+1];
-	double **dPnm = new double*[nmax+1];
-	for (n=0;n<=nmax;n++) {
-		Pnm[n] = new double[n+1];
-		dPnm[n] = new double[n+1];
-	}	
 	
 	/* create some arrays to be used in the field calculation */
 	double r1;
@@ -704,15 +727,14 @@ void Internal::_SphHarm(double r0, double t, double p,
 		sint1 = 1.0/sint;
 	}
 
-	double *cosmp = new double[nmax+1];
-	double *sinmp = new double[nmax+1];
-	for (m=0;m<=nmax;m++) {
+
+	for (m=0;m<=nmax_;m++) {
 		if (m == 0) {
-			cosmp[0] = 1.0;
-			sinmp[0] = 0.0;
+			cosmp_[0] = 1.0;
+			sinmp_[0] = 0.0;
 		} else {
-			cosmp[m] = cos(((double) m)*p);
-			sinmp[m] = sin(((double) m)*p);
+			cosmp_[m] = cos(((double) m)*p);
+			sinmp_[m] = sin(((double) m)*p);
 		}
 	}
 	double sumr;
@@ -721,7 +743,7 @@ void Internal::_SphHarm(double r0, double t, double p,
 	
 	
 	/* calculate the Legendre polynomials */
-	_Legendre(cost,sint,nmax,Pnm,dPnm);
+	_Legendre(cost,sint,nmax,Pnm_,dPnm_);
 	
 	/* set B components to 0 */
 	Br[0] = 0.0;
@@ -739,9 +761,9 @@ void Internal::_SphHarm(double r0, double t, double p,
 				
 		/* start summing stuff */
 		for (m=0;m<=n;m++) {
-			sumr += Pnm[n][m]*(g_[n][m]*cosmp[m] + h_[n][m]*sinmp[m]);
-			sumt += dPnm[n][m]*(g_[n][m]*cosmp[m] + h_[n][m]*sinmp[m]);
-			sump += ((double) m)*Pnm[n][m]*(h_[n][m]*cosmp[m] - g_[n][m]*sinmp[m]);
+			sumr += Pnm_[n][m]*(g_[n][m]*cosmp_[m] + h_[n][m]*sinmp_[m]);
+			sumt += dPnm_[n][m]*(g_[n][m]*cosmp_[m] + h_[n][m]*sinmp_[m]);
+			sump += ((double) m)*Pnm_[n][m]*(h_[n][m]*cosmp_[m] - g_[n][m]*sinmp_[m]);
 
 		}
 		
@@ -755,18 +777,6 @@ void Internal::_SphHarm(double r0, double t, double p,
 	
 	/* finally multiply by 1/sintheta */
 	Bp[0] = sint1*Bp[0];
-	
-	/* delete the arrays */
-	for (n=0;n<=nmax;n++) {
-		delete[] Pnm[n];
-		delete[] dPnm[n];
-		
-	}		
-	delete[] Pnm;
-	delete[] dPnm;
-	
-	delete[] cosmp;
-	delete[] sinmp;	
 	
 					
 }

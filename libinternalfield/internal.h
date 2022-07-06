@@ -64,6 +64,13 @@ class Internal {
 		double **g_;
 		double **h_;
 		
+		/* Legendre Polynomial and derivative arrays */
+		double **Pnm_, **dPnm_;
+		
+		/* cosmp and sinmp arrays */
+		double *cosmp_, *sinmp_;		
+		
+		
 		/* hack to scale r or x,y,z because some models use a different
 		 * definition for the planetary radius - notably the different 
 		 * Jupiter models - this should be rpgood/rpbad, where rpgood
