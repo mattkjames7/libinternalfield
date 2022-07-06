@@ -11,7 +11,7 @@
 
 #define INTERNALFIELD_VERSION_MAJOR 0
 #define INTERNALFIELD_VERSION_MINOR 1
-#define INTERNALFIELD_VERSION_PATCH 4
+#define INTERNALFIELD_VERSION_PATCH 5
 
 class Internal;
 
@@ -58,6 +58,7 @@ extern coeffStruct& _model_coeff_nmoh();
 extern coeffStruct& _model_coeff_gsfco8full();
 extern coeffStruct& _model_coeff_gsfco8();
 extern coeffStruct& _model_coeff_ness1975();
+extern coeffStruct& _model_coeff_ah5();
 extern coeffStruct& _model_coeff_gsfcq3full();
 extern coeffStruct& _model_coeff_gsfcq3();
 extern coeffStruct& _model_coeff_umoh();
@@ -120,6 +121,7 @@ extern Internal& nmoh();
 extern Internal& gsfco8full();
 extern Internal& gsfco8();
 extern Internal& ness1975();
+extern Internal& ah5();
 extern Internal& gsfcq3full();
 extern Internal& gsfcq3();
 extern Internal& umoh();
@@ -271,6 +273,8 @@ void gsfco8fullField(double x, double y, double z,
 void gsfco8Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void ness1975Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void ah5Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void gsfcq3fullField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);

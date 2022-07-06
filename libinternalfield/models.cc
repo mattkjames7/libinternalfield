@@ -111,6 +111,11 @@ Internal& ness1975() {
 	return model;
 }
 
+Internal& ah5() {
+	static Internal model("ah5");
+	return model;
+}
+
 Internal& gsfcq3full() {
 	static Internal model("gsfcq3full");
 	return model;
@@ -152,6 +157,7 @@ std::map<std::string,InternalFunc> getModelPtrMap() {
 										{"gsfco8full",gsfco8full},
 										{"gsfco8",gsfco8},
 										{"ness1975",ness1975},
+										{"ah5",ah5},
 										{"gsfcq3full",gsfcq3full},
 										{"gsfcq3",gsfcq3},
 										{"umoh",umoh}
@@ -231,6 +237,7 @@ std::map<std::string,modelFieldPtr> getModelFieldPtrMap() {
 													{"gsfco8full",&gsfco8fullField},
 													{"gsfco8",&gsfco8Field},
 													{"ness1975",&ness1975Field},
+													{"ah5",&ah5Field},
 													{"gsfcq3full",&gsfcq3fullField},
 													{"gsfcq3",&gsfcq3Field},
 													{"umoh",&umohField}
@@ -426,6 +433,12 @@ void gsfco8Field(double x, double y, double z,
 void ness1975Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
 	Internal model = ness1975();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void ah5Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = ah5();
 	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 

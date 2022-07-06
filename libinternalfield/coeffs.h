@@ -47,6 +47,7 @@ extern coeffStruct& _model_coeff_nmoh();
 extern coeffStruct& _model_coeff_gsfco8full();
 extern coeffStruct& _model_coeff_gsfco8();
 extern coeffStruct& _model_coeff_ness1975();
+extern coeffStruct& _model_coeff_ah5();
 extern coeffStruct& _model_coeff_gsfcq3full();
 extern coeffStruct& _model_coeff_gsfcq3();
 extern coeffStruct& _model_coeff_umoh();
