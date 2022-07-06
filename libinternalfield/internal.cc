@@ -428,6 +428,62 @@ void Internal::_Legendre(int l, double *costheta, double *sintheta,
 
 
 /***********************************************************************
+ * NAME : void Internal::_Legendre(l,costheta,sintheta,nmax,Pnm,dPnm)
+ * 
+ * DESCRIPTION : Calculate the Legendre polynomials.
+ * 
+ * INPUTS : 
+ * 		int		l			Number of elements
+ * 		double	*costheta	Cosine of colatitude.
+ * 		double	*sintheta	Sine of colatitude.
+ * 		int		nmax		Maximum degree of the model
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	***Pnm			Polynomials
+ * 		double 	***dPnm			Polynomial derivatives
+ * 
+ * ********************************************************************/
+void Internal::_Legendre(double costheta, double sintheta, 
+						int nmax, double **Pnm, double **dPnm) {
+	/* set up the intial few terms */
+	int n, m, i;
+	Pnm[0][0] = 1.0;
+	Pnm[1][0] = costheta;
+	Pnm[1][1] = sintheta;
+	dPnm[0][0] = 0.0;
+	dPnm[1][0] = -sintheta;
+	dPnm[1][1] = costheta;
+
+	
+	/* now recurse through the rest of them */
+	double n21,onenm,nm1;
+	for (n=2;n<=nmax;n++) {
+		n21 = 2.0*n - 1.0;
+		for (m=0;m<=n;m++) {
+			if (m < n-1) {
+				/* this case is the more complicated one, where we need
+				 * two previous polynomials to calculate the next */
+				onenm = 1.0/(n-m);
+				nm1 = (n + m - 1.0);
+				Pnm[n][m] = onenm*(n21*costheta*Pnm[n-1][m] - nm1*Pnm[n-2][m]);
+				dPnm[n][m] = onenm*(n21*(costheta*dPnm[n-1][m] - sintheta*Pnm[n-1][m]) - nm1*dPnm[n-2][m]);
+								
+			} else { 
+				/* this case only requires one previous polynomial */
+				Pnm[n][m] = n21*sintheta*Pnm[n-1][m-1];
+				dPnm[n][m] = n21*(costheta*Pnm[n-1][m-1] + sintheta*dPnm[n-1][m-1]);
+				
+				
+				
+			}
+		}
+	}
+			
+	
+}
+
+/***********************************************************************
  * NAME : void Internal::_SphHarm(l,r,t,p,MaxDeg,Br,Bt,Bp)
  * 
  * DESCRIPTION : Calculate the magnetic field using spherical harmonics.
@@ -590,6 +646,133 @@ void Internal::_SphHarm(	int l, double *r0, double *t, double *p,
 }
 
 
+
+
+/***********************************************************************
+ * NAME : void Internal::_SphHarm(l,r,t,p,MaxDeg,Br,Bt,Bp)
+ * 
+ * DESCRIPTION : Calculate the magnetic field using spherical harmonics.
+ * 
+ * INPUTS : 
+ * 		int		l			Number of elements
+ * 		double	*r			Radial coordinate (planetary radii)
+ * 		double 	*t			Theta, colatitude (radians)
+ * 		double	*p			Phi, azimuth (radians)			
+ * 		int		MaxDeg		Maximum degree of the model to use.
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	*Br			Radial field component (nT)
+ * 		double 	*Bt			Theta component (nT)
+ * 		double 	*Bp			Phi component (nT)
+ * 
+ * 
+ * 
+ * ********************************************************************/
+void Internal::_SphHarm(double r0, double t, double p,
+						double *Br, double *Bt, double *Bp) {
+	/* rescale r */
+	int i;
+	double r;
+	r = r0*rscale_;
+	
+	/* set the maximum degree of the model to use */
+	int nmax = ncur_[0];
+	
+	/* create arrays for the Legendre polynomials */
+	int n, m;
+	double **Pnm = new double*[nmax+1];
+	double **dPnm = new double*[nmax+1];
+	for (n=0;n<=nmax;n++) {
+		Pnm[n] = new double[n+1];
+		dPnm[n] = new double[n+1];
+	}	
+	
+	/* create some arrays to be used in the field calculation */
+	double r1;
+	double C;
+	double cost;
+	double sint;
+	double sint1;
+	r1 = 1.0/r;
+	C = r1*r1;
+	cost = cos(t);
+	sint = sin(t);
+	if (sint == 0.0) {
+		sint1 = 0.0;
+	} else {
+		sint1 = 1.0/sint;
+	}
+
+	double *cosmp = new double[nmax+1];
+	double *sinmp = new double[nmax+1];
+	for (m=0;m<=nmax;m++) {
+		if (m == 0) {
+			cosmp[0] = 1.0;
+			sinmp[0] = 0.0;
+		} else {
+			cosmp[m] = cos(((double) m)*p);
+			sinmp[m] = sin(((double) m)*p);
+		}
+	}
+	double sumr;
+	double sumt;
+	double sump;
+	
+	
+	/* calculate the Legendre polynomials */
+	_Legendre(cost,sint,nmax,Pnm,dPnm);
+	
+	/* set B components to 0 */
+	Br[0] = 0.0;
+	Bt[0] = 0.0;
+	Bp[0] = 0.0;
+
+	
+	/* now start summing stuff up */
+	for (n=1;n<=nmax;n++) {
+		/* zero the sum arrays and update the C parameter */
+		C = C*r1;
+		sumr = 0.0;
+		sumt = 0.0;
+		sump = 0.0;
+				
+		/* start summing stuff */
+		for (m=0;m<=n;m++) {
+			sumr += Pnm[n][m]*(g_[n][m]*cosmp[m] + h_[n][m]*sinmp[m]);
+			sumt += dPnm[n][m]*(g_[n][m]*cosmp[m] + h_[n][m]*sinmp[m]);
+			sump += ((double) m)*Pnm[n][m]*(h_[n][m]*cosmp[m] - g_[n][m]*sinmp[m]);
+
+		}
+		
+		/* now calculate B */
+		Br[0] += C*(n+1)*sumr;
+		Bt[0] += -C*sumt;
+		Bp[0] += -C*sump;
+		
+		
+	}
+	
+	/* finally multiply by 1/sintheta */
+	Bp[0] = sint1*Bp[0];
+	
+	/* delete the arrays */
+	for (n=0;n<=nmax;n++) {
+		delete[] Pnm[n];
+		delete[] dPnm[n];
+		
+	}		
+	delete[] Pnm;
+	delete[] dPnm;
+	
+	delete[] cosmp;
+	delete[] sinmp;	
+	
+					
+}
+
+
+
 /***********************************************************************
  * NAME : void Internal::Field(l,r,t,p,Br,Bt,Bp)
  * 
@@ -613,8 +796,11 @@ void Internal::_SphHarm(	int l, double *r0, double *t, double *p,
 void Internal::Field(int l, double *r, double *t, double *p,
 						double *Br, double *Bt, double *Bp) {
 	
+	int i;
 	/* call the model */
-	_SphHarm(l,r,t,p,Br,Bt,Bp);
+	for (i=0;i<l;i++) {
+		_SphHarm(r[i],t[i],p[i],&Br[i],&Bt[i],&Bp[i]);
+	}
 	
 }
 
@@ -645,8 +831,11 @@ void Internal::Field(int l, double *r, double *t, double *p,
 	/* set the model degree */
 	SetDegree(MaxDeg);
 
+	int i;
 	/* call the model */
-	_SphHarm(l,r,t,p,Br,Bt,Bp);
+	for (i=0;i<l;i++) {
+		_SphHarm(r[i],t[i],p[i],&Br[i],&Bt[i],&Bp[i]);
+	}
 	
 
 }
@@ -674,7 +863,7 @@ void Internal::Field(	double r, double t, double p,
 						double *Br, double *Bt, double *Bp) {
 	
 	/* call the model */
-	_SphHarm(1,&r,&t,&p,Br,Bt,Bp);
+	_SphHarm(r,t,p,Br,Bt,Bp);
 	
 
 }
@@ -707,9 +896,11 @@ void Internal::Field(	double r, double t, double p, int MaxDeg,
 	SetDegree(MaxDeg);
 
 	/* call the model */
-	_SphHarm(1,&r,&t,&p,Br,Bt,Bp);
+	_SphHarm(r,t,p,Br,Bt,Bp);
 
 }
+
+
 
 
 /***********************************************************************
@@ -739,7 +930,7 @@ void Internal::FieldCart(	double x, double y, double z,
 	_Cart2Pol(x,y,z,&r,&t,&p);
 
 	/* call the model */
-	_SphHarm(1,&r,&t,&p,&Br,&Bt,&Bp);
+	_SphHarm(r,t,p,&Br,&Bt,&Bp);
 
 	/* convert B to Cartesian */
 	_BPol2BCart(t,p,Br,Bt,Bp,Bx,By,Bz);
@@ -778,7 +969,7 @@ void Internal::FieldCart(	double x, double y, double z, int MaxDeg,
 	_Cart2Pol(x,y,z,&r,&t,&p);
 
 	/* call the model */
-	_SphHarm(1,&r,&t,&p,&Br,&Bt,&Bp);
+	_SphHarm(r,t,p,&Br,&Bt,&Bp);
 
 	/* convert B to Cartesian */
 	_BPol2BCart(t,p,Br,Bt,Bp,Bx,By,Bz);

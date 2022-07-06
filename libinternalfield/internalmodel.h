@@ -65,7 +65,9 @@ class InternalModel {
 		bool *CartIn_;
 		bool *CartOut_;
 		void _Cart2Pol(int,double*,double*,double*,double*,double*,double*);
+		void _Cart2Pol(double,double,double,double*,double*,double*);
 		void _BPol2BCart(int,double*,double*,double*,double*,double*,double*,double*,double*);
+		void _BPol2BCart(double,double,double,double,double,double*,double*,double*);
 };
 
 

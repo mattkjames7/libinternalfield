@@ -80,11 +80,13 @@ class Internal {
 
 		/* This function will calculate the Legendre polynomials */
 		void _Legendre(int,double*,double*,int,double***,double***);
+		void _Legendre(double,double,int,double**,double**);
 		
 		/* this function will calculate the magnetic field components in
 		 * spherical polar coordinates */
 		void _SphHarm(int,double*,double*,double*,double*,double*,double*);
 		/* could do with writing a scalar version of this for extra speed */
+		void _SphHarm(double,double,double,double*,double*,double*);
 		
 		void _Cart2Pol(double,double,double,double*,double*,double*);
 		void _BPol2BCart(double,double,double,double,double,double*,double*,double*);

@@ -59,6 +59,10 @@ int main() {
 		printf(" %12.10f",mu_sc[n]);
 	}
 	printf("\n");
+
+
+
+	
 	
 }
 	

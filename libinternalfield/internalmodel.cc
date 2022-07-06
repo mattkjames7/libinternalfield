@@ -247,55 +247,37 @@ int InternalModel::GetDegree() {
  * 		double 	*B1			Theta or y component (nT)
  * 		double 	*B2			Phi or z component (nT)
  * 
- * 
+ * Removed new/delete use - slightly quicker now
  * 
  * ********************************************************************/
-void InternalModel::Field(int n, double *p0, double *p1, double *p2,
+void InternalModel::Field(	int n, double *p0, double *p1, double *p2,
 							double *B0, double *B1, double *B2) {
 	
 	CheckInit();
 	/* some IO pointers */
 	int i;
-	double *r, *t, *p, *Br, *Bt, *Bp;
+	double r, t, p, Br, Bt, Bp;
 	
-	/* set the input pointers */
-	if (!CartIn_[0]) {
-		r = p0;
-		t = p1;
-		p = p2;
-	} else { 
-		r = new double[n];
-		t = new double[n];
-		p = new double[n];
-		_Cart2Pol(n,p0,p1,p2,r,t,p);
-	}
+	for (i=0;i<n;i++) {
+		/* set the input pointers */
+		if (!CartIn_[0]) {
+			r = p0[i];
+			t = p1[i];
+			p = p2[i];
+		} else { 
+			_Cart2Pol(p0[i],p1[i],p2[i],&r,&t,&p);
+		}
 
-	/* set up the output pointers */
-	if (!CartOut_[0]) {
-		Br = B0;
-		Bt = B1;
-		Bp = B2;
-	} else { 
-		Br = new double[n];
-		Bt = new double[n];
-		Bp = new double[n];		
-	}
+		CurrentModel_->Field(r,t,p,&Br,&Bt,&Bp);
 
-	CurrentModel_->Field(n,r,t,p,Br,Bt,Bp);
-
-	/* rotate field vector if needed and delete output arrays */
-	if (CartOut_[0]) {
-		_BPol2BCart(n,t,p,Br,Bt,Bp,B0,B1,B2);
-		delete[] Br;
-		delete[] Bt;
-		delete[] Bp;
-	}
-	
-	/* delete input arrays */
-	if (CartIn_[0]) {
-		delete[] r;
-		delete[] t;
-		delete[] p;
+		/* rotate field vector if needed and delete output arrays */
+		if (CartOut_[0]) {
+			_BPol2BCart(t,p,Br,Bt,Bp,B0,B1,B2);
+		} else {
+			B0[i] = Br;
+			B1[i] = Bt;
+			B2[i] = Bp;
+		}	
 	}
 }
 								
@@ -325,59 +307,43 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 							int MaxDeg, double *B0, double *B1, double *B2) {
 
 	CheckInit();
-	/* some IO pointers */
-	int i;
-	double *r, *t, *p, *Br, *Bt, *Bp;
-	
-	/* set the input pointers */
-	if (!CartIn_[0]) {
-		r = p0;
-		t = p1;
-		p = p2;
-	} else { 
-		r = new double[n];
-		t = new double[n];
-		p = new double[n];
-		_Cart2Pol(n,p0,p1,p2,r,t,p);
-	}
-	
-	/* set up the output pointers */
-	if (!CartOut_[0]) {
-		Br = B0;
-		Bt = B1;
-		Bp = B2;
-	} else { 
-		Br = new double[n];
-		Bt = new double[n];
-		Bp = new double[n];		
-	}
-	
+
 	/* store the existing model degree and set current*/
 	int OldDeg = CurrentModel_->GetDegree();
 	CurrentModel_->SetDegree(MaxDeg);
 	
-	/* call the model */
-	CurrentModel_->Field(n,r,t,p,Br,Bt,Bp);
+	
+	/* some IO pointers */
+	int i;
+	double r, t, p, Br, Bt, Bp;
+	
+	for (i=0;i<n;i++) {
+		/* set the input pointers */
+		if (!CartIn_[0]) {
+			r = p0[i];
+			t = p1[i];
+			p = p2[i];
+		} else { 
+			_Cart2Pol(p0[i],p1[i],p2[i],&r,&t,&p);
+		}
+
+		CurrentModel_->Field(r,t,p,&Br,&Bt,&Bp);
+
+		/* rotate field vector if needed and delete output arrays */
+		if (CartOut_[0]) {
+			_BPol2BCart(t,p,Br,Bt,Bp,B0,B1,B2);
+		} else {
+			B0[i] = Br;
+			B1[i] = Bt;
+			B2[i] = Bp;
+		}	
+	}
 	
 	/* return the original degree */
 	CurrentModel_->SetDegree(OldDeg);
-
-	/* rotate field vector if needed and delete output arrays */
-	if (CartOut_[0]) {
-		_BPol2BCart(n,t,p,Br,Bt,Bp,B0,B1,B2);
-		delete[] Br;
-		delete[] Bt;
-		delete[] Bp;
-	}
-	
-	/* delete input arrays */
-	if (CartIn_[0]) {
-		delete[] r;
-		delete[] t;
-		delete[] p;
-	}
-								
 }
+			
+
 
 /***********************************************************************
  * NAME : void InternalModel::Field(p0,p1,p2,B0,B1,B2)
@@ -411,14 +377,14 @@ void InternalModel::Field(	double p0, double p1, double p2,
 		t = p1;
 		p = p2;
 	} else { 
-		_Cart2Pol(1,&p0,&p1,&p2,&r,&t,&p);
+		_Cart2Pol(p0,p1,p2,&r,&t,&p);
 	}
 	
 	CurrentModel_->Field(r,t,p,&Br,&Bt,&Bp);
 
 	/* rotate field vector if needed and delete output arrays */
 	if (CartOut_[0]) {
-		_BPol2BCart(1,&t,&p,&Br,&Bt,&Bp,B0,B1,B2);
+		_BPol2BCart(t,p,Br,Bt,Bp,B0,B1,B2);
 	} else {
 		B0[0] = Br;
 		B1[0] = Bt;
@@ -459,7 +425,7 @@ void InternalModel::Field(	double p0, double p1, double p2, int MaxDeg,
 		t = p1;
 		p = p2;
 	} else { 
-		_Cart2Pol(1,&p0,&p1,&p2,&r,&t,&p);
+		_Cart2Pol(p0,p1,p2,&r,&t,&p);
 	}
 	
 
@@ -475,7 +441,7 @@ void InternalModel::Field(	double p0, double p1, double p2, int MaxDeg,
 	
 	/* rotate field vector if needed and delete output arrays */
 	if (CartOut_[0]) {
-		_BPol2BCart(1,&t,&p,&Br,&Bt,&Bp,B0,B1,B2);
+		_BPol2BCart(t,p,Br,Bt,Bp,B0,B1,B2);
 	} else {
 		B0[0] = Br;
 		B1[0] = Bt;
@@ -504,8 +470,8 @@ void InternalModel::Field(	double p0, double p1, double p2, int MaxDeg,
  * 
  * 
  * ********************************************************************/
-void InternalModel::_Cart2Pol(int l, double *x, double *y, double *z,
-						double *r, double *t, double *p) {
+void InternalModel::_Cart2Pol(	int l, double *x, double *y, double *z,
+								double *r, double *t, double *p) {
 	CheckInit();
 	int i;
 	double pi2 = M_PI*2;
@@ -515,6 +481,37 @@ void InternalModel::_Cart2Pol(int l, double *x, double *y, double *z,
 		p[i] = fmod(atan2(y[i],x[i]) + pi2,pi2);
 	}
 }
+
+/***********************************************************************
+ * NAME : void InternalModel::_Cart2Pol(x,y,z,r,t,p)
+ * 
+ * DESCRIPTION : Convert Cartesian to polar.
+ * 
+ * INPUTS : 
+ * 		double	x			x 
+ * 		double 	y			y 
+ * 		double	z			z 			
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	*r			Radial component
+ * 		double 	*t			Theta component
+ * 		double 	*p			Phi component 
+ * 
+ * 
+ * 
+ * ********************************************************************/
+void InternalModel::_Cart2Pol(	double x, double y, double z,
+								double *r, double *t, double *p) {
+	CheckInit();
+
+	double pi2 = M_PI*2;
+	r[0] = sqrt(x*x + y*y + z*z);
+	t[0] = acos(z/r[0]);
+	p[0] = fmod(atan2(y,x) + pi2,pi2);
+
+}
+
 
 /***********************************************************************
  * NAME : void InternalModel::_BPol2Cart(l,t,p,Br,Bt,Bp,Bx,By,Bz)
@@ -539,8 +536,8 @@ void InternalModel::_Cart2Pol(int l, double *x, double *y, double *z,
  * 
  * ********************************************************************/
 void InternalModel::_BPol2BCart(int l, double *t, double *p,
-							double *Br, double *Bt, double *Bp,
-							double *Bx, double *By, double *Bz) {
+								double *Br, double *Bt, double *Bp,
+								double *Bx, double *By, double *Bz) {
 	CheckInit();
 	int i;
 	double cost, cosp, sint ,sinp;
@@ -553,5 +550,44 @@ void InternalModel::_BPol2BCart(int l, double *t, double *p,
 		By[i] = Br[i]*sint*sinp + Bt[i]*cost*sinp + Bp[i]*cosp;
 		Bz[i] = Br[i]*cost - Bt[i]*sint;
 	}
+								
+}
+
+
+/***********************************************************************
+ * NAME : void InternalModel::_BPol2Cart(t,p,Br,Bt,Bp,Bx,By,Bz)
+ * 
+ * DESCRIPTION : Convert polar field to Cartesian.
+ * 
+ * INPUTS : 
+ * 		double	t			t Theta position
+ * 		double 	p			p Phi position
+ * 		double	Br			Radial field 			
+ * 		double	Bt			Theta field 			
+ * 		double	Bp			Phi field 			
+ * 
+ * 
+ * OUTPUTS :
+ * 		double 	*Bx			x component
+ * 		double 	*By			y component
+ * 		double 	*Bz			z component 
+ * 
+ * 
+ * 
+ * ********************************************************************/
+void InternalModel::_BPol2BCart(double t, double p,
+									double Br, double Bt, double Bp,
+									double *Bx, double *By, double *Bz) {
+	CheckInit();
+
+	double cost, cosp, sint ,sinp;
+	cost = cos(t);
+	cosp = cos(p);
+	sint = sin(t);
+	sinp = sin(p);
+	Bx[0] = Br*sint*cosp + Bt*cost*cosp - Bp*sinp;
+	By[0] = Br*sint*sinp + Bt*cost*sinp + Bp*cosp;
+	Bz[0] = Br*cost - Bt*sint;
+	
 								
 }
