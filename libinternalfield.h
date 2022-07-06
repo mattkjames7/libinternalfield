@@ -45,18 +45,22 @@ extern coeffStruct& _model_coeff_vipal();
 extern coeffStruct& _model_coeff_jpl15evs();
 extern coeffStruct& _model_coeff_u17ev();
 extern coeffStruct& _model_coeff_jrm09();
-extern coeffStruct& _model_coeff_ness1975();
 extern coeffStruct& _model_coeff_o6();
 extern coeffStruct& _model_coeff_o4();
-extern coeffStruct& _model_coeff_gsfco8();
-extern coeffStruct& _model_coeff_gsfcq3();
 extern coeffStruct& _model_coeff_sha();
 extern coeffStruct& _model_coeff_p11a();
 extern coeffStruct& _model_coeff_jrm33();
-extern coeffStruct& _model_coeff_langlais2019();
 extern coeffStruct& _model_coeff_vit4();
 extern coeffStruct& _model_coeff_isaac();
 extern coeffStruct& _model_coeff_jpl15ev();
+extern coeffStruct& _model_coeff_langlais2019();
+extern coeffStruct& _model_coeff_nmoh();
+extern coeffStruct& _model_coeff_gsfco8full();
+extern coeffStruct& _model_coeff_gsfco8();
+extern coeffStruct& _model_coeff_ness1975();
+extern coeffStruct& _model_coeff_gsfcq3full();
+extern coeffStruct& _model_coeff_gsfcq3();
+extern coeffStruct& _model_coeff_umoh();
 
 /* map model names to the structure containing the coefficients */
 std::map<std::string,coeffStructFunc> getCoeffMap();
@@ -103,18 +107,22 @@ extern Internal& vipal();
 extern Internal& jpl15evs();
 extern Internal& u17ev();
 extern Internal& jrm09();
-extern Internal& ness1975();
 extern Internal& o6();
 extern Internal& o4();
-extern Internal& gsfco8();
-extern Internal& gsfcq3();
 extern Internal& sha();
 extern Internal& p11a();
 extern Internal& jrm33();
-extern Internal& langlais2019();
 extern Internal& vit4();
 extern Internal& isaac();
 extern Internal& jpl15ev();
+extern Internal& langlais2019();
+extern Internal& nmoh();
+extern Internal& gsfco8full();
+extern Internal& gsfco8();
+extern Internal& ness1975();
+extern Internal& gsfcq3full();
+extern Internal& gsfcq3();
+extern Internal& umoh();
 
 
 /* map the model names to their model object pointers */
@@ -238,15 +246,9 @@ void u17evField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void jrm09Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
-void ness1975Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
 void o6Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void o4Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
-void gsfco8Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
-void gsfcq3Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void shaField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
@@ -254,13 +256,27 @@ void p11aField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void jrm33Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
-void langlais2019Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
 void vit4Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void isaacField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void jpl15evField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void langlais2019Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void nmohField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void gsfco8fullField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void gsfco8Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void ness1975Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void gsfcq3fullField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void gsfcq3Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void umohField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 
 

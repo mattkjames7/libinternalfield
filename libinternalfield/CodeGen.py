@@ -1,21 +1,47 @@
 import numpy as np
 import os
 
+def ListFiles(start,ReturnNames=False):
+	'''
+	Should list the files that exist within a folder.
+	'''
+	
+	FileOut = []
+	NameOut = []
+	for root,dirs,files in os.walk(start,topdown=False,followlinks=True):
+		for name in files:
+			FileOut.append(root+'/'+name)
+			NameOut.append(name)
+	
+	FileOut = np.array(FileOut)
+	NameOut = np.array(NameOut)
+	
+	if ReturnNames:
+		return FileOut,NameOut
+	else:
+		return FileOut
+
+
+
 def ListDatFiles():
 	'''
 	List the dat files within the "coeffs" directory
 	
 	'''
 	
-	files = os.listdir('coeffs')
+	fnames = ListFiles('coeffs/')
+	n = fnames.size
+	planet = []
 	dat = []
-	for f in files:
-		if f.endswith('.dat'):
-			dat.append(f)
-	
+	for i in range(0,n):
+		if fnames[i].endswith('.dat'):
+			tmp,d = os.path.split(fnames[i])
+			dat.append(d)
+			planet.append(tmp[7:])
+	planet = np.array(planet)
 	dat = np.array(dat)
-	print('Found {:d} coefficient files'.format(dat.size))
-	return dat
+	
+	return planet,dat
 
 def ListBinFiles():
 	'''
@@ -58,30 +84,33 @@ def ListModelNames():
 	'''
 	
 	#start by listing all of the object files which have been created
-	files = ListDatFiles()
+	planets,files = ListDatFiles()
 	
 	#strip them of their extensions
 	models = [os.path.splitext(f)[0] for f in files]
 	modelsl = [os.path.splitext(f)[0].lower() for f in files]
 	
-	return models,modelsl	
+	return planets,models,modelsl	
 	
-def WriteCppFile(fname):
+def WriteCppFile(planet,fname):
 	'''
 	This will convert the ASCII files of internal magnetic field model
 	coefficients to C++ code.
 	
 	Inputs
 	======
-	fnamein : str
+	planet : str
+		Name of the planet.
+	fname : str
 		Name of the ASCII file containing the coefficients.
-	fnameout : str
-		Name of the output C++ file.
 	
 	'''
-	
 	#open the ASCII file
-	f = open('coeffs/'+fname,'r')
+	if planet == '':
+		#planet = 'unknown'	
+		f = open('coeffs/'+fname,'r')
+	else:
+		f = open('coeffs/'+planet+'/'+fname,'r')
 	lines = f.readlines()
 	f.close()
 	lines = np.array(lines)
@@ -112,18 +141,29 @@ def WriteCppFile(fname):
 	coeff = np.zeros(nl,dtype='float64')
 	
 	#fill them
+	good = np.zeros(nl,dtype='bool')
 	for i in range(0,nl):
-		s = lines[i].split()
+		try:
+			s = lines[i].split()
 
-		if s[0] == 'h':
-			gh[i] = 1
-		else:
-			gh[i] = 0
-			
-		n[i] = np.int32(s[1])
-		m[i] = np.int32(s[2])
-		coeff[i] = np.float64(s[3])
-		
+			if s[0] == 'h':
+				gh[i] = 1
+			else:
+				gh[i] = 0
+			n[i] = np.int32(s[1])
+			m[i] = np.int32(s[2])
+			coeff[i] = np.float64(s[3])
+			good[i] = True
+		except:
+			good[i] = False
+	
+	#remove any bad bits
+	use = np.where(good)[0]
+	gh = gh[use]
+	n = n[use]
+	m = m[use]
+	coeff = coeff[use]
+	nl = use.size
 
 	#get any extra info - more things might be added here e.g. "planet"
 	if 'DefaultDegree' in stuff:
@@ -163,7 +203,7 @@ def WriteCppFile(fname):
 	
 	#output file names
 	name,ext = os.path.splitext(fname)
-	fnameout = name + '.cc'
+	fnameout = planet + '/' + name + '.cc'
 
 	#cpp contents
 	clines = []
@@ -225,7 +265,7 @@ def WriteCppFile(fname):
 
 	
 	#C++ file
-	print('Saving {:s}'.format(fnameout))
+	#print('Saving {:s}'.format(fnameout))
 	fc = open('coeffs/'+fnameout,'w')
 	fc.writelines(clines)
 	fc.close()
@@ -252,7 +292,7 @@ def WriteASCII(fname,lines):
 		print('Saved {:s}'.format(fname))
 	
 
-def GenerateCoeffsH(models,modelsl):
+def GenerateCoeffsH(models):
 	'''
 	Generate C++ header file "coeffs.h" using the models inside the 
 	coeffs directory.
@@ -279,7 +319,7 @@ def GenerateCoeffsH(models,modelsl):
 	
 	
 
-def GenerateCoeffsCC(models,modelsl):
+def GenerateCoeffsCC(planets,models,modelsl):
 	'''
 	Generate C++ file "coeffs.cc" using the models inside the 
 	coeffs directory.
@@ -306,8 +346,11 @@ def GenerateCoeffsCC(models,modelsl):
 	
 	#arrays of coefficients and struct definitions
 	lines += code1
-	for m in models:
-		cc = ReadASCII('coeffs/{:s}.cc'.format(m))
+	for p,m in zip(planets,models):
+		if p == '':
+			cc = ReadASCII('coeffs/{:s}.cc'.format(m))
+		else:
+			cc = ReadASCII('coeffs/{:s}/{:s}.cc'.format(p,m))
 		lines += cc
 	
 	#map of structures
@@ -332,7 +375,7 @@ def GenerateCoeffsCC(models,modelsl):
 	WriteASCII('coeffs.cc',lines)
 	
 
-def GenerateModelsH(models,modelsl):
+def GenerateModelsH(modelsl):
 	'''
 	Generate C++ header file "models.h" using the models inside the 
 	coeffs directory.
@@ -467,28 +510,30 @@ def GenerateLibHeader():
 if __name__ == "__main__":
 	
 	#list the dat files
-	files = ListDatFiles()
+	planets,files = ListDatFiles()
+	nf = files.size
+	print('Found {:d} coefficient files...'.format(nf))
 	
 	#now attempt to convert them
-	for i,f in enumerate(files):
-		print('Converting coefficients in {:s} ({:d} of {:d})'.format(f,i+1,files.size))
+	for i in range(0,nf):
+		print('Converting coefficients in {:s} ({:d} of {:d})'.format(files[i],i+1,nf))
 		
 		try:
 			#read it in, convert to binary
-			WriteCppFile(f)
+			WriteCppFile(planets[i],files[i])
 			
 		except:
 			#ignore if it fails
-			print('Converting file {:s} failed, check the formatting'.format(f))
+			print('Converting file {:s} failed, check the formatting'.format(files[i]))
 			
 
 	
 	#list models
-	models,modelsl = ListModelNames()
+	planets,models,modelsl = ListModelNames()
 			
 	#generate files
-	GenerateCoeffsH(models,modelsl)
-	GenerateCoeffsCC(models,modelsl)
-	GenerateModelsH(models,modelsl)
+	GenerateCoeffsH(models)
+	GenerateCoeffsCC(planets,models,modelsl)
+	GenerateModelsH(modelsl)
 	GenerateModelsCC(models,modelsl)
 	GenerateLibHeader()

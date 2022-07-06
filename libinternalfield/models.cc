@@ -46,11 +46,6 @@ Internal& jrm09() {
 	return model;
 }
 
-Internal& ness1975() {
-	static Internal model("ness1975");
-	return model;
-}
-
 Internal& o6() {
 	static Internal model("o6");
 	return model;
@@ -58,16 +53,6 @@ Internal& o6() {
 
 Internal& o4() {
 	static Internal model("o4");
-	return model;
-}
-
-Internal& gsfco8() {
-	static Internal model("gsfco8");
-	return model;
-}
-
-Internal& gsfcq3() {
-	static Internal model("gsfcq3");
 	return model;
 }
 
@@ -86,11 +71,6 @@ Internal& jrm33() {
 	return model;
 }
 
-Internal& langlais2019() {
-	static Internal model("langlais2019");
-	return model;
-}
-
 Internal& vit4() {
 	static Internal model("vit4");
 	return model;
@@ -103,6 +83,46 @@ Internal& isaac() {
 
 Internal& jpl15ev() {
 	static Internal model("jpl15ev");
+	return model;
+}
+
+Internal& langlais2019() {
+	static Internal model("langlais2019");
+	return model;
+}
+
+Internal& nmoh() {
+	static Internal model("nmoh");
+	return model;
+}
+
+Internal& gsfco8full() {
+	static Internal model("gsfco8full");
+	return model;
+}
+
+Internal& gsfco8() {
+	static Internal model("gsfco8");
+	return model;
+}
+
+Internal& ness1975() {
+	static Internal model("ness1975");
+	return model;
+}
+
+Internal& gsfcq3full() {
+	static Internal model("gsfcq3full");
+	return model;
+}
+
+Internal& gsfcq3() {
+	static Internal model("gsfcq3");
+	return model;
+}
+
+Internal& umoh() {
+	static Internal model("umoh");
 	return model;
 }
 
@@ -119,18 +139,22 @@ std::map<std::string,InternalFunc> getModelPtrMap() {
 										{"jpl15evs",jpl15evs},
 										{"u17ev",u17ev},
 										{"jrm09",jrm09},
-										{"ness1975",ness1975},
 										{"o6",o6},
 										{"o4",o4},
-										{"gsfco8",gsfco8},
-										{"gsfcq3",gsfcq3},
 										{"sha",sha},
 										{"p11a",p11a},
 										{"jrm33",jrm33},
-										{"langlais2019",langlais2019},
 										{"vit4",vit4},
 										{"isaac",isaac},
-										{"jpl15ev",jpl15ev}
+										{"jpl15ev",jpl15ev},
+										{"langlais2019",langlais2019},
+										{"nmoh",nmoh},
+										{"gsfco8full",gsfco8full},
+										{"gsfco8",gsfco8},
+										{"ness1975",ness1975},
+										{"gsfcq3full",gsfcq3full},
+										{"gsfcq3",gsfcq3},
+										{"umoh",umoh}
 	};
 	return modelPtrMap;
 }
@@ -194,18 +218,22 @@ std::map<std::string,modelFieldPtr> getModelFieldPtrMap() {
 													{"jpl15evs",&jpl15evsField},
 													{"u17ev",&u17evField},
 													{"jrm09",&jrm09Field},
-													{"ness1975",&ness1975Field},
 													{"o6",&o6Field},
 													{"o4",&o4Field},
-													{"gsfco8",&gsfco8Field},
-													{"gsfcq3",&gsfcq3Field},
 													{"sha",&shaField},
 													{"p11a",&p11aField},
 													{"jrm33",&jrm33Field},
-													{"langlais2019",&langlais2019Field},
 													{"vit4",&vit4Field},
 													{"isaac",&isaacField},
-													{"jpl15ev",&jpl15evField}
+													{"jpl15ev",&jpl15evField},
+													{"langlais2019",&langlais2019Field},
+													{"nmoh",&nmohField},
+													{"gsfco8full",&gsfco8fullField},
+													{"gsfco8",&gsfco8Field},
+													{"ness1975",&ness1975Field},
+													{"gsfcq3full",&gsfcq3fullField},
+													{"gsfcq3",&gsfcq3Field},
+													{"umoh",&umohField}
 	};
 	return modelFieldPtrMap;
 }
@@ -323,12 +351,6 @@ void jrm09Field(double x, double y, double z,
 	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
-void ness1975Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz) {
-	Internal model = ness1975();
-	model.FieldCart(x,y,z,Bx,By,Bz);
-}
-
 void o6Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
 	Internal model = o6();
@@ -338,18 +360,6 @@ void o6Field(double x, double y, double z,
 void o4Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
 	Internal model = o4();
-	model.FieldCart(x,y,z,Bx,By,Bz);
-}
-
-void gsfco8Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz) {
-	Internal model = gsfco8();
-	model.FieldCart(x,y,z,Bx,By,Bz);
-}
-
-void gsfcq3Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz) {
-	Internal model = gsfcq3();
 	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
@@ -371,12 +381,6 @@ void jrm33Field(double x, double y, double z,
 	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
-void langlais2019Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz) {
-	Internal model = langlais2019();
-	model.FieldCart(x,y,z,Bx,By,Bz);
-}
-
 void vit4Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
 	Internal model = vit4();
@@ -392,6 +396,54 @@ void isaacField(double x, double y, double z,
 void jpl15evField(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
 	Internal model = jpl15ev();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void langlais2019Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = langlais2019();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void nmohField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = nmoh();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void gsfco8fullField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = gsfco8full();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void gsfco8Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = gsfco8();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void ness1975Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = ness1975();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void gsfcq3fullField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = gsfcq3full();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void gsfcq3Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = gsfcq3();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void umohField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = umoh();
 	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 

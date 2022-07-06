@@ -18,18 +18,22 @@ extern Internal& vipal();
 extern Internal& jpl15evs();
 extern Internal& u17ev();
 extern Internal& jrm09();
-extern Internal& ness1975();
 extern Internal& o6();
 extern Internal& o4();
-extern Internal& gsfco8();
-extern Internal& gsfcq3();
 extern Internal& sha();
 extern Internal& p11a();
 extern Internal& jrm33();
-extern Internal& langlais2019();
 extern Internal& vit4();
 extern Internal& isaac();
 extern Internal& jpl15ev();
+extern Internal& langlais2019();
+extern Internal& nmoh();
+extern Internal& gsfco8full();
+extern Internal& gsfco8();
+extern Internal& ness1975();
+extern Internal& gsfcq3full();
+extern Internal& gsfcq3();
+extern Internal& umoh();
 
 
 /* map the model names to their model object pointers */
@@ -153,15 +157,9 @@ void u17evField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void jrm09Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
-void ness1975Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
 void o6Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void o4Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
-void gsfco8Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
-void gsfcq3Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void shaField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
@@ -169,11 +167,25 @@ void p11aField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void jrm33Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
-void langlais2019Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
 void vit4Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void isaacField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void jpl15evField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void langlais2019Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void nmohField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void gsfco8fullField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void gsfco8Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void ness1975Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void gsfcq3fullField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void gsfcq3Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void umohField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
