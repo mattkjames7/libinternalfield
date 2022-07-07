@@ -164,7 +164,7 @@ def WriteCppFile(planet,fname):
 	m = m[use]
 	coeff = coeff[use]
 	nl = use.size
-
+	
 	#get any extra info - more things might be added here e.g. "planet"
 	if 'DefaultDegree' in stuff:
 		DefDeg = np.int32(stuff['DefaultDegree'])

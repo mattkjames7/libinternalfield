@@ -23,7 +23,20 @@ std::vector<std::string> getModelNames() {
 								"nmoh",
 								"gsfco8full",
 								"gsfco8",
+								"thebault2018m3",
+								"anderson2010qts04",
+								"uno2009svd",
+								"anderson2012",
+								"thebault2018m1",
+								"anderson2010dts04",
+								"anderson2010q",
+								"anderson2010d",
+								"anderson2010qsha",
+								"anderson2010dsha",
 								"ness1975",
+								"uno2009",
+								"anderson2010r",
+								"thebault2018m2",
 								"ah5",
 								"gsfcq3full",
 								"gsfcq3",
@@ -4304,6 +4317,158 @@ coeffStruct& _model_coeff_gsfco8() {
 	return out;
 }
 
+coeffStruct& _model_coeff_thebault2018m3() {
+	static const int len = 20;
+	static const int nmax = 5;
+	static const int ndef = 5;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3,4,4,4,4,4,5,5,5,5,5,5};
+	static const int m[] = {0,1,0,1,2,0,1,2,3,0,1,2,3,4,0,1,2,3,4,5};
+	static const double g[] = {-198.800000,0.900000,-77.600000,0.000000,
+		0.000000,-20.600000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.600000,0.000000,0.000000,0.000000,
+		0.000000,0.000000};
+	static const double h[] = {0.000000,1.800000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_anderson2010qts04() {
+	static const int len = 5;
+	static const int nmax = 2;
+	static const int ndef = 2;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2};
+	static const int m[] = {0,1,0,1,2};
+	static const double g[] = {-213.000000,-4.000000,-66.000000,9.000000,
+		4.000000};
+	static const double h[] = {0.000000,7.000000,0.000000,5.000000,-4.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_uno2009svd() {
+	static const int len = 5;
+	static const int nmax = 2;
+	static const int ndef = 2;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2};
+	static const int m[] = {0,1,0,1,2};
+	static const double g[] = {-169.600000,6.700000,-56.000000,7.900000,
+		13.700000};
+	static const double h[] = {0.000000,17.500000,0.000000,-45.400000,
+		-16.300000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_anderson2012() {
+	static const int len = 14;
+	static const int nmax = 4;
+	static const int ndef = 4;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3,4,4,4,4,4};
+	static const int m[] = {0,1,0,1,2,0,1,2,3,0,1,2,3,4};
+	static const double g[] = {-190.000000,0.000000,-74.600000,0.000000,
+		0.000000,-22.000000,0.000000,0.000000,0.000000,-5.700000,0.000000,
+		0.000000,0.000000,0.000000};
+	static const double h[] = {0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_thebault2018m1() {
+	static const int len = 20;
+	static const int nmax = 5;
+	static const int ndef = 5;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3,4,4,4,4,4,5,5,5,5,5,5};
+	static const int m[] = {0,1,0,1,2,0,1,2,3,0,1,2,3,4,0,1,2,3,4,5};
+	static const double g[] = {-213.200000,1.200000,-56.500000,0.000000,
+		0.000000,-34.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,2.700000,0.000000,0.000000,0.000000,
+		0.000000,0.000000};
+	static const double h[] = {0.000000,1.600000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_anderson2010dts04() {
+	static const int len = 2;
+	static const int nmax = 1;
+	static const int ndef = 1;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1};
+	static const int m[] = {0,1};
+	static const double g[] = {-240.000000,-1.000000};
+	static const double h[] = {0.000000,5.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_anderson2010q() {
+	static const int len = 5;
+	static const int nmax = 2;
+	static const int ndef = 2;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2};
+	static const int m[] = {0,1,0,1,2};
+	static const double g[] = {-173.000000,-7.000000,-108.000000,-9.000000,
+		-1.000000};
+	static const double h[] = {0.000000,15.000000,0.000000,16.000000,
+		-17.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_anderson2010d() {
+	static const int len = 2;
+	static const int nmax = 1;
+	static const int ndef = 1;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1};
+	static const int m[] = {0,1};
+	static const double g[] = {-216.000000,-6.000000};
+	static const double h[] = {0.000000,14.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_anderson2010qsha() {
+	static const int len = 5;
+	static const int nmax = 2;
+	static const int ndef = 2;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2};
+	static const int m[] = {0,1,0,1,2};
+	static const double g[] = {-182.000000,-15.000000,-108.000000,10.000000,
+		2.000000};
+	static const double h[] = {0.000000,9.000000,0.000000,6.000000,-15.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_anderson2010dsha() {
+	static const int len = 2;
+	static const int nmax = 1;
+	static const int ndef = 1;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1};
+	static const int m[] = {0,1};
+	static const double g[] = {-249.000000,-12.000000};
+	static const double h[] = {0.000000,16.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
 coeffStruct& _model_coeff_ness1975() {
 	static const int len = 2;
 	static const int nmax = 1;
@@ -4313,6 +4478,66 @@ coeffStruct& _model_coeff_ness1975() {
 	static const int m[] = {0,1};
 	static const double g[] = {-344.000000,16.000000};
 	static const double h[] = {0.000000,-59.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_uno2009() {
+	static const int len = 44;
+	static const int nmax = 8;
+	static const int ndef = 8;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3,4,4,4,4,4,5,5,5,5,5,5,6,6,6,
+		6,6,6,6,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8,8};
+	static const int m[] = {0,1,0,1,2,0,1,2,3,0,1,2,3,4,0,1,2,3,4,5,0,1,2,
+		3,4,5,6,0,1,2,3,4,5,6,7,0,1,2,3,4,5,6,7,8};
+	static const double g[] = {-227.100000,11.000000,-20.700000,3.100000,
+		5.100000,-10.300000,-1.500000,5.800000,1.900000,-4.700000,-0.600000,
+		2.700000,1.200000,1.800000,-3.300000,-0.400000,0.800000,-0.200000,
+		0.300000,0.700000,-1.000000,-0.300000,0.200000,-0.500000,-0.200000,
+		-0.200000,0.300000,0.200000,0.100000,0.100000,-0.200000,-0.100000,
+		-0.200000,-0.200000,0.100000,0.100000,0.300000,0.100000,-0.100000,
+		0.000000,0.000000,0.100000,-0.100000,0.000000};
+	static const double h[] = {0.000000,7.000000,0.000000,-3.300000,3.600000,
+		0.000000,-4.300000,2.300000,-0.400000,0.000000,-1.700000,1.500000,
+		2.000000,0.000000,0.000000,-1.200000,1.000000,1.400000,1.100000,
+		0.300000,0.000000,-1.000000,0.100000,0.400000,0.500000,0.500000,
+		0.100000,0.000000,-0.400000,-0.100000,0.000000,0.000000,0.200000,
+		0.100000,0.100000,0.000000,-0.100000,0.100000,-0.100000,-0.100000,
+		0.000000,0.100000,0.000000,0.100000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_anderson2010r() {
+	static const int len = 5;
+	static const int nmax = 2;
+	static const int ndef = 2;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2};
+	static const int m[] = {0,1,0,1,2};
+	static const double g[] = {-222.000000,12.000000,-24.000000,9.000000,
+		9.000000};
+	static const double h[] = {0.000000,2.000000,0.000000,-6.000000,8.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_thebault2018m2() {
+	static const int len = 20;
+	static const int nmax = 5;
+	static const int ndef = 5;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3,4,4,4,4,4,5,5,5,5,5,5};
+	static const int m[] = {0,1,0,1,2,0,1,2,3,0,1,2,3,4,0,1,2,3,4,5};
+	static const double g[] = {-213.600000,0.900000,-57.700000,0.000000,
+		0.000000,-35.800000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,2.100000,0.000000,0.000000,0.000000,
+		0.000000,0.000000};
+	static const double h[] = {0.000000,1.500000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000};
 	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
 	return out;
 }
@@ -4458,7 +4683,20 @@ std::map<std::string,coeffStructFunc> getCoeffMap() {
 											{"nmoh",_model_coeff_nmoh},
 											{"gsfco8full",_model_coeff_gsfco8full},
 											{"gsfco8",_model_coeff_gsfco8},
+											{"thebault2018m3",_model_coeff_thebault2018m3},
+											{"anderson2010qts04",_model_coeff_anderson2010qts04},
+											{"uno2009svd",_model_coeff_uno2009svd},
+											{"anderson2012",_model_coeff_anderson2012},
+											{"thebault2018m1",_model_coeff_thebault2018m1},
+											{"anderson2010dts04",_model_coeff_anderson2010dts04},
+											{"anderson2010q",_model_coeff_anderson2010q},
+											{"anderson2010d",_model_coeff_anderson2010d},
+											{"anderson2010qsha",_model_coeff_anderson2010qsha},
+											{"anderson2010dsha",_model_coeff_anderson2010dsha},
 											{"ness1975",_model_coeff_ness1975},
+											{"uno2009",_model_coeff_uno2009},
+											{"anderson2010r",_model_coeff_anderson2010r},
+											{"thebault2018m2",_model_coeff_thebault2018m2},
 											{"ah5",_model_coeff_ah5},
 											{"gsfcq3full",_model_coeff_gsfcq3full},
 											{"gsfcq3",_model_coeff_gsfcq3},

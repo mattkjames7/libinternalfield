@@ -57,7 +57,20 @@ extern coeffStruct& _model_coeff_langlais2019();
 extern coeffStruct& _model_coeff_nmoh();
 extern coeffStruct& _model_coeff_gsfco8full();
 extern coeffStruct& _model_coeff_gsfco8();
+extern coeffStruct& _model_coeff_thebault2018m3();
+extern coeffStruct& _model_coeff_anderson2010qts04();
+extern coeffStruct& _model_coeff_uno2009svd();
+extern coeffStruct& _model_coeff_anderson2012();
+extern coeffStruct& _model_coeff_thebault2018m1();
+extern coeffStruct& _model_coeff_anderson2010dts04();
+extern coeffStruct& _model_coeff_anderson2010q();
+extern coeffStruct& _model_coeff_anderson2010d();
+extern coeffStruct& _model_coeff_anderson2010qsha();
+extern coeffStruct& _model_coeff_anderson2010dsha();
 extern coeffStruct& _model_coeff_ness1975();
+extern coeffStruct& _model_coeff_uno2009();
+extern coeffStruct& _model_coeff_anderson2010r();
+extern coeffStruct& _model_coeff_thebault2018m2();
 extern coeffStruct& _model_coeff_ah5();
 extern coeffStruct& _model_coeff_gsfcq3full();
 extern coeffStruct& _model_coeff_gsfcq3();
@@ -120,7 +133,20 @@ extern Internal& langlais2019();
 extern Internal& nmoh();
 extern Internal& gsfco8full();
 extern Internal& gsfco8();
+extern Internal& thebault2018m3();
+extern Internal& anderson2010qts04();
+extern Internal& uno2009svd();
+extern Internal& anderson2012();
+extern Internal& thebault2018m1();
+extern Internal& anderson2010dts04();
+extern Internal& anderson2010q();
+extern Internal& anderson2010d();
+extern Internal& anderson2010qsha();
+extern Internal& anderson2010dsha();
 extern Internal& ness1975();
+extern Internal& uno2009();
+extern Internal& anderson2010r();
+extern Internal& thebault2018m2();
 extern Internal& ah5();
 extern Internal& gsfcq3full();
 extern Internal& gsfcq3();
@@ -272,7 +298,33 @@ void gsfco8fullField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void gsfco8Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
+void thebault2018m3Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void anderson2010qts04Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void uno2009svdField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void anderson2012Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void thebault2018m1Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void anderson2010dts04Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void anderson2010qField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void anderson2010dField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void anderson2010qshaField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void anderson2010dshaField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
 void ness1975Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void uno2009Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void anderson2010rField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void thebault2018m2Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void ah5Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);

@@ -106,8 +106,73 @@ Internal& gsfco8() {
 	return model;
 }
 
+Internal& thebault2018m3() {
+	static Internal model("thebault2018m3");
+	return model;
+}
+
+Internal& anderson2010qts04() {
+	static Internal model("anderson2010qts04");
+	return model;
+}
+
+Internal& uno2009svd() {
+	static Internal model("uno2009svd");
+	return model;
+}
+
+Internal& anderson2012() {
+	static Internal model("anderson2012");
+	return model;
+}
+
+Internal& thebault2018m1() {
+	static Internal model("thebault2018m1");
+	return model;
+}
+
+Internal& anderson2010dts04() {
+	static Internal model("anderson2010dts04");
+	return model;
+}
+
+Internal& anderson2010q() {
+	static Internal model("anderson2010q");
+	return model;
+}
+
+Internal& anderson2010d() {
+	static Internal model("anderson2010d");
+	return model;
+}
+
+Internal& anderson2010qsha() {
+	static Internal model("anderson2010qsha");
+	return model;
+}
+
+Internal& anderson2010dsha() {
+	static Internal model("anderson2010dsha");
+	return model;
+}
+
 Internal& ness1975() {
 	static Internal model("ness1975");
+	return model;
+}
+
+Internal& uno2009() {
+	static Internal model("uno2009");
+	return model;
+}
+
+Internal& anderson2010r() {
+	static Internal model("anderson2010r");
+	return model;
+}
+
+Internal& thebault2018m2() {
+	static Internal model("thebault2018m2");
 	return model;
 }
 
@@ -156,7 +221,20 @@ std::map<std::string,InternalFunc> getModelPtrMap() {
 										{"nmoh",nmoh},
 										{"gsfco8full",gsfco8full},
 										{"gsfco8",gsfco8},
+										{"thebault2018m3",thebault2018m3},
+										{"anderson2010qts04",anderson2010qts04},
+										{"uno2009svd",uno2009svd},
+										{"anderson2012",anderson2012},
+										{"thebault2018m1",thebault2018m1},
+										{"anderson2010dts04",anderson2010dts04},
+										{"anderson2010q",anderson2010q},
+										{"anderson2010d",anderson2010d},
+										{"anderson2010qsha",anderson2010qsha},
+										{"anderson2010dsha",anderson2010dsha},
 										{"ness1975",ness1975},
+										{"uno2009",uno2009},
+										{"anderson2010r",anderson2010r},
+										{"thebault2018m2",thebault2018m2},
 										{"ah5",ah5},
 										{"gsfcq3full",gsfcq3full},
 										{"gsfcq3",gsfcq3},
@@ -236,7 +314,20 @@ std::map<std::string,modelFieldPtr> getModelFieldPtrMap() {
 													{"nmoh",&nmohField},
 													{"gsfco8full",&gsfco8fullField},
 													{"gsfco8",&gsfco8Field},
+													{"thebault2018m3",&thebault2018m3Field},
+													{"anderson2010qts04",&anderson2010qts04Field},
+													{"uno2009svd",&uno2009svdField},
+													{"anderson2012",&anderson2012Field},
+													{"thebault2018m1",&thebault2018m1Field},
+													{"anderson2010dts04",&anderson2010dts04Field},
+													{"anderson2010q",&anderson2010qField},
+													{"anderson2010d",&anderson2010dField},
+													{"anderson2010qsha",&anderson2010qshaField},
+													{"anderson2010dsha",&anderson2010dshaField},
 													{"ness1975",&ness1975Field},
+													{"uno2009",&uno2009Field},
+													{"anderson2010r",&anderson2010rField},
+													{"thebault2018m2",&thebault2018m2Field},
 													{"ah5",&ah5Field},
 													{"gsfcq3full",&gsfcq3fullField},
 													{"gsfcq3",&gsfcq3Field},
@@ -430,9 +521,87 @@ void gsfco8Field(double x, double y, double z,
 	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
+void thebault2018m3Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = thebault2018m3();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void anderson2010qts04Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = anderson2010qts04();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void uno2009svdField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = uno2009svd();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void anderson2012Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = anderson2012();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void thebault2018m1Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = thebault2018m1();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void anderson2010dts04Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = anderson2010dts04();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void anderson2010qField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = anderson2010q();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void anderson2010dField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = anderson2010d();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void anderson2010qshaField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = anderson2010qsha();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void anderson2010dshaField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = anderson2010dsha();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
 void ness1975Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
 	Internal model = ness1975();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void uno2009Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = uno2009();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void anderson2010rField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = anderson2010r();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void thebault2018m2Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = thebault2018m2();
 	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
