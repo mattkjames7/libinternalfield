@@ -272,7 +272,7 @@ void InternalModel::Field(	int n, double *p0, double *p1, double *p2,
 
 		/* rotate field vector if needed and delete output arrays */
 		if (CartOut_[0]) {
-			_BPol2BCart(t,p,Br,Bt,Bp,B0,B1,B2);
+			_BPol2BCart(t,p,Br,Bt,Bp,&B0[i],&B1[i],&B2[i]);
 		} else {
 			B0[i] = Br;
 			B1[i] = Bt;
@@ -331,7 +331,7 @@ void InternalModel::Field(int n, double *p0, double *p1, double *p2,
 
 		/* rotate field vector if needed and delete output arrays */
 		if (CartOut_[0]) {
-			_BPol2BCart(t,p,Br,Bt,Bp,B0,B1,B2);
+			_BPol2BCart(t,p,Br,Bt,Bp,&B0[i],&B1[i],&B2[i]);
 		} else {
 			B0[i] = Br;
 			B1[i] = Bt;
