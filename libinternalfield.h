@@ -53,7 +53,10 @@ extern coeffStruct& _model_coeff_jrm33();
 extern coeffStruct& _model_coeff_vit4();
 extern coeffStruct& _model_coeff_isaac();
 extern coeffStruct& _model_coeff_jpl15ev();
+extern coeffStruct& _model_coeff_mh2014();
+extern coeffStruct& _model_coeff_cain2003();
 extern coeffStruct& _model_coeff_langlais2019();
+extern coeffStruct& _model_coeff_gao2021();
 extern coeffStruct& _model_coeff_nmoh();
 extern coeffStruct& _model_coeff_gsfco8full();
 extern coeffStruct& _model_coeff_gsfco8();
@@ -129,7 +132,10 @@ extern Internal& jrm33();
 extern Internal& vit4();
 extern Internal& isaac();
 extern Internal& jpl15ev();
+extern Internal& mh2014();
+extern Internal& cain2003();
 extern Internal& langlais2019();
+extern Internal& gao2021();
 extern Internal& nmoh();
 extern Internal& gsfco8full();
 extern Internal& gsfco8();
@@ -290,7 +296,13 @@ void isaacField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void jpl15evField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
+void mh2014Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void cain2003Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
 void langlais2019Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void gao2021Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void nmohField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);

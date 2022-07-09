@@ -86,8 +86,23 @@ Internal& jpl15ev() {
 	return model;
 }
 
+Internal& mh2014() {
+	static Internal model("mh2014");
+	return model;
+}
+
+Internal& cain2003() {
+	static Internal model("cain2003");
+	return model;
+}
+
 Internal& langlais2019() {
 	static Internal model("langlais2019");
+	return model;
+}
+
+Internal& gao2021() {
+	static Internal model("gao2021");
 	return model;
 }
 
@@ -217,7 +232,10 @@ std::map<std::string,InternalFunc> getModelPtrMap() {
 										{"vit4",vit4},
 										{"isaac",isaac},
 										{"jpl15ev",jpl15ev},
+										{"mh2014",mh2014},
+										{"cain2003",cain2003},
 										{"langlais2019",langlais2019},
+										{"gao2021",gao2021},
 										{"nmoh",nmoh},
 										{"gsfco8full",gsfco8full},
 										{"gsfco8",gsfco8},
@@ -310,7 +328,10 @@ std::map<std::string,modelFieldPtr> getModelFieldPtrMap() {
 													{"vit4",&vit4Field},
 													{"isaac",&isaacField},
 													{"jpl15ev",&jpl15evField},
+													{"mh2014",&mh2014Field},
+													{"cain2003",&cain2003Field},
 													{"langlais2019",&langlais2019Field},
+													{"gao2021",&gao2021Field},
 													{"nmoh",&nmohField},
 													{"gsfco8full",&gsfco8fullField},
 													{"gsfco8",&gsfco8Field},
@@ -497,9 +518,27 @@ void jpl15evField(double x, double y, double z,
 	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
+void mh2014Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = mh2014();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void cain2003Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = cain2003();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
 void langlais2019Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
 	Internal model = langlais2019();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void gao2021Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = gao2021();
 	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
