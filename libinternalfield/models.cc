@@ -86,6 +86,56 @@ Internal& jpl15ev() {
 	return model;
 }
 
+Internal& spv() {
+	static Internal model("spv");
+	return model;
+}
+
+Internal& soi() {
+	static Internal model("soi");
+	return model;
+}
+
+Internal& v2() {
+	static Internal model("v2");
+	return model;
+}
+
+Internal& cassini3() {
+	static Internal model("cassini3");
+	return model;
+}
+
+Internal& cassini5() {
+	static Internal model("cassini5");
+	return model;
+}
+
+Internal& z3() {
+	static Internal model("z3");
+	return model;
+}
+
+Internal& burton2009() {
+	static Internal model("burton2009");
+	return model;
+}
+
+Internal& v1() {
+	static Internal model("v1");
+	return model;
+}
+
+Internal& p1184() {
+	static Internal model("p1184");
+	return model;
+}
+
+Internal& p11as() {
+	static Internal model("p11as");
+	return model;
+}
+
 Internal& mh2014() {
 	static Internal model("mh2014");
 	return model;
@@ -232,6 +282,16 @@ std::map<std::string,InternalFunc> getModelPtrMap() {
 										{"vit4",vit4},
 										{"isaac",isaac},
 										{"jpl15ev",jpl15ev},
+										{"spv",spv},
+										{"soi",soi},
+										{"v2",v2},
+										{"cassini3",cassini3},
+										{"cassini5",cassini5},
+										{"z3",z3},
+										{"burton2009",burton2009},
+										{"v1",v1},
+										{"p1184",p1184},
+										{"p11as",p11as},
 										{"mh2014",mh2014},
 										{"cain2003",cain2003},
 										{"langlais2019",langlais2019},
@@ -328,6 +388,16 @@ std::map<std::string,modelFieldPtr> getModelFieldPtrMap() {
 													{"vit4",&vit4Field},
 													{"isaac",&isaacField},
 													{"jpl15ev",&jpl15evField},
+													{"spv",&spvField},
+													{"soi",&soiField},
+													{"v2",&v2Field},
+													{"cassini3",&cassini3Field},
+													{"cassini5",&cassini5Field},
+													{"z3",&z3Field},
+													{"burton2009",&burton2009Field},
+													{"v1",&v1Field},
+													{"p1184",&p1184Field},
+													{"p11as",&p11asField},
 													{"mh2014",&mh2014Field},
 													{"cain2003",&cain2003Field},
 													{"langlais2019",&langlais2019Field},
@@ -515,6 +585,66 @@ void isaacField(double x, double y, double z,
 void jpl15evField(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
 	Internal model = jpl15ev();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void spvField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = spv();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void soiField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = soi();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void v2Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = v2();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void cassini3Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = cassini3();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void cassini5Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = cassini5();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void z3Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = z3();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void burton2009Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = burton2009();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void v1Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = v1();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void p1184Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = p1184();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void p11asField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = p11as();
 	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 

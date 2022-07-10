@@ -19,6 +19,16 @@ std::vector<std::string> getModelNames() {
 								"vit4",
 								"isaac",
 								"jpl15ev",
+								"spv",
+								"soi",
+								"v2",
+								"cassini3",
+								"cassini5",
+								"z3",
+								"burton2009",
+								"v1",
+								"p1184",
+								"p11as",
 								"mh2014",
 								"cain2003",
 								"langlais2019",
@@ -657,6 +667,160 @@ coeffStruct& _model_coeff_jpl15ev() {
 		-35000.000000};
 	static const double h[] = {0.000000,26900.000000,0.000000,-55600.000000,
 		11000.000000,0.000000,-61500.000000,46500.000000,-26400.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_spv() {
+	static const int len = 9;
+	static const int nmax = 3;
+	static const int ndef = 3;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3};
+	static const int m[] = {0,1,0,1,2,0,1,2,3};
+	static const double g[] = {21160.000000,0.000000,1560.000000,0.000000,
+		0.000000,2320.000000,0.000000,0.000000,0.000000};
+	static const double h[] = {0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_soi() {
+	static const int len = 9;
+	static const int nmax = 3;
+	static const int ndef = 3;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3};
+	static const int m[] = {0,1,0,1,2,0,1,2,3};
+	static const double g[] = {21084.000000,0.000000,1544.000000,0.000000,
+		0.000000,2150.000000,0.000000,0.000000,0.000000};
+	static const double h[] = {0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_v2() {
+	static const int len = 9;
+	static const int nmax = 3;
+	static const int ndef = 3;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3};
+	static const int m[] = {0,1,0,1,2,0,1,2,3};
+	static const double g[] = {21084.000000,0.000000,1607.000000,0.000000,
+		0.000000,2513.000000,0.000000,0.000000,0.000000};
+	static const double h[] = {0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_cassini3() {
+	static const int len = 9;
+	static const int nmax = 3;
+	static const int ndef = 3;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3};
+	static const int m[] = {0,1,0,1,2,0,1,2,3};
+	static const double g[] = {21191.000000,0.000000,1586.000000,0.000000,
+		0.000000,2374.000000,0.000000,0.000000,0.000000};
+	static const double h[] = {0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_cassini5() {
+	static const int len = 20;
+	static const int nmax = 5;
+	static const int ndef = 5;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3,4,4,4,4,4,5,5,5,5,5,5};
+	static const int m[] = {0,1,0,1,2,0,1,2,3,0,1,2,3,4,0,1,2,3,4,5};
+	static const double g[] = {21191.000000,0.000000,1586.000000,0.000000,
+		0.000000,2374.000000,0.000000,0.000000,0.000000,65.000000,0.000000,
+		0.000000,0.000000,0.000000,185.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000};
+	static const double h[] = {0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_z3() {
+	static const int len = 9;
+	static const int nmax = 3;
+	static const int ndef = 3;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3};
+	static const int m[] = {0,1,0,1,2,0,1,2,3};
+	static const double g[] = {21184.000000,0.000000,1544.000000,0.000000,
+		0.000000,2150.000000,0.000000,0.000000,0.000000};
+	static const double h[] = {0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_burton2009() {
+	static const int len = 9;
+	static const int nmax = 3;
+	static const int ndef = 3;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3};
+	static const int m[] = {0,1,0,1,2,0,1,2,3};
+	static const double g[] = {21162.000000,0.000000,1514.000000,0.000000,
+		0.000000,2283.000000,0.000000,0.000000,0.000000};
+	static const double h[] = {0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_v1() {
+	static const int len = 9;
+	static const int nmax = 3;
+	static const int ndef = 3;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3};
+	static const int m[] = {0,1,0,1,2,0,1,2,3};
+	static const double g[] = {21224.000000,0.000000,1678.000000,0.000000,
+		0.000000,2613.000000,0.000000,0.000000,0.000000};
+	static const double h[] = {0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_p1184() {
+	static const int len = 9;
+	static const int nmax = 3;
+	static const int ndef = 3;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3};
+	static const int m[] = {0,1,0,1,2,0,1,2,3};
+	static const double g[] = {21140.000000,0.000000,1600.000000,0.000000,
+		0.000000,2260.000000,0.000000,0.000000,0.000000};
+	static const double h[] = {0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_p11as() {
+	static const int len = 9;
+	static const int nmax = 3;
+	static const int ndef = 3;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3};
+	static const int m[] = {0,1,0,1,2,0,1,2,3};
+	static const double g[] = {21180.000000,0.000000,1980.000000,0.000000,
+		0.000000,2350.000000,0.000000,0.000000,0.000000};
+	static const double h[] = {0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000};
 	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
 	return out;
 }
@@ -11000,6 +11164,16 @@ std::map<std::string,coeffStructFunc> getCoeffMap() {
 											{"vit4",_model_coeff_vit4},
 											{"isaac",_model_coeff_isaac},
 											{"jpl15ev",_model_coeff_jpl15ev},
+											{"spv",_model_coeff_spv},
+											{"soi",_model_coeff_soi},
+											{"v2",_model_coeff_v2},
+											{"cassini3",_model_coeff_cassini3},
+											{"cassini5",_model_coeff_cassini5},
+											{"z3",_model_coeff_z3},
+											{"burton2009",_model_coeff_burton2009},
+											{"v1",_model_coeff_v1},
+											{"p1184",_model_coeff_p1184},
+											{"p11as",_model_coeff_p11as},
 											{"mh2014",_model_coeff_mh2014},
 											{"cain2003",_model_coeff_cain2003},
 											{"langlais2019",_model_coeff_langlais2019},

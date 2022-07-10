@@ -53,6 +53,16 @@ extern coeffStruct& _model_coeff_jrm33();
 extern coeffStruct& _model_coeff_vit4();
 extern coeffStruct& _model_coeff_isaac();
 extern coeffStruct& _model_coeff_jpl15ev();
+extern coeffStruct& _model_coeff_spv();
+extern coeffStruct& _model_coeff_soi();
+extern coeffStruct& _model_coeff_v2();
+extern coeffStruct& _model_coeff_cassini3();
+extern coeffStruct& _model_coeff_cassini5();
+extern coeffStruct& _model_coeff_z3();
+extern coeffStruct& _model_coeff_burton2009();
+extern coeffStruct& _model_coeff_v1();
+extern coeffStruct& _model_coeff_p1184();
+extern coeffStruct& _model_coeff_p11as();
 extern coeffStruct& _model_coeff_mh2014();
 extern coeffStruct& _model_coeff_cain2003();
 extern coeffStruct& _model_coeff_langlais2019();
@@ -132,6 +142,16 @@ extern Internal& jrm33();
 extern Internal& vit4();
 extern Internal& isaac();
 extern Internal& jpl15ev();
+extern Internal& spv();
+extern Internal& soi();
+extern Internal& v2();
+extern Internal& cassini3();
+extern Internal& cassini5();
+extern Internal& z3();
+extern Internal& burton2009();
+extern Internal& v1();
+extern Internal& p1184();
+extern Internal& p11as();
 extern Internal& mh2014();
 extern Internal& cain2003();
 extern Internal& langlais2019();
@@ -295,6 +315,26 @@ void vit4Field(double x, double y, double z,
 void isaacField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void jpl15evField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void spvField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void soiField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void v2Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void cassini3Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void cassini5Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void z3Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void burton2009Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void v1Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void p1184Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void p11asField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void mh2014Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
