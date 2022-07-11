@@ -156,6 +156,136 @@ Internal& gao2021() {
 	return model;
 }
 
+Internal& igrf1935() {
+	static Internal model("igrf1935");
+	return model;
+}
+
+Internal& igrf2005() {
+	static Internal model("igrf2005");
+	return model;
+}
+
+Internal& igrf2000() {
+	static Internal model("igrf2000");
+	return model;
+}
+
+Internal& igrf1950() {
+	static Internal model("igrf1950");
+	return model;
+}
+
+Internal& igrf1960() {
+	static Internal model("igrf1960");
+	return model;
+}
+
+Internal& igrf1985() {
+	static Internal model("igrf1985");
+	return model;
+}
+
+Internal& igrf1945() {
+	static Internal model("igrf1945");
+	return model;
+}
+
+Internal& igrf1965() {
+	static Internal model("igrf1965");
+	return model;
+}
+
+Internal& igrf1905() {
+	static Internal model("igrf1905");
+	return model;
+}
+
+Internal& igrf2010() {
+	static Internal model("igrf2010");
+	return model;
+}
+
+Internal& igrf2020() {
+	static Internal model("igrf2020");
+	return model;
+}
+
+Internal& igrf1910() {
+	static Internal model("igrf1910");
+	return model;
+}
+
+Internal& igrf1990() {
+	static Internal model("igrf1990");
+	return model;
+}
+
+Internal& igrf2015() {
+	static Internal model("igrf2015");
+	return model;
+}
+
+Internal& igrf1925() {
+	static Internal model("igrf1925");
+	return model;
+}
+
+Internal& igrf2025() {
+	static Internal model("igrf2025");
+	return model;
+}
+
+Internal& igrf1970() {
+	static Internal model("igrf1970");
+	return model;
+}
+
+Internal& igrf1930() {
+	static Internal model("igrf1930");
+	return model;
+}
+
+Internal& igrf1920() {
+	static Internal model("igrf1920");
+	return model;
+}
+
+Internal& igrf1955() {
+	static Internal model("igrf1955");
+	return model;
+}
+
+Internal& igrf1995() {
+	static Internal model("igrf1995");
+	return model;
+}
+
+Internal& igrf1900() {
+	static Internal model("igrf1900");
+	return model;
+}
+
+Internal& igrf1980() {
+	static Internal model("igrf1980");
+	return model;
+}
+
+Internal& igrf1940() {
+	static Internal model("igrf1940");
+	return model;
+}
+
+Internal& igrf1975() {
+	static Internal model("igrf1975");
+	return model;
+}
+
+Internal& igrf1915() {
+	static Internal model("igrf1915");
+	return model;
+}
+
 Internal& nmoh() {
 	static Internal model("nmoh");
 	return model;
@@ -296,6 +426,32 @@ std::map<std::string,InternalFunc> getModelPtrMap() {
 										{"cain2003",cain2003},
 										{"langlais2019",langlais2019},
 										{"gao2021",gao2021},
+										{"igrf1935",igrf1935},
+										{"igrf2005",igrf2005},
+										{"igrf2000",igrf2000},
+										{"igrf1950",igrf1950},
+										{"igrf1960",igrf1960},
+										{"igrf1985",igrf1985},
+										{"igrf1945",igrf1945},
+										{"igrf1965",igrf1965},
+										{"igrf1905",igrf1905},
+										{"igrf2010",igrf2010},
+										{"igrf2020",igrf2020},
+										{"igrf1910",igrf1910},
+										{"igrf1990",igrf1990},
+										{"igrf2015",igrf2015},
+										{"igrf1925",igrf1925},
+										{"igrf2025",igrf2025},
+										{"igrf1970",igrf1970},
+										{"igrf1930",igrf1930},
+										{"igrf1920",igrf1920},
+										{"igrf1955",igrf1955},
+										{"igrf1995",igrf1995},
+										{"igrf1900",igrf1900},
+										{"igrf1980",igrf1980},
+										{"igrf1940",igrf1940},
+										{"igrf1975",igrf1975},
+										{"igrf1915",igrf1915},
 										{"nmoh",nmoh},
 										{"gsfco8full",gsfco8full},
 										{"gsfco8",gsfco8},
@@ -402,6 +558,32 @@ std::map<std::string,modelFieldPtr> getModelFieldPtrMap() {
 													{"cain2003",&cain2003Field},
 													{"langlais2019",&langlais2019Field},
 													{"gao2021",&gao2021Field},
+													{"igrf1935",&igrf1935Field},
+													{"igrf2005",&igrf2005Field},
+													{"igrf2000",&igrf2000Field},
+													{"igrf1950",&igrf1950Field},
+													{"igrf1960",&igrf1960Field},
+													{"igrf1985",&igrf1985Field},
+													{"igrf1945",&igrf1945Field},
+													{"igrf1965",&igrf1965Field},
+													{"igrf1905",&igrf1905Field},
+													{"igrf2010",&igrf2010Field},
+													{"igrf2020",&igrf2020Field},
+													{"igrf1910",&igrf1910Field},
+													{"igrf1990",&igrf1990Field},
+													{"igrf2015",&igrf2015Field},
+													{"igrf1925",&igrf1925Field},
+													{"igrf2025",&igrf2025Field},
+													{"igrf1970",&igrf1970Field},
+													{"igrf1930",&igrf1930Field},
+													{"igrf1920",&igrf1920Field},
+													{"igrf1955",&igrf1955Field},
+													{"igrf1995",&igrf1995Field},
+													{"igrf1900",&igrf1900Field},
+													{"igrf1980",&igrf1980Field},
+													{"igrf1940",&igrf1940Field},
+													{"igrf1975",&igrf1975Field},
+													{"igrf1915",&igrf1915Field},
 													{"nmoh",&nmohField},
 													{"gsfco8full",&gsfco8fullField},
 													{"gsfco8",&gsfco8Field},
@@ -669,6 +851,162 @@ void langlais2019Field(double x, double y, double z,
 void gao2021Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
 	Internal model = gao2021();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1935Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1935();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf2005Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf2005();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf2000Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf2000();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1950Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1950();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1960Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1960();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1985Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1985();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1945Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1945();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1965Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1965();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1905Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1905();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf2010Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf2010();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf2020Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf2020();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1910Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1910();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1990Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1990();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf2015Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf2015();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1925Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1925();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf2025Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf2025();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1970Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1970();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1930Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1930();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1920Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1920();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1955Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1955();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1995Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1995();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1900Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1900();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1980Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1980();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1940Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1940();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1975Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1975();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void igrf1915Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = igrf1915();
 	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 

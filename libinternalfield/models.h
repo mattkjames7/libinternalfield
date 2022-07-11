@@ -40,6 +40,32 @@ extern Internal& mh2014();
 extern Internal& cain2003();
 extern Internal& langlais2019();
 extern Internal& gao2021();
+extern Internal& igrf1935();
+extern Internal& igrf2005();
+extern Internal& igrf2000();
+extern Internal& igrf1950();
+extern Internal& igrf1960();
+extern Internal& igrf1985();
+extern Internal& igrf1945();
+extern Internal& igrf1965();
+extern Internal& igrf1905();
+extern Internal& igrf2010();
+extern Internal& igrf2020();
+extern Internal& igrf1910();
+extern Internal& igrf1990();
+extern Internal& igrf2015();
+extern Internal& igrf1925();
+extern Internal& igrf2025();
+extern Internal& igrf1970();
+extern Internal& igrf1930();
+extern Internal& igrf1920();
+extern Internal& igrf1955();
+extern Internal& igrf1995();
+extern Internal& igrf1900();
+extern Internal& igrf1980();
+extern Internal& igrf1940();
+extern Internal& igrf1975();
+extern Internal& igrf1915();
 extern Internal& nmoh();
 extern Internal& gsfco8full();
 extern Internal& gsfco8();
@@ -227,6 +253,58 @@ void cain2003Field(double x, double y, double z,
 void langlais2019Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void gao2021Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1935Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf2005Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf2000Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1950Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1960Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1985Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1945Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1965Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1905Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf2010Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf2020Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1910Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1990Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf2015Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1925Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf2025Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1970Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1930Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1920Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1955Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1995Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1900Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1980Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1940Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1975Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+void igrf1915Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 void nmohField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
