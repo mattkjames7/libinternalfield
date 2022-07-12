@@ -38,7 +38,9 @@ lib:
 	#ar -rcs libinternalfield.a *.o 
 
 
-windows:
+windows: winobj dll
+
+winobj:
 	python3 CodeGen.py
 	mkdir -pv build/windows
 	-rm -v build/windows/*.o
@@ -47,6 +49,8 @@ windows:
 	$(CCWo) internal.cc -o build/windows/internal.o 
 	$(CCWo) internalmodel.cc -o build/windows/internalmodel.o 
 	$(CCWo) libinternal.cc -o build/windows/libinternal.o
+
+dll:
 	$(CCW) build/windows/*.o  -shared -o libinternalfield.dll
 
 
