@@ -685,7 +685,7 @@ def GenerateLibHeader():
 	code.append('#endif')			
 	
 	#save it
-	WriteASCII('../libinternalfield.h',code)
+	WriteASCII('../include/libinternalfield.h',code)
 	
 	
 
