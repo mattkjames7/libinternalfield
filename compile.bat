@@ -2,5 +2,5 @@ cd src
 call compile.bat 
 cd ..
 
-rm build/*.o
+rm build\*.o
 rmdir build
