@@ -35,7 +35,7 @@ winobj:
 dll:
 	$(MD) $(BUILDDIR)
 	$(MD) lib/libinternalfield
-	cd src; make winlib
+	cd src; make dll
 
 test:
 	cd test; make all
