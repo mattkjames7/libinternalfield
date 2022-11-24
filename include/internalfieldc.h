@@ -11,6 +11,7 @@
 #define INTERNALFIELD_VERSION_MINOR 1
 #define INTERNALFIELD_VERSION_PATCH 0
 
+typedef void (*modelFieldPtr)(double,double,double,double*,double*,double*);
 
 /***********************************************************************
  * NAME : getModelFieldPointer(Model)

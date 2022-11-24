@@ -3,15 +3,29 @@ ifndef BUILDDIR
 export BUILDDIR=$(shell pwd)/build
 endif
 
+ifeq ($(PREFIX),)
+#install path
+	PREFIX=/usr/local
+endif
+
+
+
 ifeq ($(OS),Windows_NT)
 #windows stuff here
 	MD=mkdir
+	LIBFILE=libinternalfield.dll
 else
 #linux and mac here
+	OS=$(shell uname -s)
+	ifeq ($(OS),Linux)
+		LIBFILE=libinternalfield.so
+	else
+		LIBFILE=libinternalfield.dylib
+	endif
 	MD=mkdir -p
 endif
 
-.PHONY: all obj lib windows winobj dll clean test
+.PHONY: all obj lib windows winobj dll clean test header
 
 all: obj lib
 
@@ -46,11 +60,25 @@ updatemodels:
 clean:
 	-rm -v build/*
 	-rmdir -v build
-	-rm -v lib/libinternalfield/libinternalfield.a
-	-rm -v lib/libinternalfield/libinternalfield.so
-	-rm -v lib/libinternalfield/libinternalfield.dll
+	-rm -v lib/libinternalfield/$(LIBFILE)
 	-rmdir -v lib/libinternalfield
 	cd test; make clean
 
 header:
 	cd src; make header
+
+install:
+	cp -v include/internalfield.h $(PREFIX)/include
+	cp -v include/internalfieldc.h $(PREFIX)/include
+	cp -v lib/libinternalfield/$(LIBFILE) $(PREFIX)/lib
+ifeq ($(OS),Linux)
+	ldconfig
+endif
+
+uninstall:
+	rm -v $(PREFIX)/include/internalfield.h
+	rm -v $(PREFIX)/include/internalfieldc.h
+	rm -v $(PREFIX)/lib/$(LIBFILE)
+ifeq ($(OS),Linux)
+	ldconfig
+endif

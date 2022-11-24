@@ -5,5 +5,5 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <array>
-#include "../include/libinternalfield.h"
+#include "../include/internalfield.h"
 #endif
