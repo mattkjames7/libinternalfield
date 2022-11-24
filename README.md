@@ -18,15 +18,18 @@ The following things are required for building this library:
 
 ## Building
 
-Clone the repo and build:
+Clone the repo and build in Linux or Mac OS:
 
 ```bash
 git clone https://github.com/mattkjames7/libinternalfield.git
 cd libinternalfield
 make
+
+#optionally install system wide
+sudo make install
 ```
 
-This will create a shared object file ```libinternalfield.so``` with a symbolic link in the current working directory.
+This will create a library file ```libinternalfield.so``` (`.dylib` in Mac, `.dll` in Windows). Installing system wide will place the library file in `/usr/local/lib` and the header files `internalfield.h` (for C++) and `internalfieldc.h` (for C) in `/usr/local/include` by default.
 
 ## Supported Models
 
@@ -153,7 +156,7 @@ with the following columns:
 When using C++, the models field can be obtained using the ```InternalModel``` class. An instance of this class is initialized with the library called `internalModel`.
 
 ```cpp
-#include "libinternal.h"
+#include <internal.h>
 
 
 int main() {
@@ -193,6 +196,42 @@ void SetInternalCFG(char *Model, bool CartIn, bool CartOut);
 
 /* return the current configuration */
 void GetInternalCFG(char *Model, bool *CartIn, bool *CartOut);
+```
+
+## Accessing Via C
+
+This project includes a C-compatible header file which includes prototypes for the wrapper functions mentioned in the Python section above. It also includes wrapper functions for every single model included in the library, where each function is named with the format `XXXXXField`, where `XXXXX` can be replaced with the lower-case name of the model (identical to the C string in the table above). The `getModelFieldPtr` function returns a pointer to a model wrapper function when given a string, see below for an example.
+
+```c
+/* contents of ctest.c */
+#include <stdio.h>
+#include <stdbool.h>
+#include <internalfieldc.h>
+
+int main() {
+
+	printf("Testing C\n");
+	
+	/* try getting a model function */
+	modelFieldPtr model = getModelFieldPtr("jrm33");
+	double x = 10.0;
+	double y = 10.0;
+	double z = 0.0;
+	double Bx, By, Bz;
+	model(x,y,z,&Bx,&By,&Bz);
+
+	printf("B = [%6.1f,%6.1f,%6.1f] nT at [%4.1f,%4.1f,%4.1f]\n",Bx,By,Bz,x,y,z);
+
+	printf("C test done\n");
+
+
+}
+
+```
+which can be compiled, then run using
+```bash
+gcc ctest.c -o ctest -lm -linternalfield
+./ctest
 ```
 
 ## References
