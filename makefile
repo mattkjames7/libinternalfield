@@ -52,3 +52,5 @@ clean:
 	-rmdir -v lib/libinternalfield
 	cd test; make clean
 
+header:
+	cd src; make header

@@ -17,7 +17,7 @@ ifeq ($(UNAME_S),Darwin)
 	ARCMD=libtool -static -o ../lib/libinternalfield/libinternalfield.a $(BUILDDIR)/*.o 
 endif
 
-all: obj lib header
+all: obj lib
 
 obj:
 	$(CCo) coeffs.cc -o $(BUILDDIR)/coeffs.o

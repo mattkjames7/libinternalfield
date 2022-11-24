@@ -67,6 +67,7 @@ std::map<std::string,modelFieldPtr> getModelFieldPtrMap();
  **********************************************************************/
 modelFieldPtr getModelFieldPtr(std::string Model);
 
+extern "C" {
 /***********************************************************************
  * NAME : getModelFieldPointer(Model)
  *
@@ -81,7 +82,7 @@ modelFieldPtr getModelFieldPtr(std::string Model);
  *		modelFieldPtr *ptr		Pointer to model wrapper.
  *
  **********************************************************************/
-modelFieldPtr getModelFieldPtr(const char *Model);
+	modelFieldPtr getModelFieldPtr(const char *Model);
 
 /* functions to directly call each model for a single Cartesian vector (this will be used for tracing) */
 

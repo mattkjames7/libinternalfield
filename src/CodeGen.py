@@ -581,11 +581,13 @@ def GenerateModelsH(modelsl):
 	lines += code1
 
 	#define model field functions
+	
 	for m in modelsl:
-		s = 'void {:s}Field(double x, double y, double z,\n'.format(m)
+		s = '	void {:s}Field(double x, double y, double z,\n'.format(m)
 		s+= '				double *Bx, double *By, double *Bz);\n'
 		lines.append(s)		
-			
+	lines.append('}\n')
+
 	#write to file
 	WriteASCII('models.h',lines)
 
@@ -685,7 +687,7 @@ def GenerateLibHeader():
 	code.append('#endif')			
 	
 	#save it
-	WriteASCII('../include/libinternalfield.h',code)
+	WriteASCII('../include/internalfield.h',code)
 	
 	
 
