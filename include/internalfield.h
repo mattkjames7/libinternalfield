@@ -630,7 +630,7 @@ class Internal {
 /***********************************************************************
  * NAME : class InternalModel
  * 
- * DESCRIPTION : 
+ * DESCRIPTION : with a symbolic link in the current working directory
  * 		Class which can access all instances of Internal objects.
  * 
  * ********************************************************************/

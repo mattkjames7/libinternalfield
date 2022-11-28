@@ -48,7 +48,7 @@ int main() {
 	for (i=0;i<r.size();i++) {
 		printf(fmt,r[i],tdeg[i],pdeg[i],Br[i],Bt[i],Bp[i]);
 	}
-	
+	IFLAGS=-I ../include/
 	/* set model to JRM09 */
 	internalModel.SetModel("jrm09");
 	internalModel.SetCartIn(false);
