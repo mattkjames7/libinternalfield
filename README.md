@@ -112,6 +112,7 @@ There is an IGRF model for Earth's magnetic field for every 5 years, starting in
 | Burton 2009      | `burton2009` | 3              | 3              | Burton et al., 2009    |
 | Cassini 3        | `cassini3`   | 3              | 3              | Cao et al., 2011       |
 | Cassini 5        | `cassini5`   | 5              | 5              | Cao et al., 2012       |
+| Cassini 11        | `cassini11`   | 12            | 11            | Dougherty et al., 2018 |
 | P11A             | `p11as` *    | 3              | 3              | Connerney 2007         |
 | P<sub>11</sub>84 | `p1184`      | 3              | 3              | Davis and Smith 1986   |
 | SOI              | `soi`        | 3              | 3              | Dougherty et al., 2007 |
@@ -267,6 +268,8 @@ Davis, L., and Smith, E. J. (1986), New models of Saturn's magnetic field using 
 Davis, L., and Smith, E. J. (1990), A model of Saturn's magnetic field based on all available data, J. Geophys. Res., 95( A9), 15257– 15261, doi:10.1029/JA095iA09p15257.
 
 Dougherty MK, Achilleos N, Andre N, Arridge CS, Balogh A, Bertucci C, Burton ME, Cowley SW, Erdos G, Giampieri G, Glassmeier KH, Khurana KK, Leisner J, Neubauer FM, Russell CT, Smith EJ, Southwood DJ, Tsurutani BT. Cassini magnetometer observations during Saturn orbit insertion. Science. 2005 Feb 25;307(5713):1266-70. doi: 10.1126/science.1106098. PMID: 15731444.
+
+Dougherty, M., Cao, H., Khurana, K., Hunt, G., Provan, G., Kellock, S., et al. (2018). Saturn's magnetic field revealed by the Cassini grand finale. Science, 362, eaat5434. https://doi.org/10.1126/science.aat5434
 
 Gao, J. W., Rong, Z. J., Klinger, L., Li, X. Z., Liu, D., & Wei, Y. (2021). A spherical harmonic Martian crustal magnetic field model combining data sets of MAVEN and MGS. Earth and Space Science, 8, e2021EA001860. https://doi.org/10.1029/2021EA001860
 
