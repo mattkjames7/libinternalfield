@@ -138,6 +138,13 @@ There is an IGRF model for Earth's magnetic field for every 5 years, starting in
 | GSFC O8 (unconstrained) | `gsfco8full` | 8              | 3              | Connerney et al., 1991 |
 | Nmoh                    | `nmoh`       | 16             | 16             | Holme and Bloxham 1996 |
 
+### Ganymede
+
+| Model                   | C String     | Maximum Degree | Default Degree | Reference              |
+| ----------------------- | ------------ | -------------- | -------------- | ---------------------- |
+| Kivelson et al., 2002   | `kivelson2002a` <br /> `kivelson2002b` <br /> `kivelson2002c`  | 2 <br /> 1 <br />  1   | 2  <br />  1 <br />  1  | Kivelson et al., 202 |
+
+
 ### Time varying models
 
 For models which vary with time (e.g. IGRF) a chronological list of model names with associated dates and times should be provided in `libinternalfield/variable/planet/nameofmodellist.dat`
@@ -280,6 +287,8 @@ Hess, S. L. G., Bonfond, B., Zarka, P., and Grodent, D. (2011), Model of the Jov
 Hess, S., Bonfond, B., Bagenal, F., & Lamy, L. (2017). A model of the Jovian internal field derived from in-situ and auroral constraints, doi:[10.1553/PRE8s157](https://doi.org/10.1553/PRE8s157)
 
 Holme, R., and Bloxham, J. (1996), The magnetic fields of Uranus and Neptune: Methods and models, *J. Geophys. Res.*, 101( E1), 2177– 2200, doi:[10.1029/95JE03437](https://doi.org/10.1029/95JE03437 "Link to external resource: 10.1029/95JE03437").
+
+M.G. Kivelson, K.K. Khurana, M. Volwerk, The Permanent and Inductive Magnetic Moments of Ganymede, Icarus, Volume 157, Issue 2, 2002, Pages 507-522, ISSN 0019-1035, https://doi.org/10.1006/icar.2002.6834.
 
 Langlais, B., Thébault, E., Houliez, A., Purucker, M. E., & Lillis, R. J. (2019). A new model of the crustal magnetic field of Mars using MGS and MAVEN. *Journal of Geophysical Research: Planets*, 124, 1542– 1569. [A New Model of the Crustal Magnetic Field of Mars Using MGS and MAVEN - Langlais - 2019 - Journal of Geophysical Research: Planets - Wiley Online Library](https://doi.org/10.1029/2018JE005854)
 
