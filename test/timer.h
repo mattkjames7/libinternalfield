@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctime>
-#include "../include/internalfield.h"
+#include <internalfield.h>
 
 #endif
 

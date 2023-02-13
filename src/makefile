@@ -7,15 +7,24 @@ CC=g++ $(CFLAGS)
 CCWo=x86_64-w64-mingw32-g++-win32 -c $(CFLAGS)
 CCW=x86_64-w64-mingw32-g++-win32 $(CFLAGS)
 
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Linux)
-	BDIR=linux
-	ARCMD=ar -rcs ../lib/libinternalfield/libinternalfield.a $(BUILDDIR)/*.o 
+ifeq ($(OS),Windows_NT)
+#windows stuff here
+	MD=mkdir
+	LIBFILE=libinternalfield.dll
+else
+#linux and mac here
+	OS=$(shell uname -s)
+	ifeq ($(OS),Linux)
+		LIBFILE=libinternalfield.so
+		ARCMD=ar -rcs ../lib/libinternalfield.a $(BUILDDIR)/*.o 
+	else
+		LIBFILE=libinternalfield.dylib
+		ARCMD=libtool -static -o ../lib/libinternalfield.a $(BUILDDIR)/*.o 
+	endif
+	MD=mkdir -p
 endif
-ifeq ($(UNAME_S),Darwin)
-	BDIR=macos
-	ARCMD=libtool -static -o ../lib/libinternalfield/libinternalfield.a $(BUILDDIR)/*.o 
-endif
+
+
 
 all: obj lib
 
@@ -27,7 +36,7 @@ obj:
 	$(CCo) libinternal.cc -o $(BUILDDIR)/libinternal.o
 
 lib:
-	$(CC) $(BUILDDIR)/*.o  -shared -o ../lib/libinternalfield/libinternalfield.so
+	$(CC) $(BUILDDIR)/*.o  -shared -o ../lib/$(LIBFILE)
 	$(ARCMD)
 
 
@@ -41,7 +50,7 @@ winobj:
 	$(CCWo) libinternal.cc -o $(BUILDDIR)/libinternal.o
 
 dll:
-	$(CCW) $(BUILDDIR)/*.o  -shared -o ../lib/libinternalfield/libinternalfield.dll
+	$(CCW) $(BUILDDIR)/*.o  -shared -o ../lib/libinternalfield.dll
 
 header:
 ifneq (,$(shell which python3))
