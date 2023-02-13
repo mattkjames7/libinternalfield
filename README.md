@@ -142,7 +142,8 @@ There is an IGRF model for Earth's magnetic field for every 5 years, starting in
 
 | Model                   | C String     | Maximum Degree | Default Degree | Reference              |
 | ----------------------- | ------------ | -------------- | -------------- | ---------------------- |
-| Kivelson et al., 2002   | `kivelson2002a` <br /> `kivelson2002b` <br /> `kivelson2002c`  | 2 <br /> 1 <br />  1   | 2  <br />  1 <br />  1  | Kivelson et al., 202 |
+| Kivelson et al., 2002   | `kivelson2002a` <br /> `kivelson2002b` <br /> `kivelson2002c`  | 2 <br /> 1 <br />  1   | 2  <br />  1 <br />  1  | Kivelson et al., 2002 |
+| Weber et al., 2022       | `weber2022dip` <br /> `weber2022quad` | 1 <br /> 2 | 1 <br /> 2 | Weber et al., 2022 |
 
 
 ### Time varying models
@@ -299,3 +300,5 @@ Ness, N. F., Behannon, K. W., Lepping, R. P., and Whang, Y. C. (1975), The magne
 Thebault, E., Langlais, B., Oliveira, J.S., et al., 2018. A time-averaged regional model of the Hermean magnetic field. Phys. Earth Planet. In. 276, 93–105. https://doi.org/10.1016/j.pepi.2017.07.001.
 
 Uno, H., Johnson, C.L., Anderson, B.J., Korth, H., Solomon, S.C., 2009. Modeling Mercury’s internal magnetic field with smooth inversions. Earth Planet. Sci. Lett. 285, 328–339. http://dx.doi.org/10.1016/j.epsl.2009.02.032
+
+Weber, T., Moore, K., Connerney, J., Espley, J., DiBraccio, G., & Romanelli, N. (2022). Updated spherical harmonic magnetic field moments of Ganymede from the Juno flyby. Geophysical Research Letters, 49, e2022GL098633. https://doi.org/10.1029/2022GL098633
