@@ -29,7 +29,7 @@ make
 sudo make install
 ```
 
-This will create a library file ```libinternalfield.so``` (`.dylib` in Mac, `.dll` in Windows). Installing system wide will place the library file in `/usr/local/lib` and the header files `internalfield.h` (for C++) and `internalfieldc.h` (for C) in `/usr/local/include` by default.
+This will create a library file ```libinternalfield.so``` (`.dylib` in Mac, `.dll` in Windows). Installing system wide will place the library file in `/usr/local/lib` and the header files `internalfield.h` (for both C and C++) in `/usr/local/include` by default.
 
 ## Supported Models
 
@@ -209,13 +209,13 @@ void GetInternalCFG(char *Model, bool *CartIn, bool *CartOut);
 
 ## Accessing Via C
 
-This project includes a C-compatible header file which includes prototypes for the wrapper functions mentioned in the Python section above. It also includes wrapper functions for every single model included in the library, where each function is named with the format `XXXXXField`, where `XXXXX` can be replaced with the lower-case name of the model (identical to the C string in the table above). The `getModelFieldPtr` function returns a pointer to a model wrapper function when given a string, see below for an example.
+This the header included with this project is C-compatible and includes prototypes for the wrapper functions mentioned in the Python section above. It also includes wrapper functions for every single model included in the library, where each function is named with the format `XXXXXField`, where `XXXXX` can be replaced with the lower-case name of the model (identical to the C string in the table above). The `getModelFieldPtr` function returns a pointer to a model wrapper function when given a string, see below for an example.
 
 ```c
 /* contents of ctest.c */
 #include <stdio.h>
 #include <stdbool.h>
-#include <internalfieldc.h>
+#include <internalfield.h>
 
 int main() {
 

@@ -22,8 +22,6 @@ typedef void (*modelFieldPtr)(double,double,double,double*,double*,double*);
 
 #ifdef __cplusplus
 extern "C" {
-
-
 #endif
 /***********************************************************************
  * NAME : getModelFieldPointer(Model)
@@ -40,88 +38,6 @@ extern "C" {
  *
  **********************************************************************/
 	modelFieldPtr getModelFieldPtr(const char *Model);
-
-	/* these wrappers can be used to get the magnetic field vectors */
-
-	/***********************************************************************
-	 * NAME : InternalField(n,p0,p1,p2,B0,B1,B2)
-	 *
-	 * DESCRIPTION : Call the model field function. Coordinates depend 
-	 * 		on the model  configuration
-	 *		
-	 * INPUTS : 
-	 * 		int		n			Number of array elements
-	 *		double	*p0			x or r coordinate in planetary radii.
-	 *		double	*p1			y coordinate in planetary radii or theta 
-	 * 							in radians.
-	 *		double	*p2			z coordinate in planetary radii or phi
-	 * 							in radians.
-	 *
-	 * OUTPUTS :
-	 *		double	*B0			x or r component of the field (nT).
-	 *		double	*B1			y or theta component of the field (nT).
-	 *		double	*B2			z or phi component of the field (nT).
-	 * 
-	 **********************************************************************/
-	void InternalField(int n, double *p0, double *p1, double *p2,
-						double *B0, double *B1, double *B2);
-
-	/***********************************************************************
-	 * NAME : InternalFieldDeg(n,p0,p1,p2,MaxDeg,B0,B1,B2)
-	 *
-	 * DESCRIPTION : Call the model field function. Coordinates depend 
-	 * 		on the model  configuration
-	 *		
-	 * INPUTS : 
-	 * 		int		n			Number of array elements
-	 *		double	*p0			x or r coordinate in planetary radii.
-	 *		double	*p1			y coordinate in planetary radii or theta 
-	 * 							in radians.
-	 *		double	*p2			z coordinate in planetary radii or phi
-	 * 							in radians.
-	 * 		int 	MaxDeg		Maximum model degree to use.
-	 *
-	 * OUTPUTS :
-	 *		double	*B0			x or r component of the field (nT).
-	 *		double	*B1			y or theta component of the field (nT).
-	 *		double	*B2			z or phi component of the field (nT).
-	 * 
-	 **********************************************************************/
-	void InternalFieldDeg(int n, double *p0, double *p1, double *p2,
-						int MaxDeg, double *B0, double *B1, double *B2);
-
-	/***********************************************************************
-	 * NAME : SetInternalCFG(Model,CartIn,CartOut,MaxDeg)
-	 *
-	 * DESCRIPTION : Configure the current model.
-	 *		
-	 * INPUTS : 
-	 * 		const char *Model		Model name.
-	 * 		bool CartIn				Set to True for Cartesian input
-	 * 								coordinates or false for polar.
-	 * 		bool CartOut			As above, but for the output.
-	 * 		int  MaxDeg				Maximum degree used by model
-	 * 
-	 **********************************************************************/
-	void SetInternalCFG(const char *Model, bool CartIn, bool CartOut, int MaxDeg);
-
-	/***********************************************************************
-	 * NAME : GetInternalCFG(Model,CartIn,CartOut,MaxDeg)
-	 *
-	 * DESCRIPTION : Return the current model configuration.
-	 *		
-	 * OUTPUTS : 
-	 * 		char *Model				Model name.
-	 * 		bool CartIn				True for Cartesian input
-	 * 								coordinates or false for polar.
-	 * 		bool CartOut			As above, but for the output.
-	 * 		int  MaxDeg				Maximum degree used by model
-	 * 
-	 **********************************************************************/
-	void GetInternalCFG(char *Model, bool *CartIn, bool *CartOut, int *MaxDeg);
-
-	
-
 
 /* functions to directly call each model for a single Cartesian vector (this will be used for tracing) */
 
@@ -192,9 +108,21 @@ extern "C" {
 				double *Bx, double *By, double *Bz);
 	void v1Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
+	void cassini11Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
 	void p1184Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 	void p11asField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+	void kivelson2002bField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+	void kivelson2002aField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+	void kivelson2002cField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+	void weber2022dipField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+	void weber2022quadField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 	void mh2014Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
@@ -297,13 +225,89 @@ extern "C" {
 	void gsfcq3Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 	void umohField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);	
+				double *Bx, double *By, double *Bz);
+	/* these wrappers can be used to get the magnetic field vectors */
 
+	/***********************************************************************
+	 * NAME : InternalField(n,p0,p1,p2,B0,B1,B2)
+	 *
+	 * DESCRIPTION : Call the model field function. Coordinates depend 
+	 * 		on the model  configuration
+	 *		
+	 * INPUTS : 
+	 * 		int		n			Number of array elements
+	 *		double	*p0			x or r coordinate in planetary radii.
+	 *		double	*p1			y coordinate in planetary radii or theta 
+	 * 							in radians.
+	 *		double	*p2			z coordinate in planetary radii or phi
+	 * 							in radians.
+	 *
+	 * OUTPUTS :
+	 *		double	*B0			x or r component of the field (nT).
+	 *		double	*B1			y or theta component of the field (nT).
+	 *		double	*B2			z or phi component of the field (nT).
+	 * 
+	 **********************************************************************/
+	void InternalField(int n, double *p0, double *p1, double *p2,
+						double *B0, double *B1, double *B2);
 
+	/***********************************************************************
+	 * NAME : InternalFieldDeg(n,p0,p1,p2,MaxDeg,B0,B1,B2)
+	 *
+	 * DESCRIPTION : Call the model field function. Coordinates depend 
+	 * 		on the model  configuration
+	 *		
+	 * INPUTS : 
+	 * 		int		n			Number of array elements
+	 *		double	*p0			x or r coordinate in planetary radii.
+	 *		double	*p1			y coordinate in planetary radii or theta 
+	 * 							in radians.
+	 *		double	*p2			z coordinate in planetary radii or phi
+	 * 							in radians.
+	 * 		int 	MaxDeg		Maximum model degree to use.
+	 *
+	 * OUTPUTS :
+	 *		double	*B0			x or r component of the field (nT).
+	 *		double	*B1			y or theta component of the field (nT).
+	 *		double	*B2			z or phi component of the field (nT).
+	 * 
+	 **********************************************************************/
+	void InternalFieldDeg(int n, double *p0, double *p1, double *p2,
+						int MaxDeg, double *B0, double *B1, double *B2);
+
+	/***********************************************************************
+	 * NAME : SetInternalCFG(Model,CartIn,CartOut,MaxDeg)
+	 *
+	 * DESCRIPTION : Configure the current model.
+	 *		
+	 * INPUTS : 
+	 * 		const char *Model		Model name.
+	 * 		bool CartIn				Set to True for Cartesian input
+	 * 								coordinates or false for polar.
+	 * 		bool CartOut			As above, but for the output.
+	 * 		int  MaxDeg				Maximum degree used by model
+	 * 
+	 **********************************************************************/
+	void SetInternalCFG(const char *Model, bool CartIn, bool CartOut, int MaxDeg);
+
+	/***********************************************************************
+	 * NAME : GetInternalCFG(Model,CartIn,CartOut,MaxDeg)
+	 *
+	 * DESCRIPTION : Return the current model configuration.
+	 *		
+	 * OUTPUTS : 
+	 * 		char *Model				Model name.
+	 * 		bool CartIn				True for Cartesian input
+	 * 								coordinates or false for polar.
+	 * 		bool CartOut			As above, but for the output.
+	 * 		int  MaxDeg				Maximum degree used by model
+	 * 
+	 **********************************************************************/
+	void GetInternalCFG(char *Model, bool *CartIn, bool *CartOut, int *MaxDeg);
+
+	
 #ifdef __cplusplus
 }
-class Internal;
-
 
 
 /* structure for storing the coefficients in memory (replaces binary stuff) */
@@ -350,8 +354,14 @@ extern coeffStruct& _model_coeff_cassini5();
 extern coeffStruct& _model_coeff_z3();
 extern coeffStruct& _model_coeff_burton2009();
 extern coeffStruct& _model_coeff_v1();
+extern coeffStruct& _model_coeff_cassini11();
 extern coeffStruct& _model_coeff_p1184();
 extern coeffStruct& _model_coeff_p11as();
+extern coeffStruct& _model_coeff_kivelson2002b();
+extern coeffStruct& _model_coeff_kivelson2002a();
+extern coeffStruct& _model_coeff_kivelson2002c();
+extern coeffStruct& _model_coeff_weber2022dip();
+extern coeffStruct& _model_coeff_weber2022quad();
 extern coeffStruct& _model_coeff_mh2014();
 extern coeffStruct& _model_coeff_cain2003();
 extern coeffStruct& _model_coeff_langlais2019();
@@ -436,200 +446,6 @@ coeffStructFunc getModelCoeffStruct(std::string Model);
  *
  **********************************************************************/
 coeffStructFunc getModelCoeffStruct(const char *Model);
-
-
-
-/* models! */
-extern Internal& gsfc15evs();
-extern Internal& vip4();
-extern Internal& v117ev();
-extern Internal& gsfc15ev();
-extern Internal& gsfc13ev();
-extern Internal& vipal();
-extern Internal& jpl15evs();
-extern Internal& u17ev();
-extern Internal& jrm09();
-extern Internal& o6();
-extern Internal& o4();
-extern Internal& sha();
-extern Internal& p11a();
-extern Internal& jrm33();
-extern Internal& vit4();
-extern Internal& isaac();
-extern Internal& jpl15ev();
-extern Internal& spv();
-extern Internal& soi();
-extern Internal& v2();
-extern Internal& cassini3();
-extern Internal& cassini5();
-extern Internal& z3();
-extern Internal& burton2009();
-extern Internal& v1();
-extern Internal& p1184();
-extern Internal& p11as();
-extern Internal& mh2014();
-extern Internal& cain2003();
-extern Internal& langlais2019();
-extern Internal& gao2021();
-extern Internal& igrf1935();
-extern Internal& igrf2005();
-extern Internal& igrf2000();
-extern Internal& igrf1950();
-extern Internal& igrf1960();
-extern Internal& igrf1985();
-extern Internal& igrf1945();
-extern Internal& igrf1965();
-extern Internal& igrf1905();
-extern Internal& igrf2010();
-extern Internal& igrf2020();
-extern Internal& igrf1910();
-extern Internal& igrf1990();
-extern Internal& igrf2015();
-extern Internal& igrf1925();
-extern Internal& igrf2025();
-extern Internal& igrf1970();
-extern Internal& igrf1930();
-extern Internal& igrf1920();
-extern Internal& igrf1955();
-extern Internal& igrf1995();
-extern Internal& igrf1900();
-extern Internal& igrf1980();
-extern Internal& igrf1940();
-extern Internal& igrf1975();
-extern Internal& igrf1915();
-extern Internal& nmoh();
-extern Internal& gsfco8full();
-extern Internal& gsfco8();
-extern Internal& thebault2018m3();
-extern Internal& anderson2010qts04();
-extern Internal& uno2009svd();
-extern Internal& anderson2012();
-extern Internal& thebault2018m1();
-extern Internal& anderson2010dts04();
-extern Internal& anderson2010q();
-extern Internal& anderson2010d();
-extern Internal& anderson2010qsha();
-extern Internal& anderson2010dsha();
-extern Internal& ness1975();
-extern Internal& uno2009();
-extern Internal& anderson2010r();
-extern Internal& thebault2018m2();
-extern Internal& ah5();
-extern Internal& gsfcq3full();
-extern Internal& gsfcq3();
-extern Internal& umoh();
-
-
-/* map the model names to their model object pointers */
-typedef Internal& (*InternalFunc)();
-std::map<std::string,InternalFunc> getModelPtrMap();
-
-/* functions to return the pointer to a model object given a string */
-
-/***********************************************************************
- * NAME : getModelObjPointer(Model)
- *
- * DESCRIPTION : Function to return a pointer to a model object.
- *		
- * INPUTS : 
- *		std::string Model	Model name (use lower case!).
- *
- * RETURNS :
- *		InternalFunc ptr		Function pointer to model object.
- *
- **********************************************************************/
-InternalFunc getModelObjPointer(std::string Model);
-
-/***********************************************************************
- * NAME : getModelObjPointer(Model)
- *
- * DESCRIPTION : Function to return a pointer to a model object.
- *		
- * INPUTS : 
- *		const char *Model	Model name (use lower case!).
- *
- * RETURNS :
- *		InternalFunc ptr		Function pointer to model object.
- *
- **********************************************************************/
-InternalFunc getModelObjPointer(const char *Model);
-
-/* a function to return a list of the models available */
-/***********************************************************************
- * NAME : listAvailableModels()
- *
- * DESCRIPTION : Function to return a list of model names available.
- *		
- * RETURNS :
- *		vector<string> Models	Model list.
- *
- **********************************************************************/
-std::vector<std::string> listAvailableModels();
-
-/* map of strings to direct field model function pointers */
-
-std::map<std::string,modelFieldPtr> getModelFieldPtrMap();
-
-/* functions to return pointer to model field function */
-
-/***********************************************************************
- * NAME : getModelFieldPointer(Model)
- *
- * DESCRIPTION : Function to return a pointer to a wrapper function
- * 			which will provide a single field vector at a single 
- * 			position.
- *		
- * INPUTS : 
- *		const char *Model		Model name (use lower case!).
- *
- * RETURNS :
- *		modelFieldPtr *ptr		Pointer to model wrapper.
- *
- **********************************************************************/
-modelFieldPtr getModelFieldPtr(const char *Model);
-
-
-/***********************************************************************
- * NAME : getModelFieldPointer(Model)
- *
- * DESCRIPTION : Function to return a pointer to a wrapper function
- * 			which will provide a single field vector at a single 
- * 			position.
- *		
- * INPUTS : 
- *		std::string Model		Model name (use lower case!).
- *
- * RETURNS :
- *		modelFieldPtr *ptr		Pointer to model wrapper.
- *
- **********************************************************************/
-modelFieldPtr getModelFieldPtr(std::string Model);
-
-/* based upon https://www.lonecpluspluscoder.com/2015/08/13/an-elegant-way-to-extract-keys-from-a-c-map/ */
-/***********************************************************************
- * NAME : vector<> listMapKeys(inmap)
- * 
- * DESCRIPTION : List the keys used for a std::map.
- * 
- * INPUTS : 
- * 		map		inmap		std::map instance			
- * 
- * 
- * RETURNS :
- * 		vector	keys		vector object containing a list of the map 
- * 							keys
- * 
- * 
- * 
- * ********************************************************************/
-template <typename Tkey, typename Tval> 
-std::vector<Tkey> listMapKeys(std::map<Tkey,Tval> const &inmap) {
-	std::vector<Tkey> keys;
-	for (auto const& element: inmap) {
-		keys.push_back(element.first);
-	}
-	return keys;
-}	
 
 
 
@@ -738,10 +554,196 @@ class Internal {
 
 
 
+/* models! */
+extern Internal& gsfc15evs();
+extern Internal& vip4();
+extern Internal& v117ev();
+extern Internal& gsfc15ev();
+extern Internal& gsfc13ev();
+extern Internal& vipal();
+extern Internal& jpl15evs();
+extern Internal& u17ev();
+extern Internal& jrm09();
+extern Internal& o6();
+extern Internal& o4();
+extern Internal& sha();
+extern Internal& p11a();
+extern Internal& jrm33();
+extern Internal& vit4();
+extern Internal& isaac();
+extern Internal& jpl15ev();
+extern Internal& spv();
+extern Internal& soi();
+extern Internal& v2();
+extern Internal& cassini3();
+extern Internal& cassini5();
+extern Internal& z3();
+extern Internal& burton2009();
+extern Internal& v1();
+extern Internal& cassini11();
+extern Internal& p1184();
+extern Internal& p11as();
+extern Internal& kivelson2002b();
+extern Internal& kivelson2002a();
+extern Internal& kivelson2002c();
+extern Internal& weber2022dip();
+extern Internal& weber2022quad();
+extern Internal& mh2014();
+extern Internal& cain2003();
+extern Internal& langlais2019();
+extern Internal& gao2021();
+extern Internal& igrf1935();
+extern Internal& igrf2005();
+extern Internal& igrf2000();
+extern Internal& igrf1950();
+extern Internal& igrf1960();
+extern Internal& igrf1985();
+extern Internal& igrf1945();
+extern Internal& igrf1965();
+extern Internal& igrf1905();
+extern Internal& igrf2010();
+extern Internal& igrf2020();
+extern Internal& igrf1910();
+extern Internal& igrf1990();
+extern Internal& igrf2015();
+extern Internal& igrf1925();
+extern Internal& igrf2025();
+extern Internal& igrf1970();
+extern Internal& igrf1930();
+extern Internal& igrf1920();
+extern Internal& igrf1955();
+extern Internal& igrf1995();
+extern Internal& igrf1900();
+extern Internal& igrf1980();
+extern Internal& igrf1940();
+extern Internal& igrf1975();
+extern Internal& igrf1915();
+extern Internal& nmoh();
+extern Internal& gsfco8full();
+extern Internal& gsfco8();
+extern Internal& thebault2018m3();
+extern Internal& anderson2010qts04();
+extern Internal& uno2009svd();
+extern Internal& anderson2012();
+extern Internal& thebault2018m1();
+extern Internal& anderson2010dts04();
+extern Internal& anderson2010q();
+extern Internal& anderson2010d();
+extern Internal& anderson2010qsha();
+extern Internal& anderson2010dsha();
+extern Internal& ness1975();
+extern Internal& uno2009();
+extern Internal& anderson2010r();
+extern Internal& thebault2018m2();
+extern Internal& ah5();
+extern Internal& gsfcq3full();
+extern Internal& gsfcq3();
+extern Internal& umoh();
+
+
+/* map the model names to their model object pointers */
+typedef Internal& (*InternalFunc)();
+std::map<std::string,InternalFunc> getModelPtrMap();
+
+/* functions to return the pointer to a model object given a string */
+
+/***********************************************************************
+ * NAME : getModelObjPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to a model object.
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		InternalFunc ptr		Function pointer to model object.
+ *
+ **********************************************************************/
+InternalFunc getModelObjPointer(std::string Model);
+
+/***********************************************************************
+ * NAME : getModelObjPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to a model object.
+ *		
+ * INPUTS : 
+ *		const char *Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		InternalFunc ptr		Function pointer to model object.
+ *
+ **********************************************************************/
+InternalFunc getModelObjPointer(const char *Model);
+
+/* a function to return a list of the models available */
+/***********************************************************************
+ * NAME : listAvailableModels()
+ *
+ * DESCRIPTION : Function to return a list of model names available.
+ *		
+ * RETURNS :
+ *		vector<string> Models	Model list.
+ *
+ **********************************************************************/
+std::vector<std::string> listAvailableModels();
+
+/* map of strings to direct field model function pointers */
+std::map<std::string,modelFieldPtr> getModelFieldPtrMap();
+
+/* functions to return pointer to model field function */
+
+/***********************************************************************
+ * NAME : getModelFieldPointer(Model)
+ *
+ * DESCRIPTION : Function to return a pointer to a wrapper function
+ * 			which will provide a single field vector at a single 
+ * 			position.
+ *		
+ * INPUTS : 
+ *		std::string Model		Model name (use lower case!).
+ *
+ * RETURNS :
+ *		modelFieldPtr *ptr		Pointer to model wrapper.
+ *
+ **********************************************************************/
+modelFieldPtr getModelFieldPtr(std::string Model);
+
+extern "C" {
+}
+
+
+/* based upon https://www.lonecpluspluscoder.com/2015/08/13/an-elegant-way-to-extract-keys-from-a-c-map/ */
+/***********************************************************************
+ * NAME : vector<> listMapKeys(inmap)
+ * 
+ * DESCRIPTION : List the keys used for a std::map.
+ * 
+ * INPUTS : 
+ * 		map		inmap		std::map instance			
+ * 
+ * 
+ * RETURNS :
+ * 		vector	keys		vector object containing a list of the map 
+ * 							keys
+ * 
+ * 
+ * 
+ * ********************************************************************/
+template <typename Tkey, typename Tval> 
+std::vector<Tkey> listMapKeys(std::map<Tkey,Tval> const &inmap) {
+	std::vector<Tkey> keys;
+	for (auto const& element: inmap) {
+		keys.push_back(element.first);
+	}
+	return keys;
+}	
+
+
+
 /***********************************************************************
  * NAME : class InternalModel
  * 
- * DESCRIPTION : with a symbolic link in the current working directory
+ * DESCRIPTION : 
  * 		Class which can access all instances of Internal objects.
  * 
  * ********************************************************************/
@@ -802,6 +804,7 @@ class InternalModel {
 /* we want to initialize the model objects witht heir parameters */
 InternalModel getInternalModel();
 
-
+extern "C" {
+}
 #endif
 #endif

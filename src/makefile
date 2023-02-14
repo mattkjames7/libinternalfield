@@ -26,7 +26,7 @@ endif
 
 
 
-all: obj lib
+all: obj lib header
 
 obj:
 	$(CCo) coeffs.cc -o $(BUILDDIR)/coeffs.o

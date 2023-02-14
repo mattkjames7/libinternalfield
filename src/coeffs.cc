@@ -27,8 +27,14 @@ std::vector<std::string> getModelNames() {
 								"z3",
 								"burton2009",
 								"v1",
+								"cassini11",
 								"p1184",
 								"p11as",
+								"kivelson2002b",
+								"kivelson2002a",
+								"kivelson2002c",
+								"weber2022dip",
+								"weber2022quad",
 								"mh2014",
 								"cain2003",
 								"langlais2019",
@@ -821,6 +827,51 @@ coeffStruct& _model_coeff_v1() {
 	return out;
 }
 
+coeffStruct& _model_coeff_cassini11() {
+	static const int len = 90;
+	static const int nmax = 12;
+	static const int ndef = 11;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2,3,3,3,3,4,4,4,4,4,5,5,5,5,5,5,6,6,6,
+		6,6,6,6,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9,10,10,
+		10,10,10,10,10,10,10,10,10,11,11,11,11,11,11,11,11,11,11,11,11,12,
+		12,12,12,12,12,12,12,12,12,12,12,12};
+	static const int m[] = {0,1,0,1,2,0,1,2,3,0,1,2,3,4,0,1,2,3,4,5,0,1,2,
+		3,4,5,6,0,1,2,3,4,5,6,7,0,1,2,3,4,5,6,7,8,0,1,2,3,4,5,6,7,8,9,0,1,2,
+		3,4,5,6,7,8,9,10,0,1,2,3,4,5,6,7,8,9,10,11,0,1,2,3,4,5,6,7,8,9,10,
+		11,12};
+	static const double g[] = {21140.200000,0.000000,1581.100000,0.000000,
+		0.000000,2260.100000,0.000000,0.000000,0.000000,91.100000,0.000000,
+		0.000000,0.000000,0.000000,12.600000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,17.200000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,59.600000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,-10.500000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,-12.900000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,15.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,18.200000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.300000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000};
+	static const double h[] = {0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,
+		0.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
 coeffStruct& _model_coeff_p1184() {
 	static const int len = 9;
 	static const int nmax = 3;
@@ -847,6 +898,75 @@ coeffStruct& _model_coeff_p11as() {
 		0.000000,2350.000000,0.000000,0.000000,0.000000};
 	static const double h[] = {0.000000,0.000000,0.000000,0.000000,0.000000,
 		0.000000,0.000000,0.000000,0.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_kivelson2002b() {
+	static const int len = 2;
+	static const int nmax = 1;
+	static const int ndef = 1;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1};
+	static const int m[] = {0,1};
+	static const double g[] = {-727.300000,52.800000};
+	static const double h[] = {0.000000,18.400000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_kivelson2002a() {
+	static const int len = 5;
+	static const int nmax = 2;
+	static const int ndef = 2;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2};
+	static const int m[] = {0,1,0,1,2};
+	static const double g[] = {-711.000000,46.800000,0.900000,27.000000,
+		-0.400000};
+	static const double h[] = {0.000000,22.300000,0.000000,1.800000,
+		-11.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_kivelson2002c() {
+	static const int len = 2;
+	static const int nmax = 1;
+	static const int ndef = 1;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1};
+	static const int m[] = {0,1};
+	static const double g[] = {-716.800000,49.300000};
+	static const double h[] = {0.000000,22.200000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_weber2022dip() {
+	static const int len = 2;
+	static const int nmax = 1;
+	static const int ndef = 1;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1};
+	static const int m[] = {0,1};
+	static const double g[] = {-716.400000,56.000000};
+	static const double h[] = {0.000000,27.000000};
+	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
+	return out;
+}
+
+coeffStruct& _model_coeff_weber2022quad() {
+	static const int len = 5;
+	static const int nmax = 2;
+	static const int ndef = 2;
+	static const double rscale =  1.0000000000000000000000000;
+	static const int n[] = {1,1,2,2,2};
+	static const int m[] = {0,1,0,1,2};
+	static const double g[] = {-748.300000,41.100000,22.500000,23.300000,
+		-26.800000};
+	static const double h[] = {0.000000,20.800000,0.000000,16.500000,
+		-10.600000};
 	static coeffStruct out = {len,nmax,ndef,rscale,n,m,g,h};
 	return out;
 }
@@ -12550,8 +12670,14 @@ std::map<std::string,coeffStructFunc> getCoeffMap() {
 											{"z3",_model_coeff_z3},
 											{"burton2009",_model_coeff_burton2009},
 											{"v1",_model_coeff_v1},
+											{"cassini11",_model_coeff_cassini11},
 											{"p1184",_model_coeff_p1184},
 											{"p11as",_model_coeff_p11as},
+											{"kivelson2002b",_model_coeff_kivelson2002b},
+											{"kivelson2002a",_model_coeff_kivelson2002a},
+											{"kivelson2002c",_model_coeff_kivelson2002c},
+											{"weber2022dip",_model_coeff_weber2022dip},
+											{"weber2022quad",_model_coeff_weber2022quad},
 											{"mh2014",_model_coeff_mh2014},
 											{"cain2003",_model_coeff_cain2003},
 											{"langlais2019",_model_coeff_langlais2019},

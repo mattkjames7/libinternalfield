@@ -34,8 +34,14 @@ extern Internal& cassini5();
 extern Internal& z3();
 extern Internal& burton2009();
 extern Internal& v1();
+extern Internal& cassini11();
 extern Internal& p1184();
 extern Internal& p11as();
+extern Internal& kivelson2002b();
+extern Internal& kivelson2002a();
+extern Internal& kivelson2002c();
+extern Internal& weber2022dip();
+extern Internal& weber2022quad();
 extern Internal& mh2014();
 extern Internal& cain2003();
 extern Internal& langlais2019();
@@ -243,9 +249,21 @@ extern "C" {
 				double *Bx, double *By, double *Bz);
 	void v1Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
+	void cassini11Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
 	void p1184Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 	void p11asField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+	void kivelson2002bField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+	void kivelson2002aField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+	void kivelson2002cField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+	void weber2022dipField(double x, double y, double z,
+				double *Bx, double *By, double *Bz);
+	void weber2022quadField(double x, double y, double z,
 				double *Bx, double *By, double *Bz);
 	void mh2014Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz);

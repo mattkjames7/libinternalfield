@@ -25,9 +25,9 @@ else
 	MD=mkdir -p
 endif
 
-.PHONY: all obj lib windows winobj dll clean test
+.PHONY: all obj lib windows winobj dll clean test header
 
-all: obj lib
+all: obj lib header
 
 
 obj:
@@ -39,6 +39,8 @@ lib:
 	$(MD) lib
 	cd src; make lib
 
+header:
+	cd src; make header
 
 windows: winobj dll
 

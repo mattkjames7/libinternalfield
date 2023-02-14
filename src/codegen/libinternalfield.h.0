@@ -3,15 +3,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <string.h>
+#ifdef __cplusplus
 #include <vector>
-#include <string>
 #include <map>
+#include <string>
+#else 
+#include <string.h>
+#endif
+
 
 
 #define INTERNALFIELD_VERSION_MAJOR 1
-#define INTERNALFIELD_VERSION_MINOR 1
+#define INTERNALFIELD_VERSION_MINOR 2
 #define INTERNALFIELD_VERSION_PATCH 0
 
-class Internal;
+/* this is used in both C and C++*/
+typedef void (*modelFieldPtr)(double,double,double,double*,double*,double*);
 
+#ifdef __cplusplus
+extern "C" {
+#endif

@@ -126,6 +126,11 @@ Internal& v1() {
 	return model;
 }
 
+Internal& cassini11() {
+	static Internal model("cassini11");
+	return model;
+}
+
 Internal& p1184() {
 	static Internal model("p1184");
 	return model;
@@ -133,6 +138,31 @@ Internal& p1184() {
 
 Internal& p11as() {
 	static Internal model("p11as");
+	return model;
+}
+
+Internal& kivelson2002b() {
+	static Internal model("kivelson2002b");
+	return model;
+}
+
+Internal& kivelson2002a() {
+	static Internal model("kivelson2002a");
+	return model;
+}
+
+Internal& kivelson2002c() {
+	static Internal model("kivelson2002c");
+	return model;
+}
+
+Internal& weber2022dip() {
+	static Internal model("weber2022dip");
+	return model;
+}
+
+Internal& weber2022quad() {
+	static Internal model("weber2022quad");
 	return model;
 }
 
@@ -420,8 +450,14 @@ std::map<std::string,InternalFunc> getModelPtrMap() {
 										{"z3",z3},
 										{"burton2009",burton2009},
 										{"v1",v1},
+										{"cassini11",cassini11},
 										{"p1184",p1184},
 										{"p11as",p11as},
+										{"kivelson2002b",kivelson2002b},
+										{"kivelson2002a",kivelson2002a},
+										{"kivelson2002c",kivelson2002c},
+										{"weber2022dip",weber2022dip},
+										{"weber2022quad",weber2022quad},
 										{"mh2014",mh2014},
 										{"cain2003",cain2003},
 										{"langlais2019",langlais2019},
@@ -552,8 +588,14 @@ std::map<std::string,modelFieldPtr> getModelFieldPtrMap() {
 													{"z3",&z3Field},
 													{"burton2009",&burton2009Field},
 													{"v1",&v1Field},
+													{"cassini11",&cassini11Field},
 													{"p1184",&p1184Field},
 													{"p11as",&p11asField},
+													{"kivelson2002b",&kivelson2002bField},
+													{"kivelson2002a",&kivelson2002aField},
+													{"kivelson2002c",&kivelson2002cField},
+													{"weber2022dip",&weber2022dipField},
+													{"weber2022quad",&weber2022quadField},
 													{"mh2014",&mh2014Field},
 													{"cain2003",&cain2003Field},
 													{"langlais2019",&langlais2019Field},
@@ -818,6 +860,12 @@ void v1Field(double x, double y, double z,
 	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
+void cassini11Field(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = cassini11();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
 void p1184Field(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
 	Internal model = p1184();
@@ -827,6 +875,36 @@ void p1184Field(double x, double y, double z,
 void p11asField(double x, double y, double z,
 				double *Bx, double *By, double *Bz) {
 	Internal model = p11as();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void kivelson2002bField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = kivelson2002b();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void kivelson2002aField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = kivelson2002a();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void kivelson2002cField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = kivelson2002c();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void weber2022dipField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = weber2022dip();
+	model.FieldCart(x,y,z,Bx,By,Bz);
+}
+
+void weber2022quadField(double x, double y, double z,
+				double *Bx, double *By, double *Bz) {
+	Internal model = weber2022quad();
 	model.FieldCart(x,y,z,Bx,By,Bz);
 }
 
