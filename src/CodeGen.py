@@ -272,6 +272,49 @@ def MakeObjectFile(fname):
 	#return to original directory
 	os.chdir(pwd)
 
+def ListVariableModels():
+	'''
+	list all variable model files
+	'''
+	fnames = ListFiles('variable/')
+	n = fnames.size
+	planet = []
+	dat = []
+	for i in range(0,n):
+		if fnames[i].endswith('.dat'):
+			tmp,d = os.path.split(fnames[i])
+			dat.append(d)
+			planet.append(tmp[9:])
+	planet = np.array(planet)
+	dat = np.array(dat)
+	
+	return planet,dat
+
+
+def ReadVariableDat(fname):
+
+	f = open(fname,'r'))
+	lines = np.array(f.readlines())
+	f.close()
+
+	n = lines.size
+	names = np.zeros(n,dtype='object')
+	dates = np.zeros(n,dtype='int32')
+	times = np.zeros(n,dtype='float64')
+
+	for i in range(0,n):
+		s = lines[i].split()
+		names[i] = s[0]
+		dates[i] = np.int32(s[1])
+		times[i] = np.float64(s[2])
+	return names,dates,times
+
+def EncodeVariableModelBin(planet,name):
+
+	datname = 'variable/'+planet+'/'+name+'.dat'
+	binname = 'variable/'+planet+'/'+name+'.dat'
+
+	names,dates,times = ReadVariableDat(datname)
 
 	
 def WriteCppFile(planet,fname):
