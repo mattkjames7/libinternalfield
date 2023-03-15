@@ -52,9 +52,13 @@ winobj:
 dll:
 	$(CCW) $(BUILDDIR)/*.o  -shared -o ../lib/libinternalfield.dll
 
+clean:
+	-rm coeffs/*/*.bin
+	-rm variable/*/*.bin
+	
 header:
 ifneq (,$(shell which python3))
-	python3 CodeGen.py
+	python3 CodeGen.py $(BUILDDIR)
 else
 	@echo "python3 command doesn't appear to exist - skipping header regeneration..."
 endif

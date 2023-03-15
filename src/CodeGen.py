@@ -1,6 +1,6 @@
 import numpy as np
 import os
-
+import platform
 
 def ProcessIGRF():
 	'''
@@ -107,15 +107,18 @@ def ListDatFiles():
 	n = fnames.size
 	planet = []
 	dat = []
+	name = []
 	for i in range(0,n):
 		if fnames[i].endswith('.dat'):
 			tmp,d = os.path.split(fnames[i])
 			dat.append(d)
 			planet.append(tmp[7:])
+			name.append(os.path.splitext(d)[0])
 	planet = np.array(planet)
 	dat = np.array(dat)
+	name = np.array(name)
 	
-	return planet,dat
+	return planet,name,dat
 
 def ListBinFiles():
 	'''
@@ -158,7 +161,7 @@ def ListModelNames():
 	'''
 	
 	#start by listing all of the object files which have been created
-	planets,files = ListDatFiles()
+	planets,_,files = ListDatFiles()
 	
 	#strip them of their extensions
 	models = [os.path.splitext(f)[0] for f in files]
@@ -167,7 +170,7 @@ def ListModelNames():
 	return planets,models,modelsl	
 
 
-def EncodeFile(fname):
+def EncodeFile(planet,name):
 	'''
 	This will encode the ASCII files of internal magnetic field model
 	coefficients as pure binary.
@@ -181,6 +184,8 @@ def EncodeFile(fname):
 	
 	'''
 	
+	fname = planet+'/'+name+'.dat'
+	print('Reading file '+fname)
 	#open the ASCII file
 	f = open('coeffs/'+fname,'r')
 	lines = f.readlines()
@@ -250,27 +255,41 @@ def EncodeFile(fname):
 	Rscale.tofile(f)
 	f.close()
 
-def MakeObjectFile(fname):
+def MakeObjectFile(bdir,planet,name):
 	'''
 	Convert the binary file coefficients to object files which have an 
 	address that can be used in C++
 	
 	'''
 	
-	#get the output file name
-	name,ext = os.path.splitext(fname)
-	fnameout = name + '.o'
+	binname = 'coeffs/'+planet+'/'+name+'.bin'
+
+	#get the object name name
+	oname = os.path.splitext(binname)[0] + '.o'
+	cname = os.path.splitext(binname)[0] + '.cc'
 	
-	#change working directory
-	pwd = os.getcwd()
-	os.chdir('coeffs/')
+	#get the OS
+	OS = platform.system()
+
+	if OS in ['Windows','Linux']:
+		#use ld
+		cmd = 'ld -r -b binary '+binname+' -o '+oname
+		os.system(cmd)
+	else:
+		#use xxd
+		cmd = 'xxd -i '+binname+' > '+oname
+		os.system(cmd)
+		cmd = 'gcc -c '+cname+' -o '+oname
+		os.system(cmd)
 	
-	#call ld
-	cmd = 'ld -r -b binary -o {:s} {:s}'.format(fnameout,fname)
+	#move it to the build directory
+	vdir = bdir + '/coef'
+	if not os.path.isdir(vdir):
+		os.makedirs(vdir)
+	bfname = vdir + '/' + os.path.basename(oname)
+
+	cmd = 'mv -v '+oname+' '+bfname
 	os.system(cmd)
-	
-	#return to original directory
-	os.chdir(pwd)
 
 def ListVariableModels():
 	'''
@@ -280,20 +299,23 @@ def ListVariableModels():
 	n = fnames.size
 	planet = []
 	dat = []
+	name = []
 	for i in range(0,n):
 		if fnames[i].endswith('.dat'):
 			tmp,d = os.path.split(fnames[i])
 			dat.append(d)
 			planet.append(tmp[9:])
+			name.append(os.path.splitext(d)[0])
 	planet = np.array(planet)
 	dat = np.array(dat)
+	name = np.array(name)
 	
-	return planet,dat
+	return planet,name,dat
 
 
 def ReadVariableDat(fname):
 
-	f = open(fname,'r'))
+	f = open(fname,'r')
 	lines = np.array(f.readlines())
 	f.close()
 
@@ -312,10 +334,71 @@ def ReadVariableDat(fname):
 def EncodeVariableModelBin(planet,name):
 
 	datname = 'variable/'+planet+'/'+name+'.dat'
-	binname = 'variable/'+planet+'/'+name+'.dat'
+	binname = 'variable/'+planet+'/'+name+'.bin'
 
 	names,dates,times = ReadVariableDat(datname)
 
+	f = open(binname,'wb')
+	n = len(names)
+	np.int32(n).tofile(f)
+	for nm in names:
+		l = np.int32(len(nm))
+		l.tofile(f)
+		f.write(nm.encode('utf8'))
+	dates.tofile(f)
+	times.tofile(f)
+	f.close()
+	print('Saved '+binname)
+
+def MakeVariableObjectFile(bdir,planet,name):
+
+	binname = 'variable/'+planet+'/'+name+'.bin'
+
+	#get the object name name
+	oname = os.path.splitext(binname)[0] + '.o'
+	cname = os.path.splitext(binname)[0] + '.cc'
+	
+	#get the OS
+	OS = platform.system()
+
+	if OS in ['Windows','Linux']:
+		#use ld
+		cmd = 'ld -r -b binary '+binname+' -o '+oname
+		os.system(cmd)
+	else:
+		#use xxd
+		cmd = 'xxd -i '+binname+' > '+oname
+		os.system(cmd)
+		cmd = 'gcc -c '+cname+' -o '+oname
+		os.system(cmd)
+	
+	#move it to the build directory
+	vdir = bdir + '/var'
+	if not os.path.isdir(vdir):
+		os.makedirs(vdir)
+	bfname = vdir + '/' + os.path.basename(oname)
+
+	cmd = 'mv -v '+oname+' '+bfname
+	os.system(cmd)
+
+def GenerateVarObjects(bdir):
+
+	planets,names,dats = ListVariableModels()
+	n = names.size
+
+	for i in range(0,n):
+		EncodeVariableModelBin(planets[i],names[i])
+		MakeVariableObjectFile(bdir,planets[i],names[i])
+
+
+def GenerateModelObjects(bdir):
+
+	planets,names,dats = ListDatFiles()
+	n = names.size
+
+	for i in range(0,n):
+		EncodeFile(planets[i],names[i])
+		MakeObjectFile(bdir,planets[i],names[i])
 	
 def WriteCppFile(planet,fname):
 	'''
@@ -860,8 +943,11 @@ def GenerateLibHeader():
 
 if __name__ == "__main__":
 	
+	import sys
+	bdir = sys.argv[1]
+
 	#list the dat files
-	planets,files = ListDatFiles()
+	planets,_,files = ListDatFiles()
 	nf = files.size
 	print('Found {:d} coefficient files...'.format(nf))
 	
@@ -888,3 +974,7 @@ if __name__ == "__main__":
 	GenerateModelsH(modelsl)
 	GenerateModelsCC(models,modelsl)
 	GenerateLibHeader()
+
+	#generate variable models
+	GenerateVarObjects(bdir)
+	GenerateModelObjects(bdir)

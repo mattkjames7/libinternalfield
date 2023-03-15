@@ -60,8 +60,12 @@ updatemodels:
 	cd src; make header
 
 clean:
-	-rm -v build/*
-	-rmdir -v build
+	cd src; make clean
+ifeq ($(OS),Windows_NT)
+	-rmdir build /s /q
+else
+	-rm -vfr build
+endif
 	cd test; make clean
 
 install:
