@@ -264,22 +264,26 @@ def MakeObjectFile(bdir,planet,name):
 	
 	binname = 'coeffs/'+planet+'/'+name+'.bin'
 
+	outname = 'coeffs/'+planet+'/'+name+'_bin.bin'
+
 	#get the object name name
-	oname = os.path.splitext(binname)[0] + '.o'
-	cname = os.path.splitext(binname)[0] + '.cc'
+	oname = os.path.splitext(outname)[0] + '.o'
+	cname = os.path.splitext(outname)[0] + '.cc'
 	
 	#get the OS
 	OS = platform.system()
 
-	if OS in ['Windows','Linux']:
+	if OS in ['Windows']:
 		#use ld
 		cmd = 'ld -r -b binary '+binname+' -o '+oname
 		os.system(cmd)
 	else:
 		#use xxd
-		cmd = 'xxd -i '+binname+' > '+oname
+		cmd = 'xxd -i '+binname+' > '+cname
 		os.system(cmd)
 		cmd = 'gcc -c '+cname+' -o '+oname
+		os.system(cmd)
+		cmd = 'rm -v '+cname
 		os.system(cmd)
 	
 	#move it to the build directory
@@ -367,9 +371,11 @@ def MakeVariableObjectFile(bdir,planet,name):
 		os.system(cmd)
 	else:
 		#use xxd
-		cmd = 'xxd -i '+binname+' > '+oname
+		cmd = 'xxd -i '+binname+' > '+cname
 		os.system(cmd)
 		cmd = 'gcc -c '+cname+' -o '+oname
+		os.system(cmd)
+		cmd = 'rm -v '+cname
 		os.system(cmd)
 	
 	#move it to the build directory
