@@ -26,7 +26,7 @@ endif
 
 
 
-all: obj lib header
+all: header obj lib 
 
 obj:
 	$(CCo) coeffs.cc -o $(BUILDDIR)/coeffs.o
@@ -36,7 +36,7 @@ obj:
 	$(CCo) libinternal.cc -o $(BUILDDIR)/libinternal.o
 
 lib:
-	$(CC) $(BUILDDIR)/*.o  -shared -o ../lib/$(LIBFILE)
+	$(CC) $(BUILDDIR)/*.o $(BUILDDIR)/*/*.o -shared -o ../lib/$(LIBFILE)
 	$(ARCMD)
 
 

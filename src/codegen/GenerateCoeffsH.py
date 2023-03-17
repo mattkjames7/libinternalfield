@@ -19,7 +19,7 @@ def GenerateCoeffsH(planets,models):
 
 	for p,m in zip(planets,models):
 		lines.append('extern coeffStruct& _model_coeff_{:s}();\n'.format(m))
-		lines.append('extern unsigned int _binary_coeffs_{:s}_{:s}_bin_start[];\n'.format(p,m))
+		lines.append('extern unsigned char *_binary_coeffs_{:s}_{:s}_bin_start;\n'.format(p,m))
 		
 		
 	#rest of the code

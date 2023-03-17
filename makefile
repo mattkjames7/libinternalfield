@@ -27,7 +27,7 @@ endif
 
 .PHONY: all obj lib windows winobj dll clean test header
 
-all: obj lib header
+all: header obj lib 
 
 
 obj:

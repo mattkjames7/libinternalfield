@@ -58,8 +58,8 @@ def GenerateCoeffsCC(planets,names):
 	lines.append(s)
 
 	#map of pointers
-	s = 'std::map<std::string,unsigned int*> getCoeffPtrMap() {\n'
-	s += '\tstatic std::map<std::string,unsigned int*> coeffPtrMap = {\t\n'
+	s = 'std::map<std::string,unsigned char*> getCoeffPtrMap() {\n'
+	s += '\tstatic std::map<std::string,unsigned char*> coeffPtrMap = {\t\n'
 	for i,(p,m) in enumerate(zip(planets,modelsl)):
 		s += '\t\t\t'
 		s += '{"' + m + '",_binary_coeffs_{:s}_{:s}_bin_start'.format(p,m) + '}'
