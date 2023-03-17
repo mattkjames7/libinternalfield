@@ -316,10 +316,10 @@ typedef struct coeffStruct {
     const int nmax;
     const int ndef;
     const double rscale;
-    const int *n;
-    const int *m;
-    const double *g;
-    const double *h;
+    std::vector<int> n;
+    std::vector<int> m;
+    std::vector<double> g;
+    std::vector<double> h;
 } coeffStruct;
 
 typedef coeffStruct& (*coeffStructFunc)();

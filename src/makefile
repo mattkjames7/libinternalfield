@@ -34,6 +34,7 @@ obj:
 	$(CCo) internal.cc -o $(BUILDDIR)/internal.o 
 	$(CCo) internalmodel.cc -o $(BUILDDIR)/internalmodel.o 
 	$(CCo) libinternal.cc -o $(BUILDDIR)/libinternal.o
+	$(CCo) readcoeffs.cc -o $(BUILDDIR)/readcoeffs.o
 
 lib:
 	$(CC) $(BUILDDIR)/*.o $(BUILDDIR)/*/*.o -shared -o ../lib/$(LIBFILE)
@@ -48,6 +49,7 @@ winobj:
 	$(CCWo) internal.cc -o $(BUILDDIR)/internal.o 
 	$(CCWo) internalmodel.cc -o $(BUILDDIR)/internalmodel.o 
 	$(CCWo) libinternal.cc -o $(BUILDDIR)/libinternal.o
+	$(CCWo) readcoeffs.cc -o $(BUILDDIR)/readcoeffs.o
 
 dll:
 	$(CCW) $(BUILDDIR)/*.o  -shared -o ../lib/libinternalfield.dll
