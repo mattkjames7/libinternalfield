@@ -59,16 +59,14 @@ def MakeCoeffObject(bdir,planet,name):
 	
 	binname = 'coeffs/'+planet+'/'+name+'.bin'
 
-	outname = 'coeffs/'+planet+'/'+name+'_bin.bin'
-
 	#get the object name name
-	oname = os.path.splitext(outname)[0] + '.o'
-	cname = os.path.splitext(outname)[0] + '.cc'
+	oname = 'coeffs/'+planet+'/'+name+'.o'
+	cname = 'coeffs/'+planet+'/'+name+'_bin.cc'
 	
 	#get the OS
 	OS = platform.system()
 
-	if OS in ['Windows']:
+	if OS in ['Windows','Linux']:
 		#use ld
 		cmd = 'ld -r -b binary '+binname+' -o '+oname
 		os.system(cmd)

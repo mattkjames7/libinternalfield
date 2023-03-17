@@ -13,7 +13,7 @@ def MakeVariableObject(bdir,planet,name):
 	#get the OS
 	OS = platform.system()
 
-	if OS in ['Windows']:
+	if OS in ['Windows','Linux']:
 		#use ld
 		cmd = 'ld -r -b binary '+binname+' -o '+oname
 		os.system(cmd)
