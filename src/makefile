@@ -58,7 +58,7 @@ clean:
 	
 header:
 ifneq (,$(shell which python3))
-	python3 CodeGen.py $(BUILDDIR)
+	python3 GenerateCode.py $(BUILDDIR)
 else
 	@echo "python3 command doesn't appear to exist - skipping header regeneration..."
 endif
