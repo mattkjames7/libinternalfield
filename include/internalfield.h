@@ -535,6 +535,13 @@ coeffStructFunc getModelCoeffStruct(const char *Model);
 
 
 
+void readCoeffs(unsigned char *data, 
+				int *len, int *nmax, int *ndef, double *rscale,
+				std::vector<int> n, std::vector<int> m,
+				std::vector<double> g, std::vector<double> h);
+
+
+
 
 /* This structure will store the Schmidt coefficients */
 struct schmidtcoeffs {

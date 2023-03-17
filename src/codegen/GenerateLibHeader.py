@@ -58,6 +58,12 @@ def _ExtractListmapkeysH():
 	lines = ReadASCII('listmapkeys.h')
 	return _RemoveDirectives(lines)
 
+def _ExtractReadCoeffsH():
+
+	lines = ReadASCII('readcoeffs.h')
+	return _RemoveDirectives(lines)
+
+
 def _RemoveDirectives(lines):
 	'''
 	Remove compiler directives and includes
@@ -114,6 +120,9 @@ def GenerateLibHeader():
 	cccode = []
 
 	cc = _ExtractCoeffsH()
+	cccode = cccode + cc.tolist()
+
+	cc = _ExtractReadCoeffsH()
 	cccode = cccode + cc.tolist()
 
 	cc = _ExtractInternalH()
