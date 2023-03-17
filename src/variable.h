@@ -1,17 +1,17 @@
 #ifndef __VARIABLE_H__
 #define __VARIABLE_H__
 #include <string>
-#include <vector>
+#include <array>
 
 #include "coeffs.h"
 
 typedef struct variableModelList {
 	std::string Name;
-	std::vector<std::string> Models;
-	std::vector<int> Date;
-	std::vector<double> ut;
-	std::vector<double> unixt;
-	std::vector<coeffStruct> modelCoeffs;
+	std::array<std::string> Models;
+	std::array<int> Date;
+	std::array<double> ut;
+	std::array<double> unixt;
+	std::array<coeffStruct> modelCoeffs;
 } variableModelList;
 
 typedef variableModelList& (*variableModelListFunc)();
