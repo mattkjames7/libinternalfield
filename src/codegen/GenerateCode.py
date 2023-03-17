@@ -20,7 +20,7 @@ def GenerateCode(bdir):
 	planets,models,modelsl = ListModelNames()
 			
 	#generate files
-	GenerateCoeffsH(models)
+	GenerateCoeffsH(planets,models)
 	GenerateCoeffsCC(planets,models)
 	GenerateModelsH(models)
 	GenerateModelsCC(models)

@@ -56,7 +56,23 @@ def GenerateCoeffsCC(planets,names):
 	s += '\treturn coeffMap;\n'
 	s += '}\n\n'
 	lines.append(s)
-			
+
+	#map of pointers
+	s = 'std::map<std::string,unsigned int*> getCoeffPtrMap() {\n'
+	s += '\tstatic std::map<std::string,unsigned int*> coeffPtrMap = {\t\n'
+	for i,(p,m) in enumerate(zip(planets,modelsl)):
+		s += '\t\t\t'
+		s += '{"' + m + '",_binary_coeffs_{:s}_{:s}_bin_start'.format(p,m) + '}'
+		if i < len(models) - 1:
+			s += ',\n'
+		else:
+			s += '\n'
+	s += '\t};\n'
+	s += '\treturn coeffPtrMap;\n'
+	s += '}\n\n'
+	lines.append(s)
+
+
 	#add more existing code
 	lines += code3
 	
