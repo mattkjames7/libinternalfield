@@ -1,13 +1,16 @@
 #include <iostream>
 #include <internalfield.h>
 #include <string>
+#include <stdio.h>
 
 void testCoeff(std::string model) {
 
 	/* get the memory address first */
 	std::map<std::string,unsigned char*> cmap = getCoeffPtrMap();
 	unsigned char *ptr = cmap[model];
-
+	std::cout << model << std::endl;
+	std::cout << cmap.size() << std::endl;
+	printf("ptr: %d\n",ptr);
 	/* read the model coefficients*/
 	coeffStruct mc;
 	readCoeffs(ptr,&(mc.len),&(mc.nmax),&(mc.ndef),&(mc.rscale),
