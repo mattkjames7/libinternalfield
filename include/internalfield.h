@@ -312,10 +312,10 @@ extern "C" {
 
 /* structure for storing the coefficients in memory (replaces binary stuff) */
 typedef struct coeffStruct {
-    const int len;    
-    const int nmax;
-    const int ndef;
-    const double rscale;
+    int len = 0;    
+    int nmax = 0;
+    int ndef = 0;
+    double rscale = 0.0;
     std::vector<int> n;
     std::vector<int> m;
     std::vector<double> g;

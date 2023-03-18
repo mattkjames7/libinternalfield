@@ -18,10 +18,12 @@ all:
 	$(CC) $(IFLAGS) timer.cc -o timer $(LDFLAGS)
 	gcc $(IFLAGS) ctest.c -o ctest $(LDFLAGS)
 	$(CC) $(IFLAGS) cpptest.cc -o cpptest $(LDFLAGS)
+	$(CC) $(IFLAGS) coefftest.cc -o coefftest $(LDFLAGS)
 	./test
 	./timer
 	./ctest
 	./cpptest
+	./coefftest
 	
 clean:
 	-rm -v test
