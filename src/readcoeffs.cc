@@ -14,8 +14,9 @@ void readCoeffs(unsigned char *data,
 	
 	/* read the length */
 	l = ((int*) ptr)[0];
+	len[0] = l;
 	ptr += sizeof(int);
-	printf("l: %d\n",l);
+
 	/* initialize the temporary arrays */
 	int8_t *gh = new int8_t[l];
 	double *coeffs = new double[l];

@@ -1,5 +1,9 @@
 # CFLAGS for CC
-CFLAGS=-lm -fPIC -std=c++17 -O3
+ifdef DEBUG
+	CFLAGS=-fPIC -lm -std=c++17 -Wextra -ggdb3  -no-pie 
+else 
+	CFLAGS=-fPIC -lm -std=c++17 -Wextra 
+endif
 
 # Compiler
 CCo=g++ -c $(CFLAGS)
@@ -37,7 +41,7 @@ obj:
 	$(CCo) readcoeffs.cc -o $(BUILDDIR)/readcoeffs.o
 
 lib:
-	$(CC) $(BUILDDIR)/*.o $(BUILDDIR)/*/*.o -shared -o ../lib/$(LIBFILE)
+	$(CC) $(BUILDDIR)/*/*.o $(BUILDDIR)/*.o -shared -o ../lib/$(LIBFILE)
 	$(ARCMD)
 
 

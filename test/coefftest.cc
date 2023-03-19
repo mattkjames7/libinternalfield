@@ -8,20 +8,18 @@ void testCoeff(std::string model) {
 	/* get the memory address first */
 	std::map<std::string,unsigned char*> cmap = getCoeffPtrMap();
 	unsigned char *ptr = cmap[model];
-	std::cout << model << std::endl;
-	std::cout << cmap.size() << std::endl;
-	printf("ptr: %d\n",ptr);
+
 	/* read the model coefficients*/
 	coeffStruct mc;
 	readCoeffs(ptr,&(mc.len),&(mc.nmax),&(mc.ndef),&(mc.rscale),
 				mc.n,mc.m,mc.g,mc.h);
 
 	/* print out the model */
-	std::cout << model;
-	std::cout << mc.len;
-	std::cout << mc.nmax;
-	std::cout << mc.ndef;
-	std::cout << mc.rscale;
+	std::cout << model << ": ";
+	std::cout << "Len: " << mc.len;
+	std::cout << ", n_max: " << mc.nmax;
+	std::cout << ", n_def: " << mc.ndef;
+	std::cout << ", R_scale: "<< mc.rscale;
 	std::cout << std::endl;
 
 }
