@@ -6,7 +6,7 @@
 #include <math.h>
 #include <string.h>
 #include "coeffs.h"
-
+#include "readcoeffs.h"
 
 /* This structure will store the Schmidt coefficients */
 struct schmidtcoeffs {
@@ -31,6 +31,7 @@ class Internal {
 		Internal(unsigned char *);
 		Internal(const char *);
 		Internal(const Internal&);
+		Internal(coeffStruct);
 		~Internal();
 	
 		/*these four functions will calculate the field in spherical

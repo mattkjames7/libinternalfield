@@ -40,6 +40,7 @@ Internal::Internal(const char *Model) {
 
 
 Internal::Internal(const Internal &obj) {
+	printf("copy\n");
 	init_ = obj.init_;
 	copy = true;
 	useptr_ = obj.useptr_;
@@ -148,91 +149,106 @@ void Internal::_Init() {
  * ********************************************************************/
 void Internal::_LoadSchmidt(unsigned char *ptr){
 	
-	/* this is the length of each array */
-	int l, i, j, p;
+	// /* this is the length of each array */
+	// int l, i, j, p;
 	
-	/* read the length */
-	l = ((int*) ptr)[0];
-	ptr += sizeof(int);
+	// /* read the length */
+	// l = ((int*) ptr)[0];
+	// ptr += sizeof(int);
 	
-	/* initialize the temporary arrays */
-	int *n = new int[l];
-	int *m = new int[l];
-	int8_t *gh = new int8_t[l];
-	double *coeffs = new double[l];
+	// /* initialize the temporary arrays */
+	// int *n = new int[l];
+	// int *m = new int[l];
+	// int8_t *gh = new int8_t[l];
+	// double *coeffs = new double[l];
 	
-	/* load them in */
-	for (i=0;i<l;i++) {
-		gh[i] = ((int8_t*) ptr)[0];
-		ptr += sizeof(int8_t);
-	}
-	for (i=0;i<l;i++) {
-		n[i] = ((int*) ptr)[0];
-		ptr += sizeof(int);
-	}
-	for (i=0;i<l;i++) {
-		m[i] = ((int*) ptr)[0];
-		ptr += sizeof(int);
-	}
-	for (i=0;i<l;i++) {
-		coeffs[i] = ((double*) ptr)[0];
-		ptr += sizeof(double);
-	}
-	ndef_ = ((int*) ptr)[0];
-	ptr += sizeof(int);
+	// /* load them in */
+	// for (i=0;i<l;i++) {
+	// 	gh[i] = ((int8_t*) ptr)[0];
+	// 	ptr += sizeof(int8_t);
+	// }
+	// for (i=0;i<l;i++) {
+	// 	n[i] = ((int*) ptr)[0];
+	// 	ptr += sizeof(int);
+	// }
+	// for (i=0;i<l;i++) {
+	// 	m[i] = ((int*) ptr)[0];
+	// 	ptr += sizeof(int);
+	// }
+	// for (i=0;i<l;i++) {
+	// 	coeffs[i] = ((double*) ptr)[0];
+	// 	ptr += sizeof(double);
+	// }
+	// ndef_ = ((int*) ptr)[0];
+	// ptr += sizeof(int);
 	
-	/* get n max */
-	nmax_ = 0;
-	for (i=0;i<l;i++) {
-		if (n[i] > nmax_) {
-			nmax_ = n[i];
-		}
-	}
-	
+	// /* get n max */
+	// nmax_ = 0;
+	// for (i=0;i<l;i++) {
+	// 	if (n[i] > nmax_) {
+	// 		nmax_ = n[i];
+	// 	}
+	// }
+
+	/* read the coefficients in */
+	coeffStruct mc;
+	readCoeffs(ptr,&(mc.len),&(mc.nmax),&(mc.ndef),&(mc.rscale),
+				mc.n,mc.m,mc.g,mc.h);
+
 	/* set current model degree to the default */
-	ncur_[0] = ndef_;
+	nmax_ = mc.nmax;
+	ndef_ = mc.ndef;
+	ncur_[0] = mc.ndef;
 	
 	/* calculate the length of the coefficient structure */
-	nschc_ = 0;
-	for (i=0;i<nmax_;i++) {
-		nschc_ += (2 + i);
-	}
+	nschc_ = mc.n.size();
+//	for (i=0;i<nmax_;i++) {
+//		nschc_ += (2 + i);
+//	}
 	
 	/* get rscale */
-	rscale_ = ((double*) ptr)[0];
-	ptr += sizeof(double);
+	rscale_ = mc.rscale;
+	//rscale_ = ((double*) ptr)[0];
+	//ptr += sizeof(double);
 	
 	/* create the structure array */
 	schc_ = new struct schmidtcoeffs[nschc_];
 	
 	/*fill it up */
-	p = 0;
-	for (i=1;i<=nmax_;i++) {
-		for (j=0;j<=i;j++) {
-			schc_[p].n = i;
-			schc_[p].m = j;
-			schc_[p].g = 0.0;
-			schc_[p].h = 0.0;
-			p++;
-		}
+	int p;
+	for (p=0;p<nschc_;p++) {
+		schc_[p].n = mc.n[p];
+		schc_[p].m = mc.m[p];
+		schc_[p].g = mc.g[p];
+		schc_[p].h = mc.h[p];
 	}
-	for (i=0;i<l;i++) {
-		p = m[i]-1;
-		for (j=0;j<n[i];j++) {
-			p += (1 + j);
-		}
-		if (gh[i] == 0) {
-			schc_[p].g = coeffs[i];
-		} else {
-			schc_[p].h = coeffs[i];
-		}
-	}
+	// p = 0;
+	// for (i=1;i<=nmax_;i++) {
+	// 	for (j=0;j<=i;j++) {
+	// 		schc_[p].n = i;
+	// 		schc_[p].m = j;
+	// 		schc_[p].g = 0.0;
+	// 		schc_[p].h = 0.0;
+	// 		p++;
+	// 	}
+	// }
+	// for (i=0;i<l;i++) {
+	// 	p = m[i]-1;
+	// 	for (j=0;j<n[i];j++) {
+	// 		p += (1 + j);
+	// 	}
+	// 	if (gh[i] == 0) {
+	// 		schc_[p].g = coeffs[i];
+	// 	} else {
+	// 		schc_[p].h = coeffs[i];
+	// 	}
+	// }
 			
 	/* free the original arrays */
-	delete[] n;
-	delete[] m;
-	delete[] gh;
-	delete[] coeffs;
+	//delete[] n;
+	//delete[] m;
+	//delete[] gh;
+	//delete[] coeffs;
 	
 }
 

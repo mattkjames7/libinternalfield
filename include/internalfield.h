@@ -542,7 +542,6 @@ void readCoeffs(unsigned char *data,
 
 
 
-
 /* This structure will store the Schmidt coefficients */
 struct schmidtcoeffs {
 	int n;
@@ -566,6 +565,7 @@ class Internal {
 		Internal(unsigned char *);
 		Internal(const char *);
 		Internal(const Internal&);
+		Internal(coeffStruct);
 		~Internal();
 	
 		/*these four functions will calculate the field in spherical

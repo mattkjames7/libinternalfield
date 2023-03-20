@@ -49,11 +49,31 @@ void readCoeffs(unsigned char *data,
 		}
 	}
 
+	/* calculate the length of the coefficient structure */
+	int nschc = 0;
+	for (i=0;i<nmax[0];i++) {
+		nschc += (2 + i);
+	}
+	n.resize(nschc);
+	m.resize(nschc);
+	g.resize(nschc);
+	h.resize(nschc);
 
 	/* get rscale */
 	rscale[0] = ((double*) ptr)[0];
 	ptr += sizeof(double);
-	
+
+
+	p = 0;
+	for (i=1;i<=nmax[0];i++) {
+		for (j=0;j<=i;j++) {
+			n[p] = i;
+			m[p] = j;
+			g[p] = 0.0;
+			h[p] = 0.0;
+			p++;
+		}
+	}
 
 	for (i=0;i<l;i++) {
 		p = m[i]-1;
@@ -61,9 +81,9 @@ void readCoeffs(unsigned char *data,
 			p += (1 + j);
 		}
 		if (gh[i] == 0) {
-			g.push_back(coeffs[i]);
+			g[p] = coeffs[i];
 		} else {
-			h.push_back(coeffs[i]);
+			h[p] = coeffs[i];
 		}
 	}
 			

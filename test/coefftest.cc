@@ -24,6 +24,29 @@ void testCoeff(std::string model) {
 
 }
 
+Internal getModel(std::string model) {
+
+	/* get the memory address first */
+	std::map<std::string,unsigned char*> cmap = getCoeffPtrMap();
+	unsigned char *ptr = cmap[model];
+
+	return Internal(ptr);
+
+}
+
+void testModel(std::string model) {
+
+	std::cout << "Loading model: " << model << std::endl;
+	Internal M = getModel(model);
+
+	double x = 10.0, y = 0.0, z = 0.0;
+	double Bx, By, Bz;
+
+	M.Field(x,y,z,&Bx,&By,&Bz);
+	std::cout << "B = [" << Bx << "," << By << "," << Bz << "] at ";
+	std::cout << "[" << x << "," << y << "," << z << "]" << std::endl; 
+
+}
 
 int main() {
 
@@ -32,6 +55,10 @@ int main() {
 	testCoeff("jrm09");
 	testCoeff("jrm33");
 	testCoeff("vip4");
+
+	testModel("jrm09");
+	testModel("jrm33");
+	testModel("vip4");
 
 }
 
