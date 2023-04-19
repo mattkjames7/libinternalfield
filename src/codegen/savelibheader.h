@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include "trimstring.h"
 
 typedef std::pair<std::vector<std::string>, std::vector<std::string>>  StrVecPair;

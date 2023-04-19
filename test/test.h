@@ -8,6 +8,7 @@
 #include <internalfield.h>
 #include "testdata.h"
 #include <tuple>
+#include <sstream>
 
 typedef std::tuple<
     std::vector<double>,
