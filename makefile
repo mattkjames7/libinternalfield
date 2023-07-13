@@ -61,6 +61,7 @@ updatemodels:
 
 clean:
 	cd src; make clean
+	-rm -v lib/$(LIBFILE)
 ifeq ($(OS),Windows_NT)
 	-rmdir build /s /q
 else
