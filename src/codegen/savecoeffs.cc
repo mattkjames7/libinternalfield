@@ -2,11 +2,12 @@
 
 typedef std::tuple<std::string,std::string,std::filesystem::path> ModelFileTuple;
 typedef std::vector<ModelFileTuple> ModelFileTuples;
+typedef std::vector<std::filesystem::path> FileList;
 
-std::vector<std::filesystem::path> listDirectories(
+FileList listDirectories(
     const std::filesystem::path &startDir 
 ) {
-    std::vector<std::filesystem::path> subDirs;
+    FileList subDirs;
 
     for (const auto& entry : std::filesystem::directory_iterator(startDir)) {
         if (std::filesystem::is_directory(entry.status())) {
@@ -17,14 +18,16 @@ std::vector<std::filesystem::path> listDirectories(
     return subDirs;
 }
 
-std::vector<std::filesystem::path> listFiles(
+FileList listFiles(
     const std::filesystem::path &startDir 
 ) {
-    std::vector<std::filesystem::path> files;
+    FileList files;
 
     for (const auto& entry : std::filesystem::directory_iterator(startDir)) {
         if (std::filesystem::is_regular_file(entry.status())) {
-            files.push_back(entry.path());
+            if (entry.path().extension() == ".dat") {
+                files.push_back(entry.path());
+            }
         }
     }
 
@@ -32,17 +35,17 @@ std::vector<std::filesystem::path> listFiles(
 }
 
 
-std::vector<std::filesystem::path> listAllModelFiles(
+FileList listAllModelFiles(
     const std::filesystem::path &coeffDir
 ) {
 
     /* this is the list of all sub directories */
-    std::vector<std::filesystem::path> bodyCoeffDirs;
+    FileList bodyCoeffDirs;
     bodyCoeffDirs = listDirectories(coeffDir);
 
     /* this vector should store all of the files*/
-    std::vector<std::filesystem::path> files;
-    std::vector<std::filesystem::path> dirFiles;
+    FileList files;
+    FileList dirFiles;
     for (const auto& dir : bodyCoeffDirs) {
         dirFiles = listFiles(dir);
         files.insert(files.end(), dirFiles.begin(), dirFiles.end());
@@ -65,7 +68,7 @@ ModelFileTuple getModelFileTuple(
 ModelFileTuples listModels(
     const std::filesystem::path &coeffDir
 ) {
-    std::vector<std::filesystem::path> files = listAllModelFiles(coeffDir);
+    FileList files = listAllModelFiles(coeffDir);
 
     ModelFileTuples out;
 
@@ -99,7 +102,7 @@ int main(int argc, char *argv[]) {
 
 
     /* get a list of the subdirectories to scan */
-    std::vector<std::filesystem::path> files = listAllModelFiles(coeffPath);
+    FileList files = listAllModelFiles(coeffPath);
     int i, n;
     n = files.size();
     for (i=0;i<n;i++) {
