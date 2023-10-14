@@ -1,6 +1,7 @@
 
 ifndef BUILDDIR
 export BUILDDIR=$(shell pwd)/build
+export DATADIR=$(shell pwd)/data
 endif
 
 ifeq ($(PREFIX),)
