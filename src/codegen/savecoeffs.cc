@@ -1,8 +1,5 @@
 #include "savecoeffs.h"
 
-typedef std::tuple<std::string,std::string,std::filesystem::path> ModelFileTuple;
-typedef std::vector<ModelFileTuple> ModelFileTuples;
-typedef std::vector<std::filesystem::path> FileList;
 
 FileList listDirectories(
     const std::filesystem::path &startDir 
@@ -78,6 +75,143 @@ ModelFileTuples listModels(
     return out;
 }
 
+std::vector<std::string> splitString(std::string input) {
+
+    std::vector<std::string> out;
+    std::string tmp;
+
+    for (char c : input) {
+        if ((c == '\t') || (c == ' ') || (c == '\n')) {
+            if (tmp.length() > 0) {
+                out.push_back(tmp);
+                tmp.clear();
+            }
+        } else {
+            tmp += c;
+        }
+    }
+    if (tmp.length() > 0) {
+        out.push_back(tmp);
+    }
+    
+    return out;
+}
+
+
+FileParams readFileParams(std::filesystem::path coeffFile) {
+
+    FileCoeffs data;
+    std::ifstream cFile(coeffFile);
+    std::cout << "reading file " << coeffFile << std::endl;
+    if (!cFile.is_open()) {
+        std::cout << "no data "<< std::endl;
+        return std::make_tuple(data,0.0,0);
+    }
+
+    double rScale = 1.0;
+    int defaultDegree = -1;
+
+    std::string rscalePrefix = "#Rscale";
+    std::string defdegPrefix = "#DefaultDegree";
+    std::string error;
+
+    std::string line;
+    std::istringstream liness;
+    FileCoeff tmp;
+    std::vector<std::string> substrs;
+    while (std::getline(cFile, line)) {
+        liness.clear();
+        
+        
+        if (line.compare(0, rscalePrefix.length(), rscalePrefix) == 0) {
+            liness.str(line.substr(rscalePrefix.length()));
+            try {
+                if (!(liness >> rScale)) {
+                    error = "File formatting error\n";
+                    error += "File: ";
+                    error += coeffFile.string();
+                    error += " (#Rscale)\n";
+                    throw std::runtime_error(error);
+                }
+            } catch (const std::exception &e) {
+                std::cerr << e.what();
+            }
+        } else if (line.compare(0, defdegPrefix.length(), defdegPrefix) == 0) {
+            liness.str(line.substr(defdegPrefix.length()));
+            try {
+                if (!(liness >> rScale)) {
+                    error = "File formatting error\n";
+                    error += "File: ";
+                    error += coeffFile.string();
+                    error += " (#DefaultDegree)\n";
+                    throw std::runtime_error(error);
+                }
+            } catch (const std::exception &e) {
+                std::cerr << e.what();
+            }
+        } else {
+            try {
+                substrs = splitString(line);
+                if (substrs.size() == 4) {
+                    tmp.gh = substrs[0].c_str()[0];
+                    tmp.m = stoi(substrs[1]) ;
+                    tmp.n = stoi(substrs[2]);
+                    tmp.val = stod(substrs[3]);
+                    data.push_back(tmp);
+                } else {
+                    std::cout << substrs.size() << std::endl;
+                }
+            } catch (const std::exception &e) {
+            }
+
+        }
+    }
+    cFile.close();
+
+    if (defaultDegree == -1) {
+        for (auto &d : data) {
+            if (d.m > defaultDegree){
+                defaultDegree = d.m;
+            } 
+            if (d.n > defaultDegree){
+                defaultDegree = d.n;
+            } 
+        }
+    }
+
+    return std::make_tuple(data,rScale,defaultDegree);
+}
+
+
+ModelDef getModelDefinition(ModelFileTuple model) {
+
+    std::filesystem::path coeffFile = std::get<2>(model);
+
+    FileParams params = readFileParams(coeffFile);
+
+    ModelDef def;
+    def.name = std::get<0>(model);
+    def.body = std::get<1>(model);
+    def.nmax = 0;
+    for (auto &p : params) {
+        if (p.n > def.nmax) {
+            def.nmax = p.n;
+        }
+        if (p.m > def.nmax) {
+            def.nmax = p.m;
+        }
+    }
+
+    int i, j, k;
+    def.len = 0;
+    for (i=1;i<=def.nmax;i++) {
+        for (j=0;j<n;j++) {
+
+        }
+    }
+
+}
+
 int main(int argc, char *argv[]) {
 
     /* check for the starting directory */
@@ -116,6 +250,14 @@ int main(int argc, char *argv[]) {
         std::cout << "Model File: " << std::get<2>(model);
         std::cout << std::endl;
     }
+
+    FileParams params = readFileParams(files[0]);
+
+    FileCoeffs coeffs = std::get<0>(params);
+    for (auto &c : coeffs) {
+        std::cout << c.gh << " " << c.m << " " << c.n << " " << c.val << std::endl;
+    }
+    std::cout << coeffs.size() << std::endl;
 
     return 0;
 
