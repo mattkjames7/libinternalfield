@@ -188,12 +188,15 @@ ModelDef getModelDefinition(ModelFileTuple model) {
     std::filesystem::path coeffFile = std::get<2>(model);
 
     FileParams params = readFileParams(coeffFile);
+    FileCoeffs coeffs = std::get<0>(params);
 
     ModelDef def;
     def.name = std::get<0>(model);
     def.body = std::get<1>(model);
+    def.rscale = std::get<1>(params);
+    def.ndef = std::get<2>(params);
     def.nmax = 0;
-    for (auto &p : params) {
+    for (auto &p : coeffs) {
         if (p.n > def.nmax) {
             def.nmax = p.n;
         }
@@ -202,14 +205,47 @@ ModelDef getModelDefinition(ModelFileTuple model) {
         }
     }
 
-    int i, j, k;
+    int i, j;
+    
     def.len = 0;
     for (i=1;i<=def.nmax;i++) {
-        for (j=0;j<n;j++) {
-
+        for (j=0;j<=i;j++) {
+            def.n.push_back(i);
+            def.m.push_back(j);
+            def.g.push_back(0.0);
+            def.h.push_back(0.0);
+            def.len++;
+        }
+    }
+  
+    int pos;
+    for (i=0;i<coeffs.size();i++) {
+        pos = coeffs[i].m - 1;
+        for (j=0;j<coeffs[i].n;j++) {
+            pos += (1 + j);
+        } 
+        if (coeffs[i].gh == 'g') {
+            def.g[pos] = coeffs[i].val;
+        } else {
+            def.h[pos] = coeffs[i].val;
         }
     }
 
+    return def;
+
+}
+
+std::string getModelDefinitionString(ModelFileTuple model) {
+
+    ModelDef mdef = getModelDefinition(model);
+
+    std::ostringstream oss;
+    oss << "/* Body : " << mdef.body << " ---  Model : " << mdef.name << " */\n";
+    oss << "coeffStruct& _model_coeff_" << mdef.name << "() {\n";
+    oss << "\tstatic const int len = " << mdef.len << ";\n";
+
+    oss << "}\n\n"; 
+    return oss.str();
 }
 
 int main(int argc, char *argv[]) {
@@ -258,6 +294,9 @@ int main(int argc, char *argv[]) {
         std::cout << c.gh << " " << c.m << " " << c.n << " " << c.val << std::endl;
     }
     std::cout << coeffs.size() << std::endl;
+
+    std::string example = getModelDefinitionString(models[0]);
+    std::cout << example << std::endl;
 
     return 0;
 
