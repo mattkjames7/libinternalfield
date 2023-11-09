@@ -235,6 +235,28 @@ ModelDef getModelDefinition(ModelFileTuple model) {
 
 }
 
+std::string formatInts(std::vector<int> x) {
+
+    int w = 4;
+    int nPerLine = 16;
+    int n = x.size();
+    std::ostringstream oss;
+    int i;
+
+    for (i=0;i<n;i++) {
+        if ((i % nPerLine) == 0) {
+            oss << "\t\t";
+        }
+        oss << std::setw(w) << x[i] << ",";
+        if ((((i + 1) % nPerLine) == 0) || (i == (n-1))) {
+            oss << std::endl;
+        }
+    }
+
+    return oss.str();
+
+}
+
 std::string getModelDefinitionString(ModelFileTuple model) {
 
     ModelDef mdef = getModelDefinition(model);
@@ -243,7 +265,13 @@ std::string getModelDefinitionString(ModelFileTuple model) {
     oss << "/* Body : " << mdef.body << " ---  Model : " << mdef.name << " */\n";
     oss << "coeffStruct& _model_coeff_" << mdef.name << "() {\n";
     oss << "\tstatic const int len = " << mdef.len << ";\n";
-
+    oss << "\tstatic const int nmax = " << mdef.nmax << ";\n";
+    oss << "\tstatic const int ndef = " << mdef.ndef << ";\n";
+    oss << "\tstatic const int rscale = " << std::fixed << std::setw(27) 
+        << std::setprecision(25) << mdef.rscale << ";\n";
+    oss << "\tstatic const std::vector<int> n = {\n";
+    oss << formatInts(mdef.n);
+    oss << "\t};\n";
     oss << "}\n\n"; 
     return oss.str();
 }
