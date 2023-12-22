@@ -269,7 +269,7 @@ std::string formatDoubles(std::vector<double> x) {
         if ((i % nPerLine) == 0) {
             oss << "\t\t";
         }
-        oss << std::setw(w) << std::setprecision(6) << [i] << ",";
+        oss << std::setw(w) << std::setprecision(6) << std::fixed << x[i] << ",";
         if ((((i + 1) % nPerLine) == 0) || (i == (n-1))) {
             oss << std::endl;
         }
