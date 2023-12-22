@@ -257,6 +257,28 @@ std::string formatInts(std::vector<int> x) {
 
 }
 
+std::string formatDoubles(std::vector<double> x) {
+
+    int w = 14;
+    int nPerLine = 80/w;
+    int n = x.size();
+    std::ostringstream oss;
+    int i;
+
+    for (i=0;i<n;i++) {
+        if ((i % nPerLine) == 0) {
+            oss << "\t\t";
+        }
+        oss << std::setw(w) << std::setprecision(6) << [i] << ",";
+        if ((((i + 1) % nPerLine) == 0) || (i == (n-1))) {
+            oss << std::endl;
+        }
+    }
+
+    return oss.str();
+
+}
+
 std::string getModelDefinitionString(ModelFileTuple model) {
 
     ModelDef mdef = getModelDefinition(model);
@@ -271,6 +293,15 @@ std::string getModelDefinitionString(ModelFileTuple model) {
         << std::setprecision(25) << mdef.rscale << ";\n";
     oss << "\tstatic const std::vector<int> n = {\n";
     oss << formatInts(mdef.n);
+    oss << "\t};\n";
+    oss << "\tstatic const std::vector<int> m = {\n";
+    oss << formatInts(mdef.n);
+    oss << "\t};\n";
+    oss << "\tstatic const std::vector<double> g = {\n";
+    oss << formatDoubles(mdef.g);
+    oss << "\t};\n";
+    oss << "\tstatic const std::vector<double> h = {\n";
+    oss << formatDoubles(mdef.h);
     oss << "\t};\n";
     oss << "}\n\n"; 
     return oss.str();
