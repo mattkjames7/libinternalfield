@@ -303,6 +303,10 @@ std::string getModelDefinitionString(ModelFileTuple model) {
     oss << "\tstatic const std::vector<double> h = {\n";
     oss << formatDoubles(mdef.h);
     oss << "\t};\n";
+    oss << "\tstatic coeffStruct out = {\n";
+    oss << "\t\tname, body, len, nmax, ndef, rscale, n, m, g, h\n";
+    oss << "\t};\n";
+    oss << "\treturn out;\n";
     oss << "}\n\n"; 
     return oss.str();
 }
