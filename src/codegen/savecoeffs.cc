@@ -382,6 +382,10 @@ int main(int argc, char *argv[]) {
     std::string allDefs = getAllModelDefinitionStrings(models);
     std::cout << allDefs << std::endl;
 
+    std::ofstream outFile("coeffs.cc");
+    outFile << allDefs;
+    outFile.close();
+
     return 0;
 
 }
