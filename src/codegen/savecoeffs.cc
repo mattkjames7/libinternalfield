@@ -311,6 +311,23 @@ std::string getModelDefinitionString(ModelFileTuple model) {
     return oss.str();
 }
 
+
+std::string getAllModelDefinitionStrings(ModelFileTuples models) {
+
+    std::ostringstream modelDefines;
+    modelDefines << "/*--------------------------- Model Definitions-----------------------*/\n\n";
+
+    std::string modelDef;
+
+    for (auto &model : models) {
+        modelDef = getModelDefinitionString(model);
+        modelDefines << modelDef;
+        modelDefines << "\n\n";
+    }
+
+    return modelDefines.str();
+}
+
 int main(int argc, char *argv[]) {
 
     /* check for the starting directory */
@@ -360,6 +377,10 @@ int main(int argc, char *argv[]) {
 
     std::string example = getModelDefinitionString(models[0]);
     std::cout << example << std::endl;
+
+
+    std::string allDefs = getAllModelDefinitionStrings(models);
+    std::cout << allDefs << std::endl;
 
     return 0;
 
