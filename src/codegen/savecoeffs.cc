@@ -260,7 +260,7 @@ std::string formatInts(std::vector<int> x) {
 std::string formatDoubles(std::vector<double> x) {
 
     int w = 14;
-    int nPerLine = 80/w;
+    int nPerLine = 72/w;
     int n = x.size();
     std::ostringstream oss;
     int i;
@@ -328,6 +328,98 @@ std::string getAllModelDefinitionStrings(ModelFileTuples models) {
     return modelDefines.str();
 }
 
+std::string coeffStructDef() {
+
+    std::string out = 
+    "typedef struct {"
+    "    const std::string name;"
+    "    const std::string body;"
+    "    const int len;"
+    "    const int nmax;"
+    "    const int ndef;"
+    "    const double rscale;"
+    "    const std::vector<int> n;"
+    "    const std::vector<int> m;"
+    "    const std::vector<double> g;"
+    "    const std::vector<double> h;"
+    "} ModelDef;";
+    return out;
+}
+
+std::string formatModelStringList(std::vector<std::string> modelNames) {
+
+    /* get longest string length */
+    int l = 0;
+    for (auto name : modelNames) {
+        if (name.length() > l) {
+            l = name.length();
+        }
+    }
+
+    /* create formatted string */
+    int w = l + 4;
+    int nPerLine = 72/w;
+    int n = modelNames.size();
+    std::ostringstream oss;
+    int i, j;
+
+    for (i=0;i<n;i++) {
+        if ((i % nPerLine) == 0) {
+            oss << "\t\t";
+        }
+        l = w - modelNames[i].length();
+        oss << "\"" << modelNames[i] << "\", ";
+        for (j=0;j<l;j++) {
+            oss << " ";
+        }
+        if ((((i + 1) % nPerLine) == 0) || (i == (n-1))) {
+            oss << std::endl;
+        }
+    }
+
+    return oss.str();
+
+}
+
+std::string getModelNameFunction(ModelFileTuples models) {
+
+    /* get the list of models found */
+    std::vector<std::string> modelNames;
+    for (auto &model : models) {
+        modelNames.push_back(std::get<0>(model));
+    }
+
+    /* define the function */
+    std::ostringstream oss;
+    oss << "std::vector<std::string> getModelNames() {\n";
+    oss << "\tstatic std::vector<std::string> modelNames = {\n";
+    oss << formatModelStringList(modelNames);
+    oss << "\t};\n";
+    oss << "\treturn modelNames;\n";
+    oss << "}\n\n";
+
+    return oss.str();
+}
+
+void writeCoeffsCC(ModelFileTuples models) {
+    
+    /* get the model name function */
+    std::string modelNameFunction = getModelNameFunction(models);
+
+    /* collect model definitions */
+    std::string allDefs = getAllModelDefinitionStrings(models);
+
+    /* save everything to the file */
+    std::ofstream outFile("coeffs.cc");
+    outFile << "#include \"coeffs.h\"\n\n";
+    outFile << modelNameFunction;
+    outFile << allDefs;
+    outFile.close();
+
+
+}
+
+
 int main(int argc, char *argv[]) {
 
     /* check for the starting directory */
@@ -378,14 +470,8 @@ int main(int argc, char *argv[]) {
     std::string example = getModelDefinitionString(models[0]);
     std::cout << example << std::endl;
 
-
-    std::string allDefs = getAllModelDefinitionStrings(models);
-    std::cout << allDefs << std::endl;
-
-    std::ofstream outFile("coeffs.cc");
-    outFile << allDefs;
-    outFile.close();
-
+    writeCoeffsCC(models);
+    
     return 0;
 
 }

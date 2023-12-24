@@ -1,3 +1,39 @@
+#include "coeffs.h"
+
+std::vector<std::string> getModelNames() {
+	static std::vector<std::string> modelNames = {
+		"spv",                   "z3",                    "cassini11",             
+		"cassini5",              "soi",                   "p1184",                 
+		"burton2009",            "v1",                    "cassini3",              
+		"v2",                    "p11as",                 "igrf1960",              
+		"igrf1935",              "igrf1945",              "igrf1925",              
+		"igrf1910",              "igrf1905",              "igrf1980",              
+		"igrf1990",              "igrf2015",              "igrf1940",              
+		"igrf1930",              "igrf2005",              "igrf2020",              
+		"igrf2010",              "igrf1915",              "igrf2000",              
+		"igrf1950",              "igrf1970",              "igrf1965",              
+		"igrf1920",              "igrf2025",              "igrf1985",              
+		"igrf1975",              "igrf1955",              "igrf1900",              
+		"igrf1995",              "gsfco8full",            "gsfco8",                
+		"nmoh",                  "kivelson2002a",         "weber2022quad",         
+		"kivelson2002b",         "kivelson2002c",         "weber2022dip",          
+		"uno2009",               "thebault2018m2",        "uno2009svd",            
+		"anderson2010qts04",     "anderson2010dsha",      "anderson2012",          
+		"anderson2010dts04",     "anderson2010qsha",      "ness1975",              
+		"thebault2018m1",        "anderson2010r",         "anderson2010d",         
+		"anderson2010q",         "thebault2018m3",        "gao2021",               
+		"cain2003",              "mh2014",                "langlais2019",          
+		"gsfcq3full",            "gsfcq3",                "ah5",                   
+		"umoh",                  "jrm33",                 "vit4",                  
+		"isaac",                 "vipal",                 "vip4",                  
+		"jpl15evs",              "p11a",                  "jrm09",                 
+		"jpl15ev",               "o4",                    "o6",                    
+		"sha",                   "u17ev",                 "gsfc15ev",              
+		"gsfc13ev",              "gsfc15evs",             "v117ev",                
+	};
+	return modelNames;
+}
+
 /*--------------------------- Model Definitions-----------------------*/
 
 /* Body : saturn ---  Model : spv */
