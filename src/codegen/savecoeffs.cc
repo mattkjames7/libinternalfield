@@ -331,19 +331,32 @@ std::string getAllModelDefinitionStrings(ModelFileTuples models) {
 std::string coeffStructDef() {
 
     std::string out = 
-    "typedef struct {"
-    "    const std::string name;"
-    "    const std::string body;"
-    "    const int len;"
-    "    const int nmax;"
-    "    const int ndef;"
-    "    const double rscale;"
-    "    const std::vector<int> n;"
-    "    const std::vector<int> m;"
-    "    const std::vector<double> g;"
-    "    const std::vector<double> h;"
-    "} ModelDef;";
+    "typedef struct {\n"
+    "    const std::string name;\n"
+    "    const std::string body;\n"
+    "    const int len;\n"
+    "    const int nmax;\n"
+    "    const int ndef;\n"
+    "    const double rscale;\n"
+    "    const std::vector<int> n;\n"
+    "    const std::vector<int> m;\n"
+    "    const std::vector<double> g;\n"
+    "    const std::vector<double> h;\n"
+    "} coeffStruct;\n\n";
     return out;
+}
+
+std::string getHeaderExterns(ModelFileTuples models) {
+
+    std::ostringstream oss;
+    oss << "/* functions to return model coefficients */";
+    for (auto &model : models) {
+        oss << "extern coeffStruc& _model_coeff";
+        oss << std::get<0>(model);
+        oss << "();\n";
+    }
+    oss << "\n";
+    return oss.str();
 }
 
 std::string formatModelStringList(std::vector<std::string> modelNames) {
@@ -420,6 +433,32 @@ void writeCoeffsCC(ModelFileTuples models) {
 }
 
 
+
+void writeCoeffsH(ModelFileTuples models) {
+    
+    /* model coefficient functions */
+    std::string headerExterns = getHeaderExterns(models);
+
+    /* collect model definitions */
+    std::string coeffStruct = coeffStructDef();
+
+    /* save everything to the file */
+    std::ofstream outFile("coeffs.h");
+    outFile << "#ifndef __COEFFS_H__\n";
+    outFile << "#define __COEFFS_H__\n";
+    outFile << "#include <vector>\n";
+    outFile << "#include <string>\n";
+    outFile << "#include <map>\n\n";
+    outFile << coeffStruct;
+    outFile << "typedef coeffStruct& (*coeffStructFunc)();\n\n";
+    outFile << headerExterns;
+    outFile << "#endif\n";
+    outFile.close();
+
+
+}
+
+
 int main(int argc, char *argv[]) {
 
     /* check for the starting directory */
@@ -471,6 +510,7 @@ int main(int argc, char *argv[]) {
     std::cout << example << std::endl;
 
     writeCoeffsCC(models);
+    writeCoeffsH(models);
     
     return 0;
 
