@@ -414,6 +414,8 @@ std::string getModelNameFunction(ModelFileTuples models) {
     return oss.str();
 }
 
+
+
 void writeCoeffsCC(ModelFileTuples models) {
     
     /* get the model name function */
@@ -454,6 +456,8 @@ void writeCoeffsH(ModelFileTuples models) {
     outFile << "/* list of model names */\n";
     outFile << "std::vector<std::string> getModelNames();\n\n";
     outFile << headerExterns;
+    outFile << "/* map model names to the structure containing the coefficients */\n";
+    outFile << "std::map<std::string,coeffStructFunc> getCoeffMap();\n\n";
     outFile << "#endif\n";
     outFile.close();
 
