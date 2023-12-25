@@ -415,6 +415,40 @@ std::string getModelNameFunction(ModelFileTuples models) {
 }
 
 
+std::string getModelCoeffStructHeader() {
+
+    std::string out = 
+    "/***********************************************************************\n"
+    "* NAME : getModelCoeffStruct(Model)\n"
+    "*\n"
+    "* DESCRIPTION : Function to return a structure containing model \n"
+    "        coefficients.\n"
+    "*		\n"
+    "* INPUTS :\n" 
+    "*		std::string Model	Model name (use lower case!).\n"
+    "*\n"
+    "* RETURNS :\n"
+    "*		coeffStructFunc	cstr    Model coefficient function.\n"
+    "*\n"
+    "**********************************************************************/\n"
+    "coeffStructFunc getModelCoeffStruct(std::string Model);\n\n"
+    "/***********************************************************************\n"
+    " * NAME : getModelCoeffStruct(Model)\n"
+    " *\n"
+    " * DESCRIPTION : Function to return a structure containing model \n"
+    "        coefficients.\n"
+    "*		\n"
+    "* INPUTS :\n" 
+    "*		const char *Model	Model name (use lower case!).\n"
+    "*\n"
+    "* RETURNS :\n"
+    "*		coeffStructFunc	cstr    Model coefficient function.\n"
+    "*\n"
+    "**********************************************************************/\n"
+    "coeffStructFunc getModelCoeffStruct(const char *Model);\n\n";
+    return out;
+}
+
 
 void writeCoeffsCC(ModelFileTuples models) {
     
@@ -458,6 +492,7 @@ void writeCoeffsH(ModelFileTuples models) {
     outFile << headerExterns;
     outFile << "/* map model names to the structure containing the coefficients */\n";
     outFile << "std::map<std::string,coeffStructFunc> getCoeffMap();\n\n";
+    outFile << getModelCoeffStructHeader();
     outFile << "#endif\n";
     outFile.close();
 
