@@ -286,6 +286,8 @@ std::string getModelDefinitionString(ModelFileTuple model) {
     std::ostringstream oss;
     oss << "/* Body : " << mdef.body << " ---  Model : " << mdef.name << " */\n";
     oss << "coeffStruct& _model_coeff_" << mdef.name << "() {\n";
+    oss << "\tstatic const std::string name = \"" << mdef.name << "\";\n";
+    oss << "\tstatic const std::string body = \"" << mdef.body << "\";\n";
     oss << "\tstatic const int len = " << mdef.len << ";\n";
     oss << "\tstatic const int nmax = " << mdef.nmax << ";\n";
     oss << "\tstatic const int ndef = " << mdef.ndef << ";\n";
@@ -417,35 +419,38 @@ std::string getModelNameFunction(ModelFileTuples models) {
 
 std::string getModelCoeffStructHeader() {
 
-    std::string out = 
-    "/***********************************************************************\n"
-    "* NAME : getModelCoeffStruct(Model)\n"
-    "*\n"
-    "* DESCRIPTION : Function to return a structure containing model \n"
-    "        coefficients.\n"
-    "*		\n"
-    "* INPUTS :\n" 
-    "*		std::string Model	Model name (use lower case!).\n"
-    "*\n"
-    "* RETURNS :\n"
-    "*		coeffStructFunc	cstr    Model coefficient function.\n"
-    "*\n"
-    "**********************************************************************/\n"
-    "coeffStructFunc getModelCoeffStruct(std::string Model);\n\n"
-    "/***********************************************************************\n"
-    " * NAME : getModelCoeffStruct(Model)\n"
-    " *\n"
-    " * DESCRIPTION : Function to return a structure containing model \n"
-    "        coefficients.\n"
-    "*		\n"
-    "* INPUTS :\n" 
-    "*		const char *Model	Model name (use lower case!).\n"
-    "*\n"
-    "* RETURNS :\n"
-    "*		coeffStructFunc	cstr    Model coefficient function.\n"
-    "*\n"
-    "**********************************************************************/\n"
-    "coeffStructFunc getModelCoeffStruct(const char *Model);\n\n";
+    std::string out = R"(
+/***********************************************************************
+ * NAME : getModelCoeffStruct(Model)
+ *
+ * DESCRIPTION : Function to return a structure containing model 
+        coefficients.
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		coeffStructFunc	cstr    Model coefficient function.
+ *
+ **********************************************************************/
+coeffStructFunc getModelCoeffStruct(std::string Model);
+
+/***********************************************************************
+ * NAME : getModelCoeffStruct(Model)
+ *
+ * DESCRIPTION : Function to return a structure containing model 
+        coefficients.
+ *		
+ * INPUTS : 
+ *		const char *Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		coeffStructFunc	cstr    Model coefficient function.
+ *
+ **********************************************************************/
+coeffStructFunc getModelCoeffStruct(const char *Model);
+
+    )";
     return out;
 }
 
@@ -472,6 +477,50 @@ std::string getCoeffMapFunction(ModelFileTuples models) {
     return oss.str();
 }
 
+
+std::string getModelCoeffStructFunctions() {
+
+    std::string out = R"(
+/***********************************************************************
+ * NAME : getModelCoeffStruct(Model)
+ *
+ * DESCRIPTION : Function to return a structure containing model 
+        coefficients.
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		coeffStructFunc	cstr    Model coefficient function.
+ *
+ **********************************************************************/
+coeffStructFunc getModelCoeffStruct(std::string Model) {
+    std::map<std::string,coeffStructFunc> coeffMap = getCoeffMap();
+    return coeffMap[Model];
+}
+
+/***********************************************************************
+ * NAME : getModelCoeffStruct(Model)
+ *
+ * DESCRIPTION : Function to return a structure containing model 
+        coefficients.
+ *		
+ * INPUTS : 
+ *		const char *Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		coeffStructFunc	cstr    Model coefficient function.
+ *
+ **********************************************************************/
+coeffStructFunc getModelCoeffStruct(const char *Model) {
+    std::map<std::string,coeffStructFunc> coeffMap = getCoeffMap();
+    return coeffMap[Model];
+}
+
+    )";
+    return out;
+}
+
 void writeCoeffsCC(ModelFileTuples models) {
     
     /* get the model name function */
@@ -486,6 +535,7 @@ void writeCoeffsCC(ModelFileTuples models) {
     outFile << modelNameFunction;
     outFile << allDefs;
     outFile << getCoeffMapFunction(models);
+    outFile << getModelCoeffStructFunctions();
     outFile.close();
 
 

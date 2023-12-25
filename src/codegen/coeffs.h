@@ -110,19 +110,20 @@ extern coeffStruct& _model_coeffv117ev();
 /* map model names to the structure containing the coefficients */
 std::map<std::string,coeffStructFunc> getCoeffMap();
 
+
 /***********************************************************************
-* NAME : getModelCoeffStruct(Model)
-*
-* DESCRIPTION : Function to return a structure containing model 
+ * NAME : getModelCoeffStruct(Model)
+ *
+ * DESCRIPTION : Function to return a structure containing model 
         coefficients.
-*		
-* INPUTS :
-*		std::string Model	Model name (use lower case!).
-*
-* RETURNS :
-*		coeffStructFunc	cstr    Model coefficient function.
-*
-**********************************************************************/
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		coeffStructFunc	cstr    Model coefficient function.
+ *
+ **********************************************************************/
 coeffStructFunc getModelCoeffStruct(std::string Model);
 
 /***********************************************************************
@@ -130,14 +131,14 @@ coeffStructFunc getModelCoeffStruct(std::string Model);
  *
  * DESCRIPTION : Function to return a structure containing model 
         coefficients.
-*		
-* INPUTS :
-*		const char *Model	Model name (use lower case!).
-*
-* RETURNS :
-*		coeffStructFunc	cstr    Model coefficient function.
-*
-**********************************************************************/
+ *		
+ * INPUTS : 
+ *		const char *Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		coeffStructFunc	cstr    Model coefficient function.
+ *
+ **********************************************************************/
 coeffStructFunc getModelCoeffStruct(const char *Model);
 
-#endif
+    #endif

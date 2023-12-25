@@ -38,6 +38,8 @@ std::vector<std::string> getModelNames() {
 
 /* Body : saturn ---  Model : spv */
 coeffStruct& _model_coeff_spv() {
+	static const std::string name = "spv";
+	static const std::string body = "saturn";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -66,6 +68,8 @@ coeffStruct& _model_coeff_spv() {
 
 /* Body : saturn ---  Model : z3 */
 coeffStruct& _model_coeff_z3() {
+	static const std::string name = "z3";
+	static const std::string body = "saturn";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -94,6 +98,8 @@ coeffStruct& _model_coeff_z3() {
 
 /* Body : saturn ---  Model : cassini11 */
 coeffStruct& _model_coeff_cassini11() {
+	static const std::string name = "cassini11";
+	static const std::string body = "saturn";
 	static const int len = 90;
 	static const int nmax = 12;
 	static const int ndef = 12;
@@ -164,6 +170,8 @@ coeffStruct& _model_coeff_cassini11() {
 
 /* Body : saturn ---  Model : cassini5 */
 coeffStruct& _model_coeff_cassini5() {
+	static const std::string name = "cassini5";
+	static const std::string body = "saturn";
 	static const int len = 20;
 	static const int nmax = 5;
 	static const int ndef = 5;
@@ -198,6 +206,8 @@ coeffStruct& _model_coeff_cassini5() {
 
 /* Body : saturn ---  Model : soi */
 coeffStruct& _model_coeff_soi() {
+	static const std::string name = "soi";
+	static const std::string body = "saturn";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -226,6 +236,8 @@ coeffStruct& _model_coeff_soi() {
 
 /* Body : saturn ---  Model : p1184 */
 coeffStruct& _model_coeff_p1184() {
+	static const std::string name = "p1184";
+	static const std::string body = "saturn";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -254,6 +266,8 @@ coeffStruct& _model_coeff_p1184() {
 
 /* Body : saturn ---  Model : burton2009 */
 coeffStruct& _model_coeff_burton2009() {
+	static const std::string name = "burton2009";
+	static const std::string body = "saturn";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -282,6 +296,8 @@ coeffStruct& _model_coeff_burton2009() {
 
 /* Body : saturn ---  Model : v1 */
 coeffStruct& _model_coeff_v1() {
+	static const std::string name = "v1";
+	static const std::string body = "saturn";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -310,6 +326,8 @@ coeffStruct& _model_coeff_v1() {
 
 /* Body : saturn ---  Model : cassini3 */
 coeffStruct& _model_coeff_cassini3() {
+	static const std::string name = "cassini3";
+	static const std::string body = "saturn";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -338,6 +356,8 @@ coeffStruct& _model_coeff_cassini3() {
 
 /* Body : saturn ---  Model : v2 */
 coeffStruct& _model_coeff_v2() {
+	static const std::string name = "v2";
+	static const std::string body = "saturn";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -366,6 +386,8 @@ coeffStruct& _model_coeff_v2() {
 
 /* Body : saturn ---  Model : p11as */
 coeffStruct& _model_coeff_p11as() {
+	static const std::string name = "p11as";
+	static const std::string body = "saturn";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -394,6 +416,8 @@ coeffStruct& _model_coeff_p11as() {
 
 /* Body : earth ---  Model : igrf1960 */
 coeffStruct& _model_coeff_igrf1960() {
+	static const std::string name = "igrf1960";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -472,6 +496,8 @@ coeffStruct& _model_coeff_igrf1960() {
 
 /* Body : earth ---  Model : igrf1935 */
 coeffStruct& _model_coeff_igrf1935() {
+	static const std::string name = "igrf1935";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -550,6 +576,8 @@ coeffStruct& _model_coeff_igrf1935() {
 
 /* Body : earth ---  Model : igrf1945 */
 coeffStruct& _model_coeff_igrf1945() {
+	static const std::string name = "igrf1945";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -628,6 +656,8 @@ coeffStruct& _model_coeff_igrf1945() {
 
 /* Body : earth ---  Model : igrf1925 */
 coeffStruct& _model_coeff_igrf1925() {
+	static const std::string name = "igrf1925";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -706,6 +736,8 @@ coeffStruct& _model_coeff_igrf1925() {
 
 /* Body : earth ---  Model : igrf1910 */
 coeffStruct& _model_coeff_igrf1910() {
+	static const std::string name = "igrf1910";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -784,6 +816,8 @@ coeffStruct& _model_coeff_igrf1910() {
 
 /* Body : earth ---  Model : igrf1905 */
 coeffStruct& _model_coeff_igrf1905() {
+	static const std::string name = "igrf1905";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -862,6 +896,8 @@ coeffStruct& _model_coeff_igrf1905() {
 
 /* Body : earth ---  Model : igrf1980 */
 coeffStruct& _model_coeff_igrf1980() {
+	static const std::string name = "igrf1980";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -940,6 +976,8 @@ coeffStruct& _model_coeff_igrf1980() {
 
 /* Body : earth ---  Model : igrf1990 */
 coeffStruct& _model_coeff_igrf1990() {
+	static const std::string name = "igrf1990";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -1018,6 +1056,8 @@ coeffStruct& _model_coeff_igrf1990() {
 
 /* Body : earth ---  Model : igrf2015 */
 coeffStruct& _model_coeff_igrf2015() {
+	static const std::string name = "igrf2015";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -1096,6 +1136,8 @@ coeffStruct& _model_coeff_igrf2015() {
 
 /* Body : earth ---  Model : igrf1940 */
 coeffStruct& _model_coeff_igrf1940() {
+	static const std::string name = "igrf1940";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -1174,6 +1216,8 @@ coeffStruct& _model_coeff_igrf1940() {
 
 /* Body : earth ---  Model : igrf1930 */
 coeffStruct& _model_coeff_igrf1930() {
+	static const std::string name = "igrf1930";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -1252,6 +1296,8 @@ coeffStruct& _model_coeff_igrf1930() {
 
 /* Body : earth ---  Model : igrf2005 */
 coeffStruct& _model_coeff_igrf2005() {
+	static const std::string name = "igrf2005";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -1330,6 +1376,8 @@ coeffStruct& _model_coeff_igrf2005() {
 
 /* Body : earth ---  Model : igrf2020 */
 coeffStruct& _model_coeff_igrf2020() {
+	static const std::string name = "igrf2020";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -1408,6 +1456,8 @@ coeffStruct& _model_coeff_igrf2020() {
 
 /* Body : earth ---  Model : igrf2010 */
 coeffStruct& _model_coeff_igrf2010() {
+	static const std::string name = "igrf2010";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -1486,6 +1536,8 @@ coeffStruct& _model_coeff_igrf2010() {
 
 /* Body : earth ---  Model : igrf1915 */
 coeffStruct& _model_coeff_igrf1915() {
+	static const std::string name = "igrf1915";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -1564,6 +1616,8 @@ coeffStruct& _model_coeff_igrf1915() {
 
 /* Body : earth ---  Model : igrf2000 */
 coeffStruct& _model_coeff_igrf2000() {
+	static const std::string name = "igrf2000";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -1642,6 +1696,8 @@ coeffStruct& _model_coeff_igrf2000() {
 
 /* Body : earth ---  Model : igrf1950 */
 coeffStruct& _model_coeff_igrf1950() {
+	static const std::string name = "igrf1950";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -1720,6 +1776,8 @@ coeffStruct& _model_coeff_igrf1950() {
 
 /* Body : earth ---  Model : igrf1970 */
 coeffStruct& _model_coeff_igrf1970() {
+	static const std::string name = "igrf1970";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -1798,6 +1856,8 @@ coeffStruct& _model_coeff_igrf1970() {
 
 /* Body : earth ---  Model : igrf1965 */
 coeffStruct& _model_coeff_igrf1965() {
+	static const std::string name = "igrf1965";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -1876,6 +1936,8 @@ coeffStruct& _model_coeff_igrf1965() {
 
 /* Body : earth ---  Model : igrf1920 */
 coeffStruct& _model_coeff_igrf1920() {
+	static const std::string name = "igrf1920";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -1954,6 +2016,8 @@ coeffStruct& _model_coeff_igrf1920() {
 
 /* Body : earth ---  Model : igrf2025 */
 coeffStruct& _model_coeff_igrf2025() {
+	static const std::string name = "igrf2025";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -2032,6 +2096,8 @@ coeffStruct& _model_coeff_igrf2025() {
 
 /* Body : earth ---  Model : igrf1985 */
 coeffStruct& _model_coeff_igrf1985() {
+	static const std::string name = "igrf1985";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -2110,6 +2176,8 @@ coeffStruct& _model_coeff_igrf1985() {
 
 /* Body : earth ---  Model : igrf1975 */
 coeffStruct& _model_coeff_igrf1975() {
+	static const std::string name = "igrf1975";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -2188,6 +2256,8 @@ coeffStruct& _model_coeff_igrf1975() {
 
 /* Body : earth ---  Model : igrf1955 */
 coeffStruct& _model_coeff_igrf1955() {
+	static const std::string name = "igrf1955";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -2266,6 +2336,8 @@ coeffStruct& _model_coeff_igrf1955() {
 
 /* Body : earth ---  Model : igrf1900 */
 coeffStruct& _model_coeff_igrf1900() {
+	static const std::string name = "igrf1900";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -2344,6 +2416,8 @@ coeffStruct& _model_coeff_igrf1900() {
 
 /* Body : earth ---  Model : igrf1995 */
 coeffStruct& _model_coeff_igrf1995() {
+	static const std::string name = "igrf1995";
+	static const std::string body = "earth";
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
@@ -2422,6 +2496,8 @@ coeffStruct& _model_coeff_igrf1995() {
 
 /* Body : neptune ---  Model : gsfco8full */
 coeffStruct& _model_coeff_gsfco8full() {
+	static const std::string name = "gsfco8full";
+	static const std::string body = "neptune";
 	static const int len = 44;
 	static const int nmax = 8;
 	static const int ndef = 8;
@@ -2468,6 +2544,8 @@ coeffStruct& _model_coeff_gsfco8full() {
 
 /* Body : neptune ---  Model : gsfco8 */
 coeffStruct& _model_coeff_gsfco8() {
+	static const std::string name = "gsfco8";
+	static const std::string body = "neptune";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -2496,6 +2574,8 @@ coeffStruct& _model_coeff_gsfco8() {
 
 /* Body : neptune ---  Model : nmoh */
 coeffStruct& _model_coeff_nmoh() {
+	static const std::string name = "nmoh";
+	static const std::string body = "neptune";
 	static const int len = 152;
 	static const int nmax = 16;
 	static const int ndef = 16;
@@ -2600,6 +2680,8 @@ coeffStruct& _model_coeff_nmoh() {
 
 /* Body : ganymede ---  Model : kivelson2002a */
 coeffStruct& _model_coeff_kivelson2002a() {
+	static const std::string name = "kivelson2002a";
+	static const std::string body = "ganymede";
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
@@ -2626,6 +2708,8 @@ coeffStruct& _model_coeff_kivelson2002a() {
 
 /* Body : ganymede ---  Model : weber2022quad */
 coeffStruct& _model_coeff_weber2022quad() {
+	static const std::string name = "weber2022quad";
+	static const std::string body = "ganymede";
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
@@ -2652,6 +2736,8 @@ coeffStruct& _model_coeff_weber2022quad() {
 
 /* Body : ganymede ---  Model : kivelson2002b */
 coeffStruct& _model_coeff_kivelson2002b() {
+	static const std::string name = "kivelson2002b";
+	static const std::string body = "ganymede";
 	static const int len = 2;
 	static const int nmax = 1;
 	static const int ndef = 1;
@@ -2678,6 +2764,8 @@ coeffStruct& _model_coeff_kivelson2002b() {
 
 /* Body : ganymede ---  Model : kivelson2002c */
 coeffStruct& _model_coeff_kivelson2002c() {
+	static const std::string name = "kivelson2002c";
+	static const std::string body = "ganymede";
 	static const int len = 2;
 	static const int nmax = 1;
 	static const int ndef = 1;
@@ -2704,6 +2792,8 @@ coeffStruct& _model_coeff_kivelson2002c() {
 
 /* Body : ganymede ---  Model : weber2022dip */
 coeffStruct& _model_coeff_weber2022dip() {
+	static const std::string name = "weber2022dip";
+	static const std::string body = "ganymede";
 	static const int len = 2;
 	static const int nmax = 1;
 	static const int ndef = 1;
@@ -2730,6 +2820,8 @@ coeffStruct& _model_coeff_weber2022dip() {
 
 /* Body : mercury ---  Model : uno2009 */
 coeffStruct& _model_coeff_uno2009() {
+	static const std::string name = "uno2009";
+	static const std::string body = "mercury";
 	static const int len = 44;
 	static const int nmax = 8;
 	static const int ndef = 8;
@@ -2776,6 +2868,8 @@ coeffStruct& _model_coeff_uno2009() {
 
 /* Body : mercury ---  Model : thebault2018m2 */
 coeffStruct& _model_coeff_thebault2018m2() {
+	static const std::string name = "thebault2018m2";
+	static const std::string body = "mercury";
 	static const int len = 20;
 	static const int nmax = 5;
 	static const int ndef = 5;
@@ -2810,6 +2904,8 @@ coeffStruct& _model_coeff_thebault2018m2() {
 
 /* Body : mercury ---  Model : uno2009svd */
 coeffStruct& _model_coeff_uno2009svd() {
+	static const std::string name = "uno2009svd";
+	static const std::string body = "mercury";
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
@@ -2836,6 +2932,8 @@ coeffStruct& _model_coeff_uno2009svd() {
 
 /* Body : mercury ---  Model : anderson2010qts04 */
 coeffStruct& _model_coeff_anderson2010qts04() {
+	static const std::string name = "anderson2010qts04";
+	static const std::string body = "mercury";
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
@@ -2862,6 +2960,8 @@ coeffStruct& _model_coeff_anderson2010qts04() {
 
 /* Body : mercury ---  Model : anderson2010dsha */
 coeffStruct& _model_coeff_anderson2010dsha() {
+	static const std::string name = "anderson2010dsha";
+	static const std::string body = "mercury";
 	static const int len = 2;
 	static const int nmax = 1;
 	static const int ndef = 1;
@@ -2888,6 +2988,8 @@ coeffStruct& _model_coeff_anderson2010dsha() {
 
 /* Body : mercury ---  Model : anderson2012 */
 coeffStruct& _model_coeff_anderson2012() {
+	static const std::string name = "anderson2012";
+	static const std::string body = "mercury";
 	static const int len = 14;
 	static const int nmax = 4;
 	static const int ndef = 4;
@@ -2918,6 +3020,8 @@ coeffStruct& _model_coeff_anderson2012() {
 
 /* Body : mercury ---  Model : anderson2010dts04 */
 coeffStruct& _model_coeff_anderson2010dts04() {
+	static const std::string name = "anderson2010dts04";
+	static const std::string body = "mercury";
 	static const int len = 2;
 	static const int nmax = 1;
 	static const int ndef = 1;
@@ -2944,6 +3048,8 @@ coeffStruct& _model_coeff_anderson2010dts04() {
 
 /* Body : mercury ---  Model : anderson2010qsha */
 coeffStruct& _model_coeff_anderson2010qsha() {
+	static const std::string name = "anderson2010qsha";
+	static const std::string body = "mercury";
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
@@ -2970,6 +3076,8 @@ coeffStruct& _model_coeff_anderson2010qsha() {
 
 /* Body : mercury ---  Model : ness1975 */
 coeffStruct& _model_coeff_ness1975() {
+	static const std::string name = "ness1975";
+	static const std::string body = "mercury";
 	static const int len = 2;
 	static const int nmax = 1;
 	static const int ndef = 1;
@@ -2996,6 +3104,8 @@ coeffStruct& _model_coeff_ness1975() {
 
 /* Body : mercury ---  Model : thebault2018m1 */
 coeffStruct& _model_coeff_thebault2018m1() {
+	static const std::string name = "thebault2018m1";
+	static const std::string body = "mercury";
 	static const int len = 20;
 	static const int nmax = 5;
 	static const int ndef = 5;
@@ -3030,6 +3140,8 @@ coeffStruct& _model_coeff_thebault2018m1() {
 
 /* Body : mercury ---  Model : anderson2010r */
 coeffStruct& _model_coeff_anderson2010r() {
+	static const std::string name = "anderson2010r";
+	static const std::string body = "mercury";
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
@@ -3056,6 +3168,8 @@ coeffStruct& _model_coeff_anderson2010r() {
 
 /* Body : mercury ---  Model : anderson2010d */
 coeffStruct& _model_coeff_anderson2010d() {
+	static const std::string name = "anderson2010d";
+	static const std::string body = "mercury";
 	static const int len = 2;
 	static const int nmax = 1;
 	static const int ndef = 1;
@@ -3082,6 +3196,8 @@ coeffStruct& _model_coeff_anderson2010d() {
 
 /* Body : mercury ---  Model : anderson2010q */
 coeffStruct& _model_coeff_anderson2010q() {
+	static const std::string name = "anderson2010q";
+	static const std::string body = "mercury";
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
@@ -3108,6 +3224,8 @@ coeffStruct& _model_coeff_anderson2010q() {
 
 /* Body : mercury ---  Model : thebault2018m3 */
 coeffStruct& _model_coeff_thebault2018m3() {
+	static const std::string name = "thebault2018m3";
+	static const std::string body = "mercury";
 	static const int len = 20;
 	static const int nmax = 5;
 	static const int ndef = 5;
@@ -3142,6 +3260,8 @@ coeffStruct& _model_coeff_thebault2018m3() {
 
 /* Body : mars ---  Model : gao2021 */
 coeffStruct& _model_coeff_gao2021() {
+	static const std::string name = "gao2021";
+	static const std::string body = "mars";
 	static const int len = 6215;
 	static const int nmax = 110;
 	static const int ndef = 110;
@@ -6428,6 +6548,8 @@ coeffStruct& _model_coeff_gao2021() {
 
 /* Body : mars ---  Model : cain2003 */
 coeffStruct& _model_coeff_cain2003() {
+	static const std::string name = "cain2003";
+	static const std::string body = "mars";
 	static const int len = 4185;
 	static const int nmax = 90;
 	static const int ndef = 90;
@@ -8648,6 +8770,8 @@ coeffStruct& _model_coeff_cain2003() {
 
 /* Body : mars ---  Model : mh2014 */
 coeffStruct& _model_coeff_mh2014() {
+	static const std::string name = "mh2014";
+	static const std::string body = "mars";
 	static const int len = 6215;
 	static const int nmax = 110;
 	static const int ndef = 110;
@@ -11934,6 +12058,8 @@ coeffStruct& _model_coeff_mh2014() {
 
 /* Body : mars ---  Model : langlais2019 */
 coeffStruct& _model_coeff_langlais2019() {
+	static const std::string name = "langlais2019";
+	static const std::string body = "mars";
 	static const int len = 9179;
 	static const int nmax = 134;
 	static const int ndef = 134;
@@ -16776,6 +16902,8 @@ coeffStruct& _model_coeff_langlais2019() {
 
 /* Body : uranus ---  Model : gsfcq3full */
 coeffStruct& _model_coeff_gsfcq3full() {
+	static const std::string name = "gsfcq3full";
+	static const std::string body = "uranus";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -16804,6 +16932,8 @@ coeffStruct& _model_coeff_gsfcq3full() {
 
 /* Body : uranus ---  Model : gsfcq3 */
 coeffStruct& _model_coeff_gsfcq3() {
+	static const std::string name = "gsfcq3";
+	static const std::string body = "uranus";
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
@@ -16830,6 +16960,8 @@ coeffStruct& _model_coeff_gsfcq3() {
 
 /* Body : uranus ---  Model : ah5 */
 coeffStruct& _model_coeff_ah5() {
+	static const std::string name = "ah5";
+	static const std::string body = "uranus";
 	static const int len = 14;
 	static const int nmax = 4;
 	static const int ndef = 4;
@@ -16860,6 +16992,8 @@ coeffStruct& _model_coeff_ah5() {
 
 /* Body : uranus ---  Model : umoh */
 coeffStruct& _model_coeff_umoh() {
+	static const std::string name = "umoh";
+	static const std::string body = "uranus";
 	static const int len = 152;
 	static const int nmax = 16;
 	static const int ndef = 16;
@@ -16964,6 +17098,8 @@ coeffStruct& _model_coeff_umoh() {
 
 /* Body : jupiter ---  Model : jrm33 */
 coeffStruct& _model_coeff_jrm33() {
+	static const std::string name = "jrm33";
+	static const std::string body = "jupiter";
 	static const int len = 495;
 	static const int nmax = 30;
 	static const int ndef = 30;
@@ -17246,6 +17382,8 @@ coeffStruct& _model_coeff_jrm33() {
 
 /* Body : jupiter ---  Model : vit4 */
 coeffStruct& _model_coeff_vit4() {
+	static const std::string name = "vit4";
+	static const std::string body = "jupiter";
 	static const int len = 14;
 	static const int nmax = 4;
 	static const int ndef = 4;
@@ -17276,6 +17414,8 @@ coeffStruct& _model_coeff_vit4() {
 
 /* Body : jupiter ---  Model : isaac */
 coeffStruct& _model_coeff_isaac() {
+	static const std::string name = "isaac";
+	static const std::string body = "jupiter";
 	static const int len = 65;
 	static const int nmax = 10;
 	static const int ndef = 10;
@@ -17334,6 +17474,8 @@ coeffStruct& _model_coeff_isaac() {
 
 /* Body : jupiter ---  Model : vipal */
 coeffStruct& _model_coeff_vipal() {
+	static const std::string name = "vipal";
+	static const std::string body = "jupiter";
 	static const int len = 20;
 	static const int nmax = 5;
 	static const int ndef = 5;
@@ -17368,6 +17510,8 @@ coeffStruct& _model_coeff_vipal() {
 
 /* Body : jupiter ---  Model : vip4 */
 coeffStruct& _model_coeff_vip4() {
+	static const std::string name = "vip4";
+	static const std::string body = "jupiter";
 	static const int len = 14;
 	static const int nmax = 4;
 	static const int ndef = 4;
@@ -17398,6 +17542,8 @@ coeffStruct& _model_coeff_vip4() {
 
 /* Body : jupiter ---  Model : jpl15evs */
 coeffStruct& _model_coeff_jpl15evs() {
+	static const std::string name = "jpl15evs";
+	static const std::string body = "jupiter";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -17426,6 +17572,8 @@ coeffStruct& _model_coeff_jpl15evs() {
 
 /* Body : jupiter ---  Model : p11a */
 coeffStruct& _model_coeff_p11a() {
+	static const std::string name = "p11a";
+	static const std::string body = "jupiter";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -17454,6 +17602,8 @@ coeffStruct& _model_coeff_p11a() {
 
 /* Body : jupiter ---  Model : jrm09 */
 coeffStruct& _model_coeff_jrm09() {
+	static const std::string name = "jrm09";
+	static const std::string body = "jupiter";
 	static const int len = 230;
 	static const int nmax = 20;
 	static const int ndef = 20;
@@ -17598,6 +17748,8 @@ coeffStruct& _model_coeff_jrm09() {
 
 /* Body : jupiter ---  Model : jpl15ev */
 coeffStruct& _model_coeff_jpl15ev() {
+	static const std::string name = "jpl15ev";
+	static const std::string body = "jupiter";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -17626,6 +17778,8 @@ coeffStruct& _model_coeff_jpl15ev() {
 
 /* Body : jupiter ---  Model : o4 */
 coeffStruct& _model_coeff_o4() {
+	static const std::string name = "o4";
+	static const std::string body = "jupiter";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -17654,6 +17808,8 @@ coeffStruct& _model_coeff_o4() {
 
 /* Body : jupiter ---  Model : o6 */
 coeffStruct& _model_coeff_o6() {
+	static const std::string name = "o6";
+	static const std::string body = "jupiter";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -17682,6 +17838,8 @@ coeffStruct& _model_coeff_o6() {
 
 /* Body : jupiter ---  Model : sha */
 coeffStruct& _model_coeff_sha() {
+	static const std::string name = "sha";
+	static const std::string body = "jupiter";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -17710,6 +17868,8 @@ coeffStruct& _model_coeff_sha() {
 
 /* Body : jupiter ---  Model : u17ev */
 coeffStruct& _model_coeff_u17ev() {
+	static const std::string name = "u17ev";
+	static const std::string body = "jupiter";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -17738,6 +17898,8 @@ coeffStruct& _model_coeff_u17ev() {
 
 /* Body : jupiter ---  Model : gsfc15ev */
 coeffStruct& _model_coeff_gsfc15ev() {
+	static const std::string name = "gsfc15ev";
+	static const std::string body = "jupiter";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -17766,6 +17928,8 @@ coeffStruct& _model_coeff_gsfc15ev() {
 
 /* Body : jupiter ---  Model : gsfc13ev */
 coeffStruct& _model_coeff_gsfc13ev() {
+	static const std::string name = "gsfc13ev";
+	static const std::string body = "jupiter";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -17794,6 +17958,8 @@ coeffStruct& _model_coeff_gsfc13ev() {
 
 /* Body : jupiter ---  Model : gsfc15evs */
 coeffStruct& _model_coeff_gsfc15evs() {
+	static const std::string name = "gsfc15evs";
+	static const std::string body = "jupiter";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -17822,6 +17988,8 @@ coeffStruct& _model_coeff_gsfc15evs() {
 
 /* Body : jupiter ---  Model : v117ev */
 coeffStruct& _model_coeff_v117ev() {
+	static const std::string name = "v117ev";
+	static const std::string body = "jupiter";
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
@@ -17938,3 +18106,41 @@ std::map<std::string,coeffStructFunc> getCoeffMap() {
 	return coeffMap;
 }
 
+
+/***********************************************************************
+ * NAME : getModelCoeffStruct(Model)
+ *
+ * DESCRIPTION : Function to return a structure containing model 
+        coefficients.
+ *		
+ * INPUTS : 
+ *		std::string Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		coeffStructFunc	cstr    Model coefficient function.
+ *
+ **********************************************************************/
+coeffStructFunc getModelCoeffStruct(std::string Model) {
+    std::map<std::string,coeffStructFunc> coeffMap = getCoeffMap();
+    return coeffMap[Model];
+}
+
+/***********************************************************************
+ * NAME : getModelCoeffStruct(Model)
+ *
+ * DESCRIPTION : Function to return a structure containing model 
+        coefficients.
+ *		
+ * INPUTS : 
+ *		const char *Model	Model name (use lower case!).
+ *
+ * RETURNS :
+ *		coeffStructFunc	cstr    Model coefficient function.
+ *
+ **********************************************************************/
+coeffStructFunc getModelCoeffStruct(const char *Model) {
+    std::map<std::string,coeffStructFunc> coeffMap = getCoeffMap();
+    return coeffMap[Model];
+}
+
+    
