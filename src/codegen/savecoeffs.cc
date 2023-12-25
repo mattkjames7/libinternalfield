@@ -450,6 +450,28 @@ std::string getModelCoeffStructHeader() {
 }
 
 
+std::string getCoeffMapFunction(ModelFileTuples models) {
+    std::ostringstream oss;
+    oss << "std::map<std::string,coeffStructFunc> getCoeffMap() {\n";
+    oss << "\tstatic std::map<std::string,coeffStructFunc> coeffMap = {\n";
+
+    std::string name;
+    for (auto &model : models) {
+        name = std::get<0>(model);
+        oss << "\t\t{\"";
+        oss << name;
+        oss << "\", _model_coeff_";
+        oss << name;
+        oss << "},\n";
+    }
+
+    oss << "\t};\n";
+    oss << "\treturn coeffMap;\n";
+    oss << "}\n\n";
+
+    return oss.str();
+}
+
 void writeCoeffsCC(ModelFileTuples models) {
     
     /* get the model name function */
@@ -463,6 +485,7 @@ void writeCoeffsCC(ModelFileTuples models) {
     outFile << "#include \"coeffs.h\"\n\n";
     outFile << modelNameFunction;
     outFile << allDefs;
+    outFile << getCoeffMapFunction(models);
     outFile.close();
 
 
