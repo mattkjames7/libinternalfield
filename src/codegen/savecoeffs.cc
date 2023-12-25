@@ -351,7 +351,7 @@ std::string getHeaderExterns(ModelFileTuples models) {
     std::ostringstream oss;
     oss << "/* functions to return model coefficients */";
     for (auto &model : models) {
-        oss << "extern coeffStruc& _model_coeff";
+        oss << "extern coeffStruct& _model_coeff";
         oss << std::get<0>(model);
         oss << "();\n";
     }
@@ -451,6 +451,8 @@ void writeCoeffsH(ModelFileTuples models) {
     outFile << "#include <map>\n\n";
     outFile << coeffStruct;
     outFile << "typedef coeffStruct& (*coeffStructFunc)();\n\n";
+    outFile << "/* list of model names */\n";
+    outFile << "std::vector<std::string> getModelNames();\n\n";
     outFile << headerExterns;
     outFile << "#endif\n";
     outFile.close();
