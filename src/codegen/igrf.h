@@ -4,4 +4,14 @@
 #include <stdlib.h>
 #include "savecoeffs.h"
 
+
+typedef struct {
+    std::string name;
+    std::vector<char> gh;
+    std::vector<int> n;
+    std::vector<int> m;
+    std::vector<double> v;
+} igrfModel;
+
+
 #endif
