@@ -12,7 +12,7 @@ std::vector<std::string> readIGRFFile(std::filesystem::path dataPath) {
     while (std::getline(file,line)) {
         lines.push_back(line);
     }
-
+    file.close();
     return lines;
 
 }
@@ -46,17 +46,17 @@ std::vector<std::string> splitByWhitespace(const std::string& str) {
 
 std::vector<int> listIGRFModels(std::vector<std::string> lines) {
 
-    std::vector<std::int> out;
+    std::vector<int> out;
     std::vector<std::string> names = splitByWhitespace(lines[3]);
 
     int i;
     for (i=3;i<names.size()-1;i++) {
-        out.push_back(atoi(names[i]));
+        out.push_back(std::stoi(names[i]));
     }
 
     /* this bit assumes the last column is formatted like "2020-25" */
     std::vector<std::string> parts = splitByCharacter(names[names.size()-1],'-');
-    out.push_back(100*(atoi(parts[0])/100) + atoi(parts[1]));
+    out.push_back(100*(std::stoi(parts[0])/100) + std::stoi(parts[1]));
 
     return out;
 }
@@ -94,9 +94,9 @@ igrfModel fillModel(int modelInd, int nRows, std::vector<int> modelYears,
 
     for (int i=0;i<nRows;i++) {
         model.gh.push_back(table[0][i].c_str()[0]);
-        model.n.push_back(atoi(table[1][i]));
-        model.m.push_back(atoi(table[2][i]));
-        model.v.push_back(atof(table[modelInd+3][i])); 
+        model.n.push_back(std::stoi(table[1][i]));
+        model.m.push_back(std::stoi(table[2][i]));
+        model.v.push_back(std::stod(table[modelInd+3][i])); 
     }
 
     return model;
@@ -121,3 +121,47 @@ std::vector<igrfModel> readIGRF(std::filesystem::path dataPath) {
     return out;
 
 }
+
+std::string modelLine(char gh, int n, int m, double v) {
+
+    std::ostringstream out;
+    out << gh << " ";
+    out << std::setw(4) << n << " ";
+    out << std::setw(4) << m << " ";
+    out << std::setw(14) << std::setprecision(6) << std::fixed << v;
+    out << std::endl;
+
+    return out.str();
+}
+
+
+void saveIGRFModel(std::filesystem::path dataPath, igrfModel model) {
+
+    int n = model.gh.size();
+
+    std::filesystem::path fileName = dataPath;
+    dataPath /= "earth";
+    dataPath /= model.name + ".dat";
+
+    std::cout << "Saving " << dataPath << std::endl;
+
+    std::ofstream file(fileName);
+    
+    for (int i=0;i<n;i++) {
+        file << modelLine(model.gh[i],model.n[i],model.m[i],model.v[i]);
+    }
+    file.close();
+
+}
+
+
+void saveIGRFModels(std::filesystem::path dataPath) {
+
+    std::vector<igrfModel> models = readIGRF(dataPath);
+
+    std::cout << "Found " << models.size() << " IGRF models."<< std::endl;
+
+    for (auto &model : models) {
+        saveIGRFModel(dataPath,model);
+    }
+} 

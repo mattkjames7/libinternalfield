@@ -37,5 +37,5 @@ typedef struct {
     std::vector<double> h;
 } ModelDef;
 
-
+void saveCoeffs(std::filesystem::path dataPath);
 #endif

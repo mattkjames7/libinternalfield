@@ -11,9 +11,12 @@ COEFFDIR=$(DATADIR)/coeffs
 
 
 all: 
-	$(CC) savecoeffs.cc -o savecoeffs
+	$(CCo) savecoeffs.cc -o savecoeffs.o
+	$(CCo) igrf.cc -o igrf.o
+	$(CC) savecoeffs.o igrf.o main.cc -o savecoeffs
 	./savecoeffs $(DATADIR)
 
 clean:
 	-rm savecoeffs
+	-rm *.o
 	

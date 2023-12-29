@@ -13,5 +13,5 @@ typedef struct {
     std::vector<double> v;
 } igrfModel;
 
-
+void saveIGRFModels(std::filesystem::path dataPath);
 #endif

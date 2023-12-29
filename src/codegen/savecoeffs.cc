@@ -573,16 +573,9 @@ void writeCoeffsH(ModelFileTuples models) {
 }
 
 
-int main(int argc, char *argv[]) {
-
-    /* check for the starting directory */
-    if (argc < 2) {
-        std::cerr << "Usage: " << argv[0] << " <path_to_data> " << std::endl;
-        return 1;
-    }
+void saveCoeffs(std::filesystem::path dataPath) {
 
     /* get the coefficient paths */
-    std::filesystem::path dataPath = argv[1];
     std::filesystem::path coeffPath = dataPath;
     coeffPath /= "coeffs";
     
@@ -592,7 +585,7 @@ int main(int argc, char *argv[]) {
         (std::filesystem::is_directory(coeffPath) == false)
     ) {
         std::cerr << coeffPath << " is not a directory or does not exist" << std::endl;
-        return 2;
+        return;
     }
 
 
@@ -626,6 +619,4 @@ int main(int argc, char *argv[]) {
     writeCoeffsCC(models);
     writeCoeffsH(models);
     
-    return 0;
-
 }
