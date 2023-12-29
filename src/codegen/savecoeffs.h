@@ -38,4 +38,7 @@ typedef struct {
 } ModelDef;
 
 void saveCoeffs(std::filesystem::path dataPath);
+ModelFileTuples listModels(
+    const std::filesystem::path &coeffDir
+);
 #endif

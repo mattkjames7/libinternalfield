@@ -1,7 +1,12 @@
 #ifndef __IGRF_H__
 #define __IGRF_H__
-#include <stdio.h>
-#include <stdlib.h>
+#include <filesystem>
+#include <string>
+#include <vector>
+#include <tuple>
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include "savecoeffs.h"
 
 

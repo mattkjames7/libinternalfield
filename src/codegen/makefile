@@ -13,7 +13,8 @@ COEFFDIR=$(DATADIR)/coeffs
 all: 
 	$(CCo) savecoeffs.cc -o savecoeffs.o
 	$(CCo) igrf.cc -o igrf.o
-	$(CC) savecoeffs.o igrf.o main.cc -o savecoeffs
+	$(CCo) savemodels.cc -o savemodels.o
+	$(CC) savecoeffs.o igrf.o savemodels.o main.cc -o savecoeffs
 	./savecoeffs $(DATADIR)
 
 clean:

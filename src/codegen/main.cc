@@ -19,6 +19,8 @@ int main(int argc, char *argv[]) {
     /* now create coefficient files */
     saveCoeffs(dataPath);
 
+    /* save model function files */
+    saveModels(dataPath);
 
     return 0;
 
