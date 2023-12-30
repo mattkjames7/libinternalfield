@@ -7,11 +7,11 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include "listfiles.h"
 
 
 typedef std::tuple<std::string,std::string,std::filesystem::path> ModelFileTuple;
 typedef std::vector<ModelFileTuple> ModelFileTuples;
-typedef std::vector<std::filesystem::path> FileList;
 
 /* this is what will be ready in directly from the file */
 typedef struct {
