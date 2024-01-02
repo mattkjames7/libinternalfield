@@ -7,6 +7,7 @@
 
 typedef struct variableModelList {
 	std::string name;
+    std::string body;
 	std::vector<std::string> models;
 	std::vector<int> date;
 	std::vector<double> ut;

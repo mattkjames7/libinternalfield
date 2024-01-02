@@ -82,8 +82,8 @@ std::string formatVariableModel(VariableModelTuple modelTuple) {
 
     out << "/* Body : " << body << " ---  Model : " << name << " */\n";
     out << "variableModelList& _var_model_" << name << "() {\n";
-    out << "\tstatic const std::string name = " << name << ";\n";
-    out << "\tstatic const std::string body = " << body << ";\n";
+    out << "\tstatic const std::string name = \"" << name << "\";\n";
+    out << "\tstatic const std::string body = \"" << body << "\";\n";
     out << "\tstatic const std::vector<std::string> models = {\n";
     for (auto &entry : model) {
         out << "\t\t\"" << entry.model << "\",\n";
@@ -156,6 +156,7 @@ std::string getVariableModelHeader(VariableModelTuples models) {
 
 typedef struct variableModelList {
 	std::string name;
+    std::string body;
 	std::vector<std::string> models;
 	std::vector<int> date;
 	std::vector<double> ut;
@@ -180,7 +181,7 @@ std::string getVariableModelCode(VariableModelTuples models) {
 
 
     std::ostringstream out;
-    out << "#include \"variable.h\"";
+    out << "#include \"variable.h\"\n\n";
     out << getVariableModelDefinitions(models);
     out << "#endif";
 

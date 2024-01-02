@@ -1,7 +1,9 @@
-#include "variable.h"/* Body : earth ---  Model : igrf */
+#include "variable.h"
+
+/* Body : earth ---  Model : igrf */
 variableModelList& _var_model_igrf() {
-	static const std::string name = igrf;
-	static const std::string body = earth;
+	static const std::string name = "igrf";
+	static const std::string body = "earth";
 	static const std::vector<std::string> models = {
 		"igrf1900",
 		"igrf1905",
