@@ -8,6 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include "listfiles.h"
+#include "splitstring.h"
 
 typedef std::tuple<std::string,std::string,std::filesystem::path> VariableModelTuple;
 typedef std::vector<VariableModelTuple> VariableModelTuples;
@@ -19,4 +20,5 @@ typedef struct {
 } VariableModelEntry;
 typedef std::vector<VariableModelEntry> VariableModel;
 
+void saveVariable(std::filesystem::path dataPath);
 #endif

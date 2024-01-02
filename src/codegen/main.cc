@@ -22,6 +22,9 @@ int main(int argc, char *argv[]) {
     /* save model function files */
     saveModels(dataPath);
 
+    /* save variable models */
+    saveVariable(dataPath);
+
     return 0;
 
 }

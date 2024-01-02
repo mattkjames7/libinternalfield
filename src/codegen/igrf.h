@@ -8,6 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include "savecoeffs.h"
+#include "splitstring.h"
 
 
 typedef struct {
