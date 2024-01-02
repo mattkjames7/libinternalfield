@@ -48,7 +48,7 @@ VariableModelEntry readModelEntry(std::string line) {
 
     std::vector<std::string> parts = splitByWhitespace(line);
     VariableModelEntry out = {
-        parts[0],std::stoi(parts[1]),std::stod(parts[2])
+        parts[0],std::stoi(parts[1]),std::stof(parts[2])
     };
     return out;
 }
@@ -91,18 +91,18 @@ std::string formatVariableModel(VariableModelTuple modelTuple) {
     out << "\t};\n";
     out << "\tstatic const std::vector<int> date = {\n";
     for (auto &entry : model) {
-        out << "\t\t\"" << entry.date << "\",\n";
+        out << "\t\t" << entry.date << ",\n";
     }
     out << "\t};\n";    
     out << "\tstatic const std::vector<double> ut = {\n";
     for (auto &entry : model) {
-        out << "\t\t\"" << entry.ut << "\",\n";
+        out << "\t\t" << std::setprecision(2) << std::setw(5) << entry.ut << ",\n";
     }
     out << "\t};\n"; 
     out << "\tstd::vector<double> unixt = getUnixTime(date,ut);\n";
-    out << "\tstd::vector<coeffStruct> modelCoeffs = getModelCoeffs(models);\n";
+    out << "\tstd::vector<coeffStruct> coeffs = getModelCoeffs(models);\n";
     out << "\tstatic variableModelList out = {\n";
-    out << "\t\tname,body,models,date,ut,unixt,modelCoeffs\n";
+    out << "\t\tname,body,models,date,ut,unixt,coeffs\n";
     out << "\t};\n";
     out << "\treturn out;\n";
     out << "};\n\n";
@@ -160,7 +160,7 @@ typedef struct variableModelList {
 	std::vector<int> date;
 	std::vector<double> ut;
 	std::vector<double> unixt;
-	std::vector<coeffStruct> modelCoeffs;
+	std::vector<coeffStruct> coeffs;
 } variableModelList;
 
 typedef variableModelList& (*variableModelListFunc)();
