@@ -12,4 +12,11 @@
 typedef std::tuple<std::string,std::string,std::filesystem::path> VariableModelTuple;
 typedef std::vector<VariableModelTuple> VariableModelTuples;
 
+typedef struct {
+    std::string model;
+    int date;
+    double ut;
+} VariableModelEntry;
+typedef std::vector<VariableModelEntry> VariableModel;
+
 #endif
