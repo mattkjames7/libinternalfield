@@ -12,6 +12,8 @@ int main(int argc, char *argv[]) {
 
     
     std::filesystem::path dataPath = argv[1];
+    std::filesystem::path srcPath = dataPath.parent_path();
+    srcPath /= "src";
 
     /* start by saving individual IGRF models */
     saveIGRFModels(dataPath);
@@ -24,6 +26,9 @@ int main(int argc, char *argv[]) {
 
     /* save variable models */
     saveVariable(dataPath);
+
+    /* generate the header for the library */
+    saveLibHeader(srcPath);
 
     return 0;
 

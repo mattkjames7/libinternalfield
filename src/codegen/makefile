@@ -17,7 +17,10 @@ all:
 	$(CCo) savevariable.cc -o savevariable.o
 	$(CCo) splitstring.cc -o splitstring.o
 	$(CCo) listfiles.cc -o listfiles.o
-	$(CC) listfiles.o splitstring.o savecoeffs.o igrf.o savemodels.o savevariable.o main.cc -o savecoeffs
+	$(CCo) savelibheader.cc -o savelibheader.o
+	$(CCo) trimstring.cc -o trimstring.o
+	$(CC) listfiles.o splitstring.o trimstring.o savecoeffs.o igrf.o\
+		savemodels.o savevariable.o savelibheader.o main.cc -o savecoeffs
 	./savecoeffs $(DATADIR)
 
 clean:

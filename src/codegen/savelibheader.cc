@@ -39,7 +39,7 @@ std::vector<std::string> removeDirectives(const std::vector<std::string>& lines)
 
     for (const auto& line : lines) {
         // Check if the line starts with '#' and skip it if it does
-        if (!line.empty() && line.find("#") != 0) {
+        if (line.find("#") != 0) {
             filteredLines.push_back(line);
         }
     }
@@ -52,7 +52,7 @@ std::vector<std::string> readASCII(std::filesystem::path fileName) {
     std::string line;
     std::vector<std::string> out;
     while (std::getline(file,line)) {
-        out.push_back(line);
+        out.push_back(line+"\n");
     } 
     file.close();
     return out;
@@ -65,7 +65,7 @@ StrVecPair splitHeaderDefs(const std::vector<std::string>& lines) {
 
     bool isC = false;
     for (const auto& line : lines) {
-        std::string trimmedLine = line; // Add logic to trim whitespace if necessary
+        std::string trimmedLine = trimString(line); // Add logic to trim whitespace if necessary
         if (isC && trimmedLine == "}") {
             isC = false;
         }
@@ -90,14 +90,21 @@ std::vector<std::string> extractInternalH() {
     return out;
 }
 
-StrVecPair extractModelH() {
+std::vector<std::string> extractInternalModelH() {
+
+    std::vector<std::string> lines = readASCII("../internalmodel.h");
+    std::vector<std::string> out = removeDirectives(lines);
+    return out;
+}
+
+StrVecPair extractModelsH() {
 
     std::vector<std::string> lines = readASCII("../models.h");
     StrVecPair code = splitHeaderDefs(lines);
     std::vector<std::string> cCode = code.first;
     std::vector<std::string> ccCode = code.second;
     std::vector<std::string> cOut = removeDirectives(cCode);
-    std::vector<std::string> ccTmp = removeDirectives(cccode);
+    std::vector<std::string> ccTmp = removeDirectives(ccCode);
     std::vector<std::string> ccOut;
     for (auto &cct : ccTmp) {
         if (cct.find("typedef void (*modelFieldPtr)(double,double,double,double*,double*,double*);") == std::string::npos) {
@@ -105,4 +112,108 @@ StrVecPair extractModelH() {
         }
     }
     return {cOut,ccOut};
+}
+
+StrVecPair extractLibinternalH() {
+
+    std::vector<std::string> lines = readASCII("../libinternal.h");
+    StrVecPair code = splitHeaderDefs(lines);
+    std::vector<std::string> cCode = code.first;
+    std::vector<std::string> ccCode = code.second;
+    std::vector<std::string> cOut = removeDirectives(cCode);
+    std::vector<std::string> ccOut = removeDirectives(ccCode);
+
+    return {cOut,ccOut};
+}
+
+std::vector<std::string> extractCoeffsH() {
+
+    std::vector<std::string> lines = readASCII("../coeffs.h");
+    std::vector<std::string> out = removeDirectives(lines);
+    return out;
+}
+
+std::vector<std::string> extractListmapkeysH() {
+
+    std::vector<std::string> lines = readASCII("../listmapkeys.h");
+    std::vector<std::string> out = removeDirectives(lines);
+    return out;
+}
+
+std::string stringVectorToString(std::vector<std::string> strVec) {
+
+    std::ostringstream out;
+    for (auto &str : strVec) {
+        out << str;
+    }
+    return out.str();
+}
+
+
+std::string generateLibHeader() {
+
+    std::ostringstream out;
+    std::ostringstream cCode;
+    std::ostringstream ccCode;
+    StrVecPair codePair;
+    std::vector<std::string> cVec, ccVec;
+
+    /* add the includes and stuff at the top */
+    out << getLibHeaderTop();
+
+    /* start with coeffs.h */
+    ccVec = extractCoeffsH();
+    ccCode << stringVectorToString(ccVec);
+    ccVec.clear();
+
+    /* internal.h */
+    ccVec = extractInternalH();
+    ccCode << stringVectorToString(ccVec);
+    ccVec.clear();
+
+    /* models.h */
+    codePair = extractModelsH();
+    cCode << stringVectorToString(codePair.first);
+    ccCode << stringVectorToString(codePair.second);
+
+    /* listmapkeys.h */
+    ccVec = extractListmapkeysH();
+    ccCode << stringVectorToString(ccVec);
+    ccVec.clear();
+
+    /* internalmodel.h */
+    ccVec = extractInternalModelH();
+    ccCode << stringVectorToString(ccVec);
+    ccVec.clear();
+
+    /* libinternal.h */
+    codePair = extractLibinternalH();
+    cCode << stringVectorToString(codePair.first);
+    ccCode << stringVectorToString(codePair.second);
+
+    /* add the C-compatible bits to the extern C section */
+    out << cCode.str();
+
+    /* close the extern C bit and add the C++ only code */
+    out << "#ifdef __cplusplus\n";
+    out << "}\n\n";
+    out << ccCode.str();
+    out << "#endif\n";
+    out << "#endif\n";
+
+    return out.str();
+
+}
+
+void saveLibHeader(std::filesystem::path srcPath) {
+
+    std::string headerCode = generateLibHeader();
+
+    std::filesystem::path headerPath = srcPath.parent_path();
+    headerPath /= "include/internalfield.h.test";
+    std::cout << headerPath << std::endl;
+
+    std::ofstream file(headerPath);
+    file << headerCode;
+    file.close();
 }

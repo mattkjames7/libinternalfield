@@ -1,4 +1,4 @@
 #!/bin/bash
 
-export DATADIR=../../data
+export DATADIR=$(realpath "$(pwd)/../../data")
 make
