@@ -81,3 +81,28 @@ StrVecPair splitHeaderDefs(const std::vector<std::string>& lines) {
 
     return {cCode, cppCode};
 }
+
+
+std::vector<std::string> extractInternalH() {
+
+    std::vector<std::string> lines = readASCII("../internal.h");
+    std::vector<std::string> out = removeDirectives(lines);
+    return out;
+}
+
+StrVecPair extractModelH() {
+
+    std::vector<std::string> lines = readASCII("../models.h");
+    StrVecPair code = splitHeaderDefs(lines);
+    std::vector<std::string> cCode = code.first;
+    std::vector<std::string> ccCode = code.second;
+    std::vector<std::string> cOut = removeDirectives(cCode);
+    std::vector<std::string> ccTmp = removeDirectives(cccode);
+    std::vector<std::string> ccOut;
+    for (auto &cct : ccTmp) {
+        if (cct.find("typedef void (*modelFieldPtr)(double,double,double,double*,double*,double*);") == std::string::npos) {
+            ccOut.push_back(cct);
+        }
+    }
+    return {cOut,ccOut};
+}
