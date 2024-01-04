@@ -98,14 +98,17 @@ std::string formatVariableModel(VariableModelTuple modelTuple) {
     for (auto &entry : model) {
         out << "\t\t" << std::setprecision(2) << std::setw(5) << entry.ut << ",\n";
     }
-    out << "\t};\n"; 
-    out << "\tstd::vector<double> unixt = getUnixTime(date,ut);\n";
-    out << "\tstd::vector<coeffStruct> coeffs = getModelCoeffs(models);\n";
-    out << "\tstatic variableModelList out = {\n";
-    out << "\t\tname,body,models,date,ut,unixt,coeffs\n";
-    out << "\t};\n";
-    out << "\treturn out;\n";
-    out << "};\n\n";
+    out << R"(
+    };
+    std::vector<double> unixt = getUnixTime(date,ut);
+    std::vector<coeffStruct> coeffs = getModelCoeffs(models);
+    static variableModelList out = {
+        name,body,models,date,ut,unixt,coeffs
+    };
+    \treturn out;
+};
+
+)";
 
     return out.str();
 }

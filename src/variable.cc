@@ -87,13 +87,14 @@ variableModelList& _var_model_igrf() {
 		    0,
 		    0,
 		    0,
-	};
-	std::vector<double> unixt = getUnixTime(date,ut);
-	std::vector<coeffStruct> coeffs = getModelCoeffs(models);
-	static variableModelList out = {
-		name,body,models,date,ut,unixt,coeffs
-	};
-	return out;
+
+    };
+    std::vector<double> unixt = getUnixTime(date,ut);
+    std::vector<coeffStruct> coeffs = getModelCoeffs(models);
+    static variableModelList out = {
+        name,body,models,date,ut,unixt,coeffs
+    };
+    \treturn out;
 };
 
 
