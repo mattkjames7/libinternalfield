@@ -304,19 +304,21 @@ std::string getAllModelDefinitionStrings(ModelFileTuples models) {
 
 std::string coeffStructDef() {
 
-    std::string out = 
-    "typedef struct {\n"
-    "    const std::string name;\n"
-    "    const std::string body;\n"
-    "    const int len;\n"
-    "    const int nmax;\n"
-    "    const int ndef;\n"
-    "    const double rscale;\n"
-    "    const std::vector<int> n;\n"
-    "    const std::vector<int> m;\n"
-    "    const std::vector<double> g;\n"
-    "    const std::vector<double> h;\n"
-    "} coeffStruct;\n\n";
+    std::string out = R"(
+typedef struct {
+    const std::string name;
+    const std::string body;
+    const int len;
+    const int nmax;
+    const int ndef;
+    const double rscale;
+    const std::vector<int> n;
+    const std::vector<int> m;
+    const std::vector<double> g;
+    const std::vector<double> h;
+} coeffStruct;
+
+)";
     return out;
 }
 
@@ -504,6 +506,9 @@ void writeCoeffsCC(ModelFileTuples models,std::filesystem::path srcPath) {
     /* save everything to the file */
     std::filesystem::path filePath = srcPath;
     filePath /= "coeffs.cc";
+    std::cout << "Saving model coefficient code:" << std::endl;
+    std::cout << "\t" << filePath << std::endl;
+
     std::ofstream outFile(filePath);
     outFile << "#include \"coeffs.h\"\n\n";
     outFile << modelNameFunction;
@@ -528,6 +533,9 @@ void writeCoeffsH(ModelFileTuples models,std::filesystem::path srcPath) {
     /* save everything to the file */
     std::filesystem::path filePath = srcPath;
     filePath /= "coeffs.h";
+    std::cout << "Saving model coefficient header:" << std::endl;
+    std::cout << "\t" << filePath << std::endl;
+
     std::ofstream outFile(filePath);
     outFile << "#ifndef __COEFFS_H__\n";
     outFile << "#define __COEFFS_H__\n";
@@ -577,6 +585,8 @@ void saveCoeffs(
     // }
 
     ModelFileTuples models = listModels(coeffPath);
+    std::cout << "Found " << models.size() << " model definitions." <<  std::endl;
+
     // for (auto &model : models) {
     //     std::cout << "Model: " << std::get<0>(model) << ", ";
     //     std::cout << "Body: " << std::get<1>(model) << ", ";

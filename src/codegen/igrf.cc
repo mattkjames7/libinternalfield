@@ -92,6 +92,11 @@ std::vector<igrfModel> readIGRF(std::filesystem::path dataPath) {
         out.push_back(fillModel(i,nRows,modelYears,table));
     }
 
+    /* convert last model from a secular variation to a prediction*/
+    for (int i;i<nRows;i++) {
+        out[nModels-1].v[i] = out[nModels-2].v[i] + 5*out[nModels-1].v[i];
+    }
+
     return out;
 
 }
@@ -114,10 +119,12 @@ void saveIGRFModel(std::filesystem::path dataPath, igrfModel model) {
     int n = model.gh.size();
 
     std::filesystem::path fileName = dataPath;
-    dataPath /= "earth";
-    dataPath /= model.name + ".dat";
+    fileName /= "coeffs";
+    fileName /= "earth";
+    fileName /= model.name + ".dat";
 
-    //std::cout << "Saving " << dataPath << std::endl;
+    
+    std::cout << "\t" << fileName << std::endl;
 
     std::ofstream file(fileName);
     
@@ -133,7 +140,9 @@ void saveIGRFModels(std::filesystem::path dataPath) {
 
     std::vector<igrfModel> models = readIGRF(dataPath);
 
+    std::cout << "Parsing IGRF models..." << std::endl;
     std::cout << "Found " << models.size() << " IGRF models."<< std::endl;
+    std::cout << "Saving IGRF coefficients:" << std::endl;
 
     for (auto &model : models) {
         saveIGRFModel(dataPath,model);
