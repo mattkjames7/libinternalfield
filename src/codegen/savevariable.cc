@@ -198,6 +198,9 @@ void saveVariableHeader(
 ) {
     std::filesystem::path filePath = srcPath;
     filePath /= "variable.h";
+    std::cout << "Saving variable model header:" << std::endl;
+    std::cout << "\t" << filePath << std::endl;
+
     std::ofstream file(filePath);
     file << getVariableModelHeader(models);
     file.close();
@@ -209,6 +212,9 @@ void saveVariableCode(
 ) {
     std::filesystem::path filePath = srcPath;
     filePath /= "variable.cc";
+    std::cout << "Saving variable model code:" << std::endl;
+    std::cout << "\t" << filePath << std::endl;
+
     std::ofstream file(filePath);    
     file << getVariableModelCode(models);
     file.close();
