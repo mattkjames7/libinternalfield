@@ -507,7 +507,8 @@ std::map<std::string,InternalFunc> getModelPtrMap() {
 			{"gsfc13ev",gsfc13ev},
 			{"gsfc15evs",gsfc15evs},
 			{"v117ev",v117ev},
-	};	return modelPtrMap;
+	};
+	return modelPtrMap;
 }
 
 
@@ -646,7 +647,8 @@ std::map<std::string,modelFieldPtr> getModelFieldPtrMap() {
 			{"gsfc13ev",&gsfc13evField},
 			{"gsfc15evs",&gsfc15evsField},
 			{"v117ev",&v117evField},
-	};	return modelFieldPtrMap;
+	};
+	return modelFieldPtrMap;
 }
 
 

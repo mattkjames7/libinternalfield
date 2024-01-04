@@ -214,7 +214,7 @@ std::string getModelsCCModelPtrMap(ModelFileTuples models) {
     for (auto &model : models) {
         out << modelPtrMapping(model);
     }
-    out << "\t};";
+    out << "\t};\n";
     out << "\treturn modelPtrMap;\n";
     out << "}\n\n";
     return out.str();
@@ -291,7 +291,7 @@ std::string getModelsCCModelFieldPtrMap(ModelFileTuples models) {
     for (auto &model : models) {
         out << modelFieldPtrMapping(model);
     }
-    out << "\t};";
+    out << "\t};\n";
     out << "\treturn modelFieldPtrMap;\n";
     out << "}\n\n";
     return out.str();
