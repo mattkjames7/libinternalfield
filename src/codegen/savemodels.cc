@@ -163,6 +163,9 @@ void saveModelsHeader(ModelFileTuples models,std::filesystem::path srcPath) {
 
     std::filesystem::path filePath = srcPath;
     filePath /= "models.h";
+    std::cout << "Saving variable model header:" << std::endl;
+    std::cout << "\t" << filePath << std::endl;
+
     std::ofstream file(filePath);
     file << getModelsHeaderIncludes();
     file << getModelsHeaderExterns(models);
@@ -393,6 +396,9 @@ void saveModelsCC(ModelFileTuples models,std::filesystem::path srcPath) {
 
     std::filesystem::path filePath = srcPath;
     filePath /= "models.cc";
+    std::cout << "Saving model code:" << std::endl;
+    std::cout << "\t" << filePath << std::endl;
+
     std::ofstream file(filePath);
 
     file << getModelsCCDefinitions(models);
