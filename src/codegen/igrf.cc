@@ -117,7 +117,7 @@ void saveIGRFModel(std::filesystem::path dataPath, igrfModel model) {
     dataPath /= "earth";
     dataPath /= model.name + ".dat";
 
-    std::cout << "Saving " << dataPath << std::endl;
+    //std::cout << "Saving " << dataPath << std::endl;
 
     std::ofstream file(fileName);
     

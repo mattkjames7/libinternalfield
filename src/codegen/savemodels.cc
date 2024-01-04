@@ -163,7 +163,7 @@ void saveModelsHeader(ModelFileTuples models,std::filesystem::path srcPath) {
 
     std::filesystem::path filePath = srcPath;
     filePath /= "models.h";
-    std::ofstream outFile(filePath);
+    std::ofstream file(filePath);
     file << getModelsHeaderIncludes();
     file << getModelsHeaderExterns(models);
     file << getModelsHeaderMiscPrototypes();
@@ -393,7 +393,7 @@ void saveModelsCC(ModelFileTuples models,std::filesystem::path srcPath) {
 
     std::filesystem::path filePath = srcPath;
     filePath /= "models.cc";
-    std::ofstream outFile(filePath);
+    std::ofstream file(filePath);
 
     file << getModelsCCDefinitions(models);
     file << getModelsCCModelPtrMap(models);
@@ -413,7 +413,7 @@ void saveModels(std::filesystem::path dataPath,std::filesystem::path srcPath) {
 
     ModelFileTuples models = listModels(coeffPath);
 
-    saveModelsHeader(models);
-    saveModelsCC(models);
+    saveModelsHeader(models,srcPath);
+    saveModelsCC(models,srcPath);
 
 }

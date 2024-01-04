@@ -73,9 +73,9 @@ FileParams readFileParams(std::filesystem::path coeffFile) {
 
     FileCoeffs data;
     std::ifstream cFile(coeffFile);
-    std::cout << "reading file " << coeffFile << std::endl;
+    //std::cout << "reading file " << coeffFile << std::endl;
     if (!cFile.is_open()) {
-        std::cout << "no data "<< std::endl;
+        //std::cout << "no data "<< std::endl;
         return std::make_tuple(data,0.0,0);
     }
 
@@ -105,7 +105,7 @@ FileParams readFileParams(std::filesystem::path coeffFile) {
                     throw std::runtime_error(error);
                 }
             } catch (const std::exception &e) {
-                std::cerr << e.what();
+                //std::cerr << e.what();
             }
         } else if (line.compare(0, defdegPrefix.length(), defdegPrefix) == 0) {
             liness.str(line.substr(defdegPrefix.length()));
@@ -118,7 +118,7 @@ FileParams readFileParams(std::filesystem::path coeffFile) {
                     throw std::runtime_error(error);
                 }
             } catch (const std::exception &e) {
-                std::cerr << e.what();
+                //std::cerr << e.what();
             }
         } else {
             try {
@@ -129,10 +129,11 @@ FileParams readFileParams(std::filesystem::path coeffFile) {
                     tmp.n = stoi(substrs[2]);
                     tmp.val = stod(substrs[3]);
                     data.push_back(tmp);
-                } else {
-                    std::cout << substrs.size() << std::endl;
-                }
+                } //else {
+                    //std::cout << substrs.size() << std::endl;
+                //}
             } catch (const std::exception &e) {
+                //std::cerr << e.what();
             }
 
         }
@@ -568,31 +569,31 @@ void saveCoeffs(
 
 
     /* get a list of the subdirectories to scan */
-    FileList files = listAllModelFiles(coeffPath);
-    int i, n;
-    n = files.size();
-    for (i=0;i<n;i++) {
-        std::cout << files[i] << std::endl;
-    }
+    // FileList files = listAllModelFiles(coeffPath);
+    // int i, n;
+    // n = files.size();
+    // for (i=0;i<n;i++) {
+    //     std::cout << files[i] << std::endl;
+    // }
 
     ModelFileTuples models = listModels(coeffPath);
-    for (auto &model : models) {
-        std::cout << "Model: " << std::get<0>(model) << ", ";
-        std::cout << "Body: " << std::get<1>(model) << ", ";
-        std::cout << "Model File: " << std::get<2>(model);
-        std::cout << std::endl;
-    }
+    // for (auto &model : models) {
+    //     std::cout << "Model: " << std::get<0>(model) << ", ";
+    //     std::cout << "Body: " << std::get<1>(model) << ", ";
+    //     std::cout << "Model File: " << std::get<2>(model);
+    //     std::cout << std::endl;
+    // }
 
-    FileParams params = readFileParams(files[0]);
+    //FileParams params = readFileParams(files[0]);
 
-    FileCoeffs coeffs = std::get<0>(params);
-    for (auto &c : coeffs) {
-        std::cout << c.gh << " " << c.m << " " << c.n << " " << c.val << std::endl;
-    }
-    std::cout << coeffs.size() << std::endl;
+    // FileCoeffs coeffs = std::get<0>(params);
+    // for (auto &c : coeffs) {
+    //     std::cout << c.gh << " " << c.m << " " << c.n << " " << c.val << std::endl;
+    // }
+    // std::cout << coeffs.size() << std::endl;
 
-    std::string example = getModelDefinitionString(models[0]);
-    std::cout << example << std::endl;
+    // std::string example = getModelDefinitionString(models[0]);
+    // std::cout << example << std::endl;
 
     writeCoeffsCC(models,srcPath);
     writeCoeffsH(models,srcPath);

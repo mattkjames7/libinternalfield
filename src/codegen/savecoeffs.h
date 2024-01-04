@@ -37,7 +37,10 @@ typedef struct {
     std::vector<double> h;
 } ModelDef;
 
-void saveCoeffs(std::filesystem::path dataPath);
+void saveCoeffs(
+    std::filesystem::path dataPath,
+    std::filesystem::path srcPath
+);
 ModelFileTuples listModels(
     const std::filesystem::path &coeffDir
 );

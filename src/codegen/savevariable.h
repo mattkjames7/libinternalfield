@@ -20,5 +20,8 @@ typedef struct {
 } VariableModelEntry;
 typedef std::vector<VariableModelEntry> VariableModel;
 
-void saveVariable(std::filesystem::path dataPath);
+void saveVariable(
+    std::filesystem::path dataPath,
+    std::filesystem::path srcPath
+);
 #endif

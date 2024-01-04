@@ -9,6 +9,9 @@
 #include <sstream>
 #include "savecoeffs.h"
 
-void saveModels(std::filesystem::path dataPath);
+void saveModels(
+    std::filesystem::path dataPath,
+    std::filesystem::path srcPath
+);
 
 #endif

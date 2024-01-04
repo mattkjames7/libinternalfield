@@ -210,9 +210,9 @@ void saveLibHeader(std::filesystem::path srcPath) {
     std::string headerCode = generateLibHeader();
 
     std::filesystem::path headerPath = srcPath.parent_path();
-    headerPath /= "include/internalfield.h.test";
-    std::cout << headerPath << std::endl;
-
+    headerPath /= "include/internalfield.h";
+    std::cout << "Saving library header: " << std::endl;
+    std::cout << "\t" << headerPath << std::endl;
     std::ofstream file(headerPath);
     file << headerCode;
     file.close();
