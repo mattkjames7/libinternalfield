@@ -159,10 +159,11 @@ std::string getModelsHeaderPrototypes(ModelFileTuples models) {
     return out.str();
 }
 
-void saveModelsHeader(ModelFileTuples models) {
+void saveModelsHeader(ModelFileTuples models,std::filesystem::path srcPath) {
 
-    std::ofstream file("models.h");
-
+    std::filesystem::path filePath = srcPath;
+    filePath /= "models.h";
+    std::ofstream outFile(filePath);
     file << getModelsHeaderIncludes();
     file << getModelsHeaderExterns(models);
     file << getModelsHeaderMiscPrototypes();
@@ -388,9 +389,11 @@ std::string getModelsCCFieldFunctions(ModelFileTuples models) {
     return out.str();
 }
 
-void saveModelsCC(ModelFileTuples models) {
+void saveModelsCC(ModelFileTuples models,std::filesystem::path srcPath) {
 
-    std::ofstream file("models.cc");
+    std::filesystem::path filePath = srcPath;
+    filePath /= "models.cc";
+    std::ofstream outFile(filePath);
 
     file << getModelsCCDefinitions(models);
     file << getModelsCCModelPtrMap(models);
@@ -403,7 +406,7 @@ void saveModelsCC(ModelFileTuples models) {
 }
 
 
-void saveModels(std::filesystem::path dataPath) {
+void saveModels(std::filesystem::path dataPath,std::filesystem::path srcPath) {
 
     std::filesystem::path coeffPath = dataPath;
     coeffPath /= "coeffs";

@@ -189,26 +189,36 @@ std::string getVariableModelCode(VariableModelTuples models) {
 
 }
 
-void saveVariableHeader(VariableModelTuples models) {
-    std::ofstream file("variable.h");
+void saveVariableHeader(
+    VariableModelTuples models,
+    std::filesystem::path srcPath
+) {
+    std::filesystem::path filePath = srcPath;
+    filePath /= "variable.h";
+    std::ofstream outFile(filePath);
     file << getVariableModelHeader(models);
     file.close();
 }
 
 void saveVariableCode(VariableModelTuples models) {
-    std::ofstream file("variable.cc");
+    std::filesystem::path filePath = srcPath;
+    filePath /= "variable.cc";
+    std::ofstream outFile(filePath);    
     file << getVariableModelCode(models);
     file.close();
 }
 
 
-void saveVariable(std::filesystem::path dataPath) {
+void saveVariable(
+    std::filesystem::path dataPath,
+    std::filesystem::path srcPath
+    ) {
 
     std::filesystem::path varPath = dataPath;
     varPath /= "variable";
 
     VariableModelTuples models = listVariableModels(varPath);
 
-    saveVariableHeader(models);
-    saveVariableCode(models);
+    saveVariableHeader(models,srcPath);
+    saveVariableCode(models,srcPath);
 }

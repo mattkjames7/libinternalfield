@@ -492,7 +492,7 @@ coeffStructFunc getModelCoeffStruct(const char *Model) {
     return out;
 }
 
-void writeCoeffsCC(ModelFileTuples models) {
+void writeCoeffsCC(ModelFileTuples models,std::filesystem::path srcPath) {
     
     /* get the model name function */
     std::string modelNameFunction = getModelNameFunction(models);
@@ -501,7 +501,9 @@ void writeCoeffsCC(ModelFileTuples models) {
     std::string allDefs = getAllModelDefinitionStrings(models);
 
     /* save everything to the file */
-    std::ofstream outFile("coeffs.cc");
+    std::filesystem::path filePath = srcPath;
+    filePath /= "coeffs.cc";
+    std::ofstream outFile(filePath);
     outFile << "#include \"coeffs.h\"\n\n";
     outFile << modelNameFunction;
     outFile << allDefs;
@@ -514,7 +516,7 @@ void writeCoeffsCC(ModelFileTuples models) {
 
 
 
-void writeCoeffsH(ModelFileTuples models) {
+void writeCoeffsH(ModelFileTuples models,std::filesystem::path srcPath) {
     
     /* model coefficient functions */
     std::string headerExterns = getHeaderExterns(models);
@@ -523,7 +525,9 @@ void writeCoeffsH(ModelFileTuples models) {
     std::string coeffStruct = coeffStructDef();
 
     /* save everything to the file */
-    std::ofstream outFile("coeffs.h");
+    std::filesystem::path filePath = srcPath;
+    filePath /= "coeffs.h";
+    std::ofstream outFile(filePath);
     outFile << "#ifndef __COEFFS_H__\n";
     outFile << "#define __COEFFS_H__\n";
     outFile << "#include <vector>\n";
@@ -544,7 +548,10 @@ void writeCoeffsH(ModelFileTuples models) {
 }
 
 
-void saveCoeffs(std::filesystem::path dataPath) {
+void saveCoeffs(
+    std::filesystem::path dataPath,
+    std::filesystem::path srcPath
+) {
 
     /* get the coefficient paths */
     std::filesystem::path coeffPath = dataPath;
@@ -587,7 +594,7 @@ void saveCoeffs(std::filesystem::path dataPath) {
     std::string example = getModelDefinitionString(models[0]);
     std::cout << example << std::endl;
 
-    writeCoeffsCC(models);
-    writeCoeffsH(models);
+    writeCoeffsCC(models,srcPath);
+    writeCoeffsH(models,srcPath);
     
 }

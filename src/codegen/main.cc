@@ -19,13 +19,13 @@ int main(int argc, char *argv[]) {
     saveIGRFModels(dataPath);
 
     /* now create coefficient files */
-    saveCoeffs(dataPath);
+    saveCoeffs(dataPath,srcPath);
 
     /* save model function files */
-    saveModels(dataPath);
+    saveModels(dataPath,srcPath);
 
     /* save variable models */
-    saveVariable(dataPath);
+    saveVariable(dataPath,srcPath);
 
     /* generate the header for the library */
     saveLibHeader(srcPath);
