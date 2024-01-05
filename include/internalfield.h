@@ -452,7 +452,6 @@ coeffStructFunc getModelCoeffStruct(std::string Model);
  **********************************************************************/
 coeffStructFunc getModelCoeffStruct(const char *Model);
 
-    #endif
 
 
 /* This structure will store the Schmidt coefficients */

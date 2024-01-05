@@ -171,7 +171,7 @@ void saveModelsHeader(ModelFileTuples models,std::filesystem::path srcPath) {
     file << getModelsHeaderExterns(models);
     file << getModelsHeaderMiscPrototypes();
     file << getModelsHeaderPrototypes(models);
-
+    file << "#endif\n";
     file.close();
 }
 

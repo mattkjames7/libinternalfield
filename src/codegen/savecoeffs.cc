@@ -125,8 +125,8 @@ FileParams readFileParams(std::filesystem::path coeffFile) {
                 substrs = splitString(line);
                 if (substrs.size() == 4) {
                     tmp.gh = substrs[0].c_str()[0];
-                    tmp.m = stoi(substrs[1]) ;
-                    tmp.n = stoi(substrs[2]);
+                    tmp.n = stoi(substrs[1]) ;
+                    tmp.m = stoi(substrs[2]);
                     tmp.val = stod(substrs[3]);
                     data.push_back(tmp);
                 } //else {
@@ -187,6 +187,15 @@ ModelDef getModelDefinition(ModelFileTuple model) {
             def.g.push_back(0.0);
             def.h.push_back(0.0);
             def.len++;
+        }
+    }
+
+    if (def.name.compare("vip4") == 0) {
+        for (i=0;i<coeffs.size();i++) {
+            std::cout << coeffs[i].gh << " ";
+            std::cout << coeffs[i].n << " ";
+            std::cout << coeffs[i].m << " ";
+            std::cout << coeffs[i].val << std::endl;
         }
     }
   
@@ -269,7 +278,7 @@ std::string getModelDefinitionString(ModelFileTuple model) {
     oss << formatInts(mdef.n);
     oss << "\t};\n";
     oss << "\tstatic const std::vector<int> m = {\n";
-    oss << formatInts(mdef.n);
+    oss << formatInts(mdef.m);
     oss << "\t};\n";
     oss << "\tstatic const std::vector<double> g = {\n";
     oss << formatDoubles(mdef.g);
@@ -424,7 +433,7 @@ coeffStructFunc getModelCoeffStruct(std::string Model);
  **********************************************************************/
 coeffStructFunc getModelCoeffStruct(const char *Model);
 
-    )";
+)";
     return out;
 }
 
@@ -491,7 +500,7 @@ coeffStructFunc getModelCoeffStruct(const char *Model) {
     return coeffMap[Model];
 }
 
-    )";
+)";
     return out;
 }
 

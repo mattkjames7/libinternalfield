@@ -372,3 +372,4 @@ extern "C" {
 	void v117evField(double x, double y, double z,
 				double *bx, double *by, double *bz);
 }
+#endif

@@ -28,7 +28,7 @@ endif
 
 .PHONY: all obj lib windows winobj dll clean test header
 
-all: obj lib header
+all: header obj lib 
 
 
 obj:
@@ -43,7 +43,7 @@ lib:
 header:
 	cd src; make header
 
-windows: winobj dll
+windows: header winobj dll
 
 winobj:
 	$(MD) $(BUILDDIR)

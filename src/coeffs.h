@@ -142,4 +142,4 @@ coeffStructFunc getModelCoeffStruct(std::string Model);
  **********************************************************************/
 coeffStructFunc getModelCoeffStruct(const char *Model);
 
-    #endif
+#endif

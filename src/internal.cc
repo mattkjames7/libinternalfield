@@ -36,6 +36,20 @@ Internal::Internal(const char *Model) {
 	init_[0] = false;
 	modelstr_ = &(getModelCoeffStruct(Model))();
 	_Init();
+
+	int i;
+	if (strcmp(Model,"vip4") == 0) {
+		printf("VIP4 def\n");
+		for (i=0;i<nschc_;i++) {
+			printf("%d %d %f %f\n",schc_[i].n,schc_[i].m,schc_[i].g,schc_[i].h);
+		}
+	}
+	if (strcmp(Model,"jrm09") == 0) {
+		printf("JRM09 def\n");
+		for (i=0;i<nschc_;i++) {
+			printf("%d %d %f %f\n",schc_[i].n,schc_[i].m,schc_[i].g,schc_[i].h);
+		}
+	}
 }
 
 
