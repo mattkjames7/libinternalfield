@@ -1,14 +1,14 @@
 #include "testdata.h"
 
-void saveVector(std::ofstream file, std::vector<double> x) {
+void saveVector(std::ofstream &file, std::vector<double> &x) {
 
     std::int32_t size = static_cast<std::int32_t>(x.size());
     file.write(reinterpret_cast<const char*>(&size),sizeof(size));
-    file.write(reinterpret_cast<const char*>(x.data()),x.size());
+    file.write(reinterpret_cast<const char*>(x.data()),x.size()*sizeof(double));
     
 }
 
-std::vector<double> readVector(std::ifstream file) {
+std::vector<double> readVector(std::ifstream &file) {
 
     std::int32_t size;
     file.read(reinterpret_cast<char*>(&size), sizeof(size));
@@ -18,9 +18,9 @@ std::vector<double> readVector(std::ifstream file) {
 }
 
 void saveVectors(
-    std::filesystem::path testFile,
-    std::vector<double> x, std::vector<double> y, std::vector<double> z,
-    std::vector<double> bx, std::vector<double> by, std::vector<double> bz
+    std::filesystem::path &testFile,
+    std::vector<double> &x, std::vector<double> &y, std::vector<double> &z,
+    std::vector<double> &bx, std::vector<double> &by, std::vector<double> &bz
 ) {
     std::ofstream file(testFile,std::ios::binary);
 
@@ -36,7 +36,7 @@ void saveVectors(
 }
 
 void readVectors(
-    std::filesystem::path testFile,
+    std::filesystem::path &testFile,
     std::vector<double> &x, std::vector<double> &y, std::vector<double> &z,
     std::vector<double> &bx, std::vector<double> &by, std::vector<double> &bz
 ) {
@@ -55,7 +55,7 @@ void readVectors(
 
 
 void readVectorsC(
-    const char *tesfFile,
+    const char *testFile,
     double *x, double *y, double *z, double *bx, double *by, double *bz
 ) {
 
@@ -63,7 +63,7 @@ void readVectorsC(
     int i;
     std::vector<double> vx, vy, vz, vbx, vby, vbz;
 
-    readVectors(testFile,vx,vy,vz,vbx,vby,vbz);
+    readVectors(filePath,vx,vy,vz,vbx,vby,vbz);
     int n = vx.size();
 
     x = (double*) malloc(sizeof(double)*n);

@@ -23,6 +23,10 @@ all:
 	./ctest
 	./cpptest
 	
+save:
+	$(CC) $(IFLAGS) testdata.cc savetestdata.cc -o savetestdata $(LDFLAGS)
+	./savetestdata
+
 clean:
 	-rm -v test
 	-rm -v timer
