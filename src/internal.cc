@@ -37,19 +37,19 @@ Internal::Internal(const char *Model) {
 	modelstr_ = &(getModelCoeffStruct(Model))();
 	_Init();
 
-	int i;
-	if (strcmp(Model,"vip4") == 0) {
-		printf("VIP4 def\n");
-		for (i=0;i<nschc_;i++) {
-			printf("%d %d %f %f\n",schc_[i].n,schc_[i].m,schc_[i].g,schc_[i].h);
-		}
-	}
-	if (strcmp(Model,"jrm09") == 0) {
-		printf("JRM09 def\n");
-		for (i=0;i<nschc_;i++) {
-			printf("%d %d %f %f\n",schc_[i].n,schc_[i].m,schc_[i].g,schc_[i].h);
-		}
-	}
+	// int i;
+	// if (strcmp(Model,"vip4") == 0) {
+	// 	printf("VIP4 def\n");
+	// 	for (i=0;i<nschc_;i++) {
+	// 		printf("%d %d %f %f\n",schc_[i].n,schc_[i].m,schc_[i].g,schc_[i].h);
+	// 	}
+	// }
+	// if (strcmp(Model,"jrm09") == 0) {
+	// 	printf("JRM09 def\n");
+	// 	for (i=0;i<nschc_;i++) {
+	// 		printf("%d %d %f %f\n",schc_[i].n,schc_[i].m,schc_[i].g,schc_[i].h);
+	// 	}
+	// }
 }
 
 
@@ -886,6 +886,7 @@ void Internal::Field(int l, double *r, double *t, double *p,
 void Internal::Field(	double r, double t, double p,
 						double *Br, double *Bt, double *Bp) {
 	
+
 	/* call the model */
 	_SphHarm(r,t,p,Br,Bt,Bp);
 	
