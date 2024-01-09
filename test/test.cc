@@ -140,13 +140,11 @@ bool compareSavedVectors(FieldVectors origField, FieldVectors bField) {
 	);
 }
 
-int main() {
+void testVip4Internal() {
 
 	FieldVectors pos = getPositions();
 	FieldVectors bVip4 = vip4Vectors(pos);
-	FieldVectors bJrm09 = jrm09Vectors(pos);
 	FieldVectors origVip4 = vip4TestVectors();
-	FieldVectors origJrm09 = jrm09TestVectors();
 
 	bool goodVip4 = compareSavedVectors(origVip4,bVip4);
 	std::cout << "VIP4 vector test................................";
@@ -156,7 +154,16 @@ int main() {
 		std::cout << "FAIL" << std::endl;
 		printVectors(pos,origVip4,bVip4);
 	}
-	
+
+}
+
+void testJrm09Internal() {
+
+	FieldVectors pos = getPositions();
+	FieldVectors bJrm09 = jrm09Vectors(pos);
+	FieldVectors origJrm09 = jrm09TestVectors();
+
+
 	bool goodJrm09 = compareSavedVectors(origJrm09,bJrm09);
 	std::cout << "JRM09 vector test...............................";
 	if (goodJrm09) {
@@ -165,6 +172,14 @@ int main() {
 		std::cout << "FAIL" << std::endl;
 		printVectors(pos,origJrm09,bJrm09);
 	}
+	
+}
+
+
+int main() {
+
+	testVip4Internal();
+	testJrm09Internal();
 	
 }
 	
