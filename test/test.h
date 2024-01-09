@@ -6,4 +6,14 @@
 #include <math.h>
 #include <array>
 #include <internalfield.h>
+#include "testdata.h"
+#include <tuple>
+
+typedef std::tuple<
+    std::vector<double>,
+    std::vector<double>,
+    std::vector<double>
+    > FieldVectors;
+
+
 #endif
