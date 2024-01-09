@@ -14,7 +14,8 @@ CCo=g++ -c $(CFLAGS)
 CC=g++ $(CFLAGS)
 
 all:
-	$(CC) $(IFLAGS) test.cc -o test $(LDFLAGS)
+	$(CCo) $(IFLAGS) testdata.cc -o testdata.o
+	$(CC) $(IFLAGS) testdata.o test.cc -o test $(LDFLAGS)
 	$(CC) $(IFLAGS) timer.cc -o timer $(LDFLAGS)
 	gcc $(IFLAGS) ctest.c -o ctest $(LDFLAGS)
 	$(CC) $(IFLAGS) cpptest.cc -o cpptest $(LDFLAGS)
@@ -23,6 +24,10 @@ all:
 	./ctest
 	./cpptest
 	
+save:
+	$(CC) $(IFLAGS) testdata.cc savetestdata.cc -o savetestdata $(LDFLAGS)
+	./savetestdata
+
 clean:
 	-rm -v test
 	-rm -v timer

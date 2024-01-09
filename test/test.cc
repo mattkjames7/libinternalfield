@@ -1,15 +1,13 @@
 #include "test.h"
 
-
-int main() {
-
-	/* some input coordinates to test a few models with */
-	std::array<double,16> r = {3,3,3,3, 3,3,3,3, 3,3,3,3, 3,3,3,3};
-	std::array<double,16> tdeg = {10,10,10,10,55,55,55,55,90,90,90,90,130,130,130,130};
-	std::array<double,16> pdeg = {0,27,180,340, 0,27,180,340, 0,27,180,340, 0,27,180,340};
-	std::array<double,16> t;
-	std::array<double,16> p;
-
+FieldVectors getPositions() {
+	std::vector<double> r = {3,3,3,3, 3,3,3,3, 3,3,3,3, 3,3,3,3};
+	std::vector<double> tdeg = {10,10,10,10,55,55,55,55,
+                                90,90,90,90,130,130,130,130};
+	std::vector<double> pdeg = {0,27,180,340, 0,27,180,340,
+                                0, 27,180,340, 0,27,180,340};  
+	std::vector<double> t(16);
+	std::vector<double> p(16);
 
 	/* convert to radians */
 	int i;
@@ -18,20 +16,20 @@ int main() {
 		t[i] = deg2rad*tdeg[i];
 		p[i] = deg2rad*pdeg[i];
 	}
-	
-	/*output arrays */
-	std::array<double,16> Br;
-	std::array<double,16> Bt;
-	std::array<double,16> Bp;
-	
 
-	
-	
-	/* output strings */
-	const char s0[] = "  R  | Theta |  Phi  |         Br         |         Bt         |         Bp         \n";
-	const char s1[] = "-----|-------|-------|--------------------|--------------------|--------------------\n"; 
-	const char *fmt = " %3.1f | %5.1f | %5.1f | %18.11f | %18.11f | %18.11f\n";
-	
+	return {r,t,p};	
+}
+
+FieldVectors vip4Vectors(FieldVectors pos) {
+
+	std::vector<double> r = std::get<0>(pos);
+	std::vector<double> t = std::get<1>(pos);
+	std::vector<double> p = std::get<2>(pos);
+
+	std::vector<double> Br(r.size());
+	std::vector<double> Bt(t.size());
+	std::vector<double> Bp(p.size());
+
 	/* set model to VIP4 */
 	InternalModel internalModel = getInternalModel();
 	internalModel.SetModel("vip4");
@@ -40,48 +38,133 @@ int main() {
 	
 	/* call model */
 	internalModel.Field((int) r.size(),r.data(),t.data(),p.data(),Br.data(),Bt.data(),Bp.data());
-	
-	/* print output */
-	printf("VIP4 output...\n");
-	printf(s0);
-	printf(s1);
-	for (i=0;i<r.size();i++) {
-		printf(fmt,r[i],tdeg[i],pdeg[i],Br[i],Bt[i],Bp[i]);
-	}
+
+	return {Br,Bt,Bp};
+
+}
+
+
+FieldVectors jrm09Vectors(FieldVectors pos) {
+
+	std::vector<double> r = std::get<0>(pos);
+	std::vector<double> t = std::get<1>(pos);
+	std::vector<double> p = std::get<2>(pos);
+
+	std::vector<double> Br(r.size());
+	std::vector<double> Bt(t.size());
+	std::vector<double> Bp(p.size());
 
 	/* set model to JRM09 */
+	InternalModel internalModel = getInternalModel();
 	internalModel.SetModel("jrm09");
 	internalModel.SetCartIn(false);
 	internalModel.SetCartOut(false);
 	
 	/* call model */
 	internalModel.Field((int) r.size(),r.data(),t.data(),p.data(),Br.data(),Bt.data(),Bp.data());
+
+	return {Br,Bt,Bp};
+
+}
+
+std::string formatVectors(
+	double p0, double p1, double p2,
+	double b0, double b1, double b2,
+	double t0, double t1, double t2
+	) {
 	
-	/* print output */
-	printf("JRM09 output...\n");
-	printf(s0);
-	printf(s1);
-	for (i=0;i<r.size();i++) {
-		printf(fmt,r[i],tdeg[i],pdeg[i],Br[i],Bt[i],Bp[i]);
+	std::ostringstream out;
+	out << "|";
+	out << " " << std::setw(3) << std::setprecision(0) << std::fixed << p0 << " |";
+	out << " " << std::setw(3) << std::setprecision(0) << std::fixed << p1 << " |";
+	out << " " << std::setw(3) << std::setprecision(0) << std::fixed << p2 << " |";
+
+	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << b0 << " |";
+	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << b1 << " |";
+	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << b2 << " |";
+
+	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << t0 << " |";
+	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << t1 << " |";
+	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << t2 << " |\n";
+
+	return out.str();
+}
+
+void printVectors(FieldVectors pos, FieldVectors orig, FieldVectors test) {
+
+	std::cout << "|  r  |  t  |  p  | Br0      | Bt0      | Bp0      | Br1      | Bt1      | Bp1      |" << std::endl;
+	std::cout << "|:----|:----|:----|:---------|:---------|:---------|:---------|:---------|:---------|" << std::endl;
+
+	std::vector<double> p0,p1,p2,b0,b1,b2,t0,t1,t2;
+	p0 = std::get<0>(pos);
+	p1 = std::get<1>(pos);
+	p2 = std::get<2>(pos);
+
+	b0 = std::get<0>(orig);
+	b1 = std::get<1>(orig);
+	b2 = std::get<2>(orig);
+
+	t0 = std::get<0>(test);
+	t1 = std::get<1>(test);
+	t2 = std::get<2>(test);
+
+	int n = p0.size();
+	int i;
+	std::string line;
+	for (i=0;i<n;i++) {
+		line = formatVectors(p0[i],p1[i],p2[i],b0[i],b1[i],b2[i],t0[i],t1[i],t2[i]);
+		std::cout << line;
+	}
+}
+
+FieldVectors vip4TestVectors() {
+	std::vector<double> tr, tt, tp, tbr, tbt, tbp;
+	std::filesystem::path file = "testvip4.bin";
+	readVectors(file,tr,tt,tp,tbr,tbt,tbp);
+	return {tbr,tbt,tbp};	
+}
+
+FieldVectors jrm09TestVectors() {
+	std::vector<double> tr, tt, tp, tbr, tbt, tbp;
+	std::filesystem::path file = "testjrm09.bin";
+	readVectors(file,tr,tt,tp,tbr,tbt,tbp);
+	return {tbr,tbt,tbp};	
+}
+
+bool compareSavedVectors(FieldVectors origField, FieldVectors bField) {
+
+
+	return compareVectors(
+		std::get<0>(bField),std::get<0>(bField),std::get<0>(bField),
+		std::get<0>(origField),std::get<0>(origField),std::get<0>(origField)
+	);
+}
+
+int main() {
+
+	FieldVectors pos = getPositions();
+	FieldVectors bVip4 = vip4Vectors(pos);
+	FieldVectors bJrm09 = jrm09Vectors(pos);
+	FieldVectors origVip4 = vip4TestVectors();
+	FieldVectors origJrm09 = jrm09TestVectors();
+
+	bool goodVip4 = compareSavedVectors(origVip4,bVip4);
+	std::cout << "VIP4 vector test................................";
+	if (goodVip4) {
+		std::cout << "PASS" << std::endl;
+	} else { 
+		std::cout << "FAIL" << std::endl;
+		printVectors(pos,origVip4,bVip4);
 	}
 	
-	double bx,by,bz;
-	jrm09Field(5.0,0.0,0.0,&bx,&by,&bz);
-	printf("B: %f %f %f\n",bx,by,bz);
-	
-	printf("\nTesting Model CFG\n");
-	char mstr[32];
-	bool cartin,cartout;
-	int deg;
-	printf("Initial Config:\n");
-	GetInternalCFG(mstr,&cartin,&cartout,&deg);
-	printf("%s %d %d %d\n",mstr,cartin,cartout,deg);
-	printf("Attempting to change config to\n jrm33 0 0 15\n");
-	SetInternalCFG("jrm33",false,false,15);
-	GetInternalCFG(mstr,&cartin,&cartout,&deg);
-	printf("Result:\n");
-	printf("%s %d %d %d\n",mstr,cartin,cartout,deg);
-	
+	bool goodJrm09 = compareSavedVectors(origJrm09,bJrm09);
+	std::cout << "JRM09 vector test...............................";
+	if (goodJrm09) {
+		std::cout << "PASS" << std::endl;
+	} else { 
+		std::cout << "FAIL" << std::endl;
+		printVectors(pos,origJrm09,bJrm09);
+	}
 	
 }
 	
