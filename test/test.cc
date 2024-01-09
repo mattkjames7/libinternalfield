@@ -119,14 +119,14 @@ void printVectors(FieldVectors pos, FieldVectors orig, FieldVectors test) {
 
 FieldVectors vip4TestVectors() {
 	std::vector<double> tr, tt, tp, tbr, tbt, tbp;
-	std::filesystem::path file = "vip4test.bin";
+	std::filesystem::path file = "testvip4.bin";
 	readVectors(file,tr,tt,tp,tbr,tbt,tbp);
 	return {tbr,tbt,tbp};	
 }
 
 FieldVectors jrm09TestVectors() {
 	std::vector<double> tr, tt, tp, tbr, tbt, tbp;
-	std::filesystem::path file = "jrm09test.bin";
+	std::filesystem::path file = "testjrm09.bin";
 	readVectors(file,tr,tt,tp,tbr,tbt,tbp);
 	return {tbr,tbt,tbp};	
 }
