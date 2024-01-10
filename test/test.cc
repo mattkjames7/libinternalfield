@@ -116,9 +116,32 @@ std::string formatVectors(
 	
 	std::ostringstream out;
 	out << "|";
-	out << " " << std::setw(3) << std::setprecision(0) << std::fixed << p0 << " |";
-	out << " " << std::setw(3) << std::setprecision(0) << std::fixed << p1 << " |";
-	out << " " << std::setw(3) << std::setprecision(0) << std::fixed << p2 << " |";
+	out << " " << std::setw(5) << std::setprecision(1) << std::fixed << p0 << " |";
+	out << " " << std::setw(5) << std::setprecision(2) << std::fixed << p1 << " |";
+	out << " " << std::setw(5) << std::setprecision(2) << std::fixed << p2 << " |";
+
+	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << b0 << " |";
+	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << b1 << " |";
+	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << b2 << " |";
+
+	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << t0 << " |";
+	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << t1 << " |";
+	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << t2 << " |\n";
+
+	return out.str();
+}
+
+std::string formatVectorsCart(
+	double p0, double p1, double p2,
+	double b0, double b1, double b2,
+	double t0, double t1, double t2
+	) {
+	
+	std::ostringstream out;
+	out << "|";
+	out << " " << std::setw(5) << std::setprecision(1) << std::fixed << p0 << " |";
+	out << " " << std::setw(5) << std::setprecision(1) << std::fixed << p1 << " |";
+	out << " " << std::setw(5) << std::setprecision(1) << std::fixed << p2 << " |";
 
 	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << b0 << " |";
 	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << b1 << " |";
@@ -133,8 +156,8 @@ std::string formatVectors(
 
 void printVectors(FieldVectors pos, FieldVectors orig, FieldVectors test) {
 
-	std::cout << "|  r  |  t  |  p  | Br0      | Bt0      | Bp0      | Br1      | Bt1      | Bp1      |" << std::endl;
-	std::cout << "|:----|:----|:----|:---------|:---------|:---------|:---------|:---------|:---------|" << std::endl;
+	std::cout << "|   r   |   t   |   p   | Br0      | Bt0      | Bp0      | Br1      | Bt1      | Bp1      |" << std::endl;
+	std::cout << "|:------|:------|:------|:---------|:---------|:---------|:---------|:---------|:---------|" << std::endl;
 
 	std::vector<double> p0,p1,p2,b0,b1,b2,t0,t1,t2;
 	p0 = std::get<0>(pos);
@@ -154,6 +177,34 @@ void printVectors(FieldVectors pos, FieldVectors orig, FieldVectors test) {
 	std::string line;
 	for (i=0;i<n;i++) {
 		line = formatVectors(p0[i],p1[i],p2[i],b0[i],b1[i],b2[i],t0[i],t1[i],t2[i]);
+		std::cout << line;
+	}
+}
+
+
+void printVectorsCart(FieldVectors pos, FieldVectors orig, FieldVectors test) {
+
+	std::cout << "|   x   |   y   |   z   | Bx0      | By0      | Bz0      | Bx1      | By1      | Bz1      |" << std::endl;
+	std::cout << "|:------|:------|:------|:---------|:---------|:---------|:---------|:---------|:---------|" << std::endl;
+
+	std::vector<double> p0,p1,p2,b0,b1,b2,t0,t1,t2;
+	p0 = std::get<0>(pos);
+	p1 = std::get<1>(pos);
+	p2 = std::get<2>(pos);
+
+	b0 = std::get<0>(orig);
+	b1 = std::get<1>(orig);
+	b2 = std::get<2>(orig);
+
+	t0 = std::get<0>(test);
+	t1 = std::get<1>(test);
+	t2 = std::get<2>(test);
+
+	int n = p0.size();
+	int i;
+	std::string line;
+	for (i=0;i<n;i++) {
+		line = formatVectorsCart(p0[i],p1[i],p2[i],b0[i],b1[i],b2[i],t0[i],t1[i],t2[i]);
 		std::cout << line;
 	}
 }
@@ -236,7 +287,7 @@ void testVip4Function() {
 		std::cout << "PASS" << std::endl;
 	} else { 
 		std::cout << "FAIL" << std::endl;
-		printVectors(pos,origVip4,bVip4);
+		printVectorsCart(pos,origVip4,bVip4);
 	}
 
 }
