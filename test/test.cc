@@ -226,12 +226,12 @@ void testJrm09Internal() {
 
 void testVip4Function() {
 
-	FieldVectors pos = getPositions();
+	FieldVectors pos = getPositionsCart();
 	FieldVectors bVip4 = vip4FunctionVectors(pos);
 	FieldVectors origVip4 = vip4TestFunctionVectors();
 
 	bool goodVip4 = compareSavedVectors(origVip4,bVip4);
-	std::cout << "VIP4 function test...............................";
+	std::cout << "VIP4 function test..............................";
 	if (goodVip4) {
 		std::cout << "PASS" << std::endl;
 	} else { 

@@ -8,9 +8,9 @@ void printVectorLine(
 	
 	std::ostringstream out;
 	out << "|";
-	out << " " << std::setw(3) << std::setprecision(0) << std::fixed << p0 << " |";
-	out << " " << std::setw(3) << std::setprecision(0) << std::fixed << p1 << " |";
-	out << " " << std::setw(3) << std::setprecision(0) << std::fixed << p2 << " |";
+	out << " " << std::setw(5) << std::setprecision(1) << std::fixed << p0 << " |";
+	out << " " << std::setw(5) << std::setprecision(2) << std::fixed << p1 << " |";
+	out << " " << std::setw(5) << std::setprecision(2) << std::fixed << p2 << " |";
 
 	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << b0 << " |";
 	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << b1 << " |";
@@ -26,14 +26,52 @@ void printVectors(
 	std::vector<double> b0, std::vector<double> b1, std::vector<double> b2
 ) {
 
-	std::cout << "|  r  |  t  |  p  | Br0      | Bt0      | Bp0      |" << std::endl;
-	std::cout << "|:----|:----|:----|:---------|:---------|:---------|" << std::endl;
+	std::cout << "|   r   |   t   |   p   | Br0      | Bt0      | Bp0      |" << std::endl;
+	std::cout << "|:------|:------|:------|:---------|:---------|:---------|" << std::endl;
 
 	int n = p0.size();
 	int i;
 
 	for (i=0;i<n;i++) {
 		printVectorLine(p0[i],p1[i],p2[i],b0[i],b1[i],b2[i]);
+	}
+}
+
+
+
+void printVectorLineCart(
+	double p0, double p1, double p2,
+	double b0, double b1, double b2
+	) {
+	
+	std::ostringstream out;
+	out << "|";
+	out << " " << std::setw(5) << std::setprecision(1) << std::fixed << p0 << " |";
+	out << " " << std::setw(5) << std::setprecision(1) << std::fixed << p1 << " |";
+	out << " " << std::setw(5) << std::setprecision(1) << std::fixed << p2 << " |";
+
+	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << b0 << " |";
+	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << b1 << " |";
+	out << " " << std::setw(8) << std::setprecision(1) << std::fixed << b2 << " |";
+
+
+	std::cout << out.str() << std::endl;
+}
+
+
+void printVectorsCart(
+	std::vector<double> p0, std::vector<double> p1, std::vector<double> p2,
+	std::vector<double> b0, std::vector<double> b1, std::vector<double> b2
+) {
+
+	std::cout << "|   x   |   y   |   z   | Bx0      | By0      | Bz0      |" << std::endl;
+	std::cout << "|:------|:------|:------|:---------|:---------|:---------|" << std::endl;
+
+	int n = p0.size();
+	int i;
+
+	for (i=0;i<n;i++) {
+		printVectorLineCart(p0[i],p1[i],p2[i],b0[i],b1[i],b2[i]);
 	}
 }
 
@@ -159,6 +197,10 @@ void saveVIP4TestFunctionVectors() {
 
     /* save the vectors */
 	saveVectors(vectorFile,x,y,z,Bx,By,Bz);                          
+
+
+	std::cout << "VIP4 (Cartesian)" << std::endl;
+	printVectorsCart(x,y,z,Bx,By,Bz);
 
 }
 
