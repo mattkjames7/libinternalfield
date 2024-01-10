@@ -490,6 +490,12 @@ class Internal {
 		void SetDegree(int n);
 		int GetDegree();
 
+		/* returning some internal stuff for testing */
+		std::vector<struct schmidtcoeffs> getSchmidtCoeffs();
+		std::vector<std::vector<double>> getSnm();
+		std::vector<std::vector<double>> getg();
+		std::vector<std::vector<double>> geth();
+
 		
 	private:
 		/*Schmidt coefficients */

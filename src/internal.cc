@@ -1056,3 +1056,15 @@ void Internal::_BPol2BCart(	double t, double p,
 	
 								
 }
+
+
+
+std::vector<struct schmidtcoeffs> Internal::getSchmidtCoeffs() {
+
+	std::vector<struct schmidtcoeffs> out;
+	int i;
+	for (i=0;i<nschc_;i++) {
+		out.push_back(schc_[i]);
+	}
+	return out;
+}

@@ -6,6 +6,7 @@
 #include <math.h>
 #include <string.h>
 #include "coeffs.h"
+#include <vector>
 
 
 /* This structure will store the Schmidt coefficients */
@@ -47,6 +48,12 @@ class Internal {
 		/* set current degree */
 		void SetDegree(int n);
 		int GetDegree();
+
+		/* returning some internal stuff for testing */
+		std::vector<struct schmidtcoeffs> getSchmidtCoeffs();
+		std::vector<std::vector<double>> getSnm();
+		std::vector<std::vector<double>> getg();
+		std::vector<std::vector<double>> geth();
 
 		
 	private:
