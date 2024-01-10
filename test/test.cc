@@ -20,6 +20,27 @@ FieldVectors getPositions() {
 	return {r,t,p};	
 }
 
+FieldVectors getPositionsCart() {
+
+	FieldVectors pos = getPositions();
+
+	std::vector<double> r = std::get<0>(pos);
+	std::vector<double> t = std::get<1>(pos);
+	std::vector<double> p = std::get<2>(pos);
+
+	/* convert to cartesian */
+	int n = r.size();
+	std::vector<double> x(n), y(n), z(n);
+	int i;
+	for (i=0;i<n;i++) {
+		x[i] = r[i]*cos(t[i])*cos(p[i]);
+		y[i] = r[i]*cos(t[i])*sin(p[i]);
+		z[i] = r[i]*sin(t[i]);
+	}
+	return {x,y,z};	
+}
+
+
 FieldVectors vip4Vectors(FieldVectors pos) {
 
 	std::vector<double> r = std::get<0>(pos);
@@ -66,6 +87,26 @@ FieldVectors jrm09Vectors(FieldVectors pos) {
 	return {Br,Bt,Bp};
 
 }
+
+
+FieldVectors vip4FunctionVectors(FieldVectors pos) {
+
+	std::vector<double> x = std::get<0>(pos);
+	std::vector<double> y = std::get<1>(pos);
+	std::vector<double> z = std::get<2>(pos);
+
+	std::vector<double> Bx(x.size());
+	std::vector<double> By(x.size());
+	std::vector<double> Bz(x.size());
+
+	int i;
+	for (i=0;i<x.size();i++) {
+		vip4Field(x[i],y[i],z[i],&Bx[i],&By[i],&Bz[i]);
+	}
+	return {Bx,By,Bz};
+
+}
+
 
 std::string formatVectors(
 	double p0, double p1, double p2,
@@ -131,6 +172,13 @@ FieldVectors jrm09TestVectors() {
 	return {tbr,tbt,tbp};	
 }
 
+FieldVectors vip4TestFunctionVectors() {
+	std::vector<double> tr, tt, tp, tbr, tbt, tbp;
+	std::filesystem::path file = "testvip4function.bin";
+	readVectors(file,tr,tt,tp,tbr,tbt,tbp);
+	return {tbr,tbt,tbp};	
+}
+
 bool compareSavedVectors(FieldVectors origField, FieldVectors bField) {
 
 
@@ -176,10 +224,29 @@ void testJrm09Internal() {
 }
 
 
+void testVip4Function() {
+
+	FieldVectors pos = getPositions();
+	FieldVectors bVip4 = vip4FunctionVectors(pos);
+	FieldVectors origVip4 = vip4TestFunctionVectors();
+
+	bool goodVip4 = compareSavedVectors(origVip4,bVip4);
+	std::cout << "VIP4 function test...............................";
+	if (goodVip4) {
+		std::cout << "PASS" << std::endl;
+	} else { 
+		std::cout << "FAIL" << std::endl;
+		printVectors(pos,origVip4,bVip4);
+	}
+
+}
+
+
 int main() {
 
 	testVip4Internal();
 	testJrm09Internal();
+	testVip4Function();
 	
 }
 	
