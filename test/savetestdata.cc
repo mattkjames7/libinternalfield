@@ -204,9 +204,23 @@ void saveVIP4TestFunctionVectors() {
 
 }
 
+void saveVIP4ModelVariables() {
+
+   	std::filesystem::path file = std::filesystem::current_path();
+    file /= "testmodelvars.bin";
+
+	Internal model("vip4");
+	std::vector<std::vector<double>> Snm = model.getSnm();
+	std::vector<std::vector<double>> g = model.getg();
+	std::vector<std::vector<double>> h = model.geth();
+	saveModelVariables(file,Snm,g,h);
+
+}
+
 int main() {
     saveVIP4Vectors();
     saveJRM09Vectors();
 	saveVIP4TestFunctionVectors();
+	saveVIP4ModelVariables();
     return 0;
 }

@@ -53,6 +53,72 @@ void readVectors(
     file.close();
 }
 
+void saveVectorVector(
+    std::ofstream &file,
+    std::vector<std::vector<double>> &x
+    ) {
+
+    int n = x.size();
+
+    std::int32_t size = static_cast<std::int32_t>(x.size());
+    file.write(reinterpret_cast<const char*>(&size),sizeof(size));
+    for (int i=0;i<n;i++) {
+        saveVector(file,x[i]);
+    }
+
+
+}
+
+std::vector<std::vector<double>> readVectorVector(std::ifstream &file) {
+
+    std::vector<double> tmp;
+    std::vector<std::vector<double>> out;
+
+    std::int32_t n;
+    file.read(reinterpret_cast<char*>(&n), sizeof(n));
+
+    for (int i=0;i<n;i++) {
+        tmp = readVector(file);
+        out.push_back(tmp);
+        tmp.clear();
+    }
+    return out;
+}
+
+
+void saveModelVariables(
+    std::filesystem::path &testFile,
+    std::vector<std::vector<double>> &Snm,
+    std::vector<std::vector<double>> &g,
+    std::vector<std::vector<double>> &h
+) {
+    
+    std::ofstream file(testFile,std::ios::binary);
+
+    saveVectorVector(file,Snm);
+    saveVectorVector(file,g);
+    saveVectorVector(file,h);
+
+    file.close();
+
+}
+
+void readModelVariables(
+    std::filesystem::path &testFile,
+    std::vector<std::vector<double>> &Snm,
+    std::vector<std::vector<double>> &g,
+    std::vector<std::vector<double>> &h
+) {
+
+    std::ifstream file(testFile,std::ios::binary);
+
+    Snm = readVectorVector(file);
+    g = readVectorVector(file);
+    h = readVectorVector(file);
+
+    file.close();
+
+}
 
 void readVectorsC(
     const char *testFile,

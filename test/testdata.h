@@ -25,6 +25,20 @@ bool compareVectors(
     std::vector<double> bx1, std::vector<double> by1, std::vector<double> bz1
 );
 
+void readModelVariables(
+    std::filesystem::path &testFile,
+    std::vector<std::vector<double>> &Snm,
+    std::vector<std::vector<double>> &g,
+    std::vector<std::vector<double>> &h
+);
+
+void saveModelVariables(
+    std::filesystem::path &testFile,
+    std::vector<std::vector<double>> &Snm,
+    std::vector<std::vector<double>> &g,
+    std::vector<std::vector<double>> &h
+);
+
 void readVectorsC(
     const char *testFile,
     double *x, double *y, double *z, double *bx, double *by, double *bz
