@@ -292,12 +292,25 @@ void testVip4Function() {
 
 }
 
+void testModelVars() {
+	std::vector<std::vector<double>> Snm0, Snm1, g0, g1, h0, h1;
+
+	Internal model("vip4");
+	Snm1 = model.getSnm();
+	g1 = model.getg();
+	h1 = model.geth();
+
+   	std::filesystem::path file = std::filesystem::current_path();
+    file /= "testmodelvars.bin";
+	readModelVariables(file,Snm0,g0,h0);
+}
+
 
 int main() {
 
 	testVip4Internal();
 	testJrm09Internal();
 	testVip4Function();
-	
+	testModelVars();
 }
 	
