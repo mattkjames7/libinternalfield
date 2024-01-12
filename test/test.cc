@@ -292,17 +292,194 @@ void testVip4Function() {
 
 }
 
+
+void printSchmidt(std::vector<struct schmidtcoeffs> schc) {
+	int i;
+	std::cout << "n: ";
+	for (i=0;i<schc.size();i++) {
+		std::cout << std::setw(4) << schc[i].n << " ";
+	}
+	std::cout << "m: ";
+	for (i=0;i<schc.size();i++) {
+		std::cout << std::setw(4) << schc[i].m << " ";
+	}
+	std::cout << "g: ";
+	for (i=0;i<schc.size();i++) {
+		std::cout << std::setw(10) << std::setprecision(3) << schc[i].g << " ";
+	}
+	std::cout << "h: ";
+	for (i=0;i<schc.size();i++) {
+		std::cout << std::setw(10) << std::setprecision(3) << schc[i].h << " ";
+	}
+}
+
+void compareSchmidtCoeffs(
+	std::vector<struct schmidtcoeffs> &schc0,
+	std::vector<struct schmidtcoeffs> &schc1
+){
+	int n = schc0.size();
+	std::cout << "Schmidt Coefficients............................";
+	bool passed = true;
+	int i;
+
+	if (schc1.size() != n) {
+		passed = false;
+	} else {
+		for (i=0;i<n;i++) {
+			if ((schc0[i].n != schc1[i].n) ||
+				(schc0[i].m != schc1[i].m) ||
+				(schc0[i].g != schc1[i].g) ||
+				(schc0[i].h != schc1[i].h)) {
+				passed = false;
+				break;
+			}
+		}
+	}
+
+	if (passed) {
+		std::cout << "PASS" << std::endl;
+	} else {
+		std::cout << "FAIL" << std::endl;
+		std::cout << "Schmidt Coefficient mismatch" << std::endl;
+		std::cout << "Expected:" << std::endl;
+		printSchmidt(schc0);
+		std::cout << "Found:" << std::endl;
+		printSchmidt(schc1);
+	}
+}
+
+void printVectorVector(std::vector<std::vector<double>> x) {
+	int i, j;
+	std::cout << "[" << std::endl;
+	for (i=0;i<x.size();i++) {
+		std::cout << "\t[";
+		for (j=0;j<x[i].size();j++) {
+			if (j % 6 == 0) {
+				std::cout << std::endl << "\t\t";
+			}
+			std::cout << std::setw(10) << std::setprecision(3) << x[i][j] << " ";
+		}
+		std::cout << std::endl << "\t]" << std::endl;
+
+	}
+	std::cout << "]" << std::endl;
+}
+
+void printVectorVector(std::vector<std::vector<int>> x) {
+	int i, j;
+	std::cout << "[" << std::endl;
+	for (i=0;i<x.size();i++) {
+		std::cout << "\t[";
+		for (j=0;j<x[i].size();j++) {
+			if (j % 10 == 0) {
+				std::cout << std::endl << "\t\t";
+			}
+			std::cout << std::setw(4) << x[i][j] << " ";
+		}
+		std::cout << std::endl << "\t]" << std::endl;
+
+	}
+	std::cout << "]" << std::endl;
+}
+
+
+void compareVectorVector(
+	std::string name,
+	std::vector<std::vector<double>> x0, 
+	std::vector<std::vector<double>> x1
+) {
+
+	int i, j, n = x0.size(), s = 48 - name.size();
+	std::cout << name;
+	for (i=0;i<s;i++) {
+		std::cout << ".";
+	}
+	bool passed = true;
+
+	if (x1.size() != n) {
+		passed = false;
+	} else {
+		for (i=0;i<n;i++) {
+			for (j=0;j<x0[i].size();j++) {
+				if (x0[i][j] != x1[i][j]) {
+					passed = false;
+					break;
+				}
+			}
+		}
+	}
+
+	if (passed) {
+		std::cout << "PASS" << std::endl;
+	} else {
+		std::cout << "FAIL" << std::endl;
+		std::cout << "Mismatch (" << name << ")" << std::endl;
+		std::cout << "Expected:" << std::endl;
+		printVectorVector(x0);
+		std::cout << "Found:" << std::endl;
+		printVectorVector(x1);
+	}
+}
+
+
+void compareVectorVector(
+	std::string name,
+	std::vector<std::vector<int>> x0, 
+	std::vector<std::vector<int>> x1
+) {
+
+	int i, j, n = x0.size(), s = 49 - name.size();
+	std::cout << name;
+	for (i=0;i<s;i++) {
+		std::cout << ".";
+	}
+	bool passed = true;
+
+	if (x1.size() != n) {
+		passed = false;
+	} else {
+		for (i=0;i<n;i++) {
+			for (j=0;j<x0[i].size();j++) {
+				if (x0[i][j] != x1[i][j]) {
+					passed = false;
+					break;
+				}
+			}
+		}
+	}
+
+	if (passed) {
+		std::cout << "PASS" << std::endl;
+	} else {
+		std::cout << "FAIL" << std::endl;
+		std::cout << "Mismatch (" << name << ")" << std::endl;
+		std::cout << "Expected:" << std::endl;
+		printVectorVector(x0);
+		std::cout << "Found:" << std::endl;
+		printVectorVector(x1);
+	}
+}
+
+
+
 void testModelVars() {
 	std::vector<std::vector<double>> Snm0, Snm1, g0, g1, h0, h1;
+	std::vector<struct schmidtcoeffs> schc0, schc1;
 
 	Internal model("vip4");
+	schc1 = model.getSchmidtCoeffs();
 	Snm1 = model.getSnm();
 	g1 = model.getg();
 	h1 = model.geth();
 
    	std::filesystem::path file = std::filesystem::current_path();
     file /= "testmodelvars.bin";
-	readModelVariables(file,Snm0,g0,h0);
+	readModelVariables(file,schc0,Snm0,g0,h0);
+
+	compareSchmidtCoeffs(schc0,schc1);
+	compareVectorVector("Snm",Snm0,Snm1);
+	compareVectorVector("g",g0,g1);
+	compareVectorVector("h",h0,h1);
 }
 
 

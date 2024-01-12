@@ -214,7 +214,7 @@ void saveVIP4ModelVariables() {
 	std::vector<std::vector<double>> Snm = model.getSnm();
 	std::vector<std::vector<double>> g = model.getg();
 	std::vector<std::vector<double>> h = model.geth();
-	saveModelVariables(file,Snm,g,h);
+	saveModelVariables(file,schc,Snm,g,h);
 
 }
 
