@@ -5,7 +5,8 @@
 #include <cstdint> 
 #include <filesystem>
 #include <iostream>
-#include<stdlib.h>
+#include <stdlib.h>
+#include <internalfield.h>
 
 
 void saveVector(std::ofstream &file, std::vector<double> &x);
@@ -23,6 +24,22 @@ void readVectors(
 bool compareVectors(
     std::vector<double> bx0, std::vector<double> by0, std::vector<double> bz0,
     std::vector<double> bx1, std::vector<double> by1, std::vector<double> bz1
+);
+
+void readModelVariables(
+    std::filesystem::path &testFile,
+    std::vector<struct schmidtcoeffs> &schc,
+    std::vector<std::vector<double>> &Snm,
+    std::vector<std::vector<double>> &g,
+    std::vector<std::vector<double>> &h
+);
+
+void saveModelVariables(
+    std::filesystem::path &testFile,
+    std::vector<struct schmidtcoeffs> &schc,
+    std::vector<std::vector<double>> &Snm,
+    std::vector<std::vector<double>> &g,
+    std::vector<std::vector<double>> &h
 );
 
 void readVectorsC(

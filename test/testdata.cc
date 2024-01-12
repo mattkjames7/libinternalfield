@@ -8,6 +8,38 @@ void saveVector(std::ofstream &file, std::vector<double> &x) {
     
 }
 
+void saveVector(std::ofstream &file, std::vector<int> &x) {
+
+    std::int32_t size = static_cast<std::int32_t>(x.size());
+    file.write(reinterpret_cast<const char*>(&size),sizeof(size));
+    file.write(reinterpret_cast<const char*>(x.data()),x.size()*sizeof(int));
+    
+}
+
+
+void saveSchmidtCoeffs(std::ofstream &file, std::vector<struct schmidtcoeffs> schc) {
+
+    int l = schc.size();
+    std::vector<int> n(l);
+    std::vector<int> m(l);
+    std::vector<double> g(l);
+    std::vector<double> h(l);
+
+    struct schmidtcoeffs tmp;
+    for (int i=0;i<l;i++) {
+        tmp = schc[i];
+        n[i] = tmp.n;
+        m[i] = tmp.m;
+        g[i] = tmp.g;
+        h[i] = tmp.h;
+    }
+
+    saveVector(file,n);
+    saveVector(file,m);
+    saveVector(file,g);
+    saveVector(file,h);
+}
+
 std::vector<double> readVector(std::ifstream &file) {
 
     std::int32_t size;
@@ -15,6 +47,36 @@ std::vector<double> readVector(std::ifstream &file) {
     std::vector<double> x(size);
     file.read(reinterpret_cast<char*>(x.data()), size * sizeof(double));
     return x;
+}
+
+std::vector<int> readIntVector(std::ifstream &file) {
+
+    std::int32_t size;
+    file.read(reinterpret_cast<char*>(&size), sizeof(size));
+    std::vector<int> x(size);
+    file.read(reinterpret_cast<char*>(x.data()), size * sizeof(int));
+    return x;
+}
+
+std::vector<struct schmidtcoeffs> readSchmidtCoeffs(std::ifstream &file) {
+
+    std::vector<int> n = readIntVector(file);
+    std::vector<int> m = readIntVector(file);
+    std::vector<double> g = readVector(file);
+    std::vector<double> h = readVector(file);
+
+    int l = n.size();
+    std::vector<struct schmidtcoeffs> out;
+    struct schmidtcoeffs tmp;
+    for (int i=0;i<l;i++) {
+        tmp.n = n[i];
+        tmp.m = m[i];
+        tmp.g = g[i];
+        tmp.h = h[i];
+        out.push_back(tmp);
+    }
+
+    return out;
 }
 
 void saveVectors(
@@ -35,6 +97,7 @@ void saveVectors(
     file.close();
 }
 
+
 void readVectors(
     std::filesystem::path &testFile,
     std::vector<double> &x, std::vector<double> &y, std::vector<double> &z,
@@ -53,6 +116,77 @@ void readVectors(
     file.close();
 }
 
+void saveVectorVector(
+    std::ofstream &file,
+    std::vector<std::vector<double>> &x
+    ) {
+
+    int n = x.size();
+
+    std::int32_t size = static_cast<std::int32_t>(x.size());
+    file.write(reinterpret_cast<const char*>(&size),sizeof(size));
+    for (int i=0;i<n;i++) {
+        saveVector(file,x[i]);
+    }
+
+
+}
+
+
+std::vector<std::vector<double>> readVectorVector(std::ifstream &file) {
+
+    std::vector<double> tmp;
+    std::vector<std::vector<double>> out;
+
+    std::int32_t n;
+    file.read(reinterpret_cast<char*>(&n), sizeof(n));
+
+    for (int i=0;i<n;i++) {
+        tmp = readVector(file);
+        out.push_back(tmp);
+        tmp.clear();
+    }
+    return out;
+}
+
+
+void saveModelVariables(
+    std::filesystem::path &testFile,
+    std::vector<struct schmidtcoeffs> &schc,
+    std::vector<std::vector<double>> &Snm,
+    std::vector<std::vector<double>> &g,
+    std::vector<std::vector<double>> &h
+) {
+    
+    std::ofstream file(testFile,std::ios::binary);
+
+    saveSchmidtCoeffs(file,schc);
+    saveVectorVector(file,Snm);
+    saveVectorVector(file,g);
+    saveVectorVector(file,h);
+
+    file.close();
+
+}
+
+void readModelVariables(
+    std::filesystem::path &testFile,
+    std::vector<struct schmidtcoeffs> &schc,
+    std::vector<std::vector<double>> &Snm,
+    std::vector<std::vector<double>> &g,
+    std::vector<std::vector<double>> &h
+) {
+
+    std::ifstream file(testFile,std::ios::binary);
+
+    schc = readSchmidtCoeffs(file);
+    Snm = readVectorVector(file);
+    g = readVectorVector(file);
+    h = readVectorVector(file);
+
+    file.close();
+
+}
 
 void readVectorsC(
     const char *testFile,

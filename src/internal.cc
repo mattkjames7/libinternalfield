@@ -1071,3 +1071,70 @@ void Internal::_BPol2BCart(	double t, double p,
 	
 								
 }
+
+
+
+std::vector<struct schmidtcoeffs> Internal::getSchmidtCoeffs() {
+
+	std::vector<struct schmidtcoeffs> out;
+	int i;
+	for (i=0;i<nschc_;i++) {
+		out.push_back(schc_[i]);
+	}
+	return out;
+}
+
+std::vector<std::vector<double>> Internal::getSnm() {
+
+	std::vector<double> tmp;
+	std::vector<std::vector<double>> out;
+
+	int m, n;
+	for (n=0;n<nmax_+1;n++) {
+		for (m=0;m<n+1;m++) {
+			tmp.push_back(Snm_[n][m]);
+		}
+		out.push_back(tmp);
+		tmp.clear();
+	}
+
+	return out;
+
+}
+
+
+std::vector<std::vector<double>> Internal::getg() {
+
+	std::vector<double> tmp;
+	std::vector<std::vector<double>> out;
+
+	int m, n;
+	for (n=0;n<nmax_+1;n++) {
+		for (m=0;m<n+1;m++) {
+			tmp.push_back(g_[n][m]);
+		}
+		out.push_back(tmp);
+		tmp.clear();
+	}
+
+	return out;
+
+}
+
+std::vector<std::vector<double>> Internal::geth() {
+
+	std::vector<double> tmp;
+	std::vector<std::vector<double>> out;
+
+	int m, n;
+	for (n=0;n<nmax_+1;n++) {
+		for (m=0;m<n+1;m++) {
+			tmp.push_back(h_[n][m]);
+		}
+		out.push_back(tmp);
+		tmp.clear();
+	}
+
+	return out;
+
+}
