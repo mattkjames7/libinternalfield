@@ -19,10 +19,10 @@ all:
 	$(CC) $(IFLAGS) timer.cc -o timer $(LDFLAGS)
 	gcc $(IFLAGS) ctest.c -o ctest $(LDFLAGS)
 	$(CC) $(IFLAGS) cpptest.cc -o cpptest $(LDFLAGS)
-	./test
-	./timer
-	./ctest
-	./cpptest
+	@./test
+	@./ctest
+	@./cpptest
+	@./timer
 	
 save:
 	$(CC) $(IFLAGS) testdata.cc savetestdata.cc -o savetestdata $(LDFLAGS)

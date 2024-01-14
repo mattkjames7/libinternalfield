@@ -2,9 +2,23 @@
 #include <stdbool.h>
 #include <internalfield.h>
 
+
+void readTestData(double *Tx, double *Ty, double *Tz) {
+    const char *fileName = "ctest.bin";
+
+    FILE *file = fopen(fileName, "rb");
+
+    size_t readSize = sizeof(double);
+	fread(Tx, readSize, 1, file);
+	fread(Ty, readSize, 1, file);
+    fread(Tz, readSize, 1, file);
+
+    fclose(file);
+}
+
 int main() {
 
-	printf("Testing C\n");
+	printf("C Test..........................................");
 	
 	/* try getting a model function */
 	modelFieldPtr model = getModelFieldPtr("jrm33");
@@ -14,9 +28,19 @@ int main() {
 	double Bx, By, Bz;
 	model(x,y,z,&Bx,&By,&Bz);
 
-	printf("B = [%6.1f,%6.1f,%6.1f] nT at [%4.1f,%4.1f,%4.1f]\n",Bx,By,Bz,x,y,z);
+	/* read in the saved data */
+	double Tx, Ty, Tz;
+	readTestData(&Tx, &Ty, &Tz);
 
-	printf("C test done\n");
+	/* compare results */
+	bool pass = (Tx == Bx) && (Ty == By) && (Tz == Bz);
+	if (pass) {
+		printf("PASS\n");
+	} else {
+		printf("FAIL\n");
+		printf("Expected: [%10.3f, %10.3f, %10.3f]\n",Tx,Ty,Tz);
+		printf("Output: [%10.3f, %10.3f, %10.3f]\n",Bx,By,Bz);
+	}	
 
 
 }
