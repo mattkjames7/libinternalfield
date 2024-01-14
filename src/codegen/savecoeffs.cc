@@ -80,6 +80,7 @@ FileParams readFileParams(std::filesystem::path coeffFile) {
     }
 
     double rScale = 1.0;
+    int maxDegree = -1;
     int defaultDegree = -1;
 
     std::string rscalePrefix = "#Rscale";
@@ -97,6 +98,7 @@ FileParams readFileParams(std::filesystem::path coeffFile) {
         if (line.compare(0, rscalePrefix.length(), rscalePrefix) == 0) {
             liness.str(line.substr(rscalePrefix.length()));
             try {
+                
                 if (!(liness >> rScale)) {
                     error = "File formatting error\n";
                     error += "File: ";
@@ -110,7 +112,8 @@ FileParams readFileParams(std::filesystem::path coeffFile) {
         } else if (line.compare(0, defdegPrefix.length(), defdegPrefix) == 0) {
             liness.str(line.substr(defdegPrefix.length()));
             try {
-                if (!(liness >> rScale)) {
+                //defaultDegree = stoi(liness.str());
+                if (!(liness >> defaultDegree)) {
                     error = "File formatting error\n";
                     error += "File: ";
                     error += coeffFile.string();
@@ -140,15 +143,19 @@ FileParams readFileParams(std::filesystem::path coeffFile) {
     }
     cFile.close();
 
-    if (defaultDegree == -1) {
+    if (maxDegree == -1) {
         for (auto &d : data) {
-            if (d.m > defaultDegree){
-                defaultDegree = d.m;
+            if (d.m > maxDegree){
+                maxDegree = d.m;
             } 
-            if (d.n > defaultDegree){
-                defaultDegree = d.n;
+            if (d.n > maxDegree){
+                maxDegree = d.n;
             } 
         }
+    }
+
+    if (defaultDegree == -1) {
+        defaultDegree = maxDegree;
     }
 
     return std::make_tuple(data,rScale,defaultDegree);
@@ -272,7 +279,7 @@ std::string getModelDefinitionString(ModelFileTuple model) {
     oss << "\tstatic const int len = " << mdef.len << ";\n";
     oss << "\tstatic const int nmax = " << mdef.nmax << ";\n";
     oss << "\tstatic const int ndef = " << mdef.ndef << ";\n";
-    oss << "\tstatic const int rscale = " << std::fixed << std::setw(27) 
+    oss << "\tstatic const double rscale = " << std::fixed << std::setw(27) 
         << std::setprecision(25) << mdef.rscale << ";\n";
     oss << "\tstatic const std::vector<int> n = {\n";
     oss << formatInts(mdef.n);

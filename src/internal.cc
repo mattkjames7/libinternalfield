@@ -289,9 +289,7 @@ void Internal::_LoadSchmidt(coeffStruct S){
 		schc_[i].m = S.m[i];
 		schc_[i].g = S.g[i];
 		schc_[i].h = S.h[i];
-	}
-
-	
+	}	
 }
 
 /***********************************************************************

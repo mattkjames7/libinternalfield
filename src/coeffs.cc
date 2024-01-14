@@ -43,7 +43,7 @@ coeffStruct& _model_coeff_spv() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -73,7 +73,7 @@ coeffStruct& _model_coeff_z3() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -102,8 +102,8 @@ coeffStruct& _model_coeff_cassini11() {
 	static const std::string body = "saturn";
 	static const int len = 90;
 	static const int nmax = 12;
-	static const int ndef = 12;
-	static const int rscale = 11.0000000000000000000000000;
+	static const int ndef = 11;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -175,7 +175,7 @@ coeffStruct& _model_coeff_cassini5() {
 	static const int len = 20;
 	static const int nmax = 5;
 	static const int ndef = 5;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,
@@ -211,7 +211,7 @@ coeffStruct& _model_coeff_soi() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -241,7 +241,7 @@ coeffStruct& _model_coeff_p1184() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -271,7 +271,7 @@ coeffStruct& _model_coeff_burton2009() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -301,7 +301,7 @@ coeffStruct& _model_coeff_v1() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -331,7 +331,7 @@ coeffStruct& _model_coeff_cassini3() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -361,7 +361,7 @@ coeffStruct& _model_coeff_v2() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -391,7 +391,7 @@ coeffStruct& _model_coeff_p11as() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -421,7 +421,7 @@ coeffStruct& _model_coeff_igrf1960() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -501,7 +501,7 @@ coeffStruct& _model_coeff_igrf1935() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -581,7 +581,7 @@ coeffStruct& _model_coeff_igrf1945() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -661,7 +661,7 @@ coeffStruct& _model_coeff_igrf1925() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -741,7 +741,7 @@ coeffStruct& _model_coeff_igrf1910() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -821,7 +821,7 @@ coeffStruct& _model_coeff_igrf1905() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -901,7 +901,7 @@ coeffStruct& _model_coeff_igrf1980() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -981,7 +981,7 @@ coeffStruct& _model_coeff_igrf1990() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -1061,7 +1061,7 @@ coeffStruct& _model_coeff_igrf2015() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -1141,7 +1141,7 @@ coeffStruct& _model_coeff_igrf1940() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -1221,7 +1221,7 @@ coeffStruct& _model_coeff_igrf1930() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -1301,7 +1301,7 @@ coeffStruct& _model_coeff_igrf2005() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -1381,7 +1381,7 @@ coeffStruct& _model_coeff_igrf2020() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -1461,7 +1461,7 @@ coeffStruct& _model_coeff_igrf2010() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -1541,7 +1541,7 @@ coeffStruct& _model_coeff_igrf1915() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -1621,7 +1621,7 @@ coeffStruct& _model_coeff_igrf2000() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -1701,7 +1701,7 @@ coeffStruct& _model_coeff_igrf1950() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -1781,7 +1781,7 @@ coeffStruct& _model_coeff_igrf1970() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -1861,7 +1861,7 @@ coeffStruct& _model_coeff_igrf1965() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -1941,7 +1941,7 @@ coeffStruct& _model_coeff_igrf1920() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -2021,7 +2021,7 @@ coeffStruct& _model_coeff_igrf2025() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -2101,7 +2101,7 @@ coeffStruct& _model_coeff_igrf1985() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -2181,7 +2181,7 @@ coeffStruct& _model_coeff_igrf1975() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -2261,7 +2261,7 @@ coeffStruct& _model_coeff_igrf1955() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -2341,7 +2341,7 @@ coeffStruct& _model_coeff_igrf1900() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -2421,7 +2421,7 @@ coeffStruct& _model_coeff_igrf1995() {
 	static const int len = 104;
 	static const int nmax = 13;
 	static const int ndef = 13;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -2501,7 +2501,7 @@ coeffStruct& _model_coeff_gsfco8full() {
 	static const int len = 44;
 	static const int nmax = 8;
 	static const int ndef = 8;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -2549,7 +2549,7 @@ coeffStruct& _model_coeff_gsfco8() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -2579,7 +2579,7 @@ coeffStruct& _model_coeff_nmoh() {
 	static const int len = 152;
 	static const int nmax = 16;
 	static const int ndef = 16;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -2685,7 +2685,7 @@ coeffStruct& _model_coeff_kivelson2002a() {
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,
 	};
@@ -2713,7 +2713,7 @@ coeffStruct& _model_coeff_weber2022quad() {
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,
 	};
@@ -2741,7 +2741,7 @@ coeffStruct& _model_coeff_kivelson2002b() {
 	static const int len = 2;
 	static const int nmax = 1;
 	static const int ndef = 1;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,
 	};
@@ -2769,7 +2769,7 @@ coeffStruct& _model_coeff_kivelson2002c() {
 	static const int len = 2;
 	static const int nmax = 1;
 	static const int ndef = 1;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,
 	};
@@ -2797,7 +2797,7 @@ coeffStruct& _model_coeff_weber2022dip() {
 	static const int len = 2;
 	static const int nmax = 1;
 	static const int ndef = 1;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,
 	};
@@ -2825,7 +2825,7 @@ coeffStruct& _model_coeff_uno2009() {
 	static const int len = 44;
 	static const int nmax = 8;
 	static const int ndef = 8;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -2873,7 +2873,7 @@ coeffStruct& _model_coeff_thebault2018m2() {
 	static const int len = 20;
 	static const int nmax = 5;
 	static const int ndef = 5;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,
@@ -2909,7 +2909,7 @@ coeffStruct& _model_coeff_uno2009svd() {
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,
 	};
@@ -2937,7 +2937,7 @@ coeffStruct& _model_coeff_anderson2010qts04() {
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,
 	};
@@ -2965,7 +2965,7 @@ coeffStruct& _model_coeff_anderson2010dsha() {
 	static const int len = 2;
 	static const int nmax = 1;
 	static const int ndef = 1;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,
 	};
@@ -2993,7 +2993,7 @@ coeffStruct& _model_coeff_anderson2012() {
 	static const int len = 14;
 	static const int nmax = 4;
 	static const int ndef = 4;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,
 	};
@@ -3025,7 +3025,7 @@ coeffStruct& _model_coeff_anderson2010dts04() {
 	static const int len = 2;
 	static const int nmax = 1;
 	static const int ndef = 1;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,
 	};
@@ -3053,7 +3053,7 @@ coeffStruct& _model_coeff_anderson2010qsha() {
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,
 	};
@@ -3081,7 +3081,7 @@ coeffStruct& _model_coeff_ness1975() {
 	static const int len = 2;
 	static const int nmax = 1;
 	static const int ndef = 1;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,
 	};
@@ -3109,7 +3109,7 @@ coeffStruct& _model_coeff_thebault2018m1() {
 	static const int len = 20;
 	static const int nmax = 5;
 	static const int ndef = 5;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,
@@ -3145,7 +3145,7 @@ coeffStruct& _model_coeff_anderson2010r() {
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,
 	};
@@ -3173,7 +3173,7 @@ coeffStruct& _model_coeff_anderson2010d() {
 	static const int len = 2;
 	static const int nmax = 1;
 	static const int ndef = 1;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,
 	};
@@ -3201,7 +3201,7 @@ coeffStruct& _model_coeff_anderson2010q() {
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,
 	};
@@ -3229,7 +3229,7 @@ coeffStruct& _model_coeff_thebault2018m3() {
 	static const int len = 20;
 	static const int nmax = 5;
 	static const int ndef = 5;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,
@@ -3265,7 +3265,7 @@ coeffStruct& _model_coeff_gao2021() {
 	static const int len = 6215;
 	static const int nmax = 110;
 	static const int ndef = 110;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -6553,7 +6553,7 @@ coeffStruct& _model_coeff_cain2003() {
 	static const int len = 4185;
 	static const int nmax = 90;
 	static const int ndef = 90;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -8775,7 +8775,7 @@ coeffStruct& _model_coeff_mh2014() {
 	static const int len = 6215;
 	static const int nmax = 110;
 	static const int ndef = 110;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -12063,7 +12063,7 @@ coeffStruct& _model_coeff_langlais2019() {
 	static const int len = 9179;
 	static const int nmax = 134;
 	static const int ndef = 134;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -16907,7 +16907,7 @@ coeffStruct& _model_coeff_gsfcq3full() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -16937,7 +16937,7 @@ coeffStruct& _model_coeff_gsfcq3() {
 	static const int len = 5;
 	static const int nmax = 2;
 	static const int ndef = 2;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,
 	};
@@ -16965,7 +16965,7 @@ coeffStruct& _model_coeff_ah5() {
 	static const int len = 14;
 	static const int nmax = 4;
 	static const int ndef = 4;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,
 	};
@@ -16997,7 +16997,7 @@ coeffStruct& _model_coeff_umoh() {
 	static const int len = 152;
 	static const int nmax = 16;
 	static const int ndef = 16;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -17102,8 +17102,8 @@ coeffStruct& _model_coeff_jrm33() {
 	static const std::string body = "jupiter";
 	static const int len = 495;
 	static const int nmax = 30;
-	static const int ndef = 30;
-	static const int rscale = 13.0000000000000000000000000;
+	static const int ndef = 13;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -17387,7 +17387,7 @@ coeffStruct& _model_coeff_vit4() {
 	static const int len = 14;
 	static const int nmax = 4;
 	static const int ndef = 4;
-	static const int rscale = 1.0023695021241394442768069;
+	static const double rscale = 1.0023695021241394442768069;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,
 	};
@@ -17419,7 +17419,7 @@ coeffStruct& _model_coeff_isaac() {
 	static const int len = 65;
 	static const int nmax = 10;
 	static const int ndef = 10;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -17479,7 +17479,7 @@ coeffStruct& _model_coeff_vipal() {
 	static const int len = 20;
 	static const int nmax = 5;
 	static const int ndef = 5;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,
@@ -17515,7 +17515,7 @@ coeffStruct& _model_coeff_vip4() {
 	static const int len = 14;
 	static const int nmax = 4;
 	static const int ndef = 4;
-	static const int rscale = 1.0023695021241394442768069;
+	static const double rscale = 1.0023695021241394442768069;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,
 	};
@@ -17547,7 +17547,7 @@ coeffStruct& _model_coeff_jpl15evs() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -17577,7 +17577,7 @@ coeffStruct& _model_coeff_p11a() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -17606,8 +17606,8 @@ coeffStruct& _model_coeff_jrm09() {
 	static const std::string body = "jupiter";
 	static const int len = 230;
 	static const int nmax = 20;
-	static const int ndef = 20;
-	static const int rscale = 10.0000000000000000000000000;
+	static const int ndef = 10;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   5,
 		   5,   5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,
@@ -17753,7 +17753,7 @@ coeffStruct& _model_coeff_jpl15ev() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -17783,7 +17783,7 @@ coeffStruct& _model_coeff_o4() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0016813316146389034599906;
+	static const double rscale = 1.0016813316146389034599906;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -17813,7 +17813,7 @@ coeffStruct& _model_coeff_o6() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0016813316146389034599906;
+	static const double rscale = 1.0016813316146389034599906;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -17843,7 +17843,7 @@ coeffStruct& _model_coeff_sha() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0013165634891734168121502;
+	static const double rscale = 1.0013165634891734168121502;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -17873,7 +17873,7 @@ coeffStruct& _model_coeff_u17ev() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0013165634891734168121502;
+	static const double rscale = 1.0013165634891734168121502;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -17903,7 +17903,7 @@ coeffStruct& _model_coeff_gsfc15ev() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -17933,7 +17933,7 @@ coeffStruct& _model_coeff_gsfc13ev() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -17963,7 +17963,7 @@ coeffStruct& _model_coeff_gsfc15evs() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0000000000000000000000000;
+	static const double rscale = 1.0000000000000000000000000;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
@@ -17993,7 +17993,7 @@ coeffStruct& _model_coeff_v117ev() {
 	static const int len = 9;
 	static const int nmax = 3;
 	static const int ndef = 3;
-	static const int rscale = 1.0023695021241394442768069;
+	static const double rscale = 1.0023695021241394442768069;
 	static const std::vector<int> n = {
 		   1,   1,   2,   2,   2,   3,   3,   3,   3,
 	};
