@@ -23,6 +23,42 @@ double stddev(int n, double *x) {
 	return sdx;
 }
 
+vectorTuple getRandomVectors(int n) {
+
+
+	/* seed the random number generator */
+	srand(time(NULL));	
+	
+	/* generate 10000 random vectors */
+	std::vector<double> x(n), y(n), z(n), r(n), t(n), p(n);
+
+	int i;
+	for (i=0;i<n;i++) {
+		x[i] = 100*(rand()/RAND_MAX) - 50.0;
+		y[i] = 100*(rand()/RAND_MAX) - 50.0;
+		z[i] = 40*(rand()/RAND_MAX) - 20.0;
+		
+		r[i] = sqrt(x[i]*x[i] + y[i]*y[i] + z[i]*z[i]);
+		t[i] = acos(z[i]/r[i]);
+		p[i] = atan2(y[i],x[i]);
+		
+	}
+
+	return {x,y,z,r,t,p};
+}
+
+timingResult timeModel(int n) {
+
+	vectorTuple pos = getRandomVectors(n);
+	std::vector<double> x = std:get<0>(pos);
+	std::vector<double> y = std:get<1>(pos);
+	std::vector<double> z = std:get<2>(pos);
+	std::vector<double> r = std:get<3>(pos);
+	std::vector<double> t = std:get<4>(pos);
+	std::vector<double> p = std:get<5>(pos);
+
+	
+} 
 
 int main() {
 	
