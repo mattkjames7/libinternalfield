@@ -197,15 +197,6 @@ ModelDef getModelDefinition(ModelFileTuple model) {
         }
     }
 
-    if (def.name.compare("vip4") == 0) {
-        for (i=0;i<coeffs.size();i++) {
-            std::cout << coeffs[i].gh << " ";
-            std::cout << coeffs[i].n << " ";
-            std::cout << coeffs[i].m << " ";
-            std::cout << coeffs[i].val << std::endl;
-        }
-    }
-  
     int pos;
     for (i=0;i<coeffs.size();i++) {
         pos = coeffs[i].m - 1;
