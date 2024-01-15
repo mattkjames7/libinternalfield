@@ -246,7 +246,7 @@ void testVip4Internal() {
 	FieldVectors origVip4 = vip4TestVectors();
 
 	bool goodVip4 = compareSavedVectors(origVip4,bVip4);
-	std::cout << "VIP4 vector test................................";
+	std::cout << "VIP4 vector test..............................";
 	if (goodVip4) {
 		std::cout << "PASS" << std::endl;
 	} else { 
@@ -264,7 +264,7 @@ void testJrm09Internal() {
 
 
 	bool goodJrm09 = compareSavedVectors(origJrm09,bJrm09);
-	std::cout << "JRM09 vector test...............................";
+	std::cout << "JRM09 vector test.............................";
 	if (goodJrm09) {
 		std::cout << "PASS" << std::endl;
 	} else { 
@@ -282,7 +282,7 @@ void testVip4Function() {
 	FieldVectors origVip4 = vip4TestFunctionVectors();
 
 	bool goodVip4 = compareSavedVectors(origVip4,bVip4);
-	std::cout << "VIP4 function test..............................";
+	std::cout << "VIP4 function test............................";
 	if (goodVip4) {
 		std::cout << "PASS" << std::endl;
 	} else { 
@@ -318,7 +318,7 @@ void compareSchmidtCoeffs(
 	std::vector<struct schmidtcoeffs> &schc1
 ){
 	int n = schc0.size();
-	std::cout << "Schmidt Coefficients............................";
+	std::cout << "Schmidt Coefficients..........................";
 	bool passed = true;
 	int i;
 
@@ -389,7 +389,7 @@ void compareVectorVector(
 	std::vector<std::vector<double>> x1
 ) {
 
-	int i, j, n = x0.size(), s = 48 - name.size();
+	int i, j, n = x0.size(), s = 46 - name.size();
 	std::cout << name;
 	for (i=0;i<s;i++) {
 		std::cout << ".";
@@ -428,8 +428,8 @@ void compareVectorVector(
 	std::vector<std::vector<int>> x1
 ) {
 
-	int i, j, n = x0.size(), s = 49 - name.size();
-	std::cout << name;
+	int i, j, n = x0.size(), s = 46 - name.size();
+	std::cout << name << s;
 	for (i=0;i<s;i++) {
 		std::cout << ".";
 	}

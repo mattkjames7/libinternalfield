@@ -18,7 +18,7 @@ void readTestData(double *Tx, double *Ty, double *Tz) {
 
 int main() {
 
-	std::cout << "C++ Test........................................";
+	std::cout << "C++ Test......................................";
 	
 	/* try getting a model object */
 	InternalModel model;

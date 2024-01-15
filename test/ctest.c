@@ -18,7 +18,7 @@ void readTestData(double *Tx, double *Ty, double *Tz) {
 
 int main() {
 
-	printf("C Test..........................................");
+	printf("C Test........................................");
 	
 	/* try getting a model function */
 	modelFieldPtr model = getModelFieldPtr("jrm33");

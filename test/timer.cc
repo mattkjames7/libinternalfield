@@ -1,25 +1,38 @@
 #include "timer.h"
 
-double mean(int n, double *x) {
-	double mu = 0.0;
-	int i;
-	for (i=0;i<n;i++) {
-		mu += x[i];
+int nDots;
+
+void addDot() {
+	std::cout << ".";
+	nDots += 1;
+	if (nDots == 50) {
+		nDots = 0;
+		std::cout << std::endl;
 	}
-	mu = mu/n;
-	return mu;
 }
 
-double stddev(int n, double *x) {
+
+double mean(std::vector<double> &x) {
+	double mu = 0.0;
+	int i;
+	for (i=0;i<x.size();i++) {
+		mu += x[i];
+	}
+	mu = mu/x.size();
+	return mu;	
+}
+
+
+double stddev(std::vector<double> &x) {
 	
-	double mu = mean(n,x);
+	double mu = mean(x);
 	double sdx = 0.0;
 	int i;
 	
-	for (i=0;i<n;i++) {
+	for (i=0;i<x.size();i++) {
 		sdx += pow(x[i] - mu,2.0);
 	}
-	sdx = sdx/(n-1);
+	sdx = sdx/(x.size()-1);
 	return sdx;
 }
 
@@ -47,181 +60,235 @@ vectorTuple getRandomVectors(int n) {
 	return {x,y,z,r,t,p};
 }
 
-timingResult timeModel(int n) {
+std::vector<double> timeCartSingle(
+	int ntest,
+	std::vector<double> &x,
+	std::vector<double> &y,
+	std::vector<double> &z
+) {
+	InternalModel model;
+	model.SetModel("jrm33");
+	model.SetDegree(18);
+
+	model.SetCartIn(true);
+	model.SetCartOut(true);
+
+	int n = x.size();
+	std::vector<double> bx(n);
+	std::vector<double> by(n);
+	std::vector<double> bz(n);
+
+	double t0, t1;
+	int i, j;
+	std::vector<double> times(ntest);
+
+	for (i=0;i<ntest;i++) {
+		t0 = clock();
+		for (j=0;j<n;j++) {
+			model.Field(x[j],y[j],z[j],&bx[j],&by[j],&bz[j]);
+		}
+		t1 = clock();
+		times[i] = (t1 - t0)/CLOCKS_PER_SEC;
+		addDot();
+	}
+
+	/* return mean and standard deviation */
+	std::vector<double> out(2);
+	out[0] = mean(times);
+	out[1] = stddev(times);
+
+	return out;
+}
+
+std::vector<double> timeCartArray(
+	int ntest,
+	std::vector<double> &x,
+	std::vector<double> &y,
+	std::vector<double> &z
+) {
+	InternalModel model;
+	model.SetModel("jrm33");
+	model.SetDegree(18);
+
+	model.SetCartIn(true);
+	model.SetCartOut(true);
+
+	int n = x.size();
+	std::vector<double> bx(n);
+	std::vector<double> by(n);
+	std::vector<double> bz(n);
+
+
+	double t0, t1;
+	int i;
+	std::vector<double> times(ntest);
+
+	for (i=0;i<ntest;i++) {
+		t0 = clock();
+		model.Field(x.size(),x.data(),y.data(),z.data(),bx.data(),by.data(),bz.data());
+		t1 = clock();
+		times[i] = (t1 - t0)/CLOCKS_PER_SEC;
+		addDot();
+	}
+
+	/* return mean and standard deviation */
+	std::vector<double> out(2);
+	out[0] = mean(times);
+	out[1] = stddev(times);
+
+	return out;
+}
+
+
+std::vector<double> timePolarSingle(
+	int ntest,
+	std::vector<double> &r,
+	std::vector<double> &t,
+	std::vector<double> &p
+) {
+	InternalModel model;
+	model.SetModel("jrm33");
+	model.SetDegree(18);
+
+	model.SetCartIn(false);
+	model.SetCartOut(false);
+
+	int n = r.size();
+	std::vector<double> br(n);
+	std::vector<double> bt(n);
+	std::vector<double> bp(n);
+
+	double t0, t1;
+	int i, j;
+	std::vector<double> times(ntest);
+
+	for (i=0;i<ntest;i++) {
+		t0 = clock();
+		for (j=0;j<n;j++) {
+			model.Field(r[j],t[j],p[j],&br[j],&bt[j],&bp[j]);
+		}
+		t1 = clock();
+		times[i] = (t1 - t0)/CLOCKS_PER_SEC;
+		addDot();
+	}
+
+	/* return mean and standard deviation */
+	std::vector<double> out(2);
+	out[0] = mean(times);
+	out[1] = stddev(times);
+
+	return out;
+}
+
+std::vector<double> timePolarArray(
+	int ntest,
+	std::vector<double> &r,
+	std::vector<double> &t,
+	std::vector<double> &p
+) {
+	InternalModel model;
+	model.SetModel("jrm33");
+	model.SetDegree(18);
+
+	model.SetCartIn(false);
+	model.SetCartOut(false);
+
+	int n = r.size();
+	std::vector<double> br(n);
+	std::vector<double> bt(n);
+	std::vector<double> bp(n);
+
+	double t0, t1;
+	int i;
+	std::vector<double> times(ntest);
+
+	for (i=0;i<ntest;i++) {
+		t0 = clock();
+		model.Field(r.size(),r.data(),t.data(),p.data(),br.data(),bt.data(),bp.data());
+		t1 = clock();
+		times[i] = (t1 - t0)/CLOCKS_PER_SEC;
+		addDot();
+	}
+
+	/* return mean and standard deviation */
+	std::vector<double> out(2);
+	out[0] = mean(times);
+	out[1] = stddev(times);
+
+	return out;
+}
+
+timingResult timeModel(int n, int ntest) {
 
 	vectorTuple pos = getRandomVectors(n);
-	std::vector<double> x = std:get<0>(pos);
-	std::vector<double> y = std:get<1>(pos);
-	std::vector<double> z = std:get<2>(pos);
-	std::vector<double> r = std:get<3>(pos);
-	std::vector<double> t = std:get<4>(pos);
-	std::vector<double> p = std:get<5>(pos);
+	std::vector<double> x = std::get<0>(pos);
+	std::vector<double> y = std::get<1>(pos);
+	std::vector<double> z = std::get<2>(pos);
+	std::vector<double> r = std::get<3>(pos);
+	std::vector<double> t = std::get<4>(pos);
+	std::vector<double> p = std::get<5>(pos);
 
-	
+	std::vector<double> ca = timeCartArray(ntest,x,y,z);
+	std::vector<double> cs = timeCartSingle(ntest,x,y,z);
+	std::vector<double> pa = timePolarArray(ntest,r,t,p);
+	std::vector<double> ps = timePolarSingle(ntest,r,t,p);
+
+	timingResult out = {
+		ps[0],ps[1],
+		pa[0],pa[1],
+		cs[0],cs[1],
+		ca[0],ca[1]
+	};
+	return out;
 } 
 
-int main() {
+std::vector<timingResult> getTimings(std::vector<int> n, int ntest) {
+	std::vector<timingResult> out(n.size());
 	
-	int narr[] = {1,10,100,1000,10000,100000};
-	int n;
-	
-	double mu_vp[6],mu_vc[6],mu_sp[6],mu_sc[6];
-	
-	for (n=0;n<6;n++) {
-		printf("Testing n = %d\n",narr[n]);
-		test(narr[n],&mu_vp[n],&mu_sp[n],&mu_vc[n],&mu_sc[n]);
+	for (int i=0;i<n.size();i++) {
+		out[i] = timeModel(n[i],ntest);
 	}
-	
-	printf("Mean Vectorized, Polar: ");
-	for (n=0;n<6;n++) {
-		printf(" %12.10f",mu_vp[n]);
-	}
-	printf("\n");
-	
-	printf("Mean Single Vectors, Polar: ");
-	for (n=0;n<6;n++) {
-		printf(" %12.10f",mu_sp[n]);
-	}
-	printf("\n");
-	
-	printf("Mean Vectorized, Cartesian: ");
-	for (n=0;n<6;n++) {
-		printf(" %12.10f",mu_vc[n]);
-	}
-	printf("\n");
-	
-	printf("Mean Single Vector, Cartesian: ");
-	for (n=0;n<6;n++) {
-		printf(" %12.10f",mu_sc[n]);
-	}
-	printf("\n");
 
-
-
-	
-	
+	return out;
 }
-	
-	
-void test(int n, double *mu_vp, double *mu_sp, double *mu_vc, double *mu_sc) {	
 
-	/* seed the random number generator */
-	srand(time(NULL));	
-	
-	/* generate 10000 random vectors */
-	double *x = new double[n];
-	double *y = new double[n];
-	double *z = new double[n];
-	double *r = new double[n];
-	double *t = new double[n];
-	double *p = new double[n];
-	
-	int i, j;
-	for (i=0;i<n;i++) {
-		x[i] = 100*(rand()/RAND_MAX) - 50.0;
-		y[i] = 100*(rand()/RAND_MAX) - 50.0;
-		z[i] = 40*(rand()/RAND_MAX) - 20.0;
-		
-		r[i] = sqrt(x[i]*x[i] + y[i]*y[i] + z[i]*z[i]);
-		t[i] = acos(z[i]/r[i]);
-		p[i] = atan2(y[i],x[i]);
-		
+std::ostream& scientificFormat(std::ostream& os) {
+    os << std::setw(8) << std::setprecision(1) << std::scientific;
+    return os;
+}
+
+void printTimingLine(int n, timingResult timing) {
+
+	std::cout << "| " << std::setw(6) << n << " | ";
+	std::cout << scientificFormat << timing.muCartSingle;
+	std::cout << " ±" << scientificFormat << timing.sdCartSingle << " s |   "; 
+	std::cout << scientificFormat << timing.muCartArray;
+	std::cout << " ±" << scientificFormat << timing.sdCartArray << " s | ";
+	std::cout << scientificFormat << timing.muPolarSingle;
+	std::cout << " ±" << scientificFormat << timing.sdPolarSingle << " s | "; 
+	std::cout << scientificFormat << timing.muPolarArray;
+	std::cout << " ±" << scientificFormat << timing.sdPolarArray << " s |" << std::endl;
+
+
+}
+
+void printTimingResult(std::vector<int> n, std::vector<timingResult> timings) {
+
+	std::cout << "| Count  | Cartesian (single)   | Cartesian (vectorized) | Polar (single)       | Polar (vectorized)   |" << std::endl;
+	std::cout << "|:-------|:---------------------|:-----------------------|:---------------------|:---------------------|" << std::endl;
+
+	for (int i=0;i<n.size();i++) {
+		printTimingLine(n[i],timings[i]);
 	}
-	
-	int ntest = 5;
-	double *dt_vec_pol = new double[ntest];
-	double *dt_vec_car = new double[ntest];
-	double *dt_sgl_pol = new double[ntest];
-	double *dt_sgl_car = new double[ntest];
-	double t0, t1;
-	double mu,sd;
-	
-	double *B0 = new double[n];
-	double *B1 = new double[n];
-	double *B2 = new double[n];
-	
-	/* get the model */
-	InternalModel im;
-	const char * Model = "jrm33";
-	const int Degree = 18;
-	im.SetModel(Model);
-	im.SetDegree(Degree);
-	
-	printf("Testing model %s, degree %d\n",Model,Degree);
-	
-	/* time the function calling with a whole array (polar) */
-	im.SetCartIn(false);
-	im.SetCartOut(false);
-	for (i=0;i<ntest;i++) {
-		t0 = clock();
-		im.Field(n,r,t,p,B0,B1,B2);
-		t1 = clock();
-		dt_vec_pol[i] = (t1 - t0)/CLOCKS_PER_SEC;		
-	}
-	mu_vp[0] = mean(ntest,dt_vec_pol);
-	sd = stddev(ntest,dt_vec_pol);
-	printf("%12.10f +/- %12.10f s - polar, vectorized (%d vectors, %d tests)\n",mu_vp[0],sd,n,ntest);
-	
-	
-	/* time the function calling one element at a time (polar) */
-	im.SetCartIn(false);
-	im.SetCartOut(false);
-	for (i=0;i<ntest;i++) {
-		t0 = clock();
-		for (j=0;j<n;j++) {
-			im.Field(r[j],t[j],p[j],&B0[j],&B1[j],&B2[j]);
-		}
-		t1 = clock();
-		dt_sgl_pol[i] = (t1 - t0)/CLOCKS_PER_SEC;		
-	}
-	mu_sp[0] = mean(ntest,dt_sgl_pol);
-	sd = stddev(ntest,dt_sgl_pol);
-	printf("%12.10f +/- %12.10f s - polar, single vectors (%d vectors, %d tests)\n",mu_sp[0],sd,n,ntest);
-	
-		
-	/* time the function calling with a whole array (cartesian) */
-	im.SetCartIn(true);
-	im.SetCartOut(true);
-	for (i=0;i<ntest;i++) {
-		t0 = clock();
-		im.Field(n,x,y,z,B0,B1,B2);
-		t1 = clock();
-		dt_vec_car[i] = (t1 - t0)/CLOCKS_PER_SEC;		
-	}
-	mu_vc[0] = mean(ntest,dt_vec_car);
-	sd = stddev(ntest,dt_vec_car);
-	printf("%12.10f +/- %12.10f s - Cartesian, vectorized (%d vectors, %d tests)\n",mu_vc[0],sd,n,ntest);
-	
-	
-	/* time the function calling one element at a time (cartesian) */
-	im.SetCartIn(true);
-	im.SetCartOut(true);
-	for (i=0;i<ntest;i++) {
-		t0 = clock();
-		for (j=0;j<n;j++) {
-			im.Field(x[j],y[j],z[j],&B0[j],&B1[j],&B2[j]);
-		}
-		t1 = clock();
-		dt_sgl_car[i] = (t1 - t0)/CLOCKS_PER_SEC;		
-	}
-	mu_sc[0] = mean(ntest,dt_sgl_car);
-	sd = stddev(ntest,dt_sgl_car);
-	printf("%12.10f +/- %12.10f s - Cartesian, single vectors (%d vectors, %d tests)\n",mu_sc[0],sd,n,ntest);
-		
-	
-	
-	delete[] x;
-	delete[] y;
-	delete[] z;
-	delete[] r;
-	delete[] t;
-	delete[] p;
-	delete[] dt_vec_pol;
-	delete[] dt_vec_car;
-	delete[] dt_sgl_pol;
-	delete[] dt_sgl_car;
-	delete[] B0;
-	delete[] B1;
-	delete[] B2;
-	
+}
+
+int main() {
+
+	std::cout << "Calculating average model timings" << std::endl;
+	nDots = 0;
+
+	std::vector<int> n = {1,10,100,1000,10000,100000};
+	std::vector<timingResult> timings = getTimings(n,5);
+	std::cout << std::endl;
+	printTimingResult(n,timings);
 }
