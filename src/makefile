@@ -56,6 +56,7 @@ dll:
 clean:
 	-rm coeffs/*/*.bin
 	-rm variable/*/*.bin
+	cd codegen; make clean
 	
 header:
 	cd codegen; make all
