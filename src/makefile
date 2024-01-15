@@ -28,14 +28,24 @@ endif
 
 all: header obj lib 
 
-obj:
+obj: header coeffs models internal internalmodel libinternal
+
+coeffs:
 	$(CCo) coeffs.cc -o $(BUILDDIR)/coeffs.o
+
+models:
 	$(CCo) models.cc -o $(BUILDDIR)/models.o
+
+internal: 
 	$(CCo) internal.cc -o $(BUILDDIR)/internal.o 
+
+internalmodel:
 	$(CCo) internalmodel.cc -o $(BUILDDIR)/internalmodel.o 
+
+libinternal:
 	$(CCo) libinternal.cc -o $(BUILDDIR)/libinternal.o
 
-lib:
+lib: obj
 	$(CC) $(BUILDDIR)/coeffs.o $(BUILDDIR)/models.o $(BUILDDIR)/internal.o\
 		$(BUILDDIR)/internalmodel.o $(BUILDDIR)/libinternal.o -shared -o ../lib/$(LIBFILE)
 	$(ARCMD)
@@ -59,5 +69,5 @@ clean:
 	cd codegen; make clean
 	
 header:
-	cd codegen; make all
-	cd codegen; make clean
+	+cd codegen; make all
+	+cd codegen; make clean

@@ -28,14 +28,16 @@ endif
 
 .PHONY: all obj lib windows winobj dll clean test header
 
-all: header obj lib 
+all: 
+	$(MD) $(BUILDDIR)
+	$(MD) lib
+	+cd src; make all
 
-
-obj:
+obj: header
 	$(MD) $(BUILDDIR)
 	cd src; make obj
 
-lib:
+lib: obj
 	$(MD) $(BUILDDIR)
 	$(MD) lib
 	cd src; make lib
