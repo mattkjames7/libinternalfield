@@ -1,5 +1,3 @@
-::python3 CodeGen.py
-
 mkdir ..\build
 g++ -c -lm -fPIC -std=c++17 -O3 coeffs.cc -o ..\build\coeffs.o
 g++ -c -lm -fPIC -std=c++17 -O3 models.cc -o ..\build\models.o

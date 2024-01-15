@@ -26,21 +26,32 @@ endif
 
 
 
-all: obj lib header
+all: header obj lib 
 
-obj:
+obj: header coeffs models internal internalmodel libinternal
+
+coeffs:
 	$(CCo) coeffs.cc -o $(BUILDDIR)/coeffs.o
+
+models:
 	$(CCo) models.cc -o $(BUILDDIR)/models.o
+
+internal: 
 	$(CCo) internal.cc -o $(BUILDDIR)/internal.o 
+
+internalmodel:
 	$(CCo) internalmodel.cc -o $(BUILDDIR)/internalmodel.o 
+
+libinternal:
 	$(CCo) libinternal.cc -o $(BUILDDIR)/libinternal.o
 
-lib:
-	$(CC) $(BUILDDIR)/*.o  -shared -o ../lib/$(LIBFILE)
+lib: obj
+	$(CC) $(BUILDDIR)/coeffs.o $(BUILDDIR)/models.o $(BUILDDIR)/internal.o\
+		$(BUILDDIR)/internalmodel.o $(BUILDDIR)/libinternal.o -shared -o ../lib/$(LIBFILE)
 	$(ARCMD)
 
 
-windows: winobj dll
+windows: header winobj dll
 
 winobj:
 	$(CCWo) coeffs.cc -o $(BUILDDIR)/coeffs.o
@@ -55,11 +66,8 @@ dll:
 clean:
 	-rm coeffs/*/*.bin
 	-rm variable/*/*.bin
+	cd codegen; make clean
 	
 header:
-ifneq (,$(shell which python3))
-	python3 CodeGen.py $(BUILDDIR)
-else
-	@echo "python3 command doesn't appear to exist - skipping header regeneration..."
-endif
-
+	+cd codegen; make all
+	+cd codegen; make clean

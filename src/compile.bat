@@ -1,4 +1,9 @@
-::python3 CodeGen.py
+set "dataDir=%~1"
+
+cd codegen
+call compile.bat "!dataDir!"
+cd ..
+
 call compileobj.bat
 
 mkdir ..\lib

@@ -1,6 +1,7 @@
 
 ifndef BUILDDIR
 export BUILDDIR=$(shell pwd)/build
+export DATADIR=$(shell pwd)/data
 endif
 
 ifeq ($(PREFIX),)
@@ -27,14 +28,16 @@ endif
 
 .PHONY: all obj lib windows winobj dll clean test header
 
-all: obj lib header
+all: 
+	$(MD) $(BUILDDIR)
+	$(MD) lib
+	+cd src; make all
 
-
-obj:
+obj: header
 	$(MD) $(BUILDDIR)
 	cd src; make obj
 
-lib:
+lib: obj
 	$(MD) $(BUILDDIR)
 	$(MD) lib
 	cd src; make lib
@@ -42,7 +45,7 @@ lib:
 header:
 	cd src; make header
 
-windows: winobj dll
+windows: header winobj dll
 
 winobj:
 	$(MD) $(BUILDDIR)

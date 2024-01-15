@@ -1,3 +1,4 @@
+    
 #ifndef __MODELS_H__
 #define __MODELS_H__
 #include <vector>
@@ -6,9 +7,8 @@
 #include "internal.h"
 #include "coeffs.h"
 #include "listmapkeys.h"
-#endif
 
-/* models! */
+
 extern Internal& spv();
 extern Internal& z3();
 extern Internal& cassini11();
@@ -93,6 +93,8 @@ extern Internal& gsfc15ev();
 extern Internal& gsfc13ev();
 extern Internal& gsfc15evs();
 extern Internal& v117ev();
+
+
 
 
 /* map the model names to their model object pointers */
@@ -180,7 +182,9 @@ extern "C" {
  **********************************************************************/
 	modelFieldPtr getModelFieldPtr(const char *Model);
 
-/* functions to directly call each model for a single Cartesian vector (this will be used for tracing) */
+
+/* functions to directly call each model for a single Cartesian vector 
+    (these will be used for tracing) */
 
 /***********************************************************************
  * NAME : XXXXXField(x,y,z,Bx,By,Bz)
@@ -200,171 +204,172 @@ extern "C" {
  * 
  **********************************************************************/
 	void spvField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void z3Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void cassini11Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void cassini5Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void soiField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void p1184Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void burton2009Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void v1Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void cassini3Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void v2Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void p11asField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1960Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1935Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1945Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1925Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1910Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1905Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1980Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1990Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf2015Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1940Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1930Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf2005Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf2020Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf2010Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1915Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf2000Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1950Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1970Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1965Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1920Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf2025Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1985Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1975Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1955Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1900Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void igrf1995Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void gsfco8fullField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void gsfco8Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void nmohField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void kivelson2002aField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void weber2022quadField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void kivelson2002bField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void kivelson2002cField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void weber2022dipField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void uno2009Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void thebault2018m2Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void uno2009svdField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void anderson2010qts04Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void anderson2010dshaField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void anderson2012Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void anderson2010dts04Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void anderson2010qshaField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void ness1975Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void thebault2018m1Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void anderson2010rField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void anderson2010dField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void anderson2010qField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void thebault2018m3Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void gao2021Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void cain2003Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void mh2014Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void langlais2019Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void gsfcq3fullField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void gsfcq3Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void ah5Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void umohField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void jrm33Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void vit4Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void isaacField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void vipalField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void vip4Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void jpl15evsField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void p11aField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void jrm09Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void jpl15evField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void o4Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void o6Field(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void shaField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void u17evField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void gsfc15evField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void gsfc13evField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void gsfc15evsField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 	void v117evField(double x, double y, double z,
-				double *Bx, double *By, double *Bz);
+				double *bx, double *by, double *bz);
 }
+#endif

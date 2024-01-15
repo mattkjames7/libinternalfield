@@ -218,10 +218,48 @@ void saveVIP4ModelVariables() {
 
 }
 
+void saveCvector() {
+	modelFieldPtr model = getModelFieldPtr("jrm33");
+	double x = 10.0;
+	double y = 10.0;
+	double z = 0.0;
+	double Bx, By, Bz;
+	model(x,y,z,&Bx,&By,&Bz);
+
+   	std::filesystem::path fileName = std::filesystem::current_path();
+    fileName /= "ctest.bin";
+	std::ofstream file(fileName,std::ios::binary);
+	file.write(reinterpret_cast<const char*>(&Bx),sizeof(double));
+	file.write(reinterpret_cast<const char*>(&By),sizeof(double));
+	file.write(reinterpret_cast<const char*>(&Bz),sizeof(double));
+	file.close();
+}
+
+void saveCppvector() {
+	InternalModel model;
+	model.SetModel("jrm33");
+	model.SetCartIn(true);
+	model.SetCartOut(true);
+	double x = 10.0;
+	double y = 10.0;
+	double z = 0.0;
+	double Bx, By, Bz;
+	model.Field(x,y,z,&Bx,&By,&Bz);
+   	std::filesystem::path fileName = std::filesystem::current_path();
+    fileName /= "cpptest.bin";
+	std::ofstream file(fileName,std::ios::binary);
+	file.write(reinterpret_cast<const char*>(&Bx),sizeof(double));
+	file.write(reinterpret_cast<const char*>(&By),sizeof(double));
+	file.write(reinterpret_cast<const char*>(&Bz),sizeof(double));
+	file.close();
+}
+
 int main() {
     saveVIP4Vectors();
     saveJRM09Vectors();
 	saveVIP4TestFunctionVectors();
 	saveVIP4ModelVariables();
+	saveCvector();
+	saveCppvector();
     return 0;
 }
