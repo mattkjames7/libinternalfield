@@ -1,8 +1,39 @@
 #include "savelibheader.h"
 
 
+
+std::vector<std::string> getVersion() {
+    std::ifstream file("../../VERSION");
+    if (!file) {
+        throw std::runtime_error("Unable to open VERSION file");
+    }
+
+    std::string line;
+    std::getline(file, line);
+    file.close();
+
+    // Removing any potential trailing newline or whitespace
+    line.erase(line.find_last_not_of(" \n\r\t") + 1);
+
+    std::stringstream ss(line);
+    std::string mj, mn, pa;
+    std::getline(ss, mj, '.');
+    std::getline(ss, mn, '.');
+    std::getline(ss, pa);
+
+    std::vector<std::string> out = {
+        "#define LIBINTERNALFIELD_VERSION_MAJOR " + mj + "\n",
+        "#define LIBINTERNALFIELD_VERSION_MINOR " + mn + "\n",
+        "#define LIBINTERNALFIELD_VERSION_PATCH " + pa + "\n",
+    };
+
+    return out;
+}
+
+
 std::string getLibHeaderTop() {
-    std::string out = R"(
+    std::ostringstream out;
+    std::string a = R"(
 #ifndef __LIBINTERNALFIELD_H__
 #define __LIBINTERNALFIELD_H__
 #include <stdio.h>
@@ -15,12 +46,17 @@ std::string getLibHeaderTop() {
 #else 
 #include <string.h>
 #endif
+)";
 
 
+    std::vector<std::string> version = getVersion();
+    std::stringstream b;
+    for (const auto& line : version) {
+        b << line;
+    }
 
-#define INTERNALFIELD_VERSION_MAJOR 1
-#define INTERNALFIELD_VERSION_MINOR 2
-#define INTERNALFIELD_VERSION_PATCH 0
+    std::string c = R"(
+
 
 /* this is used in both C and C++*/
 typedef void (*modelFieldPtr)(double,double,double,double*,double*,double*);
@@ -30,7 +66,10 @@ extern "C" {
 #endif
 
 )";
-    return out;
+
+    out << a << b.str() << c;
+
+    return out.str();
 }
 
 
