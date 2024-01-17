@@ -1,8 +1,8 @@
 
 ifndef BUILDDIR
 export BUILDDIR=$(shell pwd)/build
-export DATADIR=$(shell pwd)/data
 endif
+export DATADIR=$(shell pwd)/data
 
 ifeq ($(PREFIX),)
 #install path
