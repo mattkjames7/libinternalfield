@@ -11,6 +11,9 @@
 #include <tuple>
 #include <vector>
 
+#include "scalegh.h"
+#include "schmidt.h"
+
 namespace fs = std::filesystem;
 
 struct RawCoeff {
@@ -224,6 +227,14 @@ static void writeRegistryHeader(const std::vector<ModelData> &models, const fs::
         modelIdentifiers[i] = makeIdentifier(models[i].name);
     }
 
+    int globalNmax = 0;
+    for (const auto &model : models) {
+        if (model.nmax > globalNmax) {
+            globalNmax = model.nmax;
+        }
+    }
+    const std::vector<double> schmidtFlat = ComputeSchmidtFlat(globalNmax);
+
     std::ofstream out(outputHeader);
     if (!out.is_open()) {
         throw std::runtime_error("failed to open output file: " + outputHeader.string());
@@ -247,6 +258,8 @@ static void writeRegistryHeader(const std::vector<ModelData> &models, const fs::
     out << "    std::array<int, N> m;\n";
     out << "    std::array<double, N> g;\n";
     out << "    std::array<double, N> h;\n";
+    out << "    std::array<double, N> g_scaled;\n";
+    out << "    std::array<double, N> h_scaled;\n";
     out << "};\n\n";
 
     out << "struct ModelView {\n";
@@ -260,6 +273,8 @@ static void writeRegistryHeader(const std::vector<ModelData> &models, const fs::
     out << "    const int *m;\n";
     out << "    const double *g;\n";
     out << "    const double *h;\n";
+    out << "    const double *g_scaled;\n";
+    out << "    const double *h_scaled;\n";
     out << "};\n\n";
 
     out << "struct NameIndex {\n";
@@ -267,9 +282,26 @@ static void writeRegistryHeader(const std::vector<ModelData> &models, const fs::
     out << "    std::size_t index;\n";
     out << "};\n\n";
 
+    out << "inline constexpr std::array<double, " << schmidtFlat.size() << "> kSchmidtFlat = {\n";
+    out << std::scientific << std::setprecision(16);
+    for (std::size_t i = 0; i < schmidtFlat.size(); i++) {
+        if (i % 5 == 0) {
+            out << "    ";
+        }
+        out << schmidtFlat[i] << ",";
+        if ((i + 1) % 5 == 0 || (i + 1) == schmidtFlat.size()) {
+            out << "\n";
+        }
+    }
+    out << "};\n\n";
+
     out << std::scientific << std::setprecision(16);
     for (std::size_t i = 0; i < models.size(); i++) {
         const auto &m = models[i];
+        std::vector<double> gScaled;
+        std::vector<double> hScaled;
+        ComputeScaledGH(m.n, m.m, m.g, m.h, schmidtFlat, gScaled, hScaled);
+
         out << "inline constexpr ModelParams<" << m.len << "> " << modelIdentifiers[i] << " = {\n";
         out << "    \"" << m.name << "\",\n";
         out << "    \"" << m.body << "\",\n";
@@ -295,6 +327,16 @@ static void writeRegistryHeader(const std::vector<ModelData> &models, const fs::
         for (int j = 0; j < m.len; j++) {
             out << "        " << m.h[j] << ",\n";
         }
+        out << "    }},\n";
+        out << "    {{\n";
+        for (int j = 0; j < m.len; j++) {
+            out << "        " << gScaled[static_cast<std::size_t>(j)] << ",\n";
+        }
+        out << "    }},\n";
+        out << "    {{\n";
+        for (int j = 0; j < m.len; j++) {
+            out << "        " << hScaled[static_cast<std::size_t>(j)] << ",\n";
+        }
         out << "    }}\n";
         out << "};\n\n";
     }
@@ -310,7 +352,9 @@ static void writeRegistryHeader(const std::vector<ModelData> &models, const fs::
                 << modelIdentifiers[i] << ".n.data(), "
                 << modelIdentifiers[i] << ".m.data(), "
                 << modelIdentifiers[i] << ".g.data(), "
-                << modelIdentifiers[i] << ".h.data()},\n";
+                    << modelIdentifiers[i] << ".h.data(), "
+                    << modelIdentifiers[i] << ".g_scaled.data(), "
+                    << modelIdentifiers[i] << ".h_scaled.data()},\n";
     }
     out << "};\n\n";
 
