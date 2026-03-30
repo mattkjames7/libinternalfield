@@ -36,6 +36,14 @@ struct ModelData {
     std::vector<double> h;
 };
 
+struct IgrfModel {
+    std::string name;
+    std::vector<char> gh;
+    std::vector<int> n;
+    std::vector<int> m;
+    std::vector<double> v;
+};
+
 static std::vector<std::string> splitTokens(const std::string &line) {
     std::vector<std::string> out;
     std::string token;
@@ -53,6 +61,156 @@ static std::vector<std::string> splitTokens(const std::string &line) {
         out.push_back(token);
     }
     return out;
+}
+
+static std::vector<std::string> readTextLines(const fs::path &filePath) {
+    std::ifstream in(filePath);
+    if (!in.is_open()) {
+        throw std::runtime_error("failed to open file: " + filePath.string());
+    }
+
+    std::vector<std::string> lines;
+    std::string line;
+    while (std::getline(in, line)) {
+        lines.push_back(line);
+    }
+    return lines;
+}
+
+static std::vector<int> listIgrfModelYears(const std::vector<std::string> &lines) {
+    if (lines.size() < 6) {
+        throw std::runtime_error("IGRF file is too short");
+    }
+
+    const std::vector<std::string> names = splitTokens(lines[3]);
+    if (names.size() < 5) {
+        throw std::runtime_error("unexpected IGRF header format");
+    }
+
+    std::vector<int> out;
+    for (std::size_t i = 3; i + 1 < names.size(); i++) {
+        out.push_back(std::stoi(names[i]));
+    }
+
+    const std::string &range = names.back();
+    const std::size_t dashPos = range.find('-');
+    if (dashPos == std::string::npos) {
+        throw std::runtime_error("unexpected IGRF final-year range format");
+    }
+
+    const int startYear = std::stoi(range.substr(0, dashPos));
+    const int endYear = std::stoi(range.substr(dashPos + 1));
+    out.push_back((startYear / 100) * 100 + endYear);
+    return out;
+}
+
+static std::vector<std::vector<std::string>> getIgrfTable(const std::vector<std::string> &lines) {
+    int nRows = static_cast<int>(lines.size()) - 4;
+    std::vector<std::string> firstDataTokens = splitTokens(lines[5]);
+    const int nCols = static_cast<int>(firstDataTokens.size());
+
+    if (nCols < 4) {
+        throw std::runtime_error("unexpected IGRF table format");
+    }
+
+    if (splitTokens(lines.back()).size() < static_cast<std::size_t>(nCols)) {
+        nRows -= 1;
+    }
+
+    if (nRows <= 0) {
+        throw std::runtime_error("IGRF table has no rows");
+    }
+
+    std::vector<std::vector<std::string>> table(
+        static_cast<std::size_t>(nCols),
+        std::vector<std::string>(static_cast<std::size_t>(nRows))
+    );
+
+    for (int i = 0; i < nRows; i++) {
+        const std::vector<std::string> tokens = splitTokens(lines[static_cast<std::size_t>(i + 4)]);
+        if (tokens.size() < static_cast<std::size_t>(nCols)) {
+            throw std::runtime_error("malformed IGRF table row");
+        }
+        for (int j = 0; j < nCols; j++) {
+            table[static_cast<std::size_t>(j)][static_cast<std::size_t>(i)] =
+                tokens[static_cast<std::size_t>(j)];
+        }
+    }
+
+    return table;
+}
+
+static IgrfModel fillIgrfModel(
+    int modelIndex,
+    int nRows,
+    const std::vector<int> &modelYears,
+    const std::vector<std::vector<std::string>> &table
+) {
+    IgrfModel model;
+    model.name = "igrf" + std::to_string(modelYears[static_cast<std::size_t>(modelIndex)]);
+
+    for (int i = 0; i < nRows; i++) {
+        model.gh.push_back(table[0][static_cast<std::size_t>(i)][0]);
+        model.n.push_back(std::stoi(table[1][static_cast<std::size_t>(i)]));
+        model.m.push_back(std::stoi(table[2][static_cast<std::size_t>(i)]));
+        model.v.push_back(std::stod(table[static_cast<std::size_t>(modelIndex + 3)][static_cast<std::size_t>(i)]));
+    }
+
+    return model;
+}
+
+static std::vector<IgrfModel> readIgrfModels(const fs::path &dataRoot) {
+    const fs::path igrfFile = dataRoot / "igrf" / "igrf13coeffs.txt";
+    const std::vector<std::string> lines = readTextLines(igrfFile);
+    const std::vector<int> modelYears = listIgrfModelYears(lines);
+    const std::vector<std::vector<std::string>> table = getIgrfTable(lines);
+
+    const int nModels = static_cast<int>(modelYears.size());
+    const int nRows = static_cast<int>(table[0].size());
+
+    std::vector<IgrfModel> models;
+    for (int i = 0; i < nModels; i++) {
+        models.push_back(fillIgrfModel(i, nRows, modelYears, table));
+    }
+
+    if (nModels >= 2) {
+        for (int i = 0; i < nRows; i++) {
+            const std::size_t row = static_cast<std::size_t>(i);
+            models[static_cast<std::size_t>(nModels - 1)].v[row] =
+                models[static_cast<std::size_t>(nModels - 2)].v[row] +
+                5.0 * models[static_cast<std::size_t>(nModels - 1)].v[row];
+        }
+    }
+
+    return models;
+}
+
+static std::string formatIgrfLine(char gh, int n, int m, double v) {
+    std::ostringstream out;
+    out << gh << ' '
+        << std::setw(4) << n << ' '
+        << std::setw(4) << m << ' '
+        << std::setw(14) << std::setprecision(6) << std::fixed << v;
+    return out.str();
+}
+
+static void refreshIgrfCoeffFiles(const fs::path &coeffRoot) {
+    const fs::path dataRoot = coeffRoot.parent_path();
+    const std::vector<IgrfModel> models = readIgrfModels(dataRoot);
+
+    const fs::path earthDir = coeffRoot / "earth";
+    fs::create_directories(earthDir);
+
+    for (const auto &model : models) {
+        const fs::path outFile = earthDir / (model.name + ".dat");
+        std::ofstream out(outFile);
+        if (!out.is_open()) {
+            throw std::runtime_error("failed to write file: " + outFile.string());
+        }
+        for (std::size_t i = 0; i < model.gh.size(); i++) {
+            out << formatIgrfLine(model.gh[i], model.n[i], model.m[i], model.v[i]) << '\n';
+        }
+    }
 }
 
 static std::vector<fs::path> sortedSubdirs(const fs::path &root) {
@@ -385,6 +543,8 @@ int main(int argc, char *argv[]) {
             std::cerr << "Coefficient directory does not exist: " << coeffDir << "\n";
             return 1;
         }
+
+        refreshIgrfCoeffFiles(coeffDir);
 
         auto models = loadAllModels(coeffDir);
         if (models.empty()) {
