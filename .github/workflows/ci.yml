@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux Shared
+            build_shared_libs: "ON"
+            build_dir: build-shared
+          - name: Linux Static
+            build_shared_libs: "OFF"
+            build_dir: build-static
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Configure
+        run: cmake -S . -B ${{ matrix.build_dir }} -DBUILD_SHARED_LIBS=${{ matrix.build_shared_libs }}
+
+      - name: Build
+        run: cmake --build ${{ matrix.build_dir }} -j2
+
+      - name: Test
+        run: ctest --test-dir ${{ matrix.build_dir }} --output-on-failure
