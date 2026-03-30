@@ -25,7 +25,7 @@ all:
 	@./timer
 	
 save:
-	$(CC) $(IFLAGS) testdata.cc savetestdata.cc -o savetestdata $(LDFLAGS)
+	$(CC) $(IFLAGS) testdata.cc save_test_data/savetestdata.cc -o savetestdata $(LDFLAGS)
 	./savetestdata
 
 clean:

@@ -211,21 +211,21 @@ void printVectorsCart(FieldVectors pos, FieldVectors orig, FieldVectors test) {
 
 FieldVectors vip4TestVectors() {
 	std::vector<double> tr, tt, tp, tbr, tbt, tbp;
-	std::filesystem::path file = "testvip4.bin";
+	std::filesystem::path file = "data/testvip4.bin";
 	readVectors(file,tr,tt,tp,tbr,tbt,tbp);
 	return {tbr,tbt,tbp};	
 }
 
 FieldVectors jrm09TestVectors() {
 	std::vector<double> tr, tt, tp, tbr, tbt, tbp;
-	std::filesystem::path file = "testjrm09.bin";
+	std::filesystem::path file = "data/testjrm09.bin";
 	readVectors(file,tr,tt,tp,tbr,tbt,tbp);
 	return {tbr,tbt,tbp};	
 }
 
 FieldVectors vip4TestFunctionVectors() {
 	std::vector<double> tr, tt, tp, tbr, tbt, tbp;
-	std::filesystem::path file = "testvip4function.bin";
+	std::filesystem::path file = "data/testvip4function.bin";
 	readVectors(file,tr,tt,tp,tbr,tbt,tbp);
 	return {tbr,tbt,tbp};	
 }
@@ -473,7 +473,7 @@ void testModelVars() {
 	h1 = model.geth();
 
    	std::filesystem::path file = std::filesystem::current_path();
-    file /= "testmodelvars.bin";
+	file /= "data/testmodelvars.bin";
 	readModelVariables(file,schc0,Snm0,g0,h0);
 
 	compareSchmidtCoeffs(schc0,schc1);

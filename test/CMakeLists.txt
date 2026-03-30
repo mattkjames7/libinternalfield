@@ -49,6 +49,21 @@ if(UNIX AND NOT APPLE)
     target_link_libraries(libinternalfield_timer PRIVATE m)
 endif()
 
+add_executable(libinternalfield_savetestdata
+    save_test_data/savetestdata.cc
+    testdata.cc
+)
+target_include_directories(libinternalfield_savetestdata
+    PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/save_test_data"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../include"
+)
+target_link_libraries(libinternalfield_savetestdata PRIVATE ${LIBINTERNALFIELD_TEST_LINK_TARGET})
+if(UNIX AND NOT APPLE)
+    target_link_libraries(libinternalfield_savetestdata PRIVATE m)
+endif()
+
 add_test(NAME internalfield_unit COMMAND libinternalfield_test)
 set_tests_properties(internalfield_unit PROPERTIES
     WORKING_DIRECTORY "${LIBINTERNALFIELD_TEST_WORKDIR}"

@@ -5,7 +5,7 @@
 
 void readTestData(double *Tx, double *Ty, double *Tz) {
    	std::filesystem::path fileName = std::filesystem::current_path();
-    fileName /= "cpptest.bin";
+	fileName /= "data/cpptest.bin";
 
 	std::ifstream file(fileName,std::ios::binary);
 

@@ -4,7 +4,7 @@
 #include <math.h>
 #include <vector>
 #include <filesystem>
-#include "testdata.h"
+#include "../testdata.h"
 #include <internalfield.h>
 #include <iostream>
 

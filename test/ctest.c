@@ -4,7 +4,7 @@
 
 
 void readTestData(double *Tx, double *Ty, double *Tz) {
-    const char *fileName = "ctest.bin";
+	const char *fileName = "data/ctest.bin";
 
     FILE *file = fopen(fileName, "rb");
 
