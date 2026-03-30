@@ -5,7 +5,6 @@
 #include <string>
 #include <map>
 #include "internal.h"
-#include "coeffs.h"
 #include "listmapkeys.h"
 
 

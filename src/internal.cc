@@ -1,4 +1,6 @@
 #include "internal.h"
+#include "../generated/out.h"
+#include <stdexcept>
 
 
 /***********************************************************************
@@ -16,6 +18,7 @@ Internal::Internal(unsigned char *ptr) {
 	init_ = new bool[1];
 	init_[0] = false;
 	modelptr_ = ptr;
+	modelview_ = nullptr;
 	_Init();
 }
 
@@ -25,7 +28,7 @@ Internal::Internal(unsigned char *ptr) {
  * DESCRIPTION : Initialize the Internal object.
  * 
  * INPUTS : 
- * 		coeffStruct		S	Struct containing the coefficients.
+	 * 		const char *Model	Model name.
  * 
  * ********************************************************************/
 Internal::Internal(const char *Model) {
@@ -34,7 +37,11 @@ Internal::Internal(const char *Model) {
 	useptr_ = false;
 	init_ = new bool[1];
 	init_[0] = false;
-	modelstr_ = &(getModelCoeffStruct(Model))();
+	modelptr_ = nullptr;
+	modelview_ = libinternalfield::models::FindModel(Model);
+	if (modelview_ == nullptr) {
+		throw std::runtime_error(std::string("Unknown model: ") + Model);
+	}
 	_Init();
 
 	// int i;
@@ -59,6 +66,8 @@ Internal::Internal(const Internal &obj) {
 	useptr_ = obj.useptr_;
 	init_ = obj.init_;
 	nschc_ = obj.nschc_;
+	modelptr_ = obj.modelptr_;
+	modelview_ = obj.modelview_;
 	schc_ = obj.schc_;
 	Snm_ = obj.Snm_;
 	nmax_ = obj.nmax_;
@@ -122,7 +131,7 @@ void Internal::_Init() {
 	if (useptr_) {
 		_LoadSchmidt(modelptr_);	
 	} else {
-		_LoadSchmidt(*modelstr_);
+		_LoadSchmidt(*modelview_);
 	}
 
 	/* calcualte Schmidt normalized coefficient grids */
@@ -250,46 +259,25 @@ void Internal::_LoadSchmidt(unsigned char *ptr){
 	
 }
 
-/***********************************************************************
- * NAME : void Internal::_LoadSchmidt(S)
- * 
- * DESCRIPTION : Read the g/h coefficients from memory.
- * 
- * INPUTS : 
- * 		coeffStruct		S	Struct containing the coefficients.
- * 
- * ********************************************************************/
-void Internal::_LoadSchmidt(coeffStruct S){
-	
-	/* this is the length of each array */
-	int i, j, p;
-	
-	
-	/* get n max and ndef*/
+void Internal::_LoadSchmidt(const libinternalfield::models::ModelView &S){
+	int i;
+
 	nmax_ = S.nmax;
 	ndef_ = S.ndef;
-	
-	/* set current model degree to the default */
+
 	ncur_ = new int[1];
 	ncur_[0] = ndef_;
-	
-	/* calculate the length of the coefficient structure */
-	nschc_ = S.len;
 
-	/* get rscale */
+	nschc_ = static_cast<int>(S.len);
 	rscale_ = S.rscale;
-	
-	/* create the structure array */
+
 	schc_ = new struct schmidtcoeffs[nschc_];
-	
-	/*fill it up */
-	p = 0;
 	for (i=0;i<nschc_;i++) {
 		schc_[i].n = S.n[i];
 		schc_[i].m = S.m[i];
 		schc_[i].g = S.g[i];
 		schc_[i].h = S.h[i];
-	}	
+	}
 }
 
 /***********************************************************************

@@ -18,9 +18,6 @@ int main(int argc, char *argv[]) {
     /* start by saving individual IGRF models */
     saveIGRFModels(dataPath);
 
-    /* now create coefficient files */
-    saveCoeffs(dataPath,srcPath);
-
     /* save model function files */
     saveModels(dataPath,srcPath);
 

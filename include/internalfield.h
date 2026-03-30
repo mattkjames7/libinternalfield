@@ -452,6 +452,12 @@ coeffStructFunc getModelCoeffStruct(std::string Model);
 coeffStructFunc getModelCoeffStruct(const char *Model);
 
 
+namespace libinternalfield {
+namespace models {
+struct ModelView;
+}
+}
+
 
 /* This structure will store the Schmidt coefficients */
 struct schmidtcoeffs {
@@ -533,6 +539,7 @@ class Internal {
 		/* functions for initializing the object */
 		void _LoadSchmidt(unsigned char*);
 		void _LoadSchmidt(coeffStruct );
+		void _LoadSchmidt(const libinternalfield::models::ModelView &);
 		void _Schmidt();
 		void _CoeffGrids();
 
@@ -556,6 +563,7 @@ class Internal {
 		bool *init_;
 		unsigned char *modelptr_;
 		coeffStruct *modelstr_;
+		const libinternalfield::models::ModelView *modelview_;
 		void _Init();
 		void _CheckInit();
 	

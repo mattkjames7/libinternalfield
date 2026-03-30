@@ -165,13 +165,6 @@ StrVecPair extractLibinternalH() {
     return {cOut,ccOut};
 }
 
-std::vector<std::string> extractCoeffsH() {
-
-    std::vector<std::string> lines = readASCII("../coeffs.h");
-    std::vector<std::string> out = removeDirectives(lines);
-    return out;
-}
-
 std::vector<std::string> extractListmapkeysH() {
 
     std::vector<std::string> lines = readASCII("../listmapkeys.h");
@@ -199,11 +192,6 @@ std::string generateLibHeader() {
 
     /* add the includes and stuff at the top */
     out << getLibHeaderTop();
-
-    /* start with coeffs.h */
-    ccVec = extractCoeffsH();
-    ccCode << stringVectorToString(ccVec);
-    ccVec.clear();
 
     /* internal.h */
     ccVec = extractInternalH();

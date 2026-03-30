@@ -12,10 +12,10 @@ COEFFDIR=$(DATADIR)/coeffs
 
 all: obj exe
 
-obj: savecoeffs igrf savemodels savevariable splitstring listfiles savelibheader trimstring
+obj: modelindex igrf savemodels savevariable splitstring listfiles savelibheader trimstring
 
-savecoeffs:
-	$(CCo) savecoeffs.cc -o savecoeffs.o
+modelindex:
+	$(CCo) modelindex.cc -o modelindex.o
 
 igrf:
 	$(CCo) igrf.cc -o igrf.o
@@ -39,7 +39,7 @@ trimstring:
 	$(CCo) trimstring.cc -o trimstring.o
 
 exe: obj
-	$(CC) listfiles.o splitstring.o trimstring.o savecoeffs.o igrf.o\
+	$(CC) listfiles.o splitstring.o trimstring.o modelindex.o igrf.o\
 		savemodels.o savevariable.o savelibheader.o main.cc -o savecoeffs
 	./savecoeffs $(DATADIR)
 

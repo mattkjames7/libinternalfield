@@ -7,7 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "savecoeffs.h"
+#include "modelindex.h"
 
 void saveModels(
     std::filesystem::path dataPath,

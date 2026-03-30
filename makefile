@@ -26,14 +26,17 @@ else
 	MD=mkdir -p
 endif
 
-.PHONY: all obj lib windows winobj dll clean test header
+.PHONY: all obj lib windows winobj dll clean test header tool_codegen
 
-all: 
+all: tool_codegen
 	$(MD) $(BUILDDIR)
 	$(MD) lib
 	+cd src; make all
 
-obj: header
+tool_codegen:
+	+cd tools/coeff_registry_codegen; make all
+
+obj:
 	$(MD) $(BUILDDIR)
 	cd src; make obj
 
@@ -45,7 +48,7 @@ lib: obj
 header:
 	cd src; make header
 
-windows: header winobj dll
+windows: winobj dll
 
 winobj:
 	$(MD) $(BUILDDIR)
@@ -63,7 +66,10 @@ updatemodels:
 	cd src; make header
 
 clean:
+	-cd tools/coeff_registry_codegen; make clean
 	cd src; make clean
+	-rm -vfr generated
+	-rm -vfr output
 	-rm -v lib/$(LIBFILE)
 ifeq ($(OS),Windows_NT)
 	-rmdir build /s /q

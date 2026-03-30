@@ -1,4 +1,4 @@
-g++ -c -lm -fPIC -std=c++17 -O3 savecoeffs.cc -o savecoeffs.o
+g++ -c -lm -fPIC -std=c++17 -O3 modelindex.cc -o modelindex.o
 g++ -c -lm -fPIC -std=c++17 -O3 igrf.cc -o igrf.o
 g++ -c -lm -fPIC -std=c++17 -O3 savemodels.cc -o savemodels.o
 g++ -c -lm -fPIC -std=c++17 -O3 savevariable.cc -o savevariable.o
