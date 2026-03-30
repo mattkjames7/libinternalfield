@@ -20,7 +20,16 @@ cmake -S . -B build
 cmake --build build -j4
 ```
 
-This builds shared and static libraries by default:
+By default this builds a shared library (`BUILD_SHARED_LIBS=ON`).
+
+To build a static library instead:
+
+```bash
+cmake -S . -B build -DBUILD_SHARED_LIBS=OFF
+cmake --build build -j4
+```
+
+Produced artifact (platform dependent):
 
 - libinternalfield.so on Linux
 - libinternalfield.dylib on macOS

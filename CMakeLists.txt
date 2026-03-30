@@ -12,12 +12,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-option(LIBINTERNALFIELD_BUILD_SHARED "Build shared library" ON)
-option(LIBINTERNALFIELD_BUILD_STATIC "Build static library" ON)
-
-if(NOT LIBINTERNALFIELD_BUILD_SHARED AND NOT LIBINTERNALFIELD_BUILD_STATIC)
-    message(FATAL_ERROR "At least one of LIBINTERNALFIELD_BUILD_SHARED or LIBINTERNALFIELD_BUILD_STATIC must be ON")
-endif()
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 
 add_subdirectory(tools/coeff_registry_codegen)
 
@@ -48,44 +43,20 @@ set(LIBINTERNALFIELD_SOURCES
     src/libinternal.cc
 )
 
-add_library(libinternalfield_obj OBJECT ${LIBINTERNALFIELD_SOURCES})
-add_dependencies(libinternalfield_obj generate_model_registry)
-set_target_properties(libinternalfield_obj PROPERTIES POSITION_INDEPENDENT_CODE ON)
+add_library(internalfield ${LIBINTERNALFIELD_SOURCES})
+add_dependencies(internalfield generate_model_registry)
 
-target_include_directories(libinternalfield_obj
+target_include_directories(internalfield
     PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/src"
         "${CMAKE_CURRENT_SOURCE_DIR}"
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 if(UNIX AND NOT APPLE)
-    target_link_libraries(libinternalfield_obj PRIVATE m)
-endif()
-
-if(LIBINTERNALFIELD_BUILD_SHARED)
-    add_library(internalfield SHARED $<TARGET_OBJECTS:libinternalfield_obj>)
-    set_target_properties(internalfield PROPERTIES OUTPUT_NAME internalfield)
-    target_include_directories(internalfield
-        PUBLIC
-            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-            $<INSTALL_INTERFACE:include>
-    )
-    if(UNIX AND NOT APPLE)
-        target_link_libraries(internalfield PRIVATE m)
-    endif()
-endif()
-
-if(LIBINTERNALFIELD_BUILD_STATIC)
-    add_library(internalfield_static STATIC $<TARGET_OBJECTS:libinternalfield_obj>)
-    set_target_properties(internalfield_static PROPERTIES OUTPUT_NAME internalfield)
-    target_include_directories(internalfield_static
-        PUBLIC
-            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-            $<INSTALL_INTERFACE:include>
-    )
-    if(UNIX AND NOT APPLE)
-        target_link_libraries(internalfield_static PRIVATE m)
-    endif()
+    target_link_libraries(internalfield PRIVATE m)
 endif()
 
 if(LIBINTERNALFIELD_BUILD_TESTS AND BUILD_TESTING)
@@ -97,15 +68,8 @@ install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/internalfield.h"
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
-if(TARGET internalfield)
-    install(TARGETS internalfield
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    )
-endif()
-
-if(TARGET internalfield_static)
-    install(TARGETS internalfield_static
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    )
-endif()
+install(TARGETS internalfield
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
