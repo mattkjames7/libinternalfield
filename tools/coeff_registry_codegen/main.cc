@@ -245,7 +245,7 @@ static void writeRegistryHeader(const std::vector<ModelData> &models, const fs::
     out << "#include <cstddef>\n";
     out << "#include <string_view>\n\n";
 
-    out << "namespace libinternalfield::generated {\n\n";
+    out << "namespace libinternalfield::models {\n\n";
 
     out << "template <std::size_t N>\n";
     out << "struct ModelParams {\n";
@@ -280,19 +280,6 @@ static void writeRegistryHeader(const std::vector<ModelData> &models, const fs::
     out << "struct NameIndex {\n";
     out << "    std::string_view name;\n";
     out << "    std::size_t index;\n";
-    out << "};\n\n";
-
-    out << "inline constexpr std::array<double, " << schmidtFlat.size() << "> kSchmidtFlat = {\n";
-    out << std::scientific << std::setprecision(16);
-    for (std::size_t i = 0; i < schmidtFlat.size(); i++) {
-        if (i % 5 == 0) {
-            out << "    ";
-        }
-        out << schmidtFlat[i] << ",";
-        if ((i + 1) % 5 == 0 || (i + 1) == schmidtFlat.size()) {
-            out << "\n";
-        }
-    }
     out << "};\n\n";
 
     out << std::scientific << std::setprecision(16);
@@ -381,7 +368,7 @@ static void writeRegistryHeader(const std::vector<ModelData> &models, const fs::
     out << "    return nullptr;\n";
     out << "}\n\n";
 
-    out << "} // namespace libinternalfield::generated\n";
+    out << "} // namespace libinternalfield::models\n";
 }
 
 int main(int argc, char *argv[]) {
