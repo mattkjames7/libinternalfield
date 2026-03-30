@@ -37,3 +37,4 @@
 
 *.pyc
 generated/
+build/

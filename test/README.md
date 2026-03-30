@@ -4,32 +4,33 @@ This is a C++ library for various internal magnetic field models which use spher
 
 ## Dependencies
 
-The following things are required for building this library:
+The following tools are required for building and testing this project:
 
-- Python 3
-
-- numpy
-
-- make
-
-- g++
-
-- binutils
+- CMake 3.20+
+- A C/C++ compiler with C++17 support (for example gcc/g++)
 
 ## Building
 
-Clone the repo and build in Linux or Mac OS:
+Clone the repo, configure, and build:
 
 ```bash
 git clone https://github.com/mattkjames7/libinternalfield.git
 cd libinternalfield
-make
-
-#optionally install system wide
-sudo make install
+cmake -S . -B build
+cmake --build build -j4
 ```
 
-This will create a library file ```libinternalfield.so``` (`.dylib` in Mac, `.dll` in Windows). Installing system wide will place the library file in `/usr/local/lib` and the header files `internalfield.h` (for C++) and `internalfieldc.h` (for C) in `/usr/local/include` by default.
+Run tests with CTest:
+
+```bash
+ctest --test-dir build --output-on-failure
+```
+
+Install to a prefix (optional):
+
+```bash
+cmake --install build --prefix /usr/local
+```
 
 ## Supported Models
 

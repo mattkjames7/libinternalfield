@@ -16,8 +16,8 @@ Clone the repo, configure, and build:
 ```bash
 git clone https://github.com/mattkjames7/libinternalfield.git
 cd libinternalfield
-cmake -S . -B build-cmake
-cmake --build build-cmake -j4
+cmake -S . -B build
+cmake --build build -j4
 ```
 
 This builds shared and static libraries by default:
@@ -30,13 +30,13 @@ This builds shared and static libraries by default:
 Install to a prefix (for example /usr/local):
 
 ```bash
-cmake --install build-cmake --prefix /usr/local
+cmake --install build --prefix /usr/local
 ```
 
 Run tests:
 
 ```bash
-ctest --test-dir build-cmake --output-on-failure
+ctest --test-dir build --output-on-failure
 ```
 
 Notes:
