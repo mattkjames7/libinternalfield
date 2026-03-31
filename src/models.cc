@@ -421,7 +421,7 @@ Internal& v117ev() {
 }
 
 /* map the model names to their model object pointers */
-std::map<std::string,InternalFunc> getModelPtrMap() {
+const std::map<std::string,InternalFunc>& getModelPtrMap() {
 	static std::map<std::string,InternalFunc> modelPtrMap = {
 			{"spv",spv},
 			{"z3",z3},
@@ -526,8 +526,9 @@ std::map<std::string,InternalFunc> getModelPtrMap() {
  *
  **********************************************************************/
 InternalFunc getModelObjPointer(std::string Model) {
-    std::map<std::string,InternalFunc> modelPtrMap = getModelPtrMap();
-	return modelPtrMap[Model];
+	const auto& modelPtrMap = getModelPtrMap();
+	auto it = modelPtrMap.find(Model);
+	return (it == modelPtrMap.end()) ? nullptr : it->second;
 }
 
 /***********************************************************************
@@ -543,8 +544,9 @@ InternalFunc getModelObjPointer(std::string Model) {
  *
  **********************************************************************/
 InternalFunc getModelObjPointer(const char *Model) {
-    std::map<std::string,InternalFunc> modelPtrMap = getModelPtrMap();
-	return modelPtrMap[Model];
+	const auto& modelPtrMap = getModelPtrMap();
+	auto it = modelPtrMap.find(Model);
+	return (it == modelPtrMap.end()) ? nullptr : it->second;
 }
 
 /***********************************************************************
@@ -561,7 +563,7 @@ std::vector<std::string> listAvailableModels() {
 }
 
 /* map of strings to direct field model function pointers */
-std::map<std::string,modelFieldPtr> getModelFieldPtrMap() {
+const std::map<std::string,modelFieldPtr>& getModelFieldPtrMap() {
 	static std::map<std::string,modelFieldPtr> modelFieldPtrMap = {
 			{"spv",&spvField},
 			{"z3",&z3Field},
@@ -670,8 +672,9 @@ std::map<std::string,modelFieldPtr> getModelFieldPtrMap() {
  *
  *******************************************************************/
 modelFieldPtr getModelFieldPtr(std::string Model) {
-    std::map<std::string,modelFieldPtr> modelFieldPtrMap = getModelFieldPtrMap();
-    return modelFieldPtrMap[Model];
+	const auto& modelFieldPtrMap = getModelFieldPtrMap();
+	auto it = modelFieldPtrMap.find(Model);
+	return (it == modelFieldPtrMap.end()) ? nullptr : it->second;
 }
 
 /***********************************************************************
@@ -689,8 +692,9 @@ modelFieldPtr getModelFieldPtr(std::string Model) {
  *
  **********************************************************************/
 modelFieldPtr getModelFieldPtr(const char *Model) {
-    std::map<std::string,modelFieldPtr> modelFieldPtrMap = getModelFieldPtrMap();
-    return modelFieldPtrMap[Model];
+	const auto& modelFieldPtrMap = getModelFieldPtrMap();
+	auto it = modelFieldPtrMap.find(Model);
+	return (it == modelFieldPtrMap.end()) ? nullptr : it->second;
 }
 
     

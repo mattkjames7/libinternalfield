@@ -663,7 +663,7 @@ extern Internal& v117ev();
 
 /* map the model names to their model object pointers */
 typedef Internal& (*InternalFunc)();
-std::map<std::string,InternalFunc> getModelPtrMap();
+const std::map<std::string,InternalFunc>& getModelPtrMap();
 
 /* functions to return the pointer to a model object given a string */
 
@@ -708,7 +708,7 @@ InternalFunc getModelObjPointer(const char *Model);
 std::vector<std::string> listAvailableModels();
 
 /* map of strings to direct field model function pointers */
-std::map<std::string,modelFieldPtr> getModelFieldPtrMap();
+const std::map<std::string,modelFieldPtr>& getModelFieldPtrMap();
 
 /* functions to return pointer to model field function */
 
