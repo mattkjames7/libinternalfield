@@ -33,3 +33,20 @@ jobs:
 
       - name: Test
         run: ctest --test-dir ${{ matrix.build_dir }} --output-on-failure
+
+  macos-build-and-test:
+    name: macOS Build and Test
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Configure
+        run: cmake -S . -B build-macos -DBUILD_SHARED_LIBS=ON
+
+      - name: Build
+        run: cmake --build build-macos -j2
+
+      - name: Test
+        run: ctest --test-dir build-macos --output-on-failure
