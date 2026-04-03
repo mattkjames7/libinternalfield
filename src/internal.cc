@@ -1,5 +1,6 @@
 #include "internal.h"
 #include "../generated/out.h"
+#include <cstdint>
 #include <stdexcept>
 
 
