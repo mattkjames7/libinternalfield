@@ -50,3 +50,33 @@ jobs:
 
       - name: Test
         run: ctest --test-dir build-macos --output-on-failure
+
+  windows-msys2-build-and-test:
+    name: Windows MSYS2 (MinGW-w64) Build and Test
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-toolchain
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+
+      - name: Configure
+        shell: msys2 {0}
+        run: cmake -S . -B build-windows -G Ninja -DBUILD_SHARED_LIBS=ON
+
+      - name: Build
+        shell: msys2 {0}
+        run: cmake --build build-windows -j2
+
+      - name: Test
+        shell: msys2 {0}
+        run: ctest --test-dir build-windows --output-on-failure
