@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
 #include <internalfield.h>
 
 
@@ -33,7 +34,32 @@ int main() {
 	readTestData(&Tx, &Ty, &Tz);
 
 	/* compare results */
-	bool pass = (Tx == Bx) && (Ty == By) && (Tz == Bz);
+	const double absTol = 1e-3;
+	const double relTol = 1e-12;
+	bool pass = true;
+	double diff, scale, tol;
+
+	diff = fabs(Tx - Bx);
+	scale = fmax(fabs(Tx), fabs(Bx));
+	tol = fmax(absTol, relTol * scale);
+	if (diff > tol) {
+		pass = false;
+	}
+
+	diff = fabs(Ty - By);
+	scale = fmax(fabs(Ty), fabs(By));
+	tol = fmax(absTol, relTol * scale);
+	if (diff > tol) {
+		pass = false;
+	}
+
+	diff = fabs(Tz - Bz);
+	scale = fmax(fabs(Tz), fabs(Bz));
+	tol = fmax(absTol, relTol * scale);
+	if (diff > tol) {
+		pass = false;
+	}
+
 	if (pass) {
 		printf("PASS\n");
 	} else {

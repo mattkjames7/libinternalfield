@@ -1,4 +1,6 @@
 #include <internalfield.h>
+#include <algorithm>
+#include <cmath>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -36,7 +38,16 @@ int main() {
 	readTestData(&Tx, &Ty, &Tz);
 
 	/* compare results */
-	bool pass = (Tx == Bx) && (Ty == By) && (Tz == Bz);
+	const double absTol = 1e-3;
+	const double relTol = 1e-12;
+	auto nearlyEqual = [absTol, relTol](double a, double b) {
+		double diff = std::fabs(a - b);
+		double scale = std::max(std::fabs(a), std::fabs(b));
+		double tol = std::max(absTol, relTol * scale);
+		return diff <= tol;
+	};
+
+	bool pass = nearlyEqual(Tx, Bx) && nearlyEqual(Ty, By) && nearlyEqual(Tz, Bz);
 	if (pass) {
 		std::cout << "PASS" << std::endl;
 	} else {

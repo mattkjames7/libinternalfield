@@ -234,8 +234,8 @@ bool compareSavedVectors(FieldVectors origField, FieldVectors bField) {
 
 
 	return compareVectors(
-		std::get<0>(bField),std::get<0>(bField),std::get<0>(bField),
-		std::get<0>(origField),std::get<0>(origField),std::get<0>(origField)
+		std::get<0>(bField),std::get<1>(bField),std::get<2>(bField),
+		std::get<0>(origField),std::get<1>(origField),std::get<2>(origField)
 	);
 }
 

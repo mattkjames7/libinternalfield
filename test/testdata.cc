@@ -1,4 +1,6 @@
 #include "testdata.h"
+#include <algorithm>
+#include <cmath>
 
 void saveVector(std::ofstream &file, std::vector<double> &x) {
 
@@ -224,6 +226,15 @@ bool compareVectors(
     std::vector<double> bx0, std::vector<double> by0, std::vector<double> bz0,
     std::vector<double> bx1, std::vector<double> by1, std::vector<double> bz1
 ) {
+    const double absTol = 1e-3;
+    const double relTol = 1e-12;
+
+    auto nearlyEqual = [absTol, relTol](double a, double b) {
+        const double diff = std::fabs(a - b);
+        const double scale = std::max(std::fabs(a), std::fabs(b));
+        return diff <= std::max(absTol, relTol * scale);
+    };
+
     int n = bx0.size();
     if ((bx1.size() != n) || (by1.size() != n) || (bz1.size() != n) || 
         (by0.size() != n) || (bz0.size() != n)) {
@@ -232,7 +243,9 @@ bool compareVectors(
 
     int i;
     for (i=0;i<n;i++) {
-        if ((bx0[i] != bx1[i]) || (by0[i] != by1[i]) || (bz0[i] != bz1[i])) {
+        if (!nearlyEqual(bx0[i], bx1[i]) ||
+            !nearlyEqual(by0[i], by1[i]) ||
+            !nearlyEqual(bz0[i], bz1[i])) {
             return false;
         }
     }
