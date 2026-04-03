@@ -79,4 +79,4 @@ jobs:
 
       - name: Test
         shell: msys2 {0}
-        run: ctest --test-dir build-windows --output-on-failure
+        run: PATH="$PWD/build-windows:$PWD/build-windows/test:$PATH" ctest --test-dir build-windows --output-on-failure
