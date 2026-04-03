@@ -7,6 +7,8 @@
 #include "../testdata.h"
 #include <internalfield.h>
 #include <iostream>
+#include <sstream>
+#include <iomanip>
 
 int main();
 
