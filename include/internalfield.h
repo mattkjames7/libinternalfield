@@ -479,7 +479,6 @@ struct schmidtcoeffs {
  * ********************************************************************/
 class Internal {
 	public:
-		Internal(unsigned char *);
 		Internal(const char *);
 		Internal(const Internal&);
 		~Internal();
@@ -537,7 +536,6 @@ class Internal {
 		double rscale_;
 		
 		/* functions for initializing the object */
-		void _LoadSchmidt(unsigned char*);
 		void _LoadSchmidt(coeffStruct );
 		void _LoadSchmidt(const libinternalfield::models::ModelView &);
 		void _Schmidt();
@@ -559,9 +557,7 @@ class Internal {
 		bool copy;
 
 		/* initialization */
-		bool useptr_;
 		bool *init_;
-		unsigned char *modelptr_;
 		coeffStruct *modelstr_;
 		const libinternalfield::models::ModelView *modelview_;
 		void _Init();

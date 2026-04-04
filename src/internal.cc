@@ -1,27 +1,6 @@
 #include "internal.h"
 #include "../generated/models.h"
-#include <cstdint>
 #include <stdexcept>
-
-
-/***********************************************************************
- * NAME : Internal::Internal(ptr)
- * 
- * DESCRIPTION : Initialize the Internal object.
- * 
- * INPUTS : 
- * 		unsigned char	*ptr	Pointer to the memory location to read.
- * 
- * ********************************************************************/
-Internal::Internal(unsigned char *ptr) {
-
-	useptr_ = true;
-	init_ = new bool[1];
-	init_[0] = false;
-	modelptr_ = ptr;
-	modelview_ = nullptr;
-	_Init();
-}
 
 /***********************************************************************
  * NAME : Internal::Internal(S)
@@ -35,10 +14,8 @@ Internal::Internal(unsigned char *ptr) {
 Internal::Internal(const char *Model) {
 	
 	
-	useptr_ = false;
 	init_ = new bool[1];
 	init_[0] = false;
-	modelptr_ = nullptr;
 	modelview_ = libinternalfield::models::FindModel(Model);
 	if (modelview_ == nullptr) {
 		throw std::runtime_error(std::string("Unknown model: ") + Model);
@@ -64,10 +41,8 @@ Internal::Internal(const char *Model) {
 Internal::Internal(const Internal &obj) {
 	init_ = obj.init_;
 	copy = true;
-	useptr_ = obj.useptr_;
 	init_ = obj.init_;
 	nschc_ = obj.nschc_;
-	modelptr_ = obj.modelptr_;
 	modelview_ = obj.modelview_;
 	schc_ = obj.schc_;
 	Snm_ = obj.Snm_;
@@ -129,11 +104,7 @@ void Internal::_Init() {
 	
 	/* call the appropriate functions to intialize the object */
 	/* read the coeffs into the object */
-	if (useptr_) {
-		_LoadSchmidt(modelptr_);	
-	} else {
-		_LoadSchmidt(*modelview_);
-	}
+	_LoadSchmidt(*modelview_);
 
 	/* calcualte Schmidt normalized coefficient grids */
 	_Schmidt();
@@ -158,106 +129,6 @@ void Internal::_Init() {
 	cosmp_ = new double[nmax_+1];
 	sinmp_ = new double[nmax_+1];
 
-}
-
-
-/***********************************************************************
- * NAME : void Internal::_LoadSchmidt(ptr)
- * 
- * DESCRIPTION : Read the g/h coefficients from memory.
- * 
- * INPUTS : 
- * 		unsigned char	*ptr	Pointer to the memory location to read.
- * 
- * ********************************************************************/
-void Internal::_LoadSchmidt(unsigned char *ptr){
-	
-	/* this is the length of each array */
-	int l, i, j, p;
-	
-	/* read the length */
-	l = ((int*) ptr)[0];
-	ptr += sizeof(int);
-	
-	/* initialize the temporary arrays */
-	int *n = new int[l];
-	int *m = new int[l];
-	int8_t *gh = new int8_t[l];
-	double *coeffs = new double[l];
-	
-	/* load them in */
-	for (i=0;i<l;i++) {
-		gh[i] = ((int8_t*) ptr)[0];
-		ptr += sizeof(int8_t);
-	}
-	for (i=0;i<l;i++) {
-		n[i] = ((int*) ptr)[0];
-		ptr += sizeof(int);
-	}
-	for (i=0;i<l;i++) {
-		m[i] = ((int*) ptr)[0];
-		ptr += sizeof(int);
-	}
-	for (i=0;i<l;i++) {
-		coeffs[i] = ((double*) ptr)[0];
-		ptr += sizeof(double);
-	}
-	ndef_ = ((int*) ptr)[0];
-	ptr += sizeof(int);
-	
-	/* get n max */
-	nmax_ = 0;
-	for (i=0;i<l;i++) {
-		if (n[i] > nmax_) {
-			nmax_ = n[i];
-		}
-	}
-	
-	/* set current model degree to the default */
-	ncur_[0] = ndef_;
-	
-	/* calculate the length of the coefficient structure */
-	nschc_ = 0;
-	for (i=0;i<nmax_;i++) {
-		nschc_ += (2 + i);
-	}
-	
-	/* get rscale */
-	rscale_ = ((double*) ptr)[0];
-	ptr += sizeof(double);
-	
-	/* create the structure array */
-	schc_ = new struct schmidtcoeffs[nschc_];
-	
-	/*fill it up */
-	p = 0;
-	for (i=1;i<=nmax_;i++) {
-		for (j=0;j<=i;j++) {
-			schc_[p].n = i;
-			schc_[p].m = j;
-			schc_[p].g = 0.0;
-			schc_[p].h = 0.0;
-			p++;
-		}
-	}
-	for (i=0;i<l;i++) {
-		p = m[i]-1;
-		for (j=0;j<n[i];j++) {
-			p += (1 + j);
-		}
-		if (gh[i] == 0) {
-			schc_[p].g = coeffs[i];
-		} else {
-			schc_[p].h = coeffs[i];
-		}
-	}
-			
-	/* free the original arrays */
-	delete[] n;
-	delete[] m;
-	delete[] gh;
-	delete[] coeffs;
-	
 }
 
 void Internal::_LoadSchmidt(const libinternalfield::models::ModelView &S){
