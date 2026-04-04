@@ -50,7 +50,7 @@ ctest --test-dir build --output-on-failure
 
 Notes:
 
-- The generated model registry header is written to generated/out.h during the build.
+- The generated model registry header is written to generated/models.h during the build.
 - The build step also refreshes data/coeffs/earth/igrf*.dat from data/igrf/igrf13coeffs.txt before generating the registry.
 
 ## Supported Models

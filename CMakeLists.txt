@@ -16,7 +16,7 @@ option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 
 add_subdirectory(tools/coeff_registry_codegen)
 
-set(GENERATED_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/generated/out.h")
+set(GENERATED_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/generated/models.h")
 
 file(GLOB_RECURSE LIBINTERNALFIELD_COEFF_INPUTS CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/data/coeffs/*/*.dat"
