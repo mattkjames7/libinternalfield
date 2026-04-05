@@ -456,12 +456,9 @@ namespace internalfield {
 namespace models {
 struct ModelView;
 }
-}
 
 
 /* This structure will store the Schmidt coefficients */
-namespace internalfield {
-
 struct schmidtcoeffs {
 	int n;
 	int m;

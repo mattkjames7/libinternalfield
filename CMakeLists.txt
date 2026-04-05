@@ -17,15 +17,17 @@ option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 add_subdirectory(tools/coeff_registry_codegen)
 
 set(GENERATED_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/generated/models.h")
+set(GENERATED_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/generated/models.cc")
+set(GENERATED_MODEL_LIST "${CMAKE_CURRENT_SOURCE_DIR}/generated/model_list.h")
 
 file(GLOB_RECURSE LIBINTERNALFIELD_COEFF_INPUTS CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/data/coeffs/*/*.dat"
 )
 
 add_custom_command(
-    OUTPUT "${GENERATED_HEADER}"
+    OUTPUT "${GENERATED_HEADER}" "${GENERATED_SOURCE}" "${GENERATED_MODEL_LIST}"
     COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_SOURCE_DIR}/generated"
-    COMMAND coeff_registry_codegen "${CMAKE_CURRENT_SOURCE_DIR}/data/coeffs" "${GENERATED_HEADER}"
+    COMMAND coeff_registry_codegen "${CMAKE_CURRENT_SOURCE_DIR}/data/coeffs" "${GENERATED_HEADER}" "${GENERATED_SOURCE}" "${GENERATED_MODEL_LIST}"
     DEPENDS
         coeff_registry_codegen
         "${CMAKE_CURRENT_SOURCE_DIR}/data/igrf/igrf13coeffs.txt"
@@ -34,10 +36,12 @@ add_custom_command(
     VERBATIM
 )
 
-add_custom_target(generate_model_registry DEPENDS "${GENERATED_HEADER}")
+add_custom_target(generate_model_registry DEPENDS "${GENERATED_HEADER}" "${GENERATED_SOURCE}" "${GENERATED_MODEL_LIST}")
+
+set_source_files_properties("${GENERATED_SOURCE}" PROPERTIES GENERATED TRUE)
 
 set(LIBINTERNALFIELD_SOURCES
-    src/models.cc
+    "${GENERATED_SOURCE}"
     src/internal.cc
     src/internalmodel.cc
     src/libinternal.cc

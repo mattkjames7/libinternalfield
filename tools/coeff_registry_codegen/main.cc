@@ -529,14 +529,117 @@ static void writeRegistryHeader(const std::vector<ModelData> &models, const fs::
     out << "} // namespace internalfield::models\n";
 }
 
+static void writeModelFunctionsSource(const std::vector<ModelData> &models, const fs::path &outputSource) {
+    std::ofstream out(outputSource);
+    if (!out.is_open()) {
+        throw std::runtime_error("failed to open output file: " + outputSource.string());
+    }
+
+    out << "#include \"../src/models.h\"\n\n";
+    out << "namespace internalfield::models {\n\n";
+
+    for (const auto &model : models) {
+        out << "Internal& " << model.name << "() {\n";
+        out << "\tstatic Internal model(\"" << model.name << "\");\n";
+        out << "\treturn model;\n";
+        out << "}\n\n";
+    }
+
+    out << "/* map the model names to their model object pointers */\n";
+    out << "const std::map<std::string,InternalFunc>& getModelPtrMap() {\n";
+    out << "\tstatic std::map<std::string,InternalFunc> modelPtrMap = {\n";
+    for (const auto &model : models) {
+        out << "\t\t\t{\"" << model.name << "\"," << model.name << "},\n";
+    }
+    out << "\t};\n";
+    out << "\treturn modelPtrMap;\n";
+    out << "}\n\n";
+
+    out << "InternalFunc getModelObjPointer(std::string Model) {\n";
+    out << "\tconst auto& modelPtrMap = getModelPtrMap();\n";
+    out << "\tauto it = modelPtrMap.find(Model);\n";
+    out << "\treturn (it == modelPtrMap.end()) ? nullptr : it->second;\n";
+    out << "}\n\n";
+
+    out << "InternalFunc getModelObjPointer(const char *Model) {\n";
+    out << "\tconst auto& modelPtrMap = getModelPtrMap();\n";
+    out << "\tauto it = modelPtrMap.find(Model);\n";
+    out << "\treturn (it == modelPtrMap.end()) ? nullptr : it->second;\n";
+    out << "}\n\n";
+
+    out << "std::vector<std::string> listAvailableModels() {\n";
+    out << "\treturn listMapKeys(getModelPtrMap());\n";
+    out << "}\n\n";
+
+    out << "/* map of strings to direct field model function pointers */\n";
+    out << "const std::map<std::string,modelFieldPtr>& getModelFieldPtrMap() {\n";
+    out << "\tstatic std::map<std::string,modelFieldPtr> modelFieldPtrMap = {\n";
+    for (const auto &model : models) {
+        out << "\t\t\t{\"" << model.name << "\",&" << model.name << "Field},\n";
+    }
+    out << "\t};\n";
+    out << "\treturn modelFieldPtrMap;\n";
+    out << "}\n\n";
+
+    out << "modelFieldPtr getModelFieldPtr(std::string Model) {\n";
+    out << "\tconst auto& modelFieldPtrMap = getModelFieldPtrMap();\n";
+    out << "\tauto it = modelFieldPtrMap.find(Model);\n";
+    out << "\treturn (it == modelFieldPtrMap.end()) ? nullptr : it->second;\n";
+    out << "}\n\n";
+
+    out << "modelFieldPtr getModelFieldPtr(const char *Model) {\n";
+    out << "\tconst auto& modelFieldPtrMap = getModelFieldPtrMap();\n";
+    out << "\tauto it = modelFieldPtrMap.find(Model);\n";
+    out << "\treturn (it == modelFieldPtrMap.end()) ? nullptr : it->second;\n";
+    out << "}\n\n";
+
+    out << "} // namespace internalfield::models\n\n";
+    out << "using namespace internalfield;\n";
+    out << "using namespace internalfield::models;\n\n";
+
+    out << "extern \"C\" modelFieldPtr getModelFieldPtr(const char *Model) {\n";
+    out << "\treturn internalfield::models::getModelFieldPtr(Model);\n";
+    out << "}\n\n";
+
+    for (const auto &model : models) {
+        out << "void " << model.name << "Field(double x, double y, double z,\n";
+        out << "\t\t\t\tdouble *bx, double *by, double *bz) {\n";
+        out << "\tInternal model = " << model.name << "();\n";
+        out << "\tmodel.FieldCart(x,y,z,bx,by,bz);\n";
+        out << "}\n\n";
+    }
+}
+
+static void writeModelListHeader(const std::vector<ModelData> &models, const fs::path &outputHeader) {
+    std::ofstream out(outputHeader);
+    if (!out.is_open()) {
+        throw std::runtime_error("failed to open output file: " + outputHeader.string());
+    }
+
+    out << "#pragma once\n\n";
+    out << "#define LIBINTERNALFIELD_MODEL_LIST(X) \\\n";
+    for (std::size_t i = 0; i < models.size(); i++) {
+        out << "    X(" << models[i].name << ")";
+        if (i + 1 < models.size()) {
+            out << " \\\n";
+        } else {
+            out << "\n";
+        }
+    }
+}
+
 int main(int argc, char *argv[]) {
     if (argc < 3) {
-        std::cerr << "Usage: " << argv[0] << " <coeff_dir> <output_header>\n";
+        std::cerr << "Usage: " << argv[0] << " <coeff_dir> <output_header> [output_source] [output_model_list]\n";
         return 1;
     }
 
     const fs::path coeffDir = argv[1];
     const fs::path outputHeader = argv[2];
+    const bool hasSourceOutput = argc >= 4;
+    const fs::path outputSource = hasSourceOutput ? fs::path(argv[3]) : fs::path();
+    const bool hasModelListOutput = argc >= 5;
+    const fs::path outputModelList = hasModelListOutput ? fs::path(argv[4]) : fs::path();
 
     try {
         if (!fs::exists(coeffDir) || !fs::is_directory(coeffDir)) {
@@ -558,7 +661,27 @@ int main(int argc, char *argv[]) {
 
         writeRegistryHeader(models, outputHeader);
 
+        if (hasSourceOutput) {
+            if (outputSource.has_parent_path()) {
+                fs::create_directories(outputSource.parent_path());
+            }
+            writeModelFunctionsSource(models, outputSource);
+        }
+
+        if (hasModelListOutput) {
+            if (outputModelList.has_parent_path()) {
+                fs::create_directories(outputModelList.parent_path());
+            }
+            writeModelListHeader(models, outputModelList);
+        }
+
         std::cout << "Wrote registry for " << models.size() << " models to " << outputHeader << "\n";
+        if (hasSourceOutput) {
+            std::cout << "Wrote model functions for " << models.size() << " models to " << outputSource << "\n";
+        }
+        if (hasModelListOutput) {
+            std::cout << "Wrote model list for " << models.size() << " models to " << outputModelList << "\n";
+        }
         return 0;
     } catch (const std::exception &ex) {
         std::cerr << "Error: " << ex.what() << "\n";
