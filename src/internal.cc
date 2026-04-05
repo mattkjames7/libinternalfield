@@ -2,6 +2,8 @@
 #include "../generated/models.h"
 #include <stdexcept>
 
+namespace internalfield {
+
 /***********************************************************************
  * NAME : Internal::Internal(S)
  * 
@@ -16,7 +18,7 @@ Internal::Internal(const char *Model) {
 	
 	init_ = new bool[1];
 	init_[0] = false;
-	modelview_ = libinternalfield::models::FindModel(Model);
+	modelview_ = internalfield::models::FindModel(Model);
 	if (modelview_ == nullptr) {
 		throw std::runtime_error(std::string("Unknown model: ") + Model);
 	}
@@ -131,7 +133,7 @@ void Internal::_Init() {
 
 }
 
-void Internal::_LoadSchmidt(const libinternalfield::models::ModelView &S){
+void Internal::_LoadSchmidt(const internalfield::models::ModelView &S){
 	int i;
 
 	nmax_ = S.nmax;
@@ -996,3 +998,4 @@ std::vector<std::vector<double>> Internal::geth() {
 	return out;
 
 }
+} // namespace internalfield

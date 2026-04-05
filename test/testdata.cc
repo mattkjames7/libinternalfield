@@ -19,7 +19,7 @@ void saveVector(std::ofstream &file, std::vector<int> &x) {
 }
 
 
-void saveSchmidtCoeffs(std::ofstream &file, std::vector<struct schmidtcoeffs> schc) {
+void saveSchmidtCoeffs(std::ofstream &file, std::vector<internalfield::schmidtcoeffs> schc) {
 
     int l = schc.size();
     std::vector<int> n(l);
@@ -27,7 +27,7 @@ void saveSchmidtCoeffs(std::ofstream &file, std::vector<struct schmidtcoeffs> sc
     std::vector<double> g(l);
     std::vector<double> h(l);
 
-    struct schmidtcoeffs tmp;
+    internalfield::schmidtcoeffs tmp;
     for (int i=0;i<l;i++) {
         tmp = schc[i];
         n[i] = tmp.n;
@@ -60,7 +60,7 @@ std::vector<int> readIntVector(std::ifstream &file) {
     return x;
 }
 
-std::vector<struct schmidtcoeffs> readSchmidtCoeffs(std::ifstream &file) {
+std::vector<internalfield::schmidtcoeffs> readSchmidtCoeffs(std::ifstream &file) {
 
     std::vector<int> n = readIntVector(file);
     std::vector<int> m = readIntVector(file);
@@ -68,8 +68,8 @@ std::vector<struct schmidtcoeffs> readSchmidtCoeffs(std::ifstream &file) {
     std::vector<double> h = readVector(file);
 
     int l = n.size();
-    std::vector<struct schmidtcoeffs> out;
-    struct schmidtcoeffs tmp;
+    std::vector<internalfield::schmidtcoeffs> out;
+    internalfield::schmidtcoeffs tmp;
     for (int i=0;i<l;i++) {
         tmp.n = n[i];
         tmp.m = m[i];
@@ -154,7 +154,7 @@ std::vector<std::vector<double>> readVectorVector(std::ifstream &file) {
 
 void saveModelVariables(
     std::filesystem::path &testFile,
-    std::vector<struct schmidtcoeffs> &schc,
+    std::vector<internalfield::schmidtcoeffs> &schc,
     std::vector<std::vector<double>> &Snm,
     std::vector<std::vector<double>> &g,
     std::vector<std::vector<double>> &h
@@ -173,7 +173,7 @@ void saveModelVariables(
 
 void readModelVariables(
     std::filesystem::path &testFile,
-    std::vector<struct schmidtcoeffs> &schc,
+    std::vector<internalfield::schmidtcoeffs> &schc,
     std::vector<std::vector<double>> &Snm,
     std::vector<std::vector<double>> &g,
     std::vector<std::vector<double>> &h

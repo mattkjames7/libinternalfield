@@ -1,5 +1,7 @@
 #include "variable.h"
 
+namespace internalfield {
+
 /* Body : earth ---  Model : igrf */
 variableModelList& _var_model_igrf() {
 	static const std::string name = "igrf";
@@ -96,6 +98,8 @@ variableModelList& _var_model_igrf() {
     };
     \treturn out;
 };
+
+} // namespace internalfield
 
 
 #endif

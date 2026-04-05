@@ -1,5 +1,7 @@
 #include "models.h"
 
+namespace internalfield::models {
+
 Internal& spv() {
 	static Internal model("spv");
 	return model;
@@ -695,6 +697,15 @@ modelFieldPtr getModelFieldPtr(const char *Model) {
 	const auto& modelFieldPtrMap = getModelFieldPtrMap();
 	auto it = modelFieldPtrMap.find(Model);
 	return (it == modelFieldPtrMap.end()) ? nullptr : it->second;
+}
+
+} // namespace internalfield::models
+
+using namespace internalfield;
+using namespace internalfield::models;
+
+extern "C" modelFieldPtr getModelFieldPtr(const char *Model) {
+	return internalfield::models::getModelFieldPtr(Model);
 }
 
     

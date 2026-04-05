@@ -403,7 +403,7 @@ static void writeRegistryHeader(const std::vector<ModelData> &models, const fs::
     out << "#include <cstddef>\n";
     out << "#include <string_view>\n\n";
 
-    out << "namespace libinternalfield::models {\n\n";
+    out << "namespace internalfield::models {\n\n";
 
     out << "template <std::size_t N>\n";
     out << "struct ModelParams {\n";
@@ -526,7 +526,7 @@ static void writeRegistryHeader(const std::vector<ModelData> &models, const fs::
     out << "    return nullptr;\n";
     out << "}\n\n";
 
-    out << "} // namespace libinternalfield::models\n";
+    out << "} // namespace internalfield::models\n";
 }
 
 int main(int argc, char *argv[]) {

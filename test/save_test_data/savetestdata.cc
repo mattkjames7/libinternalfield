@@ -210,7 +210,7 @@ void saveVIP4ModelVariables() {
 	file /= "data/testmodelvars.bin";
 
 	Internal model("vip4");
-	std::vector<struct schmidtcoeffs> schc = model.getSchmidtCoeffs();
+	std::vector<internalfield::schmidtcoeffs> schc = model.getSchmidtCoeffs();
 	std::vector<std::vector<double>> Snm = model.getSnm();
 	std::vector<std::vector<double>> g = model.getg();
 	std::vector<std::vector<double>> h = model.geth();

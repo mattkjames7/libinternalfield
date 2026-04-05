@@ -293,7 +293,7 @@ void testVip4Function() {
 }
 
 
-void printSchmidt(std::vector<struct schmidtcoeffs> schc) {
+void printSchmidt(std::vector<internalfield::schmidtcoeffs> schc) {
 	int i;
 	std::cout << "n: ";
 	for (i=0;i<schc.size();i++) {
@@ -314,8 +314,8 @@ void printSchmidt(std::vector<struct schmidtcoeffs> schc) {
 }
 
 void compareSchmidtCoeffs(
-	std::vector<struct schmidtcoeffs> &schc0,
-	std::vector<struct schmidtcoeffs> &schc1
+	std::vector<internalfield::schmidtcoeffs> &schc0,
+	std::vector<internalfield::schmidtcoeffs> &schc1
 ){
 	int n = schc0.size();
 	std::cout << "Schmidt Coefficients..........................";
@@ -464,7 +464,7 @@ void compareVectorVector(
 
 void testModelVars() {
 	std::vector<std::vector<double>> Snm0, Snm1, g0, g1, h0, h1;
-	std::vector<struct schmidtcoeffs> schc0, schc1;
+	std::vector<internalfield::schmidtcoeffs> schc0, schc1;
 
 	Internal model("vip4");
 	schc1 = model.getSchmidtCoeffs();

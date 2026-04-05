@@ -7,6 +7,7 @@
 #include "internal.h"
 #include "listmapkeys.h"
 
+namespace internalfield::models {
 
 extern Internal& spv();
 extern Internal& z3();
@@ -164,6 +165,8 @@ const std::map<std::string,modelFieldPtr>& getModelFieldPtrMap();
  **********************************************************************/
 modelFieldPtr getModelFieldPtr(std::string Model);
 
+} // namespace internalfield::models
+
 extern "C" {
 /***********************************************************************
  * NAME : getModelFieldPointer(Model)
@@ -179,7 +182,7 @@ extern "C" {
  *		modelFieldPtr *ptr		Pointer to model wrapper.
  *
  **********************************************************************/
-	modelFieldPtr getModelFieldPtr(const char *Model);
+	internalfield::models::modelFieldPtr getModelFieldPtr(const char *Model);
 
 
 /* functions to directly call each model for a single Cartesian vector 

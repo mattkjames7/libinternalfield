@@ -7,7 +7,9 @@
 #include "internalmodel.h"
 
 /* we want to initialize the model objects witht heir parameters */
+namespace internalfield {
 InternalModel& getInternalModel();
+} // namespace internalfield
 
 extern "C" {
 	/* these wrappers can be used to get the magnetic field vectors */

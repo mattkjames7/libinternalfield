@@ -7,7 +7,7 @@
 #include <string.h>
 #include <vector>
 
-namespace libinternalfield {
+namespace internalfield {
 namespace models {
 struct ModelView;
 }
@@ -15,6 +15,8 @@ struct ModelView;
 
 
 /* This structure will store the Schmidt coefficients */
+namespace internalfield {
+
 struct schmidtcoeffs {
 	int n;
 	int m;
@@ -91,7 +93,7 @@ class Internal {
 		double rscale_;
 		
 		/* functions for initializing the object */
-		void _LoadSchmidt(const libinternalfield::models::ModelView &);
+		void _LoadSchmidt(const internalfield::models::ModelView &);
 		void _Schmidt();
 		void _CoeffGrids();
 
@@ -112,11 +114,13 @@ class Internal {
 
 		/* initialization */
 		bool *init_;
-		const libinternalfield::models::ModelView *modelview_;
+		const internalfield::models::ModelView *modelview_;
 		void _Init();
 		void _CheckInit();
 	
 };
+
+} // namespace internalfield
 
 #endif
 
