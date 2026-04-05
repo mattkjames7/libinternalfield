@@ -818,7 +818,7 @@ class InternalModel {
 
 
 /* we want to initialize the model objects witht heir parameters */
-InternalModel getInternalModel();
+InternalModel& getInternalModel();
 
 extern "C" {
 }
