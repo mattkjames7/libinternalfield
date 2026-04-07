@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Configure
-        run: cmake -S . -B ${{ matrix.build_dir }} -DBUILD_SHARED_LIBS=${{ matrix.build_shared_libs }}
+        run: cmake -S . -B ${{ matrix.build_dir }} -DBUILD_SHARED_LIBS=${{ matrix.build_shared_libs }} -GNinja
 
       - name: Build
         run: cmake --build ${{ matrix.build_dir }} -j2
@@ -43,7 +43,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Configure
-        run: cmake -S . -B build-macos -DBUILD_SHARED_LIBS=ON
+        run: cmake -S . -B build-macos -DBUILD_SHARED_LIBS=ON -GNinja
 
       - name: Build
         run: cmake --build build-macos -j2
