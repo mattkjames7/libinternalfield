@@ -41,6 +41,11 @@ gtest_add_tests(TARGET libinternalfield_gtest
 set_tests_properties(${LIBINTERNALFIELD_GTESTS} PROPERTIES
     WORKING_DIRECTORY "${LIBINTERNALFIELD_TEST_WORKDIR}")
 
+if(WIN32)
+    set_tests_properties(${LIBINTERNALFIELD_GTESTS} PROPERTIES
+        ENVIRONMENT "PATH=$<TARGET_FILE_DIR:internalfield>\\;$<TARGET_FILE_DIR:libinternalfield_gtest>\\;$<TARGET_FILE_DIR:GTest::gtest>\\;$ENV{PATH}")
+endif()
+
 add_executable(libinternalfield_cpptest cpptest.cc)
 target_include_directories(libinternalfield_cpptest PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../include")
 target_link_libraries(libinternalfield_cpptest PRIVATE internalfield)
