@@ -8,6 +8,7 @@ The following tools are required for building this library:
 
 - CMake 3.20+
 - A C/C++ compiler with C++17 support (for example gcc/g++)
+- `ninja-build` if configuring with `-GNinja`
 
 ## Building
 
@@ -16,7 +17,7 @@ Clone the repo, configure, and build:
 ```bash
 git clone https://github.com/mattkjames7/libinternalfield.git
 cd libinternalfield
-cmake -S . -B build
+cmake -S . -B build -GNinja
 cmake --build build -j4
 ```
 
