@@ -22,17 +22,18 @@ std::vector<double> ComputeSchmidtFlat(int nmax) {
         throw std::runtime_error("nmax must be >= 0");
     }
 
-    const int nfact = 2 * nmax + 1;
-    std::vector<double> facts(static_cast<std::size_t>(nfact), 1.0);
-    for (int i = 1; i < nfact; i++) {
-        facts[static_cast<std::size_t>(i)] = static_cast<double>(i) * facts[static_cast<std::size_t>(i - 1)];
+    const int nfact = 2 * nmax;
+    std::vector<double> logfacts(static_cast<std::size_t>(nfact + 1), 0.0);
+    for (int i = 0; i <= nfact; i++) {
+        logfacts[static_cast<std::size_t>(i)] = std::lgamma(static_cast<double>(i + 1));
     }
 
     std::vector<double> out(SchmidtFlatSize(nmax), 0.0);
     for (int n = 0; n <= nmax; n++) {
         for (int m = 0; m <= n; m++) {
             const double delta = (m == 0) ? 1.0 : 2.0;
-            const double ratio = facts[static_cast<std::size_t>(n - m)] / facts[static_cast<std::size_t>(n + m)];
+            const double log_ratio = logfacts[static_cast<std::size_t>(n - m)] - logfacts[static_cast<std::size_t>(n + m)];
+            const double ratio = std::exp(log_ratio);
             out[SchmidtIndex(n, m)] = std::sqrt(delta * ratio);
         }
     }
