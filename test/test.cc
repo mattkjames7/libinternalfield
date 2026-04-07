@@ -1,5 +1,8 @@
 #include "test.h"
 
+#include <algorithm>
+#include <cstring>
+
 FieldVectors getPositions() {
 	std::vector<double> r = {3,3,3,3, 3,3,3,3, 3,3,3,3, 3,3,3,3};
 	std::vector<double> tdeg = {10,10,10,10,55,55,55,55,
@@ -482,6 +485,104 @@ void testModelVars() {
 	compareVectorVector("h",h0,h1);
 }
 
+void testVip4MacroFunction() {
+	std::cout << "VIP4 macro wrapper validity test...............";
+
+	const double x = 9.5;
+	const double y = -2.25;
+	const double z = 1.75;
+
+	double bxWrap = 0.0;
+	double byWrap = 0.0;
+	double bzWrap = 0.0;
+	vip4Field(x, y, z, &bxWrap, &byWrap, &bzWrap);
+
+	InternalModel model;
+	model.SetModel("vip4");
+	model.SetCartIn(true);
+	model.SetCartOut(true);
+
+	double bxModel = 0.0;
+	double byModel = 0.0;
+	double bzModel = 0.0;
+	model.Field(x, y, z, &bxModel, &byModel, &bzModel);
+
+	const bool finite = std::isfinite(bxWrap) && std::isfinite(byWrap) && std::isfinite(bzWrap);
+	const double absTol = 1e-6;
+	const double dx = std::fabs(bxWrap - bxModel);
+	const double dy = std::fabs(byWrap - byModel);
+	const double dz = std::fabs(bzWrap - bzModel);
+	const bool matchesModel = (dx <= absTol) && (dy <= absTol) && (dz <= absTol);
+
+	if (finite && matchesModel) {
+		std::cout << "PASS" << std::endl;
+	} else {
+		std::cout << "FAIL" << std::endl;
+		if (!finite) {
+			std::cout << "vip4Field returned non-finite values" << std::endl;
+		}
+		if (!matchesModel) {
+			std::cout << "vip4Field output differs from InternalModel(vip4)" << std::endl;
+			std::cout << "Wrapper: [" << bxWrap << ", " << byWrap << ", " << bzWrap << "]" << std::endl;
+			std::cout << "Model:   [" << bxModel << ", " << byModel << ", " << bzModel << "]" << std::endl;
+		}
+	}
+}
+
+void testSingletonConfigRoundTrip() {
+	std::cout << "Singleton config get/set + field change........";
+
+	double x = 8.0;
+	double y = 1.25;
+	double z = -0.5;
+
+	char modelName[64];
+	bool cartIn = false;
+	bool cartOut = false;
+	int maxDeg = 0;
+
+	SetInternalCFG("vip4", true, true, 1);
+	GetInternalCFG(modelName, &cartIn, &cartOut, &maxDeg);
+
+	const bool cfgAOk = (std::strcmp(modelName, "vip4") == 0) && cartIn && cartOut && (maxDeg == 1);
+
+	double bxA = 0.0;
+	double byA = 0.0;
+	double bzA = 0.0;
+	InternalField(1, &x, &y, &z, &bxA, &byA, &bzA);
+
+	SetInternalCFG("vip4", true, true, 4);
+	GetInternalCFG(modelName, &cartIn, &cartOut, &maxDeg);
+
+	const bool cfgBOk = (std::strcmp(modelName, "vip4") == 0) && cartIn && cartOut && (maxDeg == 4);
+
+	double bxB = 0.0;
+	double byB = 0.0;
+	double bzB = 0.0;
+	InternalField(1, &x, &y, &z, &bxB, &byB, &bzB);
+
+	const bool finite = std::isfinite(bxA) && std::isfinite(byA) && std::isfinite(bzA) &&
+					 std::isfinite(bxB) && std::isfinite(byB) && std::isfinite(bzB);
+	const double delta = std::fabs(bxA - bxB) + std::fabs(byA - byB) + std::fabs(bzA - bzB);
+	const bool fieldChanged = delta > 1e-6;
+
+	if (cfgAOk && cfgBOk && finite && fieldChanged) {
+		std::cout << "PASS" << std::endl;
+	} else {
+		std::cout << "FAIL" << std::endl;
+		if (!cfgAOk || !cfgBOk) {
+			std::cout << "Config round-trip mismatch from GetInternalCFG" << std::endl;
+			std::cout << "Model=" << modelName << " CartIn=" << cartIn << " CartOut=" << cartOut << " MaxDeg=" << maxDeg << std::endl;
+		}
+		if (!finite) {
+			std::cout << "InternalField returned non-finite values" << std::endl;
+		}
+		if (!fieldChanged) {
+			std::cout << "InternalField output did not change after config update" << std::endl;
+		}
+	}
+}
+
 
 int main() {
 
@@ -489,5 +590,7 @@ int main() {
 	testJrm09Internal();
 	testVip4Function();
 	testModelVars();
+	testVip4MacroFunction();
+	testSingletonConfigRoundTrip();
 }
 	
