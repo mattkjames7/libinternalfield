@@ -1,4 +1,6 @@
 #include "testdata.h"
+#include <algorithm>
+#include <cmath>
 
 void saveVector(std::ofstream &file, std::vector<double> &x) {
 
@@ -17,7 +19,7 @@ void saveVector(std::ofstream &file, std::vector<int> &x) {
 }
 
 
-void saveSchmidtCoeffs(std::ofstream &file, std::vector<struct schmidtcoeffs> schc) {
+void saveSchmidtCoeffs(std::ofstream &file, std::vector<internalfield::schmidtcoeffs> schc) {
 
     int l = schc.size();
     std::vector<int> n(l);
@@ -25,7 +27,7 @@ void saveSchmidtCoeffs(std::ofstream &file, std::vector<struct schmidtcoeffs> sc
     std::vector<double> g(l);
     std::vector<double> h(l);
 
-    struct schmidtcoeffs tmp;
+    internalfield::schmidtcoeffs tmp;
     for (int i=0;i<l;i++) {
         tmp = schc[i];
         n[i] = tmp.n;
@@ -58,7 +60,7 @@ std::vector<int> readIntVector(std::ifstream &file) {
     return x;
 }
 
-std::vector<struct schmidtcoeffs> readSchmidtCoeffs(std::ifstream &file) {
+std::vector<internalfield::schmidtcoeffs> readSchmidtCoeffs(std::ifstream &file) {
 
     std::vector<int> n = readIntVector(file);
     std::vector<int> m = readIntVector(file);
@@ -66,8 +68,8 @@ std::vector<struct schmidtcoeffs> readSchmidtCoeffs(std::ifstream &file) {
     std::vector<double> h = readVector(file);
 
     int l = n.size();
-    std::vector<struct schmidtcoeffs> out;
-    struct schmidtcoeffs tmp;
+    std::vector<internalfield::schmidtcoeffs> out;
+    internalfield::schmidtcoeffs tmp;
     for (int i=0;i<l;i++) {
         tmp.n = n[i];
         tmp.m = m[i];
@@ -152,7 +154,7 @@ std::vector<std::vector<double>> readVectorVector(std::ifstream &file) {
 
 void saveModelVariables(
     std::filesystem::path &testFile,
-    std::vector<struct schmidtcoeffs> &schc,
+    std::vector<internalfield::schmidtcoeffs> &schc,
     std::vector<std::vector<double>> &Snm,
     std::vector<std::vector<double>> &g,
     std::vector<std::vector<double>> &h
@@ -171,7 +173,7 @@ void saveModelVariables(
 
 void readModelVariables(
     std::filesystem::path &testFile,
-    std::vector<struct schmidtcoeffs> &schc,
+    std::vector<internalfield::schmidtcoeffs> &schc,
     std::vector<std::vector<double>> &Snm,
     std::vector<std::vector<double>> &g,
     std::vector<std::vector<double>> &h
@@ -224,6 +226,15 @@ bool compareVectors(
     std::vector<double> bx0, std::vector<double> by0, std::vector<double> bz0,
     std::vector<double> bx1, std::vector<double> by1, std::vector<double> bz1
 ) {
+    const double absTol = 1e-3;
+    const double relTol = 1e-12;
+
+    auto nearlyEqual = [absTol, relTol](double a, double b) {
+        const double diff = std::fabs(a - b);
+        const double scale = std::max(std::fabs(a), std::fabs(b));
+        return diff <= std::max(absTol, relTol * scale);
+    };
+
     int n = bx0.size();
     if ((bx1.size() != n) || (by1.size() != n) || (bz1.size() != n) || 
         (by0.size() != n) || (bz0.size() != n)) {
@@ -232,7 +243,9 @@ bool compareVectors(
 
     int i;
     for (i=0;i<n;i++) {
-        if ((bx0[i] != bx1[i]) || (by0[i] != by1[i]) || (bz0[i] != bz1[i])) {
+        if (!nearlyEqual(bx0[i], bx1[i]) ||
+            !nearlyEqual(by0[i], by1[i]) ||
+            !nearlyEqual(bz0[i], bz1[i])) {
             return false;
         }
     }

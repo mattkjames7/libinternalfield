@@ -1,4 +1,9 @@
-#include "internalmodel.h" 
+#include "internalmodel.h"
+#include "models.h"
+
+using namespace internalfield::models;
+
+namespace internalfield {
 
 /***********************************************************************
  * NAME : InternalModel::InternalModel()
@@ -591,3 +596,5 @@ void InternalModel::_BPol2BCart(double t, double p,
 	
 								
 }
+
+} // namespace internalfield

@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux Shared
+            build_shared_libs: "ON"
+            build_dir: build-shared
+          - name: Linux Static
+            build_shared_libs: "OFF"
+            build_dir: build-static
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Configure
+        run: cmake -S . -B ${{ matrix.build_dir }} -DBUILD_SHARED_LIBS=${{ matrix.build_shared_libs }} -GNinja
+
+      - name: Build
+        run: cmake --build ${{ matrix.build_dir }} -j2
+
+      - name: Test
+        run: ctest --test-dir ${{ matrix.build_dir }} --output-on-failure
+
+  macos-build-and-test:
+    name: macOS Build and Test
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Configure
+        run: cmake -S . -B build-macos -DBUILD_SHARED_LIBS=ON -GNinja
+
+      - name: Build
+        run: cmake --build build-macos -j2
+
+      - name: Test
+        run: ctest --test-dir build-macos --output-on-failure
+
+  windows-msys2-build-and-test:
+    name: Windows MSYS2 (MinGW-w64) Build and Test
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-toolchain
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+
+      - name: Configure
+        shell: msys2 {0}
+        run: cmake -S . -B build-windows -G Ninja -DBUILD_SHARED_LIBS=ON
+
+      - name: Build
+        shell: msys2 {0}
+        run: cmake --build build-windows -j2
+
+      - name: Test
+        shell: msys2 {0}
+        run: PATH="$PWD/build-windows:$PWD/build-windows/test:$PATH" ctest --test-dir build-windows --output-on-failure

@@ -12,8 +12,8 @@
 #include <string.h>
 #endif
 #define LIBINTERNALFIELD_VERSION_MAJOR 1
-#define LIBINTERNALFIELD_VERSION_MINOR 3
-#define LIBINTERNALFIELD_VERSION_PATCH 1
+#define LIBINTERNALFIELD_VERSION_MINOR 4
+#define LIBINTERNALFIELD_VERSION_PATCH 0
 
 
 
@@ -452,6 +452,11 @@ coeffStructFunc getModelCoeffStruct(std::string Model);
 coeffStructFunc getModelCoeffStruct(const char *Model);
 
 
+namespace internalfield {
+namespace models {
+struct ModelView;
+}
+
 
 /* This structure will store the Schmidt coefficients */
 struct schmidtcoeffs {
@@ -473,7 +478,6 @@ struct schmidtcoeffs {
  * ********************************************************************/
 class Internal {
 	public:
-		Internal(unsigned char *);
 		Internal(const char *);
 		Internal(const Internal&);
 		~Internal();
@@ -531,8 +535,7 @@ class Internal {
 		double rscale_;
 		
 		/* functions for initializing the object */
-		void _LoadSchmidt(unsigned char*);
-		void _LoadSchmidt(coeffStruct );
+		void _LoadSchmidt(const internalfield::models::ModelView &);
 		void _Schmidt();
 		void _CoeffGrids();
 
@@ -552,10 +555,8 @@ class Internal {
 		bool copy;
 
 		/* initialization */
-		bool useptr_;
 		bool *init_;
-		unsigned char *modelptr_;
-		coeffStruct *modelstr_;
+		const internalfield::models::ModelView *modelview_;
 		void _Init();
 		void _CheckInit();
 	
@@ -564,6 +565,8 @@ class Internal {
 
     
 
+
+namespace models {
 
 extern Internal& spv();
 extern Internal& z3();
@@ -655,7 +658,7 @@ extern Internal& v117ev();
 
 /* map the model names to their model object pointers */
 typedef Internal& (*InternalFunc)();
-std::map<std::string,InternalFunc> getModelPtrMap();
+const std::map<std::string,InternalFunc>& getModelPtrMap();
 
 /* functions to return the pointer to a model object given a string */
 
@@ -700,7 +703,7 @@ InternalFunc getModelObjPointer(const char *Model);
 std::vector<std::string> listAvailableModels();
 
 /* map of strings to direct field model function pointers */
-std::map<std::string,modelFieldPtr> getModelFieldPtrMap();
+const std::map<std::string,modelFieldPtr>& getModelFieldPtrMap();
 
 /* functions to return pointer to model field function */
 
@@ -719,6 +722,10 @@ std::map<std::string,modelFieldPtr> getModelFieldPtrMap();
  *
  **********************************************************************/
 modelFieldPtr getModelFieldPtr(std::string Model);
+
+} // namespace models
+
+} // namespace internalfield
 
 extern "C" {
 }
@@ -741,6 +748,8 @@ extern "C" {
  * 
  * 
  * ********************************************************************/
+namespace internalfield {
+
 template <typename Tkey, typename Tval> 
 std::vector<Tkey> listMapKeys(std::map<Tkey,Tval> const &inmap) {
 	std::vector<Tkey> keys;
@@ -814,7 +823,16 @@ class InternalModel {
 
 
 /* we want to initialize the model objects witht heir parameters */
-InternalModel getInternalModel();
+InternalModel& getInternalModel();
+
+} // namespace internalfield
+
+using Internal = internalfield::Internal;
+using InternalModel = internalfield::InternalModel;
+
+inline InternalModel& getInternalModel() {
+	return internalfield::getInternalModel();
+}
 
 extern "C" {
 }

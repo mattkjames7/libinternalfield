@@ -5,6 +5,8 @@
 #include <vector>
 #include "coeffs.h"
 
+namespace internalfield {
+
 typedef struct variableModelList {
 	std::string name;
     std::string body;
@@ -17,5 +19,7 @@ typedef struct variableModelList {
 
 typedef variableModelList& (*variableModelListFunc)();
 variableModelList& _var_model_igrf();
+
+} // namespace internalfield
 
 #endif

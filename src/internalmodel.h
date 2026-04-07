@@ -18,6 +18,8 @@
  * 		Class which can access all instances of Internal objects.
  * 
  * ********************************************************************/
+namespace internalfield {
+
 class InternalModel {
 	
 	public:
@@ -70,5 +72,6 @@ class InternalModel {
 		void _BPol2BCart(double,double,double,double,double,double*,double*,double*);
 };
 
+} // namespace internalfield
 
 #endif

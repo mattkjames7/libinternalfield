@@ -77,7 +77,7 @@ void printVectorsCart(
 
 void saveVIP4Vectors() {
     std::filesystem::path vectorFile = std::filesystem::current_path();
-    vectorFile /= "testvip4.bin";
+	vectorFile /= "data/testvip4.bin";
 
 	std::vector<double> r = {3,3,3,3, 3,3,3,3, 3,3,3,3, 3,3,3,3};
 	std::vector<double> tdeg = {10,10,10,10,55,55,55,55,
@@ -118,7 +118,7 @@ void saveVIP4Vectors() {
 
 void saveJRM09Vectors() {
     std::filesystem::path vectorFile = std::filesystem::current_path();
-    vectorFile /= "testjrm09.bin";
+	vectorFile /= "data/testjrm09.bin";
 
 	std::vector<double> r = {3,3,3,3, 3,3,3,3, 3,3,3,3, 3,3,3,3};
 	std::vector<double> tdeg = {10,10,10,10,55,55,55,55,
@@ -159,7 +159,7 @@ void saveJRM09Vectors() {
 
 void saveVIP4TestFunctionVectors() {
    std::filesystem::path vectorFile = std::filesystem::current_path();
-    vectorFile /= "testvip4function.bin";
+	vectorFile /= "data/testvip4function.bin";
 
 	std::vector<double> r = {3,3,3,3, 3,3,3,3, 3,3,3,3, 3,3,3,3};
 	std::vector<double> tdeg = {10,10,10,10,55,55,55,55,
@@ -207,10 +207,10 @@ void saveVIP4TestFunctionVectors() {
 void saveVIP4ModelVariables() {
 
    	std::filesystem::path file = std::filesystem::current_path();
-    file /= "testmodelvars.bin";
+	file /= "data/testmodelvars.bin";
 
 	Internal model("vip4");
-	std::vector<struct schmidtcoeffs> schc = model.getSchmidtCoeffs();
+	std::vector<internalfield::schmidtcoeffs> schc = model.getSchmidtCoeffs();
 	std::vector<std::vector<double>> Snm = model.getSnm();
 	std::vector<std::vector<double>> g = model.getg();
 	std::vector<std::vector<double>> h = model.geth();
@@ -227,7 +227,7 @@ void saveCvector() {
 	model(x,y,z,&Bx,&By,&Bz);
 
    	std::filesystem::path fileName = std::filesystem::current_path();
-    fileName /= "ctest.bin";
+	fileName /= "data/ctest.bin";
 	std::ofstream file(fileName,std::ios::binary);
 	file.write(reinterpret_cast<const char*>(&Bx),sizeof(double));
 	file.write(reinterpret_cast<const char*>(&By),sizeof(double));
@@ -246,7 +246,7 @@ void saveCppvector() {
 	double Bx, By, Bz;
 	model.Field(x,y,z,&Bx,&By,&Bz);
    	std::filesystem::path fileName = std::filesystem::current_path();
-    fileName /= "cpptest.bin";
+	fileName /= "data/cpptest.bin";
 	std::ofstream file(fileName,std::ios::binary);
 	file.write(reinterpret_cast<const char*>(&Bx),sizeof(double));
 	file.write(reinterpret_cast<const char*>(&By),sizeof(double));
@@ -255,6 +255,7 @@ void saveCppvector() {
 }
 
 int main() {
+	std::filesystem::create_directories(std::filesystem::path("data"));
     saveVIP4Vectors();
     saveJRM09Vectors();
 	saveVIP4TestFunctionVectors();

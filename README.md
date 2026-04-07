@@ -4,36 +4,59 @@ This is a C++ library for various internal magnetic field models which use spher
 
 ## Dependencies
 
-The following things are required for building this library:
+The following tools are required for building this library:
 
-- Python 3
-
-- numpy
-
-- make
-
-- g++
-
-- binutils
+- CMake 3.20+
+- A C/C++ compiler with C++17 support (for example gcc/g++)
+- `ninja-build` if configuring with `-GNinja`
 
 ## Building
 
-Clone the repo and build in Linux or Mac OS:
+Clone the repo, configure, and build:
 
 ```bash
 git clone https://github.com/mattkjames7/libinternalfield.git
 cd libinternalfield
-make
-
-#optionally install system wide
-sudo make install
+cmake -S . -B build -GNinja
+cmake --build build -j4
 ```
 
-This will create a library file ```libinternalfield.so``` (`.dylib` in Mac, `.dll` in Windows). Installing system wide will place the library file in `/usr/local/lib` and the header files `internalfield.h` (for both C and C++) in `/usr/local/include` by default.
+By default this builds a shared library (`BUILD_SHARED_LIBS=ON`).
+
+To build a static library instead:
+
+```bash
+cmake -S . -B build -DBUILD_SHARED_LIBS=OFF
+cmake --build build -j4
+```
+
+Produced artifact (platform dependent):
+
+- libinternalfield.so on Linux
+- libinternalfield.dylib on macOS
+- libinternalfield.dll on Windows
+- libinternalfield.a (static)
+
+Install to a prefix (for example /usr/local):
+
+```bash
+cmake --install build --prefix /usr/local
+```
+
+Run tests:
+
+```bash
+ctest --test-dir build --output-on-failure
+```
+
+Notes:
+
+- The generated model registry header is written to generated/models.h during the build.
+- The build step also refreshes data/coeffs/earth/igrf*.dat from data/igrf/igrf13coeffs.txt before generating the registry.
 
 ## Supported Models
 
-Model coefficients are stored in `libinternalfield/coeffs/` as `name.dat` files, where `name` is the name of the model. Each file contains for columns:
+Model coefficients are stored in data/coeffs/ as name.dat files, where name is the model name. Each file contains four columns:
 
 1. Parameter string ("*g*" or "*h*")
 
@@ -43,7 +66,7 @@ Model coefficients are stored in `libinternalfield/coeffs/` as `name.dat` files,
 
 4. Magnitude (in nT, float or integer)
 
-Any correctly formatted `.dat` file place within this folder will automatically be included within the library when it is compiled. Any additional models will be accessible using the `name` from the `.dat` file as the model string.
+Any correctly formatted .dat file placed in this folder is automatically included when the library is built. Additional models are accessible using the filename stem as the model string.
 
 
 
@@ -148,7 +171,7 @@ There is an IGRF model for Earth's magnetic field for every 5 years, starting in
 
 ### Time varying models
 
-For models which vary with time (e.g. IGRF) a chronological list of model names with associated dates and times should be provided in `libinternalfield/variable/planet/nameofmodellist.dat`
+For models which vary with time (e.g. IGRF), provide a chronological list of model names with associated dates and times in data/variable/planet/nameofmodellist.dat
 
 with the following columns:
 
