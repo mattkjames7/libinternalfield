@@ -34,9 +34,12 @@ target_link_libraries(libinternalfield_gtest
         internalfield
         GTest::gtest_main)
 
-gtest_discover_tests(libinternalfield_gtest
+gtest_add_tests(TARGET libinternalfield_gtest
+    SOURCES gtest_unit.cc
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    DISCOVERY_MODE PRE_TEST)
+    TEST_LIST LIBINTERNALFIELD_GTESTS)
+set_tests_properties(${LIBINTERNALFIELD_GTESTS} PROPERTIES
+    WORKING_DIRECTORY "${LIBINTERNALFIELD_TEST_WORKDIR}")
 
 add_executable(libinternalfield_cpptest cpptest.cc)
 target_include_directories(libinternalfield_cpptest PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../include")
