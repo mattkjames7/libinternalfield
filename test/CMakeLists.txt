@@ -1,24 +1,41 @@
+cmake_minimum_required(VERSION 3.20)
+
 set(LIBINTERNALFIELD_TEST_WORKDIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
-add_library(libinternalfield_testdata OBJECT testdata.cc)
-target_include_directories(libinternalfield_testdata
+include(FetchContent)
+find_package(GTest CONFIG QUIET)
+if (NOT GTest_FOUND)
+    FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+    )
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+endif()
+
+include(GoogleTest)
+
+add_library(libinternalfield_testdata OBJECT
+    testdata.cc
+    testdata.h)
+
+target_include_directories(libinternalfield_testdata PUBLIC ${CMAKE_SOURCE_DIR}/include)
+
+add_executable(libinternalfield_gtest
+    gtest_unit.cc
+    $<TARGET_OBJECTS:libinternalfield_testdata>)
+target_include_directories(libinternalfield_gtest
     PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}"
         "${CMAKE_CURRENT_SOURCE_DIR}/../include"
 )
+target_link_libraries(libinternalfield_gtest
+    PRIVATE
+        internalfield
+        GTest::gtest_main)
 
-target_link_libraries(libinternalfield_testdata PRIVATE internalfield)
-
-if(UNIX AND NOT APPLE)
-    target_link_libraries(libinternalfield_testdata PRIVATE m)
-endif()
-
-add_executable(libinternalfield_test test.cc $<TARGET_OBJECTS:libinternalfield_testdata>)
-target_include_directories(libinternalfield_test PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/../include")
-target_link_libraries(libinternalfield_test PRIVATE internalfield)
-if(UNIX AND NOT APPLE)
-    target_link_libraries(libinternalfield_test PRIVATE m)
-endif()
+gtest_discover_tests(libinternalfield_gtest
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_executable(libinternalfield_cpptest cpptest.cc)
 target_include_directories(libinternalfield_cpptest PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../include")
@@ -55,12 +72,6 @@ target_link_libraries(libinternalfield_savetestdata PRIVATE internalfield)
 if(UNIX AND NOT APPLE)
     target_link_libraries(libinternalfield_savetestdata PRIVATE m)
 endif()
-
-add_test(NAME internalfield_unit COMMAND libinternalfield_test)
-set_tests_properties(internalfield_unit PROPERTIES
-    WORKING_DIRECTORY "${LIBINTERNALFIELD_TEST_WORKDIR}"
-    FAIL_REGULAR_EXPRESSION "FAIL"
-)
 
 add_test(NAME internalfield_c_api COMMAND libinternalfield_ctest)
 set_tests_properties(internalfield_c_api PROPERTIES
