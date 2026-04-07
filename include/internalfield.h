@@ -535,7 +535,6 @@ class Internal {
 		double rscale_;
 		
 		/* functions for initializing the object */
-		void _LoadSchmidt(coeffStruct );
 		void _LoadSchmidt(const internalfield::models::ModelView &);
 		void _Schmidt();
 		void _CoeffGrids();
@@ -557,7 +556,6 @@ class Internal {
 
 		/* initialization */
 		bool *init_;
-		coeffStruct *modelstr_;
 		const internalfield::models::ModelView *modelview_;
 		void _Init();
 		void _CheckInit();
