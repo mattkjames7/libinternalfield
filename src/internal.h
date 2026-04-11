@@ -5,6 +5,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <string.h>
+#include <cstdint>
 #include "coeffs.h"
 #include <vector>
 
