@@ -50,6 +50,11 @@ set(LIBINTERNALFIELD_SOURCES
 add_library(internalfield ${LIBINTERNALFIELD_SOURCES})
 add_dependencies(internalfield generate_model_registry)
 
+if(WIN32 AND BUILD_SHARED_LIBS)
+    # Export all symbols for shared builds so MSVC creates internalfield.lib.
+    set_target_properties(internalfield PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
+endif()
+
 target_include_directories(internalfield
     PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/src"
