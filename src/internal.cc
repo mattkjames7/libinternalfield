@@ -1,6 +1,7 @@
 #include "internal.h"
 #include "../generated/models.h"
 #include <stdexcept>
+#include <vector>
 
 namespace internalfield {
 
@@ -172,7 +173,7 @@ void Internal::_Schmidt() {
 	
 	/* calculate a bunch of factorials */
 	int nfact = 2*nmax_ + 1;
-	double facts[nfact];
+	std::vector<double> facts(nfact);
 	facts[0] = 1.0;
 	for (n=1;n<nfact;n++) {
 		facts[n] = n*facts[n-1];
