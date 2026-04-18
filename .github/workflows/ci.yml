@@ -5,9 +5,23 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      job:
+        description: Select which job to run
+        required: false
+        default: all
+        type: choice
+        options:
+          - all
+          - linux
+          - macos
+          - windows-msys2
+          - windows-msvc
 
 jobs:
   build-and-test:
+    if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.job == 'all' || github.event.inputs.job == 'linux' }}
     name: ${{ matrix.name }}
     runs-on: ubuntu-latest
     strategy:
@@ -35,6 +49,7 @@ jobs:
         run: ctest --test-dir ${{ matrix.build_dir }} --output-on-failure
 
   macos-build-and-test:
+    if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.job == 'all' || github.event.inputs.job == 'macos' }}
     name: macOS Build and Test
     runs-on: macos-latest
 
@@ -52,6 +67,7 @@ jobs:
         run: ctest --test-dir build-macos --output-on-failure
 
   windows-msys2-build-and-test:
+    if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.job == 'all' || github.event.inputs.job == 'windows-msys2' }}
     name: Windows MSYS2 (MinGW-w64) Build and Test
     runs-on: windows-latest
 
@@ -80,3 +96,24 @@ jobs:
       - name: Test
         shell: msys2 {0}
         run: PATH="$PWD/build-windows:$PWD/build-windows/test:$PATH" ctest --test-dir build-windows --output-on-failure
+
+  windows-msvc-build-and-test:
+    if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.job == 'all' || github.event.inputs.job == 'windows-msvc' }}
+    name: Windows MSVC Build and Test
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Configure
+        run: cmake -S . -B build-windows-msvc -G "Visual Studio 17 2022" -A x64 -DBUILD_SHARED_LIBS=ON
+
+      - name: Build
+        run: cmake --build build-windows-msvc --config Release -j2
+
+      - name: Test
+        shell: pwsh
+        run: |
+          $env:PATH = "$pwd\build-windows-msvc\Release;$pwd\build-windows-msvc\test\Release;$env:PATH"
+          ctest --test-dir build-windows-msvc -C Release --output-on-failure
